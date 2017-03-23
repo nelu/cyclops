@@ -1,3 +1,5 @@
+[![Documentation Status](https://readthedocs.org/projects/cyphon-ui/badge/?version=latest)](http://cyphon.readthedocs.io/projects/cyclops/en/latest/?badge=latest)
+
 # Cyclops
 
 Cyclops is a single-page application (SPA) that displays real-time data
