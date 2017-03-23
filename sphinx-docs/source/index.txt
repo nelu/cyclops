@@ -8,7 +8,7 @@
 Cyclops documentation
 #####################
 
-Cyclops is a single page application that displays real time data from
+Cyclops is a single-page application that displays real time data from
 an instance of `Cyphon <https://cyphon.readthedocs.io/>`__. Cyclops is
 built on `React <https://facebook.github.io/react/>`__ and served
 through an `Express <https://expressjs.com/>`__ server.
