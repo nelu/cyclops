@@ -1,7 +1,7 @@
 # Cyclops
 
 Cyclops is a single-page application (SPA) that displays real-time data
-from an instance of [Cyphon](https://cyphon.readthedocs.io/).
+from an instance of [Cyphon](https://dunbarcyber.github.io/cyphon/).
 It's built on [React](https://facebook.github.io/react/) and served
 through an [Express](https://expressjs.com/) server.
 
