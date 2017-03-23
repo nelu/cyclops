@@ -1,0 +1,18 @@
+.. _contributing:
+
+############
+Contributing
+############
+
+
+.. _api-docs:
+
+*****************
+API Documentation
+*****************
+
+If you would like to modify or contribute to this project, you will first want to generate the internal documentation by running the command::
+
+    $ npm run docs
+
+This will generate HTML in a directory named `docs` that outlines all the individual components that make up the the express server and react application, and creates search functionality for all those components. It's index page helps to explain the directory structure and locations of important files as well as architectural decisions and things to keep in mind while developing.

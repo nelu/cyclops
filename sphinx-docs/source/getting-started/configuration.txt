@@ -1,0 +1,85 @@
+.. _configuration:
+
+#############
+Configuration
+#############
+
+Cyclops needs to be configured for a specific Cyphon instance. This is
+done by creating a file named `cyclops.env` in the root of the project
+folder. This file contains environment variables that will be used when
+running the express server.
+
+In the current project root, there is a file named `cyclops.env.COPYME`.
+This contains a template of what the `cyclops.env` file should look
+like. The file should include these variables:
+
+
+.. _cyphon-url:
+
+**********
+CYPHON_URL
+**********
+
+**Default:** ``http://localhost:8080/``
+
+URL of the Cyphon instance this Cyclops instance will connect to.
+
+
+.. _cyphon-api-timeout:
+
+******************
+CYPHON_API_TIMEOUT
+******************
+
+**Default:** ``30000``
+
+Time it takes for API requests to the Cyphon instance to time out in
+milliseconds.
+
+
+.. _cyphon-api-path:
+
+***************
+CYPHON_API_PATH
+***************
+
+**Default:** ``/api/v1``
+
+URL path off of CYPHON_URL that connects to the Cyphon API. Use this to
+specify different versions of the api to connect to.
+
+
+.. _cyclops-session-secret:
+
+**********************
+CYCLOPS_SESSION_SECRET
+**********************
+
+**Default:** ``nyan cat``
+
+Random string that will be used when creating sessions for the express
+server.
+
+
+.. _mapbox-access-token:
+
+*******************
+MAPBOX_ACCESS_TOKEN
+*******************
+
+**Default:** ``''``
+
+Access token for the mapbox API. This is required to show locations and
+get geolocation data. You can signup for an access token
+[here](https://www.mapbox.com/studio/signup/).
+
+
+.. _cyclops-port:
+
+************
+CYCLOPS_PORT
+************
+
+**Default:** ``3000``
+
+Port number the express server will run on in localhost.
