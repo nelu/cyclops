@@ -188,10 +188,10 @@ The CYPHON technology or platform are distributed under the Agreement on
 an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or
 implied. See the Agreement for specific terms.
 
- Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
+Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
  
- Contributor/Change Made By: ________________. [Only apply if changes
- are made]”
+Contributor/Change Made By: ________________. [Only apply if changes
+are made]”
 
 3. Modifications.
 
