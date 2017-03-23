@@ -1,6 +1,6 @@
 .. image:: _static/images/cyclops-logo.png
     :target: https://cyphon.readthedocs.io/
-    :width: 450px
+    :width: 500px
     :align: center
     :alt: Cyphon
 
