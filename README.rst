@@ -1,3 +1,7 @@
+.. image:: https://readthedocs.org/projects/cyphon-ui/badge/?version=latest
+    :target: http://cyphon.readthedocs.io/projects/cyclops/en/latest/?badge=latest
+    :alt: Documentation Status
+
 #######
 Cyclops
 #######
