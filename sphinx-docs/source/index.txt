@@ -4,6 +4,8 @@
     :align: center
     :alt: Cyphon
 
+|
+
 #####################
 Cyclops documentation
 #####################
