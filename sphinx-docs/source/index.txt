@@ -1,4 +1,4 @@
-.. image:: _static/images/cyphon-logo.png
+.. image:: _static/images/cyclops-logo.png
     :target: https://cyphon.readthedocs.io/
     :width: 450px
     :align: center
