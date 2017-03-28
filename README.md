@@ -1,4 +1,4 @@
-Cyclops will be officially released on April 4, 2017. We'll post the source code soon!
+Cyclops will be officially released on April 4, 2017.
 
 [![Documentation Status](https://readthedocs.org/projects/cyphon-ui/badge/?version=latest)](http://cyphon.readthedocs.io/projects/cyclops/en/latest/?badge=latest)
 
