@@ -100,7 +100,7 @@ reducers[actions.SEARCH_ALERTS_PENDING] = (
   // Cancel the timeout for polling alerts.
   if (state.timeout) window.clearTimeout(state.timeout);
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -120,7 +120,7 @@ reducers[actions.SEARCH_ALERTS_SUCCESS] = (
     polling: action.payload.polling,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -138,7 +138,7 @@ reducers[actions.SEARCH_ALERTS_FAILURE] = (
     polling: false,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -157,7 +157,7 @@ reducers[actions.POLL_ALERTS_PENDING] = (
     pollingEnabled: true,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -175,7 +175,7 @@ reducers[actions.POLL_ALERTS_SUCCESS] = (
     count: action.payload.count,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -192,7 +192,7 @@ reducers[actions.POLL_ALERTS_FAILURE] = (
     polling: false,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -210,7 +210,7 @@ reducers[actions.POLL_ALERTS_WAIT] = (
     timeout: action.payload.timeoutId,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -228,7 +228,7 @@ reducers[actions.STOP_POLLING] = (
     timeout: null,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -247,7 +247,7 @@ reducers[actions.DISABLE_POLLING] = (
     timeout: null,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -261,8 +261,9 @@ reducers[UPDATE_ALERT_SUCCESS] = (
   action: ReduxAction<UpdateAlertSuccessPayload>,
 ): State => {
   // Find array index of alert.
-  const alertIndex = state.alerts.findIndex(
-    (alert) => alert.id === action.payload.id,
+  const alertIndex = _.findIndex(
+    state.alerts,
+    (alert: AlertListItem) => alert.id === action.payload.id,
   );
 
   // If no index, return the current state.
@@ -277,7 +278,7 @@ reducers[UPDATE_ALERT_SUCCESS] = (
   );
 
   // Assign new fields to alert object and place at the array index.
-  copiedAlerts[alertIndex] = Object.assign(
+  copiedAlerts[alertIndex] = _.assign(
     {},
     copiedAlerts[alertIndex],
     fields,
@@ -286,7 +287,7 @@ reducers[UPDATE_ALERT_SUCCESS] = (
   // Type check state update.
   const update: Partial<State> = { alerts: copiedAlerts };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**

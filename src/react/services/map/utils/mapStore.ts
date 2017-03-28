@@ -19,6 +19,7 @@
 // Vendor
 import { MapboxOptions } from 'mapbox-gl';
 import { Promise } from 'axios';
+import { resolve } from 'bluebird';
 
 // Local
 import {
@@ -63,10 +64,10 @@ export function getMapItem(elementId: string): Promise<MapStoreItem | undefined>
   const promise = mapItemPromises[elementId];
   const mapItem = mapStore[elementId];
 
-  if (mapItem) { return Promise.resolve(mapItem); }
-  if (promise) { return Promise.resolve(promise); }
+  if (mapItem) { return resolve(mapItem); }
+  if (promise) { return resolve(promise); }
 
-  return Promise.resolve(undefined);
+  return resolve(undefined);
 }
 
 /**

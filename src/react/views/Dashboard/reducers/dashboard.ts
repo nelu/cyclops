@@ -19,6 +19,7 @@
 // Vendor
 import { ReducerMap, handleActions } from 'redux-actions';
 import { Canceler } from 'axios';
+import * as _ from 'lodash';
 
 // Local
 import * as actions from '../actions/dashboard';
@@ -111,7 +112,7 @@ reducers[actions.FETCH_DATA_PENDING] = (
   // Cancel any current requests.
   cancelRequest(action.payload.canceler);
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -131,7 +132,7 @@ reducers[actions.FETCH_DISTRIBUTION_DATA_SUCCESS] = (
     total: action.payload.total,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -150,7 +151,7 @@ reducers[actions.FETCH_TIMSERIES_DATA_SUCCESS] = (
     levelTimeseriesLoading: false,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -169,7 +170,7 @@ reducers[actions.FETCH_LOCATION_DATA_SUCCESS] = (
     locationsLoading: false,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -187,7 +188,7 @@ reducers[actions.FETCH_DATA_FAILURE] = (
     [`${action.payload}Loading`]: false,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**

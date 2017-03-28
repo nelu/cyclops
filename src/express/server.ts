@@ -21,7 +21,6 @@ import * as express from 'express';
 import * as session from 'express-session';
 import * as exphbs from 'express-handlebars';
 import * as bodyParser from 'body-parser';
-import { resolve } from 'path';
 
 // Local
 import {
@@ -40,7 +39,6 @@ import {
   getRequestLogger,
   logServerStart,
 } from './middlewares/logger';
-import { createManifest, createManifestPath } from './helpers/notifications';
 
 /**
  * Cyclops express server
@@ -61,12 +59,12 @@ app.use(STATIC_URL, express.static(STATIC_DIRECTORY_PATH));
 app.use(STATIC_URL, express.static(STATIC_COMPILATION_DIRECTORY_PATH));
 
 // Create a manifest if a google cloud messaging sender id is present.
-if (ENV.GCM_SENDER_ID) {
-  const path = createManifestPath(STATIC_COMPILATION_DIRECTORY_PATH);
-
-  createManifest(ENV.GCM_SENDER_ID, path);
-  app.use('/manifest.json', express.static(path));
-}
+// if (ENV.GCM_SENDER_ID) {
+//   const path = createManifestPath(STATIC_COMPILATION_DIRECTORY_PATH);
+//
+//   createManifest(ENV.GCM_SENDER_ID, path);
+//   app.use('/manifest.json', express.static(path));
+// }
 
 // Body Parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -74,7 +72,6 @@ app.use(bodyParser.json());
 
 // Express sessions
 app.use(session({ secret: ENV.CYCLOPS_SESSION_SECRET }));
-
 
 // View Engine
 app.engine('handlebars', exphbs());

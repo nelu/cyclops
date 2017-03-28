@@ -151,7 +151,7 @@ export class AlertView extends React.Component<Props, {}> {
       AlertView.searchParamFields,
     );
 
-    return Object.assign({}, { limit: 30, offset: 0 }, params);
+    return _.assign({}, { limit: 30, offset: 0 }, params);
   };
 
   /**
@@ -247,7 +247,7 @@ export class AlertView extends React.Component<Props, {}> {
   public updateQuery = (newParams: AlertSearchParams): void => {
     const { router, location } = this.props;
     const currentParams = AlertView.getAlertViewParams(location);
-    const query = Object.assign({}, currentParams, newParams);
+    const query = _.assign({}, currentParams, newParams);
 
     router.push({ pathname: location.pathname, query });
   };

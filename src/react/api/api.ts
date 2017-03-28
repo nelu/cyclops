@@ -19,6 +19,7 @@
 // Vendor
 import axios, { AxiosInstance, Promise } from 'axios';
 import * as _ from 'lodash';
+import * as bluebird from 'bluebird';
 
 // Local
 import { CONFIG } from '../config';
@@ -50,7 +51,7 @@ export function request<T>(config: APIConfig): Promise<T> {
   // Return the cached request if there is one and if cache is true.
   if (cacheRequest) {
     const cachedPromise = cache.get<T>(config);
-    if (cachedPromise) return cachedPromise;
+    if (cachedPromise) { return cachedPromise; }
   }
 
   const promise: Promise<T> = cyphonAPI.request(config)
@@ -81,7 +82,7 @@ export function request<T>(config: APIConfig): Promise<T> {
  * @returns {Promise<T>}
  */
 export function get<T>(url: string, config?: APIConfig): Promise<T> {
-  return request<T>(Object.assign({}, config, { url, method: 'get' }));
+  return request<T>(_.assign({}, config, { url, method: 'get' }));
 }
 
 /**
@@ -103,7 +104,7 @@ export function getAll<T>(
   return get<APIList<T>>(url).then((response) => {
     const combinedResults = baseResults.concat(response.results);
 
-    if (!response.next) return Promise.resolve(combinedResults);
+    if (!response.next) { return bluebird.resolve(combinedResults); }
 
     const nextParams = response.next.substring(response.next.indexOf('?' + 1));
 
@@ -123,7 +124,7 @@ export function post<T>(
   data?: any,
   config?: APIConfig,
 ): Promise<T> {
-  return request<T>(Object.assign({}, config, { url, data, method: 'post' }));
+  return request<T>(_.assign({}, config, { url, data, method: 'post' }));
 }
 
 /**
@@ -138,7 +139,7 @@ export function put<T>(
   data?: any,
   config?: APIConfig,
 ): Promise<T> {
-  return request<T>(Object.assign({}, config, { url, data, method: 'put' }));
+  return request<T>(_.assign({}, config, { url, data, method: 'put' }));
 }
 
 /**
@@ -153,5 +154,5 @@ export function patch<T>(
   data?: any,
   config?: APIConfig,
 ): Promise<T> {
-  return request<T>(Object.assign({}, config, { url, data, method: 'patch' }));
+  return request<T>(_.assign({}, config, { url, data, method: 'patch' }));
 }

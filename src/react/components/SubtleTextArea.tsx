@@ -18,6 +18,7 @@
 
 // Vendor
 import * as React from 'react';
+import * as bluebird from 'bluebird';
 
 // Local
 import { TextArea } from './TextArea';
@@ -68,7 +69,7 @@ export class SubtleTextArea extends React.Component<Props, State> {
    * @returns {Promise<void>}
    */
   public handleSubmit = (value: string): void => {
-    Promise
+    bluebird
       .resolve(this.props.onSubmit(value))
       .then(() => this.closeTextArea());
   };

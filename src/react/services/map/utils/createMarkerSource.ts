@@ -45,7 +45,7 @@ export function createMarkerSource(
 ): GeoJSONSourceRaw {
   const sourceOptions = options ? options : {};
   const clusterOptions = sourceOptions.cluster
-    ? Object.assign({ cluster: true }, CLUSTER_OPTIONS)
+    ? _.assign({ cluster: true }, CLUSTER_OPTIONS)
     : {};
 
   return _.assign<GeoJSONSourceRaw>(

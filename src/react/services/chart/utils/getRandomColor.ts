@@ -18,6 +18,7 @@
 
 // Vendor
 import * as randomcolor from 'randomcolor';
+import * as _ from 'lodash';
 
 /**
  *
@@ -45,8 +46,11 @@ export function getRandomColor(): string {
 export function getRandomColorList(count: number, seed?: string): string[] {
   const extendedColorConfig: randomcolor.RandomColorOptions = seed ?
     { seed, count } : { count };
-  const colorConfig: randomcolor.RandomColorOptions =
-    Object.assign({}, BASE_COLOR_CONFIG, extendedColorConfig);
+  const colorConfig: randomcolor.RandomColorOptions = _.assign(
+    {},
+    BASE_COLOR_CONFIG,
+    extendedColorConfig,
+  );
 
   return <string[]> randomcolor(colorConfig);
 }

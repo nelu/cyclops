@@ -18,6 +18,7 @@
 
 // Vendor
 import * as React from 'react';
+import * as bluebird from 'bluebird';
 
 // Local
 import { TextArea } from './TextArea';
@@ -65,9 +66,8 @@ export class HiddenTextArea extends React.Component<Props, State> {
    * @param value String value to submit.
    * @return {Promise<undefined>}
    */
-  public handleSubmit = (value: string): Promise<undefined> => {
-    return Promise
-      .resolve(this.props.onSubmit(value))
+  public handleSubmit = (value: string): bluebird<void> => {
+    return bluebird.resolve(this.props.onSubmit(value))
       .then(() => this.hideTextArea());
   };
 

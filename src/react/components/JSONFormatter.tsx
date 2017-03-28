@@ -117,7 +117,7 @@ export class JSONFormatter extends React.Component<Props, {}> {
     config?: Formatter.Configuration,
   ): void => {
     const extendedConfig = config
-      ? Object.assign({}, JSONFormatter.DEFAULT_FORMATTER_CONFIG, config)
+      ? _.assign({}, JSONFormatter.DEFAULT_FORMATTER_CONFIG, config)
       : JSONFormatter.DEFAULT_FORMATTER_CONFIG;
     const orderedJSON = orderKeys(json);
     const formatter = new Formatter(

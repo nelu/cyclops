@@ -21,6 +21,7 @@ import {
   handleActions,
   ReducerMap,
 } from 'redux-actions';
+import * as _ from 'lodash';
 
 // Local
 import {
@@ -57,10 +58,10 @@ export interface State {
 const INITIAL_STATE: State = {
   alert: null,
   alertId: null,
+  ipAddresses: null,
   loading: false,
   locations: [],
   markers: null,
-  ipAddresses: null,
   modalActive: false,
 };
 
@@ -93,7 +94,7 @@ reducers[actions.CLOSE_ALERT] = (
 ): State => {
   cancelRequest();
 
-  return Object.assign({}, state, INITIAL_STATE);
+  return _.assign({}, state, INITIAL_STATE);
 };
 
 /**
@@ -113,7 +114,7 @@ reducers[actions.FETCH_ALERT_PENDING] = (
 
   cancelRequest(action.payload.canceler);
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -133,7 +134,7 @@ reducers[actions.FETCH_ALERT_SUCCESS] = (
     markers: action.payload.markers,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -153,7 +154,7 @@ reducers[actions.REQUEST_PENDING] = (
   // Cancel any pending requests that haven't returned.
   cancelRequest(action.payload);
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -170,7 +171,7 @@ reducers[actions.REQUEST_FAILED] = (
     loading: false,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -184,11 +185,11 @@ reducers[actions.UPDATE_ALERT_SUCCESS] = (
   action: actions.UpdateAlertSuccessAction,
 ): State => {
   const update: Partial<State> = {
-    alert: Object.assign({}, state.alert, action.payload),
+    alert: _.assign({}, state.alert, action.payload),
     loading: false,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -206,7 +207,7 @@ reducers[actions.OPEN_DATA_MODAL] = (
     modalActive: true,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -223,7 +224,7 @@ reducers[actions.CLOSE_DATA_MODAL] = (
     modalActive: false,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**

@@ -22,6 +22,7 @@ import {
   Promise as AxiosPromise,
   CancelToken,
 } from 'axios';
+import { resolve, all } from 'bluebird';
 
 // Local
 import { Result } from '../../../types/result';
@@ -50,7 +51,7 @@ export function getLocationsWithAddress(
   );
 
   // If there aren't any location fields, return an empty array.
-  if (!locationFields) return Promise.resolve([]);
+  if (!locationFields) return resolve([]);
 
   const locationFieldArray: LocationField[] = [];
 
@@ -64,7 +65,7 @@ export function getLocationsWithAddress(
   );
 
   // If the location coordinates were blank, return an empty array
-  if (!locationFieldArray.length) { return Promise.resolve([]); }
+  if (!locationFieldArray.length) { return resolve([]); }
 
   const reverseLookupPromises: Array<AxiosPromise<string>> = [];
 
@@ -73,7 +74,7 @@ export function getLocationsWithAddress(
     reverseLookupPromises.push(reverseLookup(locationField.coordinates, cancelToken));
   });
 
-  return Promise.all(reverseLookupPromises)
+  return all(reverseLookupPromises)
     .then((addresses: string[]) => {
       return addresses.map<LocationFieldAddress>
         ((address: string, index: number) => {

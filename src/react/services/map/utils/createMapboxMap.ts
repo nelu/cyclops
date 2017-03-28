@@ -18,6 +18,7 @@
 
 // Vendor
 import * as mapboxgl from 'mapbox-gl';
+import * as _ from 'lodash';
 
 // Local
 import { DEFAULT_MAP_OPTIONS } from '../constants';
@@ -35,6 +36,6 @@ export function createMapboxMap(
 ): mapboxgl.Map {
   (mapboxgl as any).accessToken = CONFIG.MAPBOX_ACCESS_TOKEN;
   return new mapboxgl.Map(
-    Object.assign({}, DEFAULT_MAP_OPTIONS, options, { container }),
+    _.assign({}, DEFAULT_MAP_OPTIONS, options, { container }),
   );
 }

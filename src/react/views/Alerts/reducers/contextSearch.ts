@@ -94,7 +94,7 @@ reducers[actions.SELECT_CONTEXT] = (
 ): State => {
   const update: Partial<State> = { selectedContext: action.payload };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -112,7 +112,7 @@ reducers[actions.SEARCH_CONTEXT_PENDING] = (
 
   cancelRequest(action.payload);
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -134,7 +134,7 @@ reducers[actions.SEARCH_CONTEXT_SUCCESS] = (
     results: action.payload.results,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -150,7 +150,7 @@ reducers[actions.SEARCH_CONTEXT_FAILURE] = (
 ): State => {
   const update: Partial<State> = { loading: false };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
@@ -165,7 +165,7 @@ reducers[CLOSE_DATA_MODAL] = (
 ): State => {
   cancelRequest();
 
-  return Object.assign({}, state, INITIAL_STATE);
+  return _.assign({}, state, INITIAL_STATE);
 };
 
 /**

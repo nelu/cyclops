@@ -18,6 +18,7 @@
 
 // Vendor
 import { ReducerMap, handleActions } from 'redux-actions';
+import * as _ from 'lodash';
 
 // Local
 import * as actions from '../actions/view';
@@ -71,7 +72,7 @@ reducers[actions.FETCH_VIEW_RESOURCES_SUCCESS] = (
     users: action.payload.users,
   };
 
-  return Object.assign({}, state, update);
+  return _.assign({}, state, update);
 };
 
 /**
