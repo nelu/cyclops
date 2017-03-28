@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "sourceMap": false,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "allowJs": true,
+    "target": "es6",
+    "outDir": "../../build/express"
+  },
+  "include": [
+    "**/*",
+    "../../constants.d.ts",
+    "../../webpack/constants.d.ts"
+  ]
+}

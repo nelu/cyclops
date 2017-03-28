@@ -1,0 +1,76 @@
+/**
+ * The contents of this file are subject to the CYPHON Proprietary Non-
+ * Commercial Registered User Use License Agreement (the "Agreement”). You
+ * may not use this file except in compliance with the Agreement, a copy
+ * of which may be found at https://github.com/dunbarcyber/cyclops/. The
+ * developer of the CYPHON technology and platform is Dunbar Security
+ * Systems, Inc.
+ *
+ * The CYPHON technology or platform are distributed under the Agreement on
+ * an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the Agreement for specific terms.
+ *
+ * Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
+ *
+ * Contributor/Change Made By: ________________. [Only apply if changes
+ * are made]
+ */
+
+// --------------------------------------------------------------------------
+// Custom Buttons
+// --------------------------------------------------------------------------
+
+$subtle-button-transition-time: .2s;
+
+.subtle-button {
+  border-radius: $border-radius-base;
+  cursor: pointer;
+  background-color: rgba(#fff, 0);
+  border: solid 1px rgba(#fff, 0);
+  transition:
+    background-color $subtle-button-transition-time,
+    border $subtle-button-transition-time
+  ;
+  padding: 4px 7px;
+  margin: -5px -8px;
+
+  &:hover {
+    border: solid 1px rgba(#fff, 0.1);
+    background-color: rgba(#fff, 0.05);
+  }
+}
+
+
+$btn-default-dark-bg: lighten($color-dark, 12%);
+$btn-default-dark-border: darken($color-dark, 3%);
+
+
+.btn-alt {
+  @extend .btn;
+
+  border-color: $color-darker;
+  background-color: lighten($color-dark, 6%);
+  border-width: 1px;
+  color: lighten($color-dark, 40%);
+
+  &:hover {
+    color: lighten($color-dark, 65%);
+  }
+}
+
+.btn-group-alt {
+  .btn {
+    @extend .btn-alt;
+    box-shadow: inset 1px 0 0 lighten($color-dark, 14%);
+
+    &:active:focus {
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      background-color: lighten($color-dark, 6%);
+      border-color: $color-darker;
+    }
+  }
+
+  .btn:first-of-type {
+    box-shadow: none;
+  }
+}

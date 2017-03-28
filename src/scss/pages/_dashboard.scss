@@ -1,0 +1,115 @@
+/**
+ * The contents of this file are subject to the CYPHON Proprietary Non-
+ * Commercial Registered User Use License Agreement (the "Agreement”). You
+ * may not use this file except in compliance with the Agreement, a copy
+ * of which may be found at https://github.com/dunbarcyber/cyclops/. The
+ * developer of the CYPHON technology and platform is Dunbar Security
+ * Systems, Inc.
+ *
+ * The CYPHON technology or platform are distributed under the Agreement on
+ * an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the Agreement for specific terms.
+ *
+ * Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
+ *
+ * Contributor/Change Made By: ________________. [Only apply if changes
+ * are made]
+ */
+
+// --------------------------------------------------------------------------
+// Dashboard Page
+// --------------------------------------------------------------------------
+
+.dashboard__container {
+  padding: $padding-large-vertical $padding-large-horizontal;
+  overflow: visible;
+}
+
+.dashboard__header {
+  text-align: center;
+  position: relative;
+  background-color: $color-dark;
+  border-radius: $border-radius-base;
+  padding: $padding-large-vertical $padding-large-horizontal;
+}
+
+.dashboard__nav {
+  display: inline-block;
+
+  & > li {
+    & > a {
+      padding: $padding-small-vertical $padding-base-horizontal;
+      color: lighten($color-dark, 30%);
+
+      &:hover {
+        color: $text-color;
+      }
+    }
+
+    &.active > a {
+      background-color: $brand-primary;
+
+      &:hover,
+      &:focus {
+        background-color: $brand-primary;
+      }
+    }
+  }
+}
+
+.dashboard__loading-container {
+  position: relative;
+}
+
+.dashboard__heading {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+  color: #fff;
+}
+
+.dashboard__map {
+  position: relative;
+  height: 400px;
+  margin-bottom: 15px;
+}
+
+.dashboard__title {
+  margin-top: -10px;
+  font-weight: 200;
+  color: $text-color;
+}
+
+.dashboard__stacked-area-chart {
+  position: relative;
+  height: 300px;
+  background-color: $color-dark;
+  border-radius: $border-radius-base;
+  padding: $padding-base-vertical $padding-base-horizontal;
+
+
+  .nvd3 text {
+    fill: $text-color;
+  }
+
+  .nvd3 .nv-axis line {
+    stroke: $color-base;
+  }
+
+  .nvd3 .nv-axis text {
+    fill: lighten($color-dark, 30%);
+  }
+
+  .nvd3 .nv-axis path {
+    stroke: $color-base;
+  }
+}
+
+.dashboard__total {
+  font-size: 5em;
+  color: #fff;
+}
+
+.dashboard__main {
+  margin-left: $padding-base-horizontal * 2;
+}

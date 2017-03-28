@@ -1,0 +1,65 @@
+/**
+ * The contents of this file are subject to the CYPHON Proprietary Non-
+ * Commercial Registered User Use License Agreement (the "Agreement”). You
+ * may not use this file except in compliance with the Agreement, a copy
+ * of which may be found at https://github.com/dunbarcyber/cyclops/. The
+ * developer of the CYPHON technology and platform is Dunbar Security
+ * Systems, Inc.
+ *
+ * The CYPHON technology or platform are distributed under the Agreement on
+ * an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the Agreement for specific terms.
+ *
+ * Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
+ *
+ * Contributor/Change Made By: ________________. [Only apply if changes
+ * are made]
+ */
+
+// --------------------------------------------------------------------------
+// Header
+// --------------------------------------------------------------------------
+
+.header {
+  background-color: $color-darker;
+  color: $text-color;
+}
+
+.header__link {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: $text-color;
+  background-color: transparent;
+  padding: $padding-base-vertical $padding-base-horizontal;
+
+  &:hover {
+    color: #fff;
+    background-color: lighten($color-darker, 10%);
+  }
+}
+
+.header__link--active {
+  color: #fff;
+  background-color: $color-primary;
+}
+
+.header__logo {
+  height: 30px;
+  margin: $padding-large-vertical $padding-base-horizontal;
+}
+
+.header__user {
+  padding: $padding-base-vertical $padding-base-horizontal;
+}
+
+.header__btn-reset {
+  background-color: transparent;
+
+}
+
+.header__logout:hover {
+  color: #fff;
+  background-color: $brand-danger;
+}

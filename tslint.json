@@ -1,0 +1,12 @@
+{
+  "extends": ["tslint:recommended", "tslint-react"],
+  "rules": {
+    "quotemark": [true, "single", "jsx-double"],
+    "ordered-imports": false,
+    "no-namespace": false,
+    "no-var-requires": false,
+    "interface-name": false,
+    "one-line": [true, "check-catch"],
+    "semicolon": [true, "always", "ignore-bound-class-methods"]
+  }
+}

@@ -1,0 +1,380 @@
+/**
+ * The contents of this file are subject to the CYPHON Proprietary Non-
+ * Commercial Registered User Use License Agreement (the "Agreement”). You
+ * may not use this file except in compliance with the Agreement, a copy
+ * of which may be found at https://github.com/dunbarcyber/cyclops/. The
+ * developer of the CYPHON technology and platform is Dunbar Security
+ * Systems, Inc.
+ *
+ * The CYPHON technology or platform are distributed under the Agreement on
+ * an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the Agreement for specific terms.
+ *
+ * Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
+ *
+ * Contributor/Change Made By: ________________. [Only apply if changes
+ * are made]
+ */
+
+// Vendor
+import * as React from 'react';
+import { Router } from 'react-router';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+
+// Local
+import {
+  AlertDetail as AlertDetailResponse,
+  AlertUpdateFields,
+} from '../../../api/alerts/types';
+import { Loading } from '../../../components/Loading';
+import { AlertDetailComments } from '../components/AlertDetailComments';
+import { AlertDetailOverview } from '../components/AlertDetailOverview';
+import { AlertDetailActions } from '../components/AlertDetailActions';
+import { AlertDetailAnalysis } from '../components/AlertDetailAnalysis';
+import { AlertDetailHeader } from '../components/AlertDetailHeader';
+import {
+  LocationFieldAddress,
+  Markers,
+  PopupGenerator,
+  LocationAddressPoint,
+} from '../../../services/map/types';
+import { SpacedSection } from '../../../components/SpacedSection';
+import { SubTitle } from '../../../components/SubTitle';
+import { Map } from '../../../services/map/components/Map';
+import { JSONFormatter } from '../../../components/JSONFormatter';
+import {
+  MapStateToProps,
+  MapDispatchToProps,
+} from '../../../types/redux';
+import { User } from '../../../api/users/types';
+import { AlertDataModal } from '../components/AlertDataModal';
+import { ResultIPAdresses, Result } from '../../../types/result';
+import {
+  addAlertDetailComment,
+  closeAlert,
+  openDataModal,
+  performAlertDetailAction,
+  updateAlertDetail,
+  fetchAlertDetail,
+  closeDataModal,
+} from '../actions/detail';
+import { Action } from '../../../api/actions/types';
+import { Container } from '../../../api/containers/types';
+
+// --------------------------------------------------------------------------
+// Interfaces/Types
+// --------------------------------------------------------------------------
+
+/** Properties of the AlertDetail component that are values. */
+interface ValueProps {
+  /** Alert to display detailed info on. */
+  alert: AlertDetailResponse | null;
+  /** Current list of actions to perform on the alert. */
+  actions: Action[];
+  /** List of current users. */
+  users: User[];
+  /** If the current alerts is being fetched or altered. */
+  loading: boolean;
+  /** GeoJSON markers of the current alerts location. */
+  markers: Markers | null;
+  /** Alert location, field the location was found on, and the address. */
+  locations: LocationFieldAddress[];
+  /** IP addresses of the alert data. */
+  ipAddresses: ResultIPAdresses | null;
+  /** If the alert data modal is active. */
+  modalActive: boolean;
+}
+
+/** Properties of the AlertDetail component that are functions. */
+interface FunctionProps {
+  /**
+   * Adds a comment to the alert.
+   * @param alertId ID of the alert to add the comment to.
+   * @param comment Comment to add to the alert.
+   */
+  addComment(alertId: number, comment: string): any;
+  /** Closes the alert detail. */
+  closeAlert(): any;
+  /** Closes the modal used to analyze the alert data. */
+  closeDataModal(): any;
+  /**
+   * Opens a modal used to analyze the alert data.
+   * @param data Data to analyze.
+   * @param container Related container to the data.
+   */
+  openDataModal(data: Result, container: Container): any;
+  /**
+   * Performs an action on the alert.
+   * @param alertId ID of the alert to perform the action on.
+   * @param actionId ID of the action to perform.
+   */
+  performAction(alertId: number, actionId: number): any;
+  /**
+   * Updates the fields of the alert.
+   * @param alertId ID of the alert to update the files of.
+   * @param fields Fields to update.
+   */
+  updateAlert(alertId: number, fields: AlertUpdateFields): any;
+  /**
+   * Fetches the alerts from the API to display.
+   * @param alertId
+   */
+  viewAlert(alertId: number): any;
+}
+
+/**
+ * Properties of the AlertDetail component that are passed in from the
+ * wrapped container object.
+ */
+interface OwnProps {
+  /** React router location. */
+  location: Router.LocationDescriptor;
+  /** React router route parameters. */
+  routeParams: RouteParams;
+  /** React router object. */
+  router: Router.InjectedRouter;
+}
+
+// Combined value and function properties of AlertDetail.
+type Props = ValueProps & FunctionProps & OwnProps;
+
+/**
+ * URL parameters passed in from react-router
+ */
+interface RouteParams {
+  /** ID of the alert to view. */
+  alertId: string;
+}
+
+// --------------------------------------------------------------------------
+// Component
+// --------------------------------------------------------------------------
+
+/**
+ * Displays detailed alert information in a sidebar.
+ */
+export class AlertDetail extends React.Component<Props, {}> {
+  /**
+   * Popup generator for the map.
+   * @param feature
+   */
+  public static popupGenerator: PopupGenerator = (
+    feature: GeoJSON.Feature<LocationAddressPoint>,
+  ) => (
+    `<b>Field:</b> ${feature.properties.field}<br />` +
+    `<b>Address:</b> ${feature.properties.address}`
+  );
+
+  /**
+   * Retrieves the alerts data of the currently selected alerts.
+   */
+  public componentWillMount(): void {
+    this.props.viewAlert(this.getAlertId());
+  }
+
+  /**
+   * Compares the current alerts elementId with the previous alerts
+   * elementId and fetches a new alert if the two don't match.
+   * @param {Object} nextProps The next passed in properties.
+   */
+  public componentWillReceiveProps(nextProps: Props) {
+    const currentAlertId = this.getAlertId();
+    const newAlertId = parseInt(nextProps.routeParams.alertId, 10);
+
+    if (currentAlertId !== newAlertId) this.props.viewAlert(newAlertId);
+  }
+
+  /**
+   * Removes the current alerts information from the redux store when
+   * the component unmounts.
+   */
+  public componentWillUnmount() {
+    this.props.closeAlert();
+  }
+
+  /**
+   * Gets the alert ID based on the current route parameters.
+   */
+  public getAlertId = (): number => {
+    return parseInt(this.props.routeParams.alertId, 10);
+  };
+
+  /**
+   * Changes the url to the base alerts list url with the current
+   * alerts search parameters in the url.
+   */
+  public dismissAlert = (): void => {
+    const { router, location } = this.props;
+
+    router.push({
+      pathname: '/alerts/',
+      query: location.query,
+    });
+  };
+
+  /**
+   * Updates the notes property on the alert with new notes.
+   * @param notes
+   */
+  public updateNotes = (notes: string): void => {
+    const alert = this.props.alert;
+    if (alert) this.props.updateAlert(alert.id, { notes });
+  };
+
+  /**
+   * Renders an HTML element based on the current properties.
+   */
+  public render() {
+    const {
+      addComment,
+      alert,
+      loading,
+      openDataModal,
+      performAction,
+      markers,
+      users,
+      locations,
+      ipAddresses,
+      closeDataModal,
+      modalActive,
+      actions,
+    } = this.props;
+    const { updateNotes } = this;
+    const popupGenerator = AlertDetail.popupGenerator;
+
+    const map = markers ? (
+      <SpacedSection>
+        <SubTitle>
+          Locations
+          <span className="text--base"> {markers.features.length}</span>
+        </SubTitle>
+        <Map
+          controls={true}
+          markers={markers}
+          options={{ scrollZoom: false }}
+          popupGenerator={popupGenerator}
+        />
+      </SpacedSection>
+    ) : null;
+    const alertHeaderElement = alert ? (
+      <AlertDetailHeader
+        alertContainer={alert.distillery.container}
+        alertId={alert.id}
+        alertLevel={alert.level}
+        closeAlert={this.dismissAlert}
+        alertData={alert.data}
+        openDataModal={openDataModal}
+      />
+    ) : null;
+    const alertDetailElement = alert ? (
+      <div className="flex-item content">
+        <div className="spacing-section">
+          <h3 className="sub-title">Title</h3>
+          <div>{alert.title}</div>
+        </div>
+
+        <AlertDetailOverview
+          alert={alert}
+          updateAlert={this.props.updateAlert}
+          users={users}
+        />
+
+        {map}
+
+        <AlertDetailAnalysis
+          notes={alert.notes}
+          updateNotes={updateNotes}
+        />
+
+        <AlertDetailComments
+          alertId={alert.id}
+          comments={alert.comments}
+          addComment={addComment}
+        />
+
+        <AlertDetailActions
+          alertId={alert.id}
+          actions={actions}
+          dispatches={alert.dispatches}
+          performAction={performAction}
+        />
+
+        <SpacedSection>
+          <SubTitle>Data</SubTitle>
+          <JSONFormatter json={alert.data} open={5} />
+        </SpacedSection>
+
+        <AlertDataModal
+          alert={alert}
+          active={modalActive}
+          locations={locations}
+          ipAddresses={ipAddresses}
+          markers={markers}
+          closeModal={closeDataModal}
+        />
+
+      </div>
+    ) : null;
+
+    return (
+      <section className="alert-detail flex-box flex-box--column flex--shrink">
+        {alertHeaderElement}
+        {alertDetailElement}
+        {loading ? <Loading /> : null}
+      </section>
+    );
+  }
+}
+
+// --------------------------------------------------------------------------
+// Container
+// --------------------------------------------------------------------------
+
+/**
+ * Maps the redux state to AlertDetail component properties.
+ * @param state Redux state.
+ * @param ownProps Properties passed AlertDetailContainer.
+ */
+const mapStateToProps: MapStateToProps<ValueProps, OwnProps> = (
+  state,
+  ownProps,
+) => ({
+  actions: state.alert.view.actions,
+  alert: state.alert.detail.alert,
+  ipAddresses: state.alert.detail.ipAddresses,
+  loading: state.alert.detail.loading,
+  location: ownProps.location,
+  locations: state.alert.detail.locations,
+  markers: state.alert.detail.markers,
+  modalActive: state.alert.detail.modalActive,
+  routeParams: ownProps.routeParams,
+  router: ownProps.router,
+  users: state.alert.view.users,
+});
+
+/**
+ * Maps redux dispatch functions to AlertDetail component properties.
+ * @param dispatch Dispatch function from the redux store.
+ */
+const mapDispatchToProps: MapDispatchToProps<FunctionProps, undefined> = (
+  dispatch,
+) => ({
+  addComment: bindActionCreators(addAlertDetailComment, dispatch),
+  closeAlert: bindActionCreators(closeAlert, dispatch),
+  closeDataModal: bindActionCreators(closeDataModal, dispatch),
+  openDataModal: bindActionCreators(openDataModal, dispatch),
+  openResultModal: bindActionCreators(openDataModal, dispatch),
+  performAction: bindActionCreators(performAlertDetailAction, dispatch),
+  updateAlert: bindActionCreators(updateAlertDetail, dispatch),
+  viewAlert: bindActionCreators(fetchAlertDetail, dispatch),
+});
+
+/**
+ * Container component created from the Alert Detail component.
+ * @type {Container}
+ */
+export const AlertDetailContainer = withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(AlertDetail),
+);

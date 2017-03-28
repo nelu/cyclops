@@ -1,0 +1,63 @@
+/**
+ * The contents of this file are subject to the CYPHON Proprietary Non-
+ * Commercial Registered User Use License Agreement (the "Agreement”). You
+ * may not use this file except in compliance with the Agreement, a copy
+ * of which may be found at https://github.com/dunbarcyber/cyclops/. The
+ * developer of the CYPHON technology and platform is Dunbar Security
+ * Systems, Inc.
+ *
+ * The CYPHON technology or platform are distributed under the Agreement on
+ * an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the Agreement for specific terms.
+ *
+ * Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
+ *
+ * Contributor/Change Made By: ________________. [Only apply if changes
+ * are made]
+ */
+
+// --------------------------------------------------------------------------
+// Type/Text
+// --------------------------------------------------------------------------
+
+.text--emphasis {
+  color: #fff;
+}
+
+.text--pre-line {
+  white-space: pre-line;
+}
+
+.text--base {
+  font-size: $font-size-base;
+  color: $text-color;
+}
+
+.text--muted {
+  color: darken($text-color, 25%);
+}
+
+.sub-title {
+  overflow: hidden;
+  font-size: 14px;
+  color: #fff;
+
+  &:after {
+    border-top: 1px solid $border-color-light;
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    margin-left: 10px;
+    margin-right: -100%;
+  }
+}
+
+.list-title {
+  padding: $padding-small-vertical 0;
+  margin-bottom: $padding-small-vertical;
+  //@include spacing(top bottom, padding, small);
+  //@include spacing(bottom, margin, small);
+  border-bottom: darken($border-color-light, 7%) 1px solid;
+  // background-color: darken($color-dark, 3%);
+}

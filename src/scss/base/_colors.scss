@@ -1,0 +1,44 @@
+/**
+ * The contents of this file are subject to the CYPHON Proprietary Non-
+ * Commercial Registered User Use License Agreement (the "Agreement”). You
+ * may not use this file except in compliance with the Agreement, a copy
+ * of which may be found at https://github.com/dunbarcyber/cyclops/. The
+ * developer of the CYPHON technology and platform is Dunbar Security
+ * Systems, Inc.
+ *
+ * The CYPHON technology or platform are distributed under the Agreement on
+ * an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the Agreement for specific terms.
+ *
+ * Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
+ *
+ * Contributor/Change Made By: ________________. [Only apply if changes
+ * are made]
+ */
+
+// --------------------------------------------------------------------------
+// Colors
+// --------------------------------------------------------------------------
+
+//== Base
+
+$color-base: #313236;
+$color-dark: darken($color-base, 3%);
+$color-darker: darken($color-base, 8%);
+$color-light: darken(#4F5054, 6%);
+$color-lighter: #4F5054;
+$color-primary: desaturate(#00ADBB, 15%);
+
+//== Alerts
+
+$alert-color-critical: #C168A6;
+$alert-color-high: #D6705C;
+$alert-color-medium: #FFC578;
+$alert-color-low: #6CA887;
+$alert-color-info: #80B8D6;
+
+//== Borders
+
+$border-color-base: darken($color-dark, 5%);
+$border-color-light: #4D4D4D;
+$border-color-extra-light: darken($border-color-light, 7%);

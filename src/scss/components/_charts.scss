@@ -1,0 +1,91 @@
+/**
+ * The contents of this file are subject to the CYPHON Proprietary Non-
+ * Commercial Registered User Use License Agreement (the "Agreement”). You
+ * may not use this file except in compliance with the Agreement, a copy
+ * of which may be found at https://github.com/dunbarcyber/cyclops/. The
+ * developer of the CYPHON technology and platform is Dunbar Security
+ * Systems, Inc.
+ *
+ * The CYPHON technology or platform are distributed under the Agreement on
+ * an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the Agreement for specific terms.
+ *
+ * Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
+ *
+ * Contributor/Change Made By: ________________. [Only apply if changes
+ * are made]
+ */
+
+// --------------------------------------------------------------------------
+// NVD3 Charts
+// --------------------------------------------------------------------------
+
+//== Overrides
+
+.nvd3.nv-noData {
+  fill: darken($text-color, 15%);
+  font-weight: normal;
+}
+
+//== Pie Chart Table
+
+.pie-chart-table {
+  //@include flex-box;
+
+  overflow: visible;
+
+  table {
+    width: 100%;
+    max-width: 100%;
+
+    td {
+      transition: background-color .2s, color .2s;
+      border-bottom: 1px solid $color-base;
+      padding: $padding-small-vertical $padding-small-horizontal;
+      background-color: $color-dark;
+    }
+
+    tr:hover {
+      td {
+        background-color: transparent;
+      }
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+  }
+}
+
+.pie-chart-table__header {
+  font-size: 1.2em;
+  color: #fff;
+}
+
+.pie-chart-table__color {
+  width: 8px;
+  padding: $padding-small-vertical 0;
+}
+
+.pie-chart-table__label {
+  min-width: 150px;
+  color: lighten($color-dark, 30%);
+  color: $text-color;
+}
+
+.pie-chart-table__container {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.pie-chart-table__chart {
+  width: 240px;
+  height: 240px;
+  margin: -15px;
+
+  .nvd3.nv-pie path {
+    stroke: $color-base;
+    stroke-width: 2px;
+    stroke-opacity: 1;
+  }
+}

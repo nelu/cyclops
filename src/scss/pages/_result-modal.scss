@@ -1,0 +1,134 @@
+/**
+ * The contents of this file are subject to the CYPHON Proprietary Non-
+ * Commercial Registered User Use License Agreement (the "Agreement”). You
+ * may not use this file except in compliance with the Agreement, a copy
+ * of which may be found at https://github.com/dunbarcyber/cyclops/. The
+ * developer of the CYPHON technology and platform is Dunbar Security
+ * Systems, Inc.
+ *
+ * The CYPHON technology or platform are distributed under the Agreement on
+ * an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the Agreement for specific terms.
+ *
+ * Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
+ *
+ * Contributor/Change Made By: ________________. [Only apply if changes
+ * are made]
+ */
+
+// --------------------------------------------------------------------------
+// Result Modal
+// --------------------------------------------------------------------------
+
+//== Modal
+
+.result-modal__header {
+  padding: $padding-large-vertical $padding-large-horizontal;
+  background-color: $color-dark;
+  border-bottom: 1px solid darken($color-dark, 3%);
+  border-top-left-radius: $border-radius-base;
+  border-top-right-radius: $border-radius-base;
+  margin-bottom: 0;
+  margin-top: 0;
+  color: #fff;
+}
+
+.result-modal__body {
+  padding: 0;
+}
+
+.result-modal__sidebar {
+  padding: $padding-large-vertical $padding-large-horizontal 20px;
+  border-bottom-left-radius: $border-radius-base;
+  background-color: $color-dark;
+  max-width: 300px;
+
+  h3 {
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+}
+
+.result-modal__content {
+  padding: $padding-large-vertical $padding-large-horizontal;
+}
+
+//== Result Field
+
+.result-field {
+  margin-top: 7px;
+  padding-top: 7px;
+  border-top: 1px solid lighten($color-dark, 3%);
+}
+
+.result-field__type {
+  color: darken($text-color, 12%);
+}
+
+//== Context Search
+
+.result-context-search__sidebar {
+  width: 270px;
+}
+
+.result-context-search__header {
+  padding: $padding-large-vertical $padding-large-horizontal;
+  border-bottom: solid 1px $color-dark;
+}
+
+.result-context-search__result-list {
+  border-top: 1px solid lighten($color-base, 4%);
+}
+
+.result-context-search__result {
+  border-bottom: 1px solid lighten($color-base, 4%);;
+}
+
+.result-context-search__button {
+  margin: $padding-large-vertical 0;
+}
+
+.result-context-search__result-index {
+  padding: $padding-large-vertical $padding-small-horizontal $padding-large-vertical $padding-large-horizontal;
+}
+
+.result-context-search__result-data {
+  padding: $padding-large-vertical $padding-large-horizontal;
+}
+
+.result-context-search__pagination {
+  text-align: center;
+  padding: $padding-large-vertical $padding-large-horizontal;
+}
+
+//== Detail
+
+.result-context__select {
+  margin-bottom: 15px;
+}
+
+//== IP Addresses
+
+.result-ipaddress__table {
+  @extend .table;
+
+  th {
+    color: #fff;
+  }
+
+  th, td {
+    padding: $table-cell-padding;
+  }
+
+  th:first-of-type,
+  td:first-of-type {
+    width: 1%;
+  }
+}
+
+.result-ipaddress__sidebar {
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
+}

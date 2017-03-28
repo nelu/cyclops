@@ -1,0 +1,387 @@
+/**
+ * The contents of this file are subject to the CYPHON Proprietary Non-
+ * Commercial Registered User Use License Agreement (the "Agreement”). You
+ * may not use this file except in compliance with the Agreement, a copy
+ * of which may be found at https://github.com/dunbarcyber/cyclops/. The
+ * developer of the CYPHON technology and platform is Dunbar Security
+ * Systems, Inc.
+ *
+ * The CYPHON technology or platform are distributed under the Agreement on
+ * an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the Agreement for specific terms.
+ *
+ * Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
+ *
+ * Contributor/Change Made By: ________________. [Only apply if changes
+ * are made]
+ */
+
+// --------------------------------------------------------------------------
+// Bootstrap Variable Overrides
+// --------------------------------------------------------------------------
+
+//== Colors
+
+$brand-primary: $color-primary;
+$brand-success: $alert-color-low;
+$brand-info: $alert-color-info;
+$brand-warning: $alert-color-medium;
+$brand-danger: $alert-color-high;
+
+//== Scaffolding
+
+$body-bg: $color-base;
+$text-color: #B3B3B3;
+$link-color: #FFF;
+$link-hover-color: #FFF;
+
+//== Typography
+
+$font-family-sans-serif: "Roboto", Helvetica, Arial, sans-serif;
+$font-size-base: 14px;
+
+//== Components
+
+$component-active-color: #FFF;
+$component-active-bg: darken($color-dark, 3%);
+
+//== Tables
+
+$table-cell-padding: 8px;
+$table-bg: transparent;
+$table-bg-hover: $color-dark;
+$table-bg-active: $color-dark;
+$table-border-color: $border-color-light;
+
+//== Buttons
+
+$btn-default-color: lighten($text-color, 10%);
+$btn-default-bg: lighten($color-base, 12%);
+$btn-default-border: lighten($color-base, 23%);
+$btn-primary-color: lighten($brand-primary, 55%);
+$btn-primary-border: lighten($brand-primary, 8%);
+$btn-danger-color: lighten($brand-danger, 30%);
+$btn-danger-border: lighten($brand-danger, 10%);
+
+//== Forms
+
+$input-bg: darken($color-dark, 3%);
+$input-bg-disabled: darken($input-bg, 5%);
+$input-color: $text-color;
+$input-border: darken($color-dark, 4%);
+$input-border-focus: $border-color-base;
+$input-color-placeholder: darken($text-color, 5%);
+
+//== Dropdowns
+
+$dropdown-bg: $color-base;
+$dropdown-link-color: $text-color;
+$dropdown-link-hover-color: $text-color;
+$dropdown-link-hover-bg: darken($color-dark, 3%);
+
+//== Navbar
+
+$navbar-margin-bottom: 0;
+$navbar-border-radius: 0px;
+$navbar-default-color: $text-color;
+$navbar-default-bg: $color-darker;
+$navbar-default-border: $border-color-base;
+$navbar-default-link-color: $text-color;
+$navbar-default-link-hover-color: #fff;
+$navbar-default-link-hover-bg: $color-light;
+$navbar-default-link-active-color: #fff;
+$navbar-default-link-active-bg: $color-light;
+$navbar-default-link-disabled-color: #ccc;
+$navbar-default-link-disabled-bg: transparent;
+
+//== Navs
+
+$nav-link-hover-bg: $color-lighter;
+$nav-disabled-link-color: darken($text-color, 10%);
+$nav-disabled-link-hover-color: darken($text-color, 10%);
+$nav-tabs-border-color: $border-color-base;
+$nav-tabs-link-hover-border-color: transparent;
+$nav-tabs-active-link-hover-bg: $color-lighter;
+$nav-tabs-active-link-hover-color: #fff;
+$nav-tabs-active-link-hover-border-color: $nav-tabs-border-color;
+
+//== Pagination
+
+$pagination-color: $btn-default-color;
+$pagination-bg: $btn-default-bg;
+$pagination-border: $btn-default-border;
+$pagination-hover-color: darken($pagination-color, 5%);
+$pagination-hover-bg: darken($pagination-bg, 5%);
+$pagination-hover-border: $pagination-border;
+$pagination-active-color: #fff;
+$pagination-active-bg: lighten($pagination-bg, 4%);
+$pagination-active-border: $pagination-border;
+$pagination-disabled-color: darken($pagination-color, 38%);
+$pagination-disabled-bg: darken($pagination-bg, 8%);
+$pagination-disabled-border: $pagination-border;
+
+//== Popovers
+
+$popover-bg: $brand-primary;
+$popover-max-width: 150px;
+$popover-border-color: lighten($brand-primary, 10%);
+$popover-fallback-border-color: #ccc;
+$popover-title-bg: $brand-primary;
+
+//== Labels
+
+$label-default-bg: $color-base;
+$label-color: #fff;
+$label-link-hover-color: #fff;
+
+//== Modals
+
+$modal-content-bg: $color-base;
+$modal-content-border-color: rgba(0,0,0,.2);
+$modal-header-border-color: $border-color-base;
+
+//== List Groups
+
+$list-group-bg: transparent;
+$list-group-border: $border-color-light;
+$list-group-border-radius: 0;
+$list-group-hover-bg: darken($color-dark, 3%);
+$list-group-active-border: $list-group-border;
+$list-group-link-color: $text-color;
+$list-group-link-hover-color:  $list-group-link-color;
+
+//== Panels
+
+$panel-bg: $color-dark;
+$panel-inner-border: $border-color-base;
+$panel-footer-bg: $color-light;
+$panel-default-text: $text-color;
+$panel-default-border: $color-darker;
+$panel-default-heading-bg: $color-darker;
+
+//== Badges
+
+$badge-color: darken(#fff, 10%);
+$badge-link-hover-color: #fff !default;
+$badge-bg: $color-lighter;
+
+//== Close
+
+$close-color: #fff;
+
+//== Type
+
+$component-offset-horizontal: 120px;
+
+// --------------------------------------------------------------------------
+// Imports
+// --------------------------------------------------------------------------
+
+// Core variables and mixins
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+// Reset and dependencies
+@import "bootstrap/normalize";
+@import "bootstrap/print";
+
+// Core CSS
+@import "bootstrap/scaffolding";
+@import "bootstrap/type";
+@import "bootstrap/code";
+//@import "bootstrap/grid";
+@import "bootstrap/tables";
+@import "bootstrap/forms";
+@import "bootstrap/buttons";
+
+// Components
+@import "bootstrap/component-animations";
+@import "bootstrap/dropdowns";
+@import "bootstrap/button-groups";
+@import "bootstrap/input-groups";
+@import "bootstrap/navs";
+@import "bootstrap/navbar";
+//@import "bootstrap/breadcrumbs";
+@import "bootstrap/pagination";
+//@import "bootstrap/pager";
+@import "bootstrap/labels";
+@import "bootstrap/badges";
+//@import "bootstrap/jumbotron";
+//@import "bootstrap/thumbnails";
+@import "bootstrap/alerts";
+//@import "bootstrap/progress-bars";
+//@import "bootstrap/media";
+@import "bootstrap/list-group";
+@import "bootstrap/panels";
+@import "bootstrap/responsive-embed";
+//@import "bootstrap/wells";
+@import "bootstrap/close";
+
+// Components w/ JavaScript
+@import "bootstrap/modals";
+@import "bootstrap/tooltip";
+@import "bootstrap/popovers";
+//@import "bootstrap/carousel";
+
+// Utility classes
+@import "bootstrap/utilities";
+@import "bootstrap/responsive-utilities";
+
+// --------------------------------------------------------------------------
+// Overrides
+// --------------------------------------------------------------------------
+
+//== Close
+
+.close {
+  opacity: 0.5
+}
+
+.close:hover, .close:focus {
+  opacity: 0.8;
+}
+
+//== Horizontal Descriptions
+
+.dl-horizontal dt {
+  text-align: left;
+  width: 120px;
+}
+
+.dl-horizontal dd {
+  margin-bottom: $padding-large-vertical;
+}
+
+dt {
+  font-weight: 200;
+}
+
+dd {
+  word-wrap: break-word;
+}
+
+
+//== List Group
+
+.list-group-item {
+  border: none;
+  margin-bottom: 0;
+  transition: background .1s;
+  padding-left: $padding-base-horizontal;
+  padding-right: $padding-base-horizontal;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  &.active, &.active:focus {
+    border-left: solid 3px $color-primary;
+  }
+
+  &.active:hover {
+    border-left: solid 3px darken($color-primary, 13%)
+  }
+}
+
+//== Modals
+
+.modal-footer {
+  padding: $padding-base-vertical $padding-base-horizontal;
+  background-color: $color-dark;
+  border-bottom-left-radius: $border-radius-base;
+  border-bottom-right-radius: $border-radius-base;
+}
+
+.modal-header {
+  background-color: $color-dark;
+  color: #fff;
+  border-top-left-radius: $border-radius-base;
+  border-top-right-radius: $border-radius-base;
+}
+
+//== Navbar
+
+.navbar {
+  border-style: none none solid;
+}
+
+//== Pager
+
+.pager {
+  margin: 0;
+}
+
+//== Buttons
+
+.btn:focus,
+.btn:active:focus {
+  outline: none;
+}
+
+.btn {
+  border-width: 2px;
+  transition: background .1s, border .1s;
+}
+
+//== Popover
+
+.popover {
+  color: #fff;
+  font-size: 12px;
+  border: none;
+}
+
+.popover-content {
+  padding: $padding-small-vertical $padding-small-horizontal;
+}
+
+//== Pagination
+
+.pagination {
+  margin: 0;
+
+  & > li {
+    & > a {
+      border-width: 2px 1px;
+    }
+
+    &:first-child > a {
+      border-width: 2px 1px 2px 2px;
+    }
+
+    &:last-child > a {
+      border-width: 2px 2px 2px 1px;
+    }
+  }
+}
+
+//== Navs
+
+.nav-tabs > li.active > a {
+  color: #fff;
+  background-color: $color-lighter;
+}
+
+.nav.nav-pills {
+  & > li {
+    margin-right: $padding-small-horizontal;
+
+    & > a {
+      padding: $padding-small-vertical $padding-small-horizontal;
+    }
+  }
+
+  & > li.active {
+    & > a,
+    & > a:hover,
+    & > a:focus {
+      background-color: $brand-primary;
+    }
+  }
+}
+
+//== Badges
+
+.badge {
+  font-weight: 400;
+}
