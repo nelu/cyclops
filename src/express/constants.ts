@@ -33,7 +33,7 @@ import {
   STATIC_COMPILATION_DIRECTORY_PATH,
 } from '../../constants';
 import { BASE_WEBPACK_CONFIG } from '../../webpack/constants';
-import { createManifestPath } from './helpers/notifications';
+import { createManifestPath } from './utils/notifications';
 
 // Place any environment variables stated in the .env file onto the node process.
 config({ path: ENV_FILE_PATH });
