@@ -21,19 +21,7 @@ import * as sinon from 'sinon';
 import * as chai from 'chai';
 
 // Local
-import { reducer, State, INITIAL_STATE } from '../monitorStatus';
-import * as actions from '../../actions/monitorStatus';
 
 describe('MonitorStatus reducer', () => {
-  describe('FETCH_MONITORS_PENDING', () => {
-    it('should set loading to true', () => {
-      const action = actions.fetchMonitorsPending();
 
-      chai.expect(INITIAL_STATE.loading).to.be.false;
-
-      const state = reducer(INITIAL_STATE, action);
-
-      chai.expect(state.loading).to.be.true;
-    });
-  });
 });

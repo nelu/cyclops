@@ -92,6 +92,11 @@ module.exports = function(config) {
     webpack: {
       module: webpack.BASE_WEBPACK_CONFIG.module,
       resolve: webpack.BASE_WEBPACK_CONFIG.resolve,
+      externals: {
+        'react/addons': true,
+        'react/lib/ExecutionEnvironment': true,
+        'react/lib/ReactContext': 'window',
+      }
     }
   })
 };

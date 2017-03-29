@@ -12,7 +12,7 @@
     "server:prod": "NODE_ENV=PROD node build/express/server.js",
     "webpack:prod": "webpack --config webpack/webpack.prod.config.js",
     "webpack:dev": "webpack --config webpack/webpack.dev.config.js --watch",
-    "test:react": "karma start",
+    "test:react": "karma start --single-run",
     "test:express": "mocha --opts mocha.opts",
     "docs": "typedoc --out docs --target ES6 --tsconfig typedoc.json --readme DOCUMENTATION.md --includeDeclarations --ignoreCompilerErrors src/",
     "livereload": "livereload \"build/static,build/webpack\"",
