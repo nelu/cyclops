@@ -27,7 +27,6 @@
     "@types/bluebird": "3.0.36",
     "@types/body-parser": "0.0.33",
     "@types/chrome": "0.0.44",
-    "@types/express-handlebars": "0.0.29",
     "@types/express-session": "0.0.32",
     "@types/memory-cache": "0.0.29",
     "axios": "0.15.3",
