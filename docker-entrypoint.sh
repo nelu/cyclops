@@ -18,13 +18,7 @@
 
 #!/bin/sh
 
-if [ "$CYCLOPS_ENV" = 'PROD' ]; then
-    echo "Running Production Server"
-    su -m cyclops -c "npm run server:prod"
-else
-    echo "Running Development Server"
-    su -m cyclops -c "npm run dev"
-fi
+echo "Running Production Server"
+su -m cyclops -c "npm run server:prod"
 
 exec "$@"
-
