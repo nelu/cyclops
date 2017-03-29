@@ -1,17 +1,14 @@
-.. image:: _static/images/cyphon-logo.png
+.. image:: _static/images/cyclops-logo.png
     :target: https://cyphon.readthedocs.io/
-    :width: 450px
+    :width: 500px
     :align: center
     :alt: Cyphon
-
-|
-|
 
 #####################
 Cyclops documentation
 #####################
 
-Cyclops is a single page application that displays real time data from
+Cyclops is a single-page application that displays real time data from
 an instance of `Cyphon <https://cyphon.readthedocs.io/>`__. Cyclops is
 built on `React <https://facebook.github.io/react/>`__ and served
 through an `Express <https://expressjs.com/>`__ server.

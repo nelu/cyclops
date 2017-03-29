@@ -27,7 +27,7 @@ import {
   ENV,
   ENVIRONMENT_VARIABLE_KEYS,
 } from '../constants';
-import { logger } from '../helpers/logger';
+import { logger } from '../utils/logger';
 
 // --------------------------------------------------------------------------
 // Constants
