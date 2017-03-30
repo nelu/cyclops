@@ -38,10 +38,7 @@ WORKDIR $CYCLOPS_HOME
 # install node modules and compile source files
 RUN npm install && npm run build
 
-# set owner:group and permissions
-RUN chown -R cyclops:cyclops $CYCLOPS_HOME \
- && chmod +x $CYCLOPS_HOME/docker-entrypoint.sh
-
 EXPOSE $CYCLOPS_PORT
 
-CMD $CYCLOPS_HOME/docker-entrypoint.sh
+# start the server
+CMD npm run server:prod "$@"
