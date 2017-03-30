@@ -24,7 +24,9 @@ Code Style
 General
 =======
 
-The style uses most of `Typescript's coding guidelines <https://github.com/Microsoft/TypeScript/wiki/Coding-guidelines>`_ with a few exceptions, such as indenting with 2 spaces instead of 4. These exceptions are caught by TSLint, so make sure to run it before contributing.
+The style uses `Typescript's coding guidelines <https://github.com/Microsoft/TypeScript/wiki/Coding-guidelines>`_ and `TSLint rules <https://palantir.github.io/tslint/>`_ with a few exceptions. These exceptions are outlined in the ``tslint.json`` file at the root of the project directory.
+
+Make sure to run TSLint before making a pull request.
 
 .. _code-style-express-router:
 
@@ -274,16 +276,20 @@ React
 
     |── api/
     |   └── endpoint/
+    |       |── _tests_/
     |       |── api.ts
     |       |── constants.ts
     |       |── schema.ts
     |       |── types.ts
     |       └── utils.ts
     |── components/
+    |   └── _tests_/
     |── services/
     |   └── service
     |       |── components/
+    |       |   └── _tests_/
     |       |── utils/
+    |       |   └── _tests_/
     |       |── types.ts
     |       └── constants.ts
     |── types/
@@ -291,14 +297,20 @@ React
     |── typings/
     |   └── typing.d.ts
     |── utils/
+    |   |── _tests_/
     |   └── utility.ts
     |── views/
     |   └── view/
     |       |── actions/
+    |       |   └── _tests_/
     |       |── components/
+    |       |   └── _tests_/
     |       |── containers/
+    |       |   └── _tests_/
     |       |── reducers/
+    |       |   └── _tests_/
     |       |── utils/
+    |       |   └── _tests_/
     |       |── constants.ts
     |       └── types.ts
     |── app.tsx
@@ -306,6 +318,7 @@ React
     |── store.ts
     └── tsconfig.json
 
+- **_tests_:** See :ref:`directory-structure-tests`.
 - **api:** Contains files that connect to the Cyphon API. It's subdirectory's are correlated to the root of the Cyphon API to easily locate where endpoint types and functions live. Each subdirectory is named after the API url and can contains these files:
 
     - **api.ts:** Functions that gets or sends information to the API endpoint.
@@ -348,16 +361,20 @@ Express
 ::
 
     |── controllers/
+    |   └── _tests_
     |── middlewares/
+    |   └── _tests_/
     |── static/
     |── typings/
     |── utils/
+    |   └── _tests_/
     |── views/
     |── constants.ts
     |── server.ts
     |── tsconfig.json
     └── types.js
 
+- **_tests_:** See :ref:`directory-structure-tests`.
 - **controllers:** Controllers that handle the different routes of the server. Files in this directory should follow he style referenced here: :ref:`code-style-express-router`.
 - **middlewares:** Express middleware.
 - **static:** Static assets that are served at the url ``/static/``.
@@ -369,6 +386,21 @@ Express
 - **tsconfig.json:** Typescript configuration for the express server.
 - **types.js** Type definitions for the server.
 
+.. _directory-structure-tests:
+
+Tests
+=====
+
+::
+
+    └── (directory)/
+        |── _tests_/
+        |   |── file.spec.ts
+        |   └── component.spec.tsx
+        |── file.ts
+        └── component.ts
+
+You might notice a few directories in :ref:`directory-structure-react` and :ref:`directory-structure-express` with directories named ``_tests_``. These store tests for files in that directory. The test file name should be the same as the file it's testing, but it should be suffixed with ``.spec.ts`` or ``.spec.tsx``. The suffix depends on if the file contains any JSX in it. This structure keeps the directory from becoming polluted with spec files. See :ref:`tests` for more info.
 
 .. _directory-structure-scss:
 
@@ -416,6 +448,45 @@ Build
 - **static:** Compiled static assets are placed here. Right now it only holds the compiled sass stylesheet.
 - **webpack:** Compiled webpack bundles and assets are placed here.
 
+.. _tests:
+
+Testing
+*******
+
+::
+
+    $ npm run test
+
+This command runs all the testing commands for the application.
+
+All tests use `Mocha <https://mochajs.org/>`_ as the testing framework, use `Chai <http://chaijs.com/>`_ as the assertion library, and uses `Sinon <http://sinonjs.org/>`_ for mocking.
+
+See :ref:`directory-structure-tests` for information on where to place test files and how to name them.
+
+.. _tests-react:
+
+React
+=====
+
+::
+
+    $ npm run test:react
+
+This command looks for files in ``src/react`` that end with ``.spec.ts`` or ``.spec.tsx`` and runs them through `Karma <https://karma-runner.github.io/1.0/index.html>`_ using the config file ``karma.conf.js`` at the root of the project.
+
+Any react component tests use `Enzyme <http://airbnb.io/enzyme/>`_ for shallow rendering.
+
+.. _tests-express:
+
+Express
+=======
+
+::
+
+    $ npm run test:express
+
+This command looks for files in ``src/express`` that end with ``.spec.ts`` and runs them through `Mocha <https://mochajs.org/>`_ using the config file ``mocha.opts`` at the root of the project.
+
 .. _dev-task
 
 Development Environment
@@ -425,5 +496,24 @@ Development Environment
 
     $ npm run dev
 
-Running this command will start a couple of concurrent processes that make it easier to develop on Cyclops. Whenever you make changes to the express source code, it restarts the server. Whenver you make changes to the react or scss source code, it sends a livreload request to the browser asking it to reload the webpage.
+Running this command will start a couple of concurrent processes that make it easier to develop Cyclops. Whenever you make changes to the express source code, it restarts the server. Whenver you make changes to the react or scss source code, it sends a livreload request to the browser asking it to reload the webpage.
 
+NPM Tasks
+*********
+
+- **build:css:** Compiles the scss files from ``src/scss/app.scss`` into ``build/static/css/main.css`` including the path ``node_modules/bootstrap-sass/assets/stylesheets`` for bootstrap imports.
+- **build:express:** Compiles the Typescript files from ``src/express`` using ``src/express/tsconfig.json``.
+- **watch:css:** Runs ``build:css``, then watches ``src/scss` for changes. When it detects a change, it runs ``build:css`` again.
+- **watch:express:** Runs ``build:express`` in watch mode so it compiles on change.
+- **server:dev:** Runs ``build/express/server.js`` with nodemon watching ``build/express`` for changes and with NODE_ENV set to DEV.
+- **server:prod:** Runs ``build/express/server.js`` with NODE_ENV set to PROD.
+- **webpack:prod:** Runs webpack using tools to minify the file output.
+- **webpack:dev:** Runs webpack in watch mode.
+- **test:react:** Runs Karma once using ``karma.conf.js``.
+- **test:express:** Runs mocha using ``mocha.opts``.
+- **test:** Runs ``npm run test:express`` and ``npm run test:react``.
+- **docs:** Builds API documentation using typedoc and ``typedoc.json`` as the tsconfig file.
+- **livereload:** Starts a livereload server that sends a signal whenever there's a change in either ``build/static`` or ``build/webpack``.
+- **clean:** Deletes the ``build`` directory.
+- **build:** Cleans the ``build`` directory, then compiles the express, react, and scss files into the ``build`` directory.
+- **dev:** Cleans the ``build`` directory, compiles the source code, watches for changes so it can recompile, and sends a livereload signal whenever it's finished compiling.

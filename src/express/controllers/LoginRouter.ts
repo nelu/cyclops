@@ -163,11 +163,9 @@ export class LoginRouter {
     return CYPHON_API.post('/api-token-auth/', req.body)
       .then((response: AuthenticateResponse) => {
         const token = response.data.token;
-        const { id, first_name, last_name } = response.data.user;
         const nextUrl = (
           decodeURIComponent(req.query.next) || DEFAULT_REDIRECT
         );
-        const user = { id, name: `${first_name} ${last_name}` };
 
         // Set session information.
         req.session.token = token;

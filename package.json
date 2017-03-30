@@ -15,7 +15,7 @@
     "test:react": "karma start --single-run",
     "test:express": "mocha --opts mocha.opts",
     "test": "npm run test:express & npm run test:react",
-    "docs": "typedoc --out docs --target ES6 --tsconfig typedoc.json --readme DOCUMENTATION.md --includeDeclarations --ignoreCompilerErrors src/",
+    "docs": "typedoc --out docs --target ES6 --tsconfig typedoc.json --includeDeclarations --ignoreCompilerErrors src/",
     "livereload": "livereload \"build/static,build/webpack\"",
     "clean": "del build",
     "build": "npm run clean && npm run build:express && npm run build:css && npm run webpack:prod",
