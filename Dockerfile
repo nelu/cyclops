@@ -41,4 +41,4 @@ RUN npm install && npm run build
 EXPOSE $CYCLOPS_PORT
 
 # start the server
-CMD npm run server:prod
+CMD npm run server:prod "$@"
