@@ -10,6 +10,6 @@ Cyclops allows you to easily view, assign, and investigate Cyphon alerts. It pro
 
 See [Cyclops' documentation](http://cyphon-ui.readthedocs.io/) for more info.
 
-# License
+## License
 
 Cyclops is subject to a non-commercial use license agreement. Please see the [LICENSE](https://github.com/dunbarcyber/cyclops/blob/master/LICENSE.txt) for details.
