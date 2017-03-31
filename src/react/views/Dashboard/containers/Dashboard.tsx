@@ -227,6 +227,7 @@ export class Dashboard extends React.Component<Props, {}> {
                 markers={locations}
                 popupGenerator={popupGenerator}
                 options={Dashboard.MAP_OPTIONS}
+                cluster={true}
               />
               {locationsLoading ? <Loading /> : null}
             </div>

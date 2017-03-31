@@ -21,6 +21,7 @@ import {
   Promise,
   CancelToken,
 } from 'axios';
+import * as bluebird from 'bluebird';
 
 // Local
 import * as api from '../api';
