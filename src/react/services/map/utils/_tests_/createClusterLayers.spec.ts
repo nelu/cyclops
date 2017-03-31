@@ -1,6 +1,4 @@
 // Vendor
-import * as sinon from 'sinon';
-import * as chai from 'chai';
 import * as _ from 'lodash';
 
 // Local

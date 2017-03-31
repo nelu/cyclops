@@ -10,7 +10,6 @@ import { Map } from '../Map';
 import * as mapStore from '../../utils/mapStore';
 
 describe('<Map />', () => {
-  let wrapper: enzyme.ShallowWrapper<any, any>;
   let setDataSpy: sinon.SinonSpy;
   let createMapItemStub: sinon.SinonStub;
   let getMapItemStub: sinon.SinonStub;
@@ -32,7 +31,7 @@ describe('<Map />', () => {
       .stub(mapStore, 'getMapItem')
       .returns(mapStoreItemPromise);
 
-    removeMapItemStub = sinon.stub(mapStore, 'removeStub');
+    removeMapItemStub = sinon.stub(mapStore, 'removeMapItem');
   });
 
   afterEach(() => {
@@ -42,8 +41,7 @@ describe('<Map />', () => {
   });
 
   it('should create a div with a random id', () => {
-    wrapper = enzyme.shallow(<Map />);
-
+    const wrapper = enzyme.shallow(<Map />);
     const id = wrapper.prop('id');
 
     chai.expect(wrapper.type()).to.equal('div');
@@ -56,7 +54,7 @@ describe('<Map />', () => {
 
     enzyme.mount(<Map markers={markers} />);
     mapStoreItemPromise.then(() => {
-      chai.expect(setDataSpy.args[0][0]).to.be(markers);
+      chai.expect(setDataSpy.args[0][0]).to.equal(markers);
     });
   });
 
@@ -64,7 +62,6 @@ describe('<Map />', () => {
     const options: any = {};
 
     enzyme.mount(<Map options={options} />);
-    console.log(createMapItemStub.args[0][1]);
-    chai.expect(createMapItemStub.args[0][1]).to.be(options);
+    chai.expect(createMapItemStub.args[0][1]).to.equal(options);
   });
 });
