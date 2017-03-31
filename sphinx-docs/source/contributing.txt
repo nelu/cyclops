@@ -510,6 +510,7 @@ NPM Tasks
 - **webpack:prod:** Runs webpack using tools to minify the file output.
 - **webpack:dev:** Runs webpack in watch mode.
 - **test:react:** Runs Karma once using ``karma.conf.js``.
+- **test:react-watch:** Runs Karma in watch mode.
 - **test:express:** Runs mocha using ``mocha.opts``.
 - **test:** Runs ``npm run test:express`` and ``npm run test:react``.
 - **docs:** Builds API documentation using typedoc and ``typedoc.json`` as the tsconfig file.
