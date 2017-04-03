@@ -53,7 +53,7 @@ describe('<Map />', () => {
     const markers: any = {};
 
     enzyme.mount(<Map markers={markers} />);
-    mapStoreItemPromise.then(() => {
+    return mapStoreItemPromise.then(() => {
       chai.expect(setDataSpy.args[0][0]).to.equal(markers);
     });
   });

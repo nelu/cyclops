@@ -59,7 +59,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['dots'],
+    reporters: ['mocha'],
 
 
     // web server port
@@ -100,9 +100,10 @@ module.exports = function(config) {
         'react/lib/ExecutionEnvironment': true,
         'react/lib/ReactContext': 'window',
       },
-      devServer: {
-        stats: 'errors-only',
-      },
+    },
+
+    webpackMiddleware: {
+      stats: 'errors-only',
     }
   })
 };
