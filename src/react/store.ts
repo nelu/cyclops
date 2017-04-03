@@ -35,11 +35,11 @@ import {
 import {
   State as MonitorStatusState,
   reducer as monitorStatusReducer,
-} from './views/app/reducers/monitorStatus';
+} from './views/App/reducers/monitorStatus';
 import {
   State as ErrorPopupState,
   reducer as errorPopupReducer,
-} from './views/app/reducers/errorPopup';
+} from './views/App/reducers/errorPopup';
 import {
   State as DashboardState,
   reducer as dashboardReducer,

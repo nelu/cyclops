@@ -38,7 +38,7 @@ import {
   performAction,
   addComment,
 } from '../../../api/alerts/api';
-import { addError } from '../../app/actions/errorPopup';
+import { addError } from '../../App/actions/errorPopup';
 import { getLocationsWithAddress } from '../../../services/map/utils/getLocationsWithAddress';
 import { createLocationGeoJSON } from '../../../services/map/utils/createLocationGeoJSON';
 import {

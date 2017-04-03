@@ -32,7 +32,7 @@ import { createHistory } from 'history';
 import { CONFIG } from './config';
 import { store } from './store';
 import { DashboardContainer } from './views/Dashboard/containers/Dashboard';
-import { Layout } from './views/app/components/Layout';
+import { Layout } from './views/App/components/Layout';
 import { AlertViewContainer } from './views/Alerts/containers/AlertView';
 import { AlertDetailContainer } from './views/Alerts/containers/AlertDetailContainer';
 

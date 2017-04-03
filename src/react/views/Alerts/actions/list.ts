@@ -28,7 +28,7 @@ import {
   AlertListItem,
 } from '../../../api/alerts/types';
 import { fetchAlertList } from '../../../api/alerts/api';
-import { addError } from '../../app/actions/errorPopup';
+import { addError } from '../../App/actions/errorPopup';
 import { createRandomId } from '../../../utils/createRandomId';
 import { StoreState } from '../../../store';
 

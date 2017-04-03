@@ -18,6 +18,7 @@
 
 // Vendor
 const webpack = require('webpack');
+const CircularDependencyPlugin = require('circular-dependency-plugin');
 
 // Local
 const WEBPACK_CONSTANTS = require('./constants');
@@ -27,5 +28,6 @@ module.exports = Object.assign({}, WEBPACK_CONSTANTS.BASE_WEBPACK_CONFIG, {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.NoErrorsPlugin(),
+    new CircularDependencyPlugin(),
   ],
 });

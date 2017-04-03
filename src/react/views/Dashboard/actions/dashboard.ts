@@ -50,7 +50,7 @@ import {
 import { createStackedChartFromTimeseries } from '../utils/createStackedChartFromTimeseries';
 
 import { getCancelTokenSource } from '../../../api/utils';
-import { addError } from '../../app/actions/errorPopup';
+import { addError } from '../../App/actions/errorPopup';
 import { Dictionary } from '../../../types/object';
 import { createPieChartDataFromObject } from '../../../services/chart/utils/createPieChartData';
 import { sortPieChartData } from '../../../services/chart/utils/sortPieChartData';

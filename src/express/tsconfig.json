@@ -8,7 +8,7 @@
     "outDir": "../../build/express"
   },
   "include": [
-    "**/*",
+    "**/*.ts",
     "../../constants.d.ts",
     "../../webpack/constants.d.ts"
   ]

@@ -30,7 +30,6 @@ import {
   ENV_FILE_PATH,
   CSS_COMPILATION_DIRECTORY,
   MAIN_CSS_FILE,
-  STATIC_COMPILATION_DIRECTORY_PATH,
 } from '../../constants';
 import { BASE_WEBPACK_CONFIG } from '../../webpack/constants';
 import { createManifestPath } from './utils/notifications';
@@ -51,6 +50,7 @@ export const ENVIRONMENT_VARIABLE_KEYS: string[] = [
   'MAPBOX_ACCESS_TOKEN',
   'NODE_ENV',
   'GCM_SENDER_ID',
+  'CYPHON_EXTERNAL_URL',
 ];
 
 /**
@@ -66,10 +66,11 @@ export const PICKED_ENVIRONMENT_VARIABLES: EnvironmentVariables = _.pick(
  * @type {EnvironmentVariables}
  */
 export const DEFAULT_ENVIRONMENT_VARIABLES: EnvironmentVariables = {
-  CYCLOPS_SESSION_SECRET: 'nyan cat',
   CYCLOPS_PORT: 3000,
+  CYCLOPS_SESSION_SECRET: 'nyan cat',
   CYPHON_API_PATH: '/api/v1',
   CYPHON_API_TIMEOUT: 30000,
+  CYPHON_EXTERNAL_URL: '',
   CYPHON_URL: 'http://localhost:8000/',
   MAPBOX_ACCESS_TOKEN: '',
   NODE_ENV: 'DEV',
@@ -99,6 +100,10 @@ export const IS_PRODUCTION: boolean = ENV.NODE_ENV === 'PROD';
 export const CYPHON_API_BASE_URL: string = urlResolve(
   ENV.CYPHON_URL, ENV.CYPHON_API_PATH,
 );
+
+export const CYPHON_ADMIN_URL: string = ENV.CYPHON_EXTERNAL_URL
+  ? urlResolve(ENV.CYPHON_EXTERNAL_URL, '/admin/')
+  : '';
 
 /**
  * Axios instance that connects to a Cyphon API instance.

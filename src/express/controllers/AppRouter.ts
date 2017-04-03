@@ -24,6 +24,7 @@ import {
   ENV,
   MAIN_CSS_URL,
   CYPHON_LOGO_URL,
+  CYPHON_ADMIN_URL,
   APP_CONTAINER_ID,
   APP_BUNDLE_URL,
   PROXY_URL,
@@ -47,17 +48,11 @@ interface AppTemplateOptions {
    * Injected application configuration variables turned into a JSON string.
    */
   CONFIG: string;
-  /**
-   * Element ID of the container for the react application.
-   */
+  /** Element ID of the container for the react application. */
   APP_CONTAINER_ID: string;
-  /**
-   * URL of the main css file.
-   */
+  /** URL of the main css file. */
   MAIN_CSS_URL: string;
-  /**
-   * URL of the react application bundle.
-   */
+  /** URL of the react application bundle. */
   APP_BUNDLE_URL: string;
 }
 
@@ -103,6 +98,7 @@ export class AppRouter {
       APP_CONTAINER_ID,
       CURRENT_USER: req.session.user,
       CYPHON_API_URL: CYPHON_API_BASE_URL,
+      CYPHON_ADMIN_URL,
       EXPRESS_CYPHON_PROXY_URL: PROXY_URL,
       MAPBOX_ACCESS_TOKEN: ENV.MAPBOX_ACCESS_TOKEN,
       CYPHON_LOGO_URL,

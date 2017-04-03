@@ -29,7 +29,7 @@ import { Result } from '../../../types/result';
 import { ContextSearchParams } from '../../../api/contexts/types';
 import { getCancelTokenSource } from '../../../api/utils';
 import { searchContext } from '../../../api/contexts/api';
-import { addError } from '../../app/actions/errorPopup';
+import { addError } from '../../App/actions/errorPopup';
 
 /**
  * Action type prefix for AlertDataContextSearch actions.

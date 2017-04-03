@@ -18,6 +18,7 @@
 
 // Vendor
 const webpack = require('webpack');
+const CircularDependencyPlugin = require('circular-dependency-plugin');
 
 // Local
 const WEBPACK_CONSTANTS = require('./constants');
@@ -30,5 +31,6 @@ module.exports = Object.assign({}, WEBPACK_CONSTANTS.BASE_WEBPACK_CONFIG, {
     new webpack.optimize.UglifyJsPlugin({
       compress: { warnings: false },
     }),
+    new CircularDependencyPlugin(),
   ],
 });
