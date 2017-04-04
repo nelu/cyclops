@@ -1,6 +1,6 @@
 Cyclops will be officially released on April 4, 2017.
 
-[![Build Status](https://travis-ci.org/dunbarcyber/cyclops.svg?branch=master)](https://travis-ci.org/dunbarcyber/cyclops) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f5738597312a4b3a996ec8e11de24fae)](https://www.codacy.com/app/DunbarCyber/cyclops?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dunbarcyber/cyclops&amp;utm_campaign=Badge_Grade) [![Documentation Status](https://readthedocs.org/projects/cyphon-ui/badge/?version=latest)](http://cyphon.readthedocs.io/projects/cyclops/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.org/dunbarcyber/cyclops.svg?branch=master)](https://travis-ci.org/dunbarcyber/cyclops) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f5738597312a4b3a996ec8e11de24fae)](https://www.codacy.com/app/DunbarCyber/cyclops?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dunbarcyber/cyclops&amp;utm_campaign=Badge_Grade) [![Dependency Status](https://david-dm.org/dunbarcyber/cyclops.svg)](https://david-dm.org/dunbarcyber/cyclops.svg) [![Documentation Status](https://readthedocs.org/projects/cyphon-ui/badge/?version=latest)](http://cyphon.readthedocs.io/projects/cyclops/en/latest/?badge=latest)
 
 # Cyclops
 
