@@ -18,16 +18,6 @@
 
 import { Configuration } from 'webpack';
 
-/**
- * Constants used across webpack configurations.
- */
-declare interface WebpackConstants {
-  /**
-   * Base webpack configuration that all configurations inherit from.
-   */
-  BASE_WEBPACK_CONFIG: Configuration;
-}
+declare let config: Configuration;
 
-declare let constants: WebpackConstants;
-
-export = constants;
+export = config;

@@ -19,47 +19,29 @@
 // Vendor
 import { RequestHandler } from 'express';
 import * as morgan from 'morgan';
-import * as _ from 'lodash';
 
 // Local
 import {
   IS_PRODUCTION,
   ENV,
-  ENVIRONMENT_VARIABLE_KEYS,
+  NOTIFICATIONS_ENABLED,
 } from '../constants';
 import { logger } from '../helpers/logger';
-
-// --------------------------------------------------------------------------
-// Constants
-// --------------------------------------------------------------------------
-
-/**
- * Sensitive environment variables that should be left out of the startup log.
- * @type {string[]}
- */
-export const SENSITIVE_ENVIRONMENT_VARIABLES: string[] = [
-  'CYCLOPS_SESSION_SECRET',
-  'MAPBOX_ACCESS_TOKEN',
-];
-
-// --------------------------------------------------------------------------
-// Methods
-// --------------------------------------------------------------------------
 
 /**
  * Returns logger middleware for requests.
  * @returns {RequestHandler}
  */
 export function getRequestLogger(): RequestHandler {
-  // If not production, return developer log format.
-  if (!IS_PRODUCTION) { return morgan('dev'); }
-
   // Set the remote-user token to the saved session token.
   morgan.token('remote-user', (req) => {
     const user = req.session.user;
 
     return user ? `${user.first_name} ${user.last_name}` : '-';
   });
+
+  // If not production, return developer log format.
+  if (!IS_PRODUCTION) { return morgan('dev'); }
 
   // Return apache combined log format.
   return morgan('combined');
@@ -70,63 +52,16 @@ export function getRequestLogger(): RequestHandler {
  * server is running on and Cyclops specific environment variables.
  */
 export function logServerStart(): void {
-  const serverStartLog = [
+  logger.info([
     '\n',
-    '------------------------------------------------------------------\n',
-    `Express Server listening on localhost:${ENV.CYCLOPS_PORT}\n`,
-    '------------------------------------------------------------------\n',
-    '\n',
-    'Cyclops Environment Variables\n',
-    '-----------------------------\n',
-  ];
-
-  const variableSpacing: number = getMaxStringLength(ENVIRONMENT_VARIABLE_KEYS);
-
-  _.forEach(ENV, (value, variable) => {
-    if (!_.includes(SENSITIVE_ENVIRONMENT_VARIABLES, variable)) {
-      const spaces: string = getSpaceString(variable, variableSpacing);
-
-      serverStartLog.push(`${variable}:${spaces}${value}\n`);
-    }
-  });
-
-  logger.info(serverStartLog.join(''));
-}
-
-// --------------------------------------------------------------------------
-// Private Methods
-// --------------------------------------------------------------------------
-
-/**
- * Returns a string of spaces by subtracting the maximum number of allowed
- * spaces from the length of a given string.
- * @param variable String to subtract length from.
- * @param maxSpacing Max number of spaces to allow.
- * @returns {string}
- */
-function getSpaceString(variable: string, maxSpacing: number): string {
-  const numOfSpaces: number = maxSpacing - variable.length;
-  let spaces: string = '';
-  let ii: number = 0;
-
-  for (ii; ii < numOfSpaces; ii++) { spaces += ' '; }
-
-  return spaces;
-}
-
-/**
- * Retrieve the longest string length from a list of strings.
- * @param variables List of strings.
- * @returns {number} Longest string length.
- */
-function getMaxStringLength(variables: string[]): number {
-  let maxSpacing: number = 0;
-
-  variables.forEach((variable) => {
-    const length: number = variable.length;
-
-    if (length > maxSpacing) { maxSpacing = length; }
-  });
-
-  return maxSpacing;
+    '---------------------------------------------------------\n',
+    `Cyclops listening on localhost:${ENV.CYCLOPS_PORT}\n`,
+    '---------------------------------------------------------\n',
+    `NODE_ENV:              ${ENV.NODE_ENV}\n`,
+    `CYPHON_URL:            ${ENV.CYPHON_URL}\n`,
+    `CYPHON_API_PATH:       ${ENV.CYPHON_API_PATH}\n`,
+    `CYPHON_API_TIMEOUT:    ${ENV.CYPHON_API_TIMEOUT}\n`,
+    `NOTIFICATIONS_ENABLED: ${NOTIFICATIONS_ENABLED}\n`,
+    `MAPBOX_TOKEN_SET:      ${!!ENV.MAPBOX_ACCESS_TOKEN}\n`,
+  ].join(''));
 }

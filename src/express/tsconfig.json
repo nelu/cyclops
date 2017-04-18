@@ -10,6 +10,9 @@
   "include": [
     "**/*",
     "../../constants.d.ts",
-    "../../webpack/constants.d.ts"
+    "../../webpack.config.d.ts"
+  ],
+  "exclude": [
+    "static"
   ]
 }

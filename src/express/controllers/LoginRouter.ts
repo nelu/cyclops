@@ -48,38 +48,47 @@ const LOGIN_TEMPLATE: string = 'login';
 // Interfaces
 // --------------------------------------------------------------------------
 
+interface User {
+  id: number;
+  company: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  is_staff: boolean;
+}
+
+/** Data sent with the authentication request. */
+interface AuthenticateRequestBody {
+  /** Email used to sign in with. */
+  email: string;
+  /** Password that pairs with the email. */
+  password: string;
+}
+
+/** URL parameters of the authentication request. */
+interface AuthenticateRequestQuery {
+  /** URL the application should transfer to on a successful authentication. */
+  next?: string;
+}
+
 /** Request made to the authenticate request handler. */
 interface AuthenticateRequest extends Request {
   /** Body of the authentication request. */
-  body: {
-    email: string;
-    password: string;
-  };
+  body: AuthenticateRequestBody;
   /** URL paramaters of the request. */
-  query: {
-    /**
-     * Next URL the application should transfer to on a
-     * successful authentication.
-     */
-    next?: string;
-  };
+  query: AuthenticateRequestQuery;
+}
+
+interface AuthentiateResponseData {
+  /** API token for the authenticated user. */
+  token: string;
+  /** User information associated with the API token. */
+  user: User;
 }
 
 /** Response back from the Cyphon API after an authenticate request. */
 interface AuthenticateResponse extends AxiosResponse {
-  data: {
-    /** API token for the authenticated user. */
-    token: string;
-    /** User information associated with the API token. */
-    user: {
-      id: number;
-      company: number;
-      email: string;
-      first_name: string;
-      last_name: string;
-      is_staff: boolean;
-    };
-  };
+  data: AuthentiateResponseData;
 }
 
 /** Data from a failed authentication request. */

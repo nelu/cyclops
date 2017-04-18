@@ -32,14 +32,14 @@ import { createHistory } from 'history';
 import { CONFIG } from './config';
 import { store } from './store';
 import { DashboardContainer } from './views/Dashboard/containers/Dashboard';
-import { Layout } from './views/app/components/Layout';
+import { LayoutContainer } from './views/app/components/Layout';
 import { AlertViewContainer } from './views/Alerts/containers/AlertView';
 import { AlertDetailContainer } from './views/Alerts/containers/AlertDetailContainer';
 
 // CSS
 require('./../../node_modules/mapbox-gl/dist/mapbox-gl.css');
-require('font-awesome-webpack!./../../node_modules/font-awesome-webpack/font-awesome.config.js');
 require('./../../node_modules/nvd3/build/nv.d3.css');
+require('./../scss/app.scss');
 
 const browserHistory = useRouterHistory(createHistory)({
   basename: CONFIG.APP_BASE_URL,
@@ -48,7 +48,7 @@ const browserHistory = useRouterHistory(createHistory)({
 render(
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={Layout}>
+      <Route path="/" component={LayoutContainer}>
         <IndexRoute component={DashboardContainer}/>
         <Route path="alerts" component={AlertViewContainer}>
           <Route

@@ -17,20 +17,26 @@
  */
 
 // Vendor
-import { Router, RequestHandler } from 'express';
+import * as express from 'express';
+import { resolve } from 'path';
+
 // Local
 import { AppRouter } from './AppRouter';
 
 import { cyphonApiProxy } from '../middlewares/proxy';
 import { LoginRouter } from './LoginRouter';
 import { LogoutRouter } from './LogoutRouter';
+import { NotificationRouter } from './NotificationRouter';
 import {
   DEFAULT_REDIRECT,
   APP_URL,
   LOGIN_URL,
   LOGOUT_URL,
   PROXY_URL,
+  ENV,
+  NOTIFICATIONS_ENABLED,
 } from '../constants';
+import { ROOT_DIRECTORY_PATH } from '../../../constants';
 
 // --------------------------------------------------------------------------
 // Router
@@ -41,12 +47,23 @@ import {
  */
 export class RootRouter {
   /**
+   * JSON for the manifest.json file.
+   * @type {Object}
+   */
+  public static MANIFEST_JSON = {
+    gcm_sender_id: ENV.CLOUD_SENDER_ID,
+    manifest_version: 2,
+    name: 'Cyphon Push Notifications',
+    version: '0.2',
+  };
+
+  /**
    * Express router object.
    */
-  public router: Router;
+  public router: express.Router;
 
   constructor() {
-    this.router = Router();
+    this.router = express.Router();
     this.middleware();
     this.routes();
   }
@@ -56,8 +73,18 @@ export class RootRouter {
    * @param req Express request object.
    * @param res Express response object.
    */
-  public redirect: RequestHandler = (req, res) => {
+  public redirect: express.RequestHandler = (req, res) => {
     return res.redirect(DEFAULT_REDIRECT);
+  };
+
+  /**
+   * Returns the JSON of the manifest file for push notifications.
+   * @param req Express request.
+   * @param res Express response.
+   * @returns {Response} manifest.json file.
+   */
+  public getManifest: express.RequestHandler = (req, res) => {
+    return res.json(RootRouter.MANIFEST_JSON);
   };
 
   /**
@@ -77,6 +104,15 @@ export class RootRouter {
     this.router.use(LOGIN_URL, new LoginRouter().router);
     // Logout page.
     this.router.use(LOGOUT_URL, new LogoutRouter().router);
+    // Enable chrome push notifications if necessary
+    if (NOTIFICATIONS_ENABLED) {
+      this.router.use('/notifications', new NotificationRouter().router);
+      this.router.get('/manifest.json', this.getManifest);
+      this.router.use(
+        '/sw.js',
+        express.static(resolve(ROOT_DIRECTORY_PATH, 'src/sw.js')),
+      );
+    }
     // Redirect all other routes.
     this.router.get('*', this.redirect);
   }

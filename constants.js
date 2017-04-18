@@ -93,7 +93,7 @@ exports.CSS_COMPILATION_DIRECTORY = 'css';
  * File name of the main css file.
  * @type {string}
  */
-exports.MAIN_CSS_FILE = 'main.css';
+exports.MAIN_CSS_FILE = 'styles.css';
 
 /**
  * Absolute path of the CSS static asset compilation directory.

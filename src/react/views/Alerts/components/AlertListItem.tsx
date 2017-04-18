@@ -62,6 +62,9 @@ export class AlertListItem extends React.Component<Props, {}> {
 
   public render(): JSX.Element {
     const { alert } = this.props;
+    const distilleryName = alert.distillery
+      ? shortenDistilleryName(alert.distillery.name)
+      : 'None';
     const isActive = (this.props.selectedAlert === alert.id);
     const classes = classnames(
       'alert-list-item',
@@ -77,7 +80,7 @@ export class AlertListItem extends React.Component<Props, {}> {
           {formatDate(alert.created_date)}
         </td>
         <td className="text--emphasis">
-          {shortenDistilleryName(alert.distillery.name) || 'None'}
+          {distilleryName}
         </td>
         <td><span className="badge">{alert.incidents}</span></td>
         <td>

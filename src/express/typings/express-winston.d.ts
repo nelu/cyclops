@@ -2,7 +2,7 @@ declare module 'express-winston' {
   import * as winston from 'winston';
   import { RequestHandler, Request, Response } from 'express';
 
-  var ExpressWinston: ExpressWinston.Middleware;
+  let ExpressWinston: ExpressWinston.Middleware;
   export = ExpressWinston;
 
   namespace ExpressWinston {

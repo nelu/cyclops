@@ -47,18 +47,14 @@ interface AppTemplateOptions {
    * Injected application configuration variables turned into a JSON string.
    */
   CONFIG: string;
-  /**
-   * Element ID of the container for the react application.
-   */
+  /** Element ID of the container for the react application. */
   APP_CONTAINER_ID: string;
-  /**
-   * URL of the main css file.
-   */
+  /** URL of the main css file. */
   MAIN_CSS_URL: string;
-  /**
-   * URL of the react application bundle.
-   */
+  /** URL of the react application bundle. */
   APP_BUNDLE_URL: string;
+  /** If push notifications are enabled. */
+  NOTIFICATIONS_ENABLED: boolean;
 }
 
 // --------------------------------------------------------------------------
@@ -116,6 +112,7 @@ export class AppRouter {
       // the handlebars view.
       CONFIG: JSON.stringify(appConfig),
       MAIN_CSS_URL,
+      NOTIFICATIONS_ENABLED,
     };
 
     return res.render(AppRouter.APP_TEMPLATE, templateOptions);

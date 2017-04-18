@@ -30,36 +30,11 @@ import {
   ENV_FILE_PATH,
   CSS_COMPILATION_DIRECTORY,
   MAIN_CSS_FILE,
-  STATIC_COMPILATION_DIRECTORY_PATH,
 } from '../../constants';
-import { BASE_WEBPACK_CONFIG } from '../../webpack/constants';
-import { createManifestPath } from './helpers/notifications';
+import * as webpackConfig from '../../webpack.config';
 
 // Place any environment variables stated in the .env file onto the node process.
 config({ path: ENV_FILE_PATH });
-
-/**
- * List of environment variables specific to Cyclops.
- * @type {string[]}
- */
-export const ENVIRONMENT_VARIABLE_KEYS: string[] = [
-  'CYCLOPS_SESSION_SECRET',
-  'CYCLOPS_PORT',
-  'CYPHON_API_PATH',
-  'CYPHON_API_TIMEOUT',
-  'CYPHON_URL',
-  'MAPBOX_ACCESS_TOKEN',
-  'NODE_ENV',
-  'GCM_SENDER_ID',
-];
-
-/**
- * Object containing only the environment variables specific to Cyclops.
- * @type {EnvironmentVariables}
- */
-export const PICKED_ENVIRONMENT_VARIABLES: EnvironmentVariables = _.pick(
-  process.env, ENVIRONMENT_VARIABLE_KEYS,
-) || {};
 
 /**
  * Default values for the Cyclops environment variables.
@@ -73,7 +48,7 @@ export const DEFAULT_ENVIRONMENT_VARIABLES: EnvironmentVariables = {
   CYPHON_URL: 'http://localhost:8000/',
   MAPBOX_ACCESS_TOKEN: '',
   NODE_ENV: 'DEV',
-  GCM_SENDER_ID: '',
+  CLOUD_SENDER_ID: '',
 };
 
 /**
@@ -83,7 +58,7 @@ export const DEFAULT_ENVIRONMENT_VARIABLES: EnvironmentVariables = {
  * @type {EnvironmentVariables}
  */
 export const ENV: EnvironmentVariables = _.assign(
-  {}, DEFAULT_ENVIRONMENT_VARIABLES, PICKED_ENVIRONMENT_VARIABLES,
+  {}, DEFAULT_ENVIRONMENT_VARIABLES, process.env,
 );
 
 /**
@@ -109,7 +84,7 @@ export const CYPHON_API: AxiosInstance = axios.create({
   timeout: ENV.CYPHON_API_TIMEOUT,
 });
 
-export const NOTIFICATIONS_ENABLED = !!ENV.GCM_SENDER_ID;
+export const NOTIFICATIONS_ENABLED = !!ENV.CLOUD_SENDER_ID;
 
 /**
  * React Application URL
@@ -194,14 +169,11 @@ export const CYPHON_LOGO_URL = pathResolve(STATIC_URL, 'img/Cyphon_Logo.svg');
  * Notification service worker location.
  * @type {string}
  */
-export const NOTIFICATIONS_SERVICE_WORKER_URL = pathResolve(
-  STATIC_URL,
-  'js/notifications.js',
-);
+export const NOTIFICATIONS_SERVICE_WORKER_URL = '/sw.js';
 
 // Element ID of the container for the react application.
 export const APP_CONTAINER_ID = 'app';
 // URL of the app webpack bundle when accessed from a browser.
 export const APP_BUNDLE_URL = pathResolve(
-  STATIC_URL, BASE_WEBPACK_CONFIG.output.filename,
+  STATIC_URL, webpackConfig.output.filename,
 );

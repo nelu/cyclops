@@ -16,19 +16,20 @@
  * are made]
  */
 
-// Vendor
-const webpack = require('webpack');
+/**
+ * Message typically returned from the Cyphon API that indicates that an
+ * error occured.
+ */
+interface ErrorDetailMessage {
+  /** Information about the error. */
+  detail: string;
+}
 
-// Local
-const WEBPACK_CONSTANTS = require('./constants');
-
-module.exports = Object.assign({}, WEBPACK_CONSTANTS.BASE_WEBPACK_CONFIG, {
-  plugins: [
-    new webpack.NoErrorsPlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(true),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false },
-    }),
-  ],
-});
+/**
+ * Creates an error message identical to the one returned from the Cyphon API.
+ * @param message Information about the error.
+ * @returns {ErrorDetailMessage}
+ */
+export function createDetailMessage(message: string): ErrorDetailMessage {
+  return { detail: message };
+}

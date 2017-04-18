@@ -21,7 +21,11 @@ are made]
   <head>
     <meta charset="UTF-8">
     <title>Cyphon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="{{ MAIN_CSS_URL }}">
+    {{#if NOTIFICATIONS_ENABLED}}
+      <link rel="manifest" href="/manifest.json">
+    {{/if}}
   </head>
   <body>
     <div id="{{ APP_CONTAINER_ID }}" class="flex-frame"></div>

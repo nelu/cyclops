@@ -1,0 +1,7 @@
+{
+  "env": {
+    "serviceworker": true,
+    "worker": true
+  },
+  "extends": "airbnb"
+}

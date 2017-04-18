@@ -19,20 +19,39 @@
 // Vendor
 import * as React from 'react';
 import { LocationDescriptor } from 'react-router';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 // Local
 import { Header } from './Header';
 import { ErrorPopupContainer } from '../containers/ErrorPopupContainer';
+import { MapDispatchToProps, MapStateToProps } from '../../../types/redux';
+import { setupNotifications } from '../../../services/notifications/actions/notifications';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties of the Layout component. */
-export interface LayoutProps {
+/** Properties passed in from the parent component. */
+interface ValueProps {
   /** react-router location descriptor. */
   location: LocationDescriptor;
 }
+
+/** Properties passed in from the parent component. */
+interface OwnProps {
+  /** react-router location descriptor. */
+  location: LocationDescriptor;
+}
+
+/** Properties that are functions. */
+interface FunctionProps {
+  /** Activates chrome push notifications. */
+  activateNotifications(): void;
+}
+
+/** Combined property interfaces. */
+type Props = OwnProps & FunctionProps & ValueProps;
 
 // --------------------------------------------------------------------------
 // Component
@@ -41,7 +60,11 @@ export interface LayoutProps {
 /**
  * Main page layout for the application.
  */
-export class Layout extends React.Component<LayoutProps, {}> {
+export class Layout extends React.Component<Props, {}> {
+  public componentWillMount(): void {
+    this.props.activateNotifications();
+  }
+
   public render(): JSX.Element {
     return (
       <div className="flex-box flex-box--column">
@@ -55,3 +78,37 @@ export class Layout extends React.Component<LayoutProps, {}> {
     );
   }
 }
+
+// --------------------------------------------------------------------------
+// Container
+// --------------------------------------------------------------------------
+
+/**
+ * Maps redux state variables to the ErrorPopup component.
+ * @param state Redux state.
+ * @param ownProps
+ */
+const mapStateToProps: MapStateToProps<ValueProps, OwnProps> = (
+  state,
+  ownProps,
+) => ({
+  location: ownProps.location,
+});
+
+/**
+ * Maps redux dispatch functions to the ErrorPopup component.
+ * @param dispatch Redux state dispatch function.
+ */
+const mapDispatchToProps: MapDispatchToProps<FunctionProps, OwnProps> = (
+  dispatch,
+) => ({
+  activateNotifications: bindActionCreators(setupNotifications, dispatch),
+});
+
+/**
+ * Container wrapper for the ErrorPopup component.
+ */
+export const LayoutContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Layout);
