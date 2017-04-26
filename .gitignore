@@ -1,10 +1,10 @@
 build/
+dist/
 coverage/
 docs/
 node_modules/
 sphinx-docs/_*
 sphinx-docs/build
-test/
 .idea/
 cyclops.env
 npm-debug.log
