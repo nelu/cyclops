@@ -40,9 +40,9 @@ export function createClusterLayers(sourceId: string): Layer[] {
         'circle-color': layer.color,
         'circle-radius': 18,
       },
-      filter: index === 0 ?
-        ['>=', 'point_count', layer.markerMinimum] :
-        [
+      filter: index === 0
+        ? ['>=', 'point_count', layer.markerMinimum]
+        : [
           'all',
           ['>=', 'point_count', layer.markerMinimum],
           ['<', 'point_count', (<ClusterLayer[]> CLUSTER_LAYERS)[index - 1].markerMinimum],

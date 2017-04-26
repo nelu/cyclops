@@ -34,7 +34,7 @@ describe('authentication middleware', () => {
     res = { redirect };
   });
 
-  describe('isAuthenticated()', () => {
+  describe('#isAuthenticated()', () => {
     it('should pass control of the request to the next middleware if the ' +
       'user is authenicated', () => {
       const req: any = { session: { token: 'blah', user: {} } };
@@ -71,7 +71,7 @@ describe('authentication middleware', () => {
     });
   });
 
-  describe('isNotAuthenticated()', () => {
+  describe('#isNotAuthenticated()', () => {
     it('should pass control of the request to the next middleware if the ' +
       'user is not authenticated', () => {
       const req: any = { session: { authenticated: false } };
