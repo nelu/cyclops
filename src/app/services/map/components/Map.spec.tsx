@@ -3,7 +3,6 @@ import * as React from 'react';
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 import * as enzyme from 'enzyme';
-import * as bluebird from 'bluebird';
 
 // Local
 import { Map } from './Map';
@@ -14,14 +13,14 @@ describe('<Map />', () => {
   let createMapItemStub: sinon.SinonStub;
   let getMapItemStub: sinon.SinonStub;
   let removeMapItemStub: sinon.SinonStub;
-  let mapStoreItemPromise: bluebird<any>;
+  let mapStoreItemPromise: Promise<any>;
   let mapStoreItem: any;
 
   beforeEach(() => {
     setDataSpy = sinon.spy();
     mapStoreItem = { markerSource: { setData: setDataSpy } };
 
-    mapStoreItemPromise = bluebird.resolve(mapStoreItem);
+    mapStoreItemPromise = Promise.resolve(mapStoreItem);
 
     createMapItemStub = sinon
       .stub(mapStore, 'createMapItem')
