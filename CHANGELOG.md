@@ -1,7 +1,7 @@
 # Change log
 
 <a name="2.0.0"></a>
-## [2.0.0](https://github.com/dunbarcyber/cyclops/compare/1.0.0...2.0.0)
+## [2.0.0](https://github.com/dunbarcyber/cyclops/compare/1.0.0...2.0.0) (2017-04-27)
 
 ### Added
 
@@ -39,4 +39,4 @@
 - `CYPHON_API_PATH` environment variable.
 
 <a name="1.0.0"></a>
-## [1.0.0](https://github.com/dunbarcyber/cyclops/releases/tag/1.0.0)
+## [1.0.0](https://github.com/dunbarcyber/cyclops/releases/tag/1.0.0) (2017-04-05)
