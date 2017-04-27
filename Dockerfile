@@ -36,9 +36,9 @@ COPY . $CYCLOPS_HOME
 WORKDIR $CYCLOPS_HOME
 
 # install node modules and compile source files
-RUN npm install && npm run build
+RUN npm install
 
 EXPOSE $CYCLOPS_PORT
 
 # start the server
-CMD npm run server:prod "$@"
+CMD npm run start "$@"

@@ -18,7 +18,7 @@ Once that's done, clone the `Cyclops Git repository <https://github.com/dunbarcy
 
     $ npm install
 
-This should download all the dependencies for the project into a folder called `node_modules`.
+This should download all the dependencies for the project into a folder called ``node_modules`` and will build the client code into ``dist``.
 
 
 *****************
@@ -26,20 +26,6 @@ Configure Project
 *****************
 
 Configure your project by following the instructions :ref:`here<configuration>`.
-
-
-.. _build-app:
-
-*****************
-Build Application
-*****************
-
-When you first download this repository, it's simply a collection of source files. These must be built into the files that will be used to run the application. To do this, run::
-
-    $ npm run build
-
-This will compile all the source files from `src` into the directory `build`. More details on this process can be found in the Build Process section. 
-
 
 .. _start-express:
 
@@ -49,6 +35,6 @@ Start Express Server
 
 To the start the server::
 
-    $ npm run server:prod
+    $ npm run start
 
 This will start an express server at `localhost` with the port number being the value set on environment variable :ref:`cyclops-port`, or port `3000` if it's not set. When you visit that URL, you should see a login page. Use any login information present on the Cyphon instance to log into the application.

@@ -20,7 +20,7 @@
 import { Response, Request } from 'express';
 
 // Local
-import { User } from '../../types';
+import { User } from '../types';
 import { LOGIN_URL } from '../constants';
 
 /**

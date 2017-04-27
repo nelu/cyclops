@@ -2,6 +2,7 @@ build/
 dist/
 coverage/
 docs/
+api-docs/
 node_modules/
 sphinx-docs/_*
 sphinx-docs/build

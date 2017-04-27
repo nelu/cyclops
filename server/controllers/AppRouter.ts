@@ -37,7 +37,7 @@ import {
   MAPBOX_ACCESS_TOKEN,
 } from '../../cyclops.config';
 import { isAuthenticated } from '../middlewares/auth';
-import { AppConfig } from '../../types';
+import { AppConfig } from '../types';
 
 // --------------------------------------------------------------------------
 // Interfaces

@@ -39,14 +39,13 @@ milliseconds.
 
 .. _cyphon-api-path:
 
-***************
-CYPHON_API_PATH
-***************
+******************
+CYPHON_API_VERSION
+******************
 
-**Default:** ``/api/v1``
+**Default:** ``1``
 
-URL path off of CYPHON_URL that connects to the Cyphon API. Use this to
-specify different versions of the api to connect to.
+Version of the Cyphon API to connect to.
 
 
 .. _cyclops-session-secret:
@@ -55,7 +54,7 @@ specify different versions of the api to connect to.
 CYCLOPS_SESSION_SECRET
 **********************
 
-**Default:** ``nyan cat``
+**Default:** ``keyboard cat``
 
 Random string that will be used when creating sessions for the express
 server.
