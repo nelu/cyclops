@@ -64,13 +64,9 @@ const DEVELOPMENT = ENV === 'development' || !ENV;
  * @type {Object}
  */
 const TYPESCRIPT_LOADER: Loader = {
-  loader: 'ts-loader',
+  loader: 'awesome-typescript-loader',
   options: {
     configFileName: resolve(__dirname, 'src/tsconfig.json'),
-    compilerOptions: {
-      sourceMap: PRODUCTION,
-      inlineSourceMap: TESTING || DEVELOPMENT,
-    }
   },
 };
 
@@ -207,9 +203,9 @@ const PLUGINS: Plugin[] = PRODUCTION
 const config: Configuration = {
   context: __dirname,
 
-  entry: './src/main.ts',
+  entry: TESTING ? './src/test.ts' : './src/main.ts',
 
-  output: {
+  output: TESTING ? undefined : {
     filename: WEBPACK_OUTPUT_FILENAME,
     path: WEBPACK_OUTPUT_PATH,
     publicPath: WEBPACK_OUTPUT_PUBLIC_PATH,

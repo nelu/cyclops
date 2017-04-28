@@ -82,3 +82,9 @@ CYCLOPS_PORT
 **Default:** ``3000``
 
 Port number the express server will run on in localhost.
+
+.. _gcm-sender-id:
+
+*************
+GCM_SENDER_ID
+*************

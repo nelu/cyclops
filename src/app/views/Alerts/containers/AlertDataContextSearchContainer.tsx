@@ -105,6 +105,12 @@ interface State {
  * a piece of alert data.
  */
 export class AlertDataContextSearch extends React.Component<Props, State> {
+  /**
+   * How many levels the returned json objects will be opened.
+   * @type {number}
+   */
+  public static JSON_OPEN_LEVEL = 10;
+
   constructor(props: Props) {
     super(props);
 
@@ -171,7 +177,7 @@ export class AlertDataContextSearch extends React.Component<Props, State> {
             {paginationRange.start + index}
           </div>
           <div className="result-context-search__result-data flex-item">
-            <JSONFormatter json={result} />
+            <JSONFormatter json={result} open={10} />
           </div>
         </div>
       )) : (

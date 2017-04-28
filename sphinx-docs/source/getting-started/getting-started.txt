@@ -11,3 +11,4 @@ Getting Started
    docker-install
    manual-install
    configuration
+   push-notifications

@@ -32,7 +32,6 @@ export default (config: Config) => {
       'mocha',
       'chai',
       'sinon',
-      'source-map-support',
     ],
 
     plugins: [
@@ -44,15 +43,16 @@ export default (config: Config) => {
       'karma-phantomjs-launcher',
       'karma-sourcemap-loader',
       'karma-source-map-support',
+      'karma-remap-istanbul',
     ],
 
     logLevel: config.LOG_WARN,
 
     preprocessors: {
-      './src/test.ts': ['webpack'],
+      './src/test.ts': ['webpack', 'sourcemap'],
     },
 
-    reporters: ['dots', 'coverage'],
+    reporters: ['dots', 'coverage', 'karma-remap-istanbul'],
 
     browsers: ['PhantomJS'],
 
@@ -81,6 +81,16 @@ export default (config: Config) => {
         { type: 'text-summary' },
         { type: 'json', subdir: '.', file: 'coverage.json' },
       ],
+    },
+
+    remapIstanbulReporter: {
+      src: 'coverage/coverage.json',
+      reports: {
+        html: 'coverage/html',
+        lcovonly: 'coverage/lcov.info',
+      },
+      timeoutNotCreated: 2000,
+      timeoutNoMoreFiles: 2000,
     },
 
     // coverageIstanbulReporter: {
