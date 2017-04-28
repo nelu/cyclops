@@ -411,7 +411,7 @@ export function performAlertDetailAction(
 
     dispatch(requestPending(source.cancel));
 
-    return performAction(alertId, actionId, source.token)
+    return performAction(actionId, alertId, source.token)
       .then(updateAlertDetailObject(dispatch))
       .catch(handleError(dispatch));
   };
