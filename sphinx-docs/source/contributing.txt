@@ -291,9 +291,9 @@ React
     |   └── store.ts
     |── styles/
     |── typings/
-    |── app.tsx
-    |── config.ts
-    |── store.ts
+    |── main.tsx
+    |── pollyfill.ts
+    |── test.ts
     └── tsconfig.json
 
 - **app:** Main application source files.
@@ -398,6 +398,8 @@ Testing
 
 Tests use `Mocha <https://mochajs.org/>`_ as the testing framework, `Chai <http://chaijs.com/>`_ as the assertion library, `Sinon <http://sinonjs.org/>`_ for mocking, `Enzyme <http://airbnb.io/enzyme/>`_ for react component rendering, and `Karma <https://karma-runner.github.io/1.0/index.html>`_. as the rest runner. Any test file created should have the suffix ``.spec.ts`` or ``.spec.tsx`` and placed next to the file it's testing.
 
+All test commands should produce coverage information in `coverage`.
+
 ::
 
     $ npm run test
@@ -415,29 +417,6 @@ This command runs the test runner in watch mode so that any changes to the sourc
     $ npm run travis
 
 This command should only be run by `Travis CI <https://travis-ci.org/>`_ because it sends test coverage to coveralls, which fails in any other environment.
-
-.. _tests-coverage:
-
-Coverage
-=====
-
-::
-
-    $ npm run coverage
-
-Runs the test's once in order to create ``coverage/coverage.json``, then uses that file to create an HTML coverage report in ``coverage/html``.
-
-::
-
-    $ npm run coverage:html
-
-Creates an HTML coverage report in ``coverage/html`` using ``coverage/coverage.json``. This will fail if the JSON file isn't created yet.
-
-::
-
-    $ npm run coverage:coveralls
-
-Creates an lcov coverage report at ``coverage/lcov.info`` and sends it to coveralls using ``coverage/coverage.json``. This is only meant to by used by Travis CI and will fail in another other environment.
 
 .. _dev-task
 
@@ -462,9 +441,6 @@ NPM Tasks
 - **docs:api:** Builds API documentation into ``api-docs``.
 - **docs:sphinx:** Builds this documentation.
 - **livereload:** Starts a livereload server that sends a signal whenever there's a change in ``dist``.
-- **coverage:** Runs tests once and creates an HTML coverage report in ``coverage``.
-- **coverage:html:** Creates an HTML coverage report in ``coverage`` from ``coverage/coverage.json``.
-- **coverage:coveralls:** Creates an lcov coverage report in ``coverage`` and sends it to coveralls.
 - **clean:** Deletes the ``dist`` directory.
 - **start:** Starts the server in production mode.
 - **build:** Compiles a minified version of the webpack bundle into ``dist``.
