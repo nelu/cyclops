@@ -21,9 +21,15 @@ import { getAll } from '../api';
 import { Action } from './types';
 
 /**
+ * Base URL for retrieving actions.
+ * @type {string}
+ */
+export const ACTIONS_URL = '/actions/';
+
+/**
  * Fetches all actions from the action list endpoint.
  * @returns {Promise<Action[]>}
  */
 export function fetchAllActions(): Promise<Action[]> {
-  return getAll('/actions/');
+  return getAll(ACTIONS_URL);
 }

@@ -62,6 +62,10 @@ export default (config: Config) => {
       noInfo: true,
     },
 
+    client: {
+      captureConsole: true,
+    },
+
     // coverageReporter: {
     //   dir: 'coverage',
     //   reporters: [

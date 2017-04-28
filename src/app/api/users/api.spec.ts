@@ -17,36 +17,24 @@
  */
 
 // Vendor
-import * as _ from 'lodash';
+import * as sinon from 'sinon';
+import * as chai from 'chai';
 
 // Local
-import { Dictionary } from '../../types/object';
+import * as api from '../api';
+import * as userAPI from './api';
 
-/**
- * Shortens the distillery name by removing the backend name.
- * @returns {string}
- * @param name
- */
-export function shortenDistilleryName(name: string): string {
-  const indexOfFirstDot = name.indexOf('.');
+describe('api.users.api', () => {
+  describe('fetchAllUsers', () => {
+    it('should call the correct url', () => {
+      const getAll = sinon.stub(api, 'getAll');
 
-  return name.substr(indexOfFirstDot + 1);
-}
+      userAPI.fetchAllUsers();
 
-/**
- * Shortens the distillery names for a list of distilleries.
- * @param distilleries
- * @returns {Dictionary<any>}
- */
-export function shortenDistilleryDictionary(
-  distilleries: Dictionary<any>,
-): Dictionary<any> {
-  const updatedDistilleries: Dictionary<any> = {};
+      chai.expect(getAll.called).to.be.true;
+      chai.expect(getAll.args[0][0]).to.equal('/users/');
 
-  _.forEach(distilleries, (value: any, name: string) => {
-    updatedDistilleries[shortenDistilleryName(name)] = value;
+      getAll.restore();
+    });
   });
-
-  return updatedDistilleries;
-}
-
+});

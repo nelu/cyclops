@@ -16,33 +16,9 @@
  * are made]
  */
 
-// Vendor
-import { APIList } from '../types';
-
 // Local
 import * as cyphon from '../api';
 import { User } from './types';
-
-/**
- * Gets a user object by it's id.
- * @param userId ID of the user object to get.
- * @param cache If the result should be cached.
- * @returns {Promise<User>}
- */
-export function fetchUser(
-  userId: number,
-  cache?: boolean,
-): Promise<User> {
-  return cyphon.get(`/users/${userId}/`, { cache });
-}
-
-/**
- * Returns an array of users that match the given parameters.
- * @return {Promise<APIList<User>>}
- */
-export function fetchUserList(): Promise<APIList<User>> {
-  return cyphon.get('/users/');
-}
 
 /**
  * Returns all the users.

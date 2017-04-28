@@ -30,11 +30,3 @@ import { normalize } from 'normalizr';
 export function getAlertUri(id: number) {
   return `${CONFIG.CYPHON_API_URL}/alerts/${id}/`;
 }
-
-// export function updateNormazliedAlertListItem()
-//
-export function normalizeAlertListItems(
-  alerts: AlertListItem[],
-): NormalizedAlertListItems {
-  return normalize(alerts, ALERT_LIST_ITEM_SCHEMA);
-}

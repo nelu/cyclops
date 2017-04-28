@@ -17,36 +17,18 @@
  */
 
 // Vendor
-import * as _ from 'lodash';
+import * as chai from 'chai';
 
 // Local
-import { Dictionary } from '../../types/object';
+import * as alertUtils from './utils';
+import { CONFIG } from '../../config';
 
-/**
- * Shortens the distillery name by removing the backend name.
- * @returns {string}
- * @param name
- */
-export function shortenDistilleryName(name: string): string {
-  const indexOfFirstDot = name.indexOf('.');
+describe('api.alert.utils', () => {
+  describe('getAlertUri', () => {
+    it('should return the alert uri for an alert id', () => {
+      const alertURI = alertUtils.getAlertUri(3);
 
-  return name.substr(indexOfFirstDot + 1);
-}
-
-/**
- * Shortens the distillery names for a list of distilleries.
- * @param distilleries
- * @returns {Dictionary<any>}
- */
-export function shortenDistilleryDictionary(
-  distilleries: Dictionary<any>,
-): Dictionary<any> {
-  const updatedDistilleries: Dictionary<any> = {};
-
-  _.forEach(distilleries, (value: any, name: string) => {
-    updatedDistilleries[shortenDistilleryName(name)] = value;
+      chai.expect(alertURI).to.equal(`${CONFIG.CYPHON_API_URL}/alerts/3/`);
+    });
   });
-
-  return updatedDistilleries;
-}
-
+});

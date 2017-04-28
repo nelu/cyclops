@@ -17,36 +17,20 @@
  */
 
 // Vendor
-import * as _ from 'lodash';
+import * as chai from 'chai';
 
 // Local
-import { Dictionary } from '../../types/object';
+import * as utils from './utils';
 
-/**
- * Shortens the distillery name by removing the backend name.
- * @returns {string}
- * @param name
- */
-export function shortenDistilleryName(name: string): string {
-  const indexOfFirstDot = name.indexOf('.');
+describe('api.users.utils', () => {
+  describe('getUserFullName', () => {
+    it('should combine the first_name and last_name of a user', () => {
+      const user: any = {
+        first_name: 'Bob',
+        last_name: 'Saget',
+      };
 
-  return name.substr(indexOfFirstDot + 1);
-}
-
-/**
- * Shortens the distillery names for a list of distilleries.
- * @param distilleries
- * @returns {Dictionary<any>}
- */
-export function shortenDistilleryDictionary(
-  distilleries: Dictionary<any>,
-): Dictionary<any> {
-  const updatedDistilleries: Dictionary<any> = {};
-
-  _.forEach(distilleries, (value: any, name: string) => {
-    updatedDistilleries[shortenDistilleryName(name)] = value;
+      chai.expect(utils.getUserFullName(user)).to.equal('Bob Saget');
+    });
   });
-
-  return updatedDistilleries;
-}
-
+});

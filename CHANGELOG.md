@@ -1,5 +1,10 @@
 # Change log
 
+<a name="2.0.2"></a>
+## [2.0.2](https://github.com/dunbarcyber/cyclops/compare/2.0.1...2.0.2) (2017-04-28)
+- Add endpoint tests for distilleries, users, contexts, and actions.
+- Fix bug that caused alert id to be used when making Jira tickets instead of the action id.
+
 <a name="2.0.1"></a>
 ## [2.0.1](https://github.com/dunbarcyber/cyclops/compare/2.0.0...2.0.1) (2017-04-28)
 
