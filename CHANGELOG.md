@@ -1,5 +1,12 @@
 # Change log
 
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/dunbarcyber/cyclops/compare/2.0.0...2.0.1) (2017-04-28)
+
+- Add push notification documentation.
+- Open context search result JSON so nested structures don't have to be toggled.
+- Simplify coverage generation so that it isn't necessary to run a seperate NPM task.
+
 <a name="2.0.0"></a>
 ## [2.0.0](https://github.com/dunbarcyber/cyclops/compare/1.0.0...2.0.0) (2017-04-27)
 
