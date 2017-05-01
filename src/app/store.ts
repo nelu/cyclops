@@ -69,16 +69,12 @@ const reducers = combineReducers<StoreState>({
 });
 
 /**
- * Logger middleware for redux.
- * @type {Middleware}
- */
-const logger = Logger({ collapsed: true });
-
-/**
  * Middlewares to add to the redux store.
  * @type {GenericStoreEnhancer}
  */
-const middlewares = applyMiddleware(thunkMiddleware, logger);
+const middlewares = process.env.NODE_ENV === 'production'
+  ? applyMiddleware(thunkMiddleware)
+  : applyMiddleware(thunkMiddleware, Logger({ collapsed: true }));
 
 /**
  * Central redux store for the application
