@@ -73,7 +73,7 @@ export const performAction = (
   cancelToken?: CancelToken,
 ): Promise<AlertDetail> => {
   const alertURI = getAlertUri(alertId);
-  const params = { alert: alertURI };
+  const params = { alert: alertId };
 
   return api.post(`/actions/${actionId}/run/`, params, { cancelToken })
     .then(() => fetchAlert(alertId, cancelToken));
