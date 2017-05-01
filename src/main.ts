@@ -24,7 +24,6 @@ import { CONFIG } from './app/config';
 import { App } from './app/index';
 
 // CSS
-require('../node_modules/mapbox-gl/dist/mapbox-gl.css');
 require('../node_modules/nvd3/build/nv.d3.css');
 require('./styles/app.scss');
 require('./pollyfill');

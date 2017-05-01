@@ -24,6 +24,7 @@ import {
   Plugin,
   Rule,
   Loader,
+  DefinePlugin,
 } from 'webpack';
 import * as ExtractTextPlugin from 'extract-text-webpack-plugin';
 
@@ -181,6 +182,11 @@ const BASE_PLUGINS: Plugin[] = [
  * @type {Plugin[]}
  */
 const PRODUCTION_PLUGINS: Plugin[] = [
+  new DefinePlugin({
+    'process.env': {
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+    },
+  }),
   new optimize.UglifyJsPlugin({ sourceMap: true }),
 ];
 
@@ -223,6 +229,7 @@ const config: Configuration = {
 
   module: {
     rules: RULES,
+    noParse: /(mapbox-gl)\.js$/,
   },
 
   externals: {

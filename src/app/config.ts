@@ -60,7 +60,7 @@ export const DEFAULT_CONFIG: AppConfig = {
   APP_BASE_URL: '/app',
   API_TIMEOUT: 30000,
   CYPHON_LOGO_URL: '/static/img/Cyphon_Logo.svg',
-  NOTIFICATIONS_ENABLED: true,
+  NOTIFICATIONS_ENABLED: false,
   NOTIFICATIONS_SERVICE_WORKER_URL: '/sw.js',
 };
 
@@ -68,4 +68,8 @@ export const DEFAULT_CONFIG: AppConfig = {
  * Injected application configuration object from the express server.
  * @type {AppConfig}
  */
-export const CONFIG = (<ExtendedWindow> window).CONFIG || DEFAULT_CONFIG;
+export const CONFIG = Object.assign(
+  {},
+  DEFAULT_CONFIG,
+  (window as ExtendedWindow).CONFIG,
+);
