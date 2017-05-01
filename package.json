@@ -15,7 +15,6 @@
     "docs:sphinx": "cd sphinx-docs && make html",
     "livereload": "livereload \"dist\"",
     "clean": "del dist",
-    "postinstall": "npm run build",
     "start": "npm run server:prod",
     "build": "npm run clean && npm run client:prod",
     "dev": "npm run clean && concurrently -p name -c \"bgRed.bold,bgGreen.bold,bgBlue.bold\" -n \"Server,Webpack,Livereload\" \"npm run server:dev\" \"npm run client:dev\" \"npm run livereload\""
