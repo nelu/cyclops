@@ -99,7 +99,8 @@ export class RootRouter {
         [RootRouter.PROXY_URL_REGEX]: '',
       },
       onProxyReq: (proxyReq, req) => {
-        proxyReq.setHeader('Authentication', `JWT ${getToken(req)}`);
+        console.log(getToken(req));
+        proxyReq.setHeader('Authorization', `JWT ${getToken(req)}`);
       },
     }));
 

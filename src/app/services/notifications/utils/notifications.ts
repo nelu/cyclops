@@ -71,7 +71,7 @@ export function getRegistrationId(subscription: any): string {
 export function sendSubscriptionToServer(subscription: any): Promise<any> {
   const postData = { registration_id: getRegistrationId(subscription) };
 
-  return axios.post('/notifications/', postData);
+  return axios.post('/api/notifications/subscribe/', postData);
 }
 
 /**
