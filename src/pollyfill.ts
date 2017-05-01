@@ -16,5 +16,4 @@
  * are made]
  */
 
-import 'core-js/shim';
-import 'ts-helpers';
+require('core-js/shim');

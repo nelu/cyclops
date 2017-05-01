@@ -6,7 +6,7 @@
     "inlineSourceMap": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "noEmitHelpers": true,
+    "noEmitHelpers": false,
     "target": "es5",
     "module": "commonjs",
     "jsx": "react",
