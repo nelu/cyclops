@@ -20,44 +20,82 @@
 import * as chai from 'chai';
 
 // Local
-import * as distilleryUtils from './utils';
+import * as utils from './utils';
 
 describe('api.distilleries.utils', () => {
-  describe('shortenDistilleryName', () => {
+  describe('shortenDistilleryName()', () => {
     it('should remove the backend name from a distillery name', () => {
       const distilleryName = 'backend.store.collection';
-      const shortened = distilleryUtils.shortenDistilleryName(distilleryName);
+      const shortened = utils.shortenDistilleryName(distilleryName);
 
       chai.expect(shortened).to.equal('store.collection');
     });
 
     it('should return an empty string for an empty string', () => {
-      const shortened = distilleryUtils.shortenDistilleryName('');
+      const shortened = utils.shortenDistilleryName('');
 
       chai.expect(shortened).to.equal('');
     });
 
     it('should return the given string if there are no periods', () => {
       const name = 'hello';
-      const shortened = distilleryUtils.shortenDistilleryName(name);
+      const shortened = utils.shortenDistilleryName(name);
 
       chai.expect(shortened).to.equal(name);
     });
   });
 
-  describe('shortenDistilleryDictionary', () => {
+  describe('getWarehouseName()', () => {
+    it('should return the warehouse name from a distillery name', () => {
+      const name = 'backend.store.collection';
+      const warehouse = utils.getWarehouseName(name);
+
+      chai.expect(warehouse).to.equal('backend');
+    });
+
+    it('should return an empty string if there is no warehouse name', () => {
+      const name = 'name';
+      const warehouse = utils.getWarehouseName(name);
+
+      chai.expect(warehouse).to.equal('');
+    });
+
+    it('should return an empty string if given an empty string', () => {
+      const name = '';
+      const warehouse = utils.getWarehouseName(name);
+
+      chai.expect(warehouse).to.equal('');
+    });
+  });
+
+  describe('shortenDistilleryDictionary()', () => {
     it('should shorten the keys of a dictionary to remove backend names', () => {
       const distilleries = {
         'distillery.name': {},
         'another.distillery': {},
       };
-      const shortened = distilleryUtils.shortenDistilleryDictionary(
+      const shortened = utils.shortenDistilleryDictionary(
         distilleries,
       );
 
       chai.expect(shortened).to.deep.equal({
         name: {},
         distillery: {},
+      });
+    });
+  });
+
+  describe('sortByWarehouse()', () => {
+    it('should sort a list of distilleries by their warehouse names', () => {
+      const distillery1 = { name: 'backend.one.collection' };
+      const distillery2 = { name: 'backend.two.collection' };
+      const distillery3 = { name: 'magic.three.collection' };
+      const distilleries: any[] = [distillery1, distillery2, distillery3];
+      const sorted = utils.sortByWarehouse(distilleries);
+
+      chai.expect(sorted).to.deep.equal({
+        backend: [distillery1, distillery2],
+        magic: [distillery3],
       });
     });
   });

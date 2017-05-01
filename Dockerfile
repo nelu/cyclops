@@ -36,7 +36,7 @@ COPY . $CYCLOPS_HOME
 WORKDIR $CYCLOPS_HOME
 
 # install node modules and compile source files
-RUN npm install
+RUN npm install && npm run build
 
 EXPOSE $CYCLOPS_PORT
 

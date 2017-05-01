@@ -21,6 +21,7 @@ import * as _ from 'lodash';
 
 // Local
 import { Dictionary } from '../../types/object';
+import { Distillery } from './types';
 
 /**
  * Shortens the distillery name by removing the backend name.
@@ -28,9 +29,16 @@ import { Dictionary } from '../../types/object';
  * @param name
  */
 export function shortenDistilleryName(name: string): string {
-  const indexOfFirstDot = name.indexOf('.');
+  return name.substr(name.indexOf('.') + 1) || '';
+}
 
-  return name.substr(indexOfFirstDot + 1);
+/**
+ * Returns the warehouse name from a distillery name.
+ * @param name Distillery name.
+ * @returns {string} Warehouse name.
+ */
+export function getWarehouseName(name: string): string {
+  return name.substr(0, name.indexOf('.')) || '';
 }
 
 /**
@@ -50,3 +58,23 @@ export function shortenDistilleryDictionary(
   return updatedDistilleries;
 }
 
+/**
+ * Sorts a list of distilleries by their warehouse.
+ * @param distilleries
+ * @returns {Dictionary<Distillery[]>}
+ */
+export function sortByWarehouse(
+  distilleries: Distillery[],
+): Dictionary<Distillery[]> {
+  const sorted: Dictionary<Distillery[]> = {};
+
+  distilleries.forEach((distillery) => {
+    const warehouse = getWarehouseName(distillery.name);
+    const copied = Object.assign({}, distillery);
+
+    if (sorted[warehouse]) { sorted[warehouse].push(copied); }
+    else { sorted[warehouse] = [copied]; }
+  });
+
+  return sorted;
+}

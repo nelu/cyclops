@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "server:dev": "cross-env NODE_ENV=development nodemon",
-    "server:prod": "cross-env NODE_ENV=production ts-node --fast server",
+    "server:prod": "cross-env NODE_ENV=production ts-node --fast server --cache-directory ./cache",
     "client:dev": "cross-env NODE_ENV=development webpack --watch",
     "client:prod": "cross-env NODE_ENV=production webpack --progress",
     "test:watch": "cross-env NODE_ENV=test karma start",

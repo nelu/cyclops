@@ -21,7 +21,10 @@ import * as React from 'react';
 
 // Local
 import { Distillery } from '../../../api/distilleries/types';
-import { shortenDistilleryName } from '../../../api/distilleries/utils';
+import {
+  shortenDistilleryName,
+  sortByWarehouse
+} from '../../../api/distilleries/utils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -60,6 +63,7 @@ export class AlertParamsDistillerySelect extends React.Component<Props, {}> {
   };
 
   public render(): JSX.Element {
+    const sortedDistilleries = sortByWarehouse(this.props.distilleries);
     const distilleryOptions = this.props.distilleries.map((distillery) => (
       <option value={distillery.id} key={distillery.id}>
         {shortenDistilleryName(distillery.name)}
