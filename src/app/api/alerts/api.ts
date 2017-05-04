@@ -26,7 +26,7 @@ import { getAlertUri } from './utils';
 import { APIList } from '../types';
 import {
   AlertSearchParams,
-  AlertUpdateFields,
+  AlertUpdateRequest,
   AlertLevelTimeseries,
   AlertLocationResponse,
   AlertDetail,
@@ -88,7 +88,7 @@ export const performAction = (
  */
 export function updateAlert(
   alertId: number,
-  fields: AlertUpdateFields,
+  fields: AlertUpdateRequest,
   cancelToken?: CancelToken,
 ): Promise<AlertDetail> {
   return api.patch(`/alerts/${alertId}/`, fields, { cancelToken });

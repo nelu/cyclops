@@ -34,6 +34,12 @@ import {
 } from '../dispatches/types';
 import { NormalizedList, NormalizedEntity } from '../../types/normalizr';
 
+/** Status choices for alerts. */
+export type AlertStatusChoices = 'NEW' | 'BUSY' | 'DONE';
+
+/** Level choices for alerts. */
+export type AlertLevelChoices = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW' | 'INFO';
+
 /** Base interface of the alert object from the Cyphon API. */
 export interface Alert {
   /** Unique identifier of the alert. */
@@ -45,11 +51,11 @@ export interface Alert {
   /** How many times the same alert occurred. */
   incidents: number;
   /** Priority level of the alert. */
-  level: string;
+  level: AlertLevelChoices;
   /** Outcome of the alert. */
   outcome: string | null;
   /** Workflow status of the alert. */
-  status: string;
+  status: AlertStatusChoices;
   /** Short description of the alert. */
   title: string;
   /** Information a user has written about an alert. */
@@ -59,7 +65,7 @@ export interface Alert {
   /** User assigned to the alert. */
   assigned_user: User | number | null;
   /** Distillery the alert came from. */
-  distillery: Distillery | number;
+  distillery?: Distillery | number;
   /** User comments associated with the alert. */
   comments?: Comment[];
   /** Previous actions performed on the alert. */
@@ -71,7 +77,7 @@ export interface AlertDetail extends Alert {
   /** OBject of the user assigned to the alert. */
   assigned_user: User | null;
   /** Object of the distillery that created the alert. */
-  distillery: DistilleryNested;
+  distillery?: DistilleryNested;
   /** Comment objects associated with the alert. */
   comments: CommentNested[];
   /** Previous actions performed on the alert. */
@@ -83,19 +89,19 @@ export interface AlertListItem extends Alert {
   /** Object of the user assigned to the alert. */
   assigned_user: User | null;
   /** Object of the distillery the alert came from. */
-  distillery: DistilleryFlat;
+  distillery?: DistilleryFlat;
 }
 
 /** Alert object fields that are able to be updated. */
-export interface AlertUpdateFields {
+export interface AlertUpdateRequest {
   /** Information a user has written about the alert. */
   notes?: string;
   /** Current level of the alert. */
-  level?: string;
+  level?: AlertLevelChoices;
   /** Current status of the alert. */
-  status?: string;
+  status?: AlertStatusChoices;
   /** Current outcome of the alert. */
-  outcome?: string;
+  outcome?: string | null;
   /** Current user of the alert. */
   assigned_user?: number | null;
 }

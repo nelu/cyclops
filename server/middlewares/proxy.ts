@@ -23,7 +23,11 @@ import * as _ from 'lodash';
 import * as proxy from 'express-http-proxy';
 
 // Local
-import { CYPHON_URL, CYPHON_API_URL } from '../../cyclops.config';
+import {
+  CYPHON_URL,
+  CYPHON_API_URL,
+  CYPHON_API_PATH
+} from '../../cyclops.config';
 import { getToken } from '../utils/auth';
 
 /**
@@ -72,6 +76,20 @@ export const proxyForwardPath: proxy.ForwardPath = (req) => {
  * @type {RequestHandler}
  */
 export const cyphonApiProxy: RequestHandler = proxy(CYPHON_URL, {
-  decorateRequest: proxyDecorateRequest,
-  forwardPath: proxyForwardPath,
+  decorateRequest: (proxyReq, origReq) => {
+    proxyReq.headers = _.assign(
+      {},
+      proxyReq.headers,
+      {
+        'Content-Type': 'application/json',
+        'accept': 'application/json, */*',
+        'Authorization': `JWT ${getToken(origReq)}`,
+      },
+    );
+
+    delete proxyReq.headers['cookie'];
+
+    return proxyReq;
+  },
+  forwardPath: (req) => CYPHON_API_PATH + parse(req.url).path,
 });

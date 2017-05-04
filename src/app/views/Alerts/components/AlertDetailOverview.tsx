@@ -26,8 +26,11 @@ import { AlertDetailStatusSelect } from './AlertDetailStatusSelect';
 import { AlertDetailUserSelect } from './AlertDetailUserSelect';
 import { AlertDetailOutcomeSelect } from './AlertDetailOutcomeSelect';
 import {
-  AlertUpdateFields,
+  AlertUpdateRequest,
   AlertDetail,
+  AlertLevelChoices,
+  AlertStatusChoices,
+  Alert,
 } from '../../../api/alerts/types';
 import { User } from '../../../api/users/types';
 import { CONFIG } from '../../../config';
@@ -46,10 +49,10 @@ interface Props {
   users: User[];
   /**
    * Updates the fields of an alert.
-   * @param alertId ID of the alert to update.
+   * @param alert Alert object to update.
    * @param fields Fields to change.
    */
-  updateAlert(alertId: number, fields: AlertUpdateFields): any;
+  updateAlert(alert: Alert, fields: AlertUpdateRequest): any;
 }
 
 // --------------------------------------------------------------------------
@@ -84,16 +87,16 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
    * Changes the alerts level.
    * @param level
    */
-  public selectLevel = (level: string): void => {
-    this.props.updateAlert(this.props.alert.id, { level });
+  public selectLevel = (level: AlertLevelChoices): void => {
+    this.props.updateAlert(this.props.alert, { level });
   };
 
   /**
    * Changes the alerts status.
    * @param status
    */
-  public selectStatus = (status: string): void => {
-    this.props.updateAlert(this.props.alert.id, { status });
+  public selectStatus = (status: AlertStatusChoices): void => {
+    this.props.updateAlert(this.props.alert, { status });
   };
 
   /**
@@ -102,7 +105,7 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
    */
   public selectUser = (assignedUser: number): void => {
     this.props.updateAlert(
-      this.props.alert.id,
+      this.props.alert,
       { assigned_user: assignedUser },
     );
   };
@@ -111,8 +114,8 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
    * Changes the outcome of the alerts.
    * @param outcome
    */
-  public selectOutcome = (outcome: string): void => {
-    this.props.updateAlert(this.props.alert.id, { outcome });
+  public selectOutcome = (outcome: string | null): void => {
+    this.props.updateAlert(this.props.alert, { outcome });
   };
 
   /**
@@ -120,7 +123,7 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
    */
   public assignToSelf = (): void => {
     this.props.updateAlert(
-      this.props.alert.id,
+      this.props.alert,
       { assigned_user: CONFIG.CURRENT_USER.id },
     );
   };
@@ -129,10 +132,11 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
    * Unassigns the current alerts.
    */
   public unassign = (): void => {
-    this.props.updateAlert(this.props.alert.id, { assigned_user: null });
+    this.props.updateAlert(this.props.alert, { assigned_user: null });
   };
 
   public render(): JSX.Element {
+    const isDone = this.props.alert.status === 'DONE';
     const assignedUser = this.props.alert.assigned_user;
     const assignToSelfDisabled = assignedUser
       ? assignedUser.id === CONFIG.CURRENT_USER.id
@@ -141,6 +145,42 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
     const contentDate = this.props.alert.content_date
       ? formatDate(this.props.alert.content_date)
       : 'Unknown';
+    const distilleryName = this.props.alert.distillery
+      ? shortenDistilleryName(this.props.alert.distillery.name)
+      : 'None';
+    const assignToMeButton = this.props.alert.assigned_user || isDone
+      ? null
+      : (
+        <OverlayTrigger
+          overlay={AlertDetailOverview.assignToSelfOverlay}
+          placement="top"
+          animation={false}
+        >
+          <button
+            className="alert-detail__assign-btn"
+            onClick={this.assignToSelf}
+          >
+            <i className="fa fa-plus" />
+          </button>
+        </OverlayTrigger>
+      );
+    const unassignButton = this.props.alert.assigned_user && !isDone
+      ? this.props.alert.assigned_user.id === CONFIG.CURRENT_USER.id
+        ? (
+          <OverlayTrigger
+            overlay={AlertDetailOverview.unassignOverlay}
+            placement="top"
+            animation={false}
+          >
+            <button
+              className="alert-detail__assign-btn"
+              onClick={this.unassign}
+            >
+              <i className="fa fa-minus" />
+            </button>
+          </OverlayTrigger>
+        ) : null
+      : null;
 
     return (
       <div className="spacing-section">
@@ -153,7 +193,7 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
           <dd>{formatDate(this.props.alert.created_date)}</dd>
 
           <dt>Source:</dt>
-          <dd>{shortenDistilleryName(this.props.alert.distillery.name)}</dd>
+          <dd>{distilleryName}</dd>
 
           <dt>Level:</dt>
           <dd>
@@ -173,32 +213,8 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
 
           <dt>
             Assigned:
-            <OverlayTrigger
-              overlay={AlertDetailOverview.assignToSelfOverlay}
-              placement="top"
-              animation={false}
-            >
-              <button
-                className="alert-detail__assign-btn"
-                onClick={this.assignToSelf}
-                disabled={assignToSelfDisabled}
-              >
-                <i className="fa fa-plus" />
-              </button>
-            </OverlayTrigger>
-            <OverlayTrigger
-              overlay={AlertDetailOverview.unassignOverlay}
-              placement="top"
-              animation={false}
-            >
-              <button
-                className="alert-detail__assign-btn"
-                onClick={this.unassign}
-                disabled={unnassignDisabled}
-              >
-                <i className="fa fa-minus" />
-              </button>
-            </OverlayTrigger>
+            {assignToMeButton}
+            {unassignButton}
           </dt>
           <dd>
             <AlertDetailUserSelect

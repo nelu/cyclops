@@ -52,7 +52,7 @@ export class AlertDetailOutcomeSelect extends React.Component<Props, {}> {
    * @param outcome New outcome.
    */
   public handleSelect = (outcome: string) => {
-    if (outcome === 'None') { this.props.selectOutcome(null); }
+    if (outcome === 'null') { this.props.selectOutcome(null); }
     else { this.props.selectOutcome(outcome); }
   };
 

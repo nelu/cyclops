@@ -25,6 +25,7 @@ import {
   Rule,
   Loader,
   DefinePlugin,
+  SourceMapDevToolPlugin,
 } from 'webpack';
 import * as ExtractTextPlugin from 'extract-text-webpack-plugin';
 
@@ -87,6 +88,12 @@ const CSS_LOADER: Loader = {
 // Rules
 // --------------------------------------------------------------------------
 
+const JS_SOURCEMAP_RULE: Rule = {
+  test: /\.js$/,
+  enforce: 'pre',
+  use: ['source-map-loader'],
+};
+
 /**
  * Webpack rule for CSS files.
  * @type {Object}
@@ -144,6 +151,7 @@ const COVERAGE_RULE: Rule = {
  * @type {Rule[]}
  */
 const BASE_RULES: Rule[] = [
+  // JS_SOURCEMAP_RULE,
   CSS_RULE,
   TYPESCRIPT_RULE,
   SCSS_RULE,
@@ -174,6 +182,10 @@ const RULES: Rule[] = TESTING
  * @type {Plugin[]}
  */
 const BASE_PLUGINS: Plugin[] = [
+  new SourceMapDevToolPlugin({
+    filename: null, // if no value is provided the sourcemap is inlined
+    test: /\.(tsx?|js)($|\?)/i, // process .js and .ts files only
+  }),
   new ExtractTextPlugin(MAIN_CSS_FILE),
 ];
 
@@ -222,10 +234,11 @@ const config: Configuration = {
       '.js',
       '.ts',
       '.tsx',
+      '.json',
     ],
   },
 
-  devtool: TESTING || DEVELOPMENT ? 'inline-source-map' : 'source-map',
+  devtool: TESTING ? 'inline-source-map' : 'source-map',
 
   module: {
     rules: RULES,

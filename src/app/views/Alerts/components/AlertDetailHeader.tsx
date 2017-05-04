@@ -45,7 +45,7 @@ interface Props {
   /** The selected alerts data. */
   alertData: Result;
   /** Container associated with the alert. */
-  alertContainer: Container;
+  alertContainer?: Container;
   /**
    * Opens a modal to analyze the alert data.
    * @param data Data of the alert to analyze.
@@ -85,10 +85,12 @@ export class AlertDetailHeader extends React.Component<Props, {}> {
    * Analyzes the current alerts data.
    */
   public analyzeAlert = (): void => {
-    this.props.openDataModal(
-      this.props.alertData,
-      this.props.alertContainer,
-    );
+    if (this.props.alertContainer) {
+      this.props.openDataModal(
+        this.props.alertData,
+        this.props.alertContainer,
+      );
+    }
   };
 
   /**
@@ -120,7 +122,11 @@ export class AlertDetailHeader extends React.Component<Props, {}> {
                 placement="bottom"
                 animation={false}
               >
-                <button className="btn btn-alt" onClick={this.analyzeAlert}>
+                <button
+                  className="btn btn-alt"
+                  disabled={!this.props.alertContainer}
+                  onClick={this.analyzeAlert}
+                >
                   <i className="fa fa-flask" />
                 </button>
               </OverlayTrigger>

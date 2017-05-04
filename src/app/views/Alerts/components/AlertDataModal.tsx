@@ -51,7 +51,7 @@ interface Props {
   /** If the modal is active. */
   active: boolean;
   /** Locations associated with the alert. */
-  locations: LocationFieldAddress[];
+  locations: LocationFieldAddress[] | null;
   /** IP address fields from the alert data. */
   ipAddresses: ResultIPAdresses | null;
   /** GeoJSON markers generated from the alert data. */
@@ -104,7 +104,21 @@ export class AlertDataModal extends React.Component<Props, {}> {
       <AlertDataIpAddresses ipAddresses={ipAddresses} /> : null;
     const mapElement = markers ?
       <AlertDataLocationMap markers={markers} /> : null;
-    const contexts = alert.distillery.contexts;
+    const contexts = alert.distillery ? alert.distillery.contexts : null;
+    const alertData = alert.distillery
+      ? (
+        <AlertData
+          result={alert.data}
+          distillery={alert.distillery}
+        />
+      ) : <h2>Alert missing distillery</h2>;
+    const alertContextSearch = alert.distillery
+      ? (
+        <AlertDataContextSearchContainer
+          resultId={alert.data._id}
+          contexts={normalizeContexts(alert.distillery.contexts)}
+        />
+      ) : <h2>Alert missing distillery</h2>;
 
     return (
       <Modal show={active} bsSize="lg" onHide={closeModalButton}>
@@ -120,7 +134,7 @@ export class AlertDataModal extends React.Component<Props, {}> {
                     <NavItem eventKey={AlertDataModal.EVENT_KEYS.data}>Data</NavItem>
                     <NavItem
                       eventKey={AlertDataModal.EVENT_KEYS.context}
-                      disabled={!contexts.length}
+                      disabled={contexts ? !contexts.length : true}
                     >
                       Related Data
                     </NavItem>
@@ -145,17 +159,11 @@ export class AlertDataModal extends React.Component<Props, {}> {
 
               <Tab.Content animation={false}>
                 <Tab.Pane eventKey={AlertDataModal.EVENT_KEYS.data}>
-                  <AlertData
-                    result={alert.data}
-                    distillery={alert.distillery}
-                  />
+                  {alertData}
                 </Tab.Pane>
 
                 <Tab.Pane eventKey={AlertDataModal.EVENT_KEYS.context}>
-                  <AlertDataContextSearchContainer
-                    resultId={alert.data._id}
-                    contexts={normalizeContexts(alert.distillery.contexts)}
-                  />
+                  {alertContextSearch}
                 </Tab.Pane>
 
                 <Tab.Pane

@@ -22,6 +22,7 @@ import { RequestHandler } from 'express';
 // Local
 import { DEFAULT_REDIRECT } from '../constants';
 import * as authUtils from '../utils/auth';
+import { getToken } from '../utils/auth';
 
 /**
  * Determines if a user is authenticated. If the are, it passes control

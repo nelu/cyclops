@@ -26,6 +26,7 @@ import {
 } from '../../../components/SubtleSelect';
 import { User } from '../../../api/users/types';
 import { getUserFullName } from '../../../api/users/utils';
+import { CONFIG } from '../../../config';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -70,12 +71,18 @@ export class AlertDetailUserSelect extends React.Component<Props, {}> {
   };
 
   public render(): JSX.Element {
-    const currentUserId = this.props.currentUser
-      ? this.props.currentUser.id
-      : 0;
     const currentUserName = this.props.currentUser
       ? getUserFullName(this.props.currentUser)
       : 'None';
+
+    // Hide user select if the current user isn't staff
+    if (!CONFIG.CURRENT_USER.is_staff) {
+      return (<span className="badge">{currentUserName}</span>);
+    }
+
+    const currentUserId = this.props.currentUser
+      ? this.props.currentUser.id
+      : 0;
     const userOptions = this.props.users.map((user) => ({
       name: `${user.first_name} ${user.last_name}`,
       value: user.id,

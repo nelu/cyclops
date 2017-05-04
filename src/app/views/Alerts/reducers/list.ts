@@ -98,9 +98,9 @@ reducers[actions.SEARCH_ALERTS_PENDING] = (
   };
 
   // Cancel the timeout for polling alerts.
-  if (state.timeout) window.clearTimeout(state.timeout);
+  if (state.timeout) { window.clearTimeout(state.timeout); }
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -120,7 +120,7 @@ reducers[actions.SEARCH_ALERTS_SUCCESS] = (
     polling: action.payload.polling,
   };
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -138,7 +138,7 @@ reducers[actions.SEARCH_ALERTS_FAILURE] = (
     polling: false,
   };
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -157,7 +157,7 @@ reducers[actions.POLL_ALERTS_PENDING] = (
     pollingEnabled: true,
   };
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -175,7 +175,7 @@ reducers[actions.POLL_ALERTS_SUCCESS] = (
     count: action.payload.count,
   };
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -192,7 +192,7 @@ reducers[actions.POLL_ALERTS_FAILURE] = (
     polling: false,
   };
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -210,7 +210,7 @@ reducers[actions.POLL_ALERTS_WAIT] = (
     timeout: action.payload.timeoutId,
   };
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -228,7 +228,9 @@ reducers[actions.STOP_POLLING] = (
     timeout: null,
   };
 
-  return _.assign({}, state, update);
+  if (state.timeout) { window.clearTimeout(state.timeout); }
+
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -247,7 +249,9 @@ reducers[actions.DISABLE_POLLING] = (
     timeout: null,
   };
 
-  return _.assign({}, state, update);
+  if (state.timeout) { window.clearTimeout(state.timeout); }
+
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -267,7 +271,7 @@ reducers[UPDATE_ALERT_SUCCESS] = (
   );
 
   // If no index, return the current state.
-  if (alertIndex === -1) return state;
+  if (alertIndex === -1) { return state; }
 
   // Copy alert array.
   const copiedAlerts = state.alerts.slice();
@@ -278,7 +282,7 @@ reducers[UPDATE_ALERT_SUCCESS] = (
   );
 
   // Assign new fields to alert object and place at the array index.
-  copiedAlerts[alertIndex] = _.assign(
+  copiedAlerts[alertIndex] = Object.assign(
     {},
     copiedAlerts[alertIndex],
     fields,
@@ -287,7 +291,7 @@ reducers[UPDATE_ALERT_SUCCESS] = (
   // Type check state update.
   const update: Partial<State> = { alerts: copiedAlerts };
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
 };
 
 /**

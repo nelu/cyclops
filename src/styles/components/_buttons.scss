@@ -74,3 +74,16 @@ $btn-default-dark-border: darken($color-dark, 3%);
     box-shadow: none;
   }
 }
+
+.btn-close {
+  background-color: transparent;
+  border-color: transparent;
+  padding: 0;
+  float: right;
+  color: #fff;
+  opacity: .5;
+
+  &:hover {
+    opacity: .9;
+  }
+}

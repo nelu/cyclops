@@ -25,11 +25,13 @@ import * as proxy from 'http-proxy-middleware';
 import { AppRouter } from './AppRouter';
 import { LoginRouter } from './LoginRouter';
 import { NotificationRouter } from './NotificationRouter';
-import { isAuthenticated } from '../middlewares/auth';
+import {
+  isAuthenticated,
+} from '../middlewares/auth';
 import {
   getToken,
   redirectToLogin,
-  unauthenticateSession
+  unauthenticateSession,
 } from '../utils/auth';
 import {
   DEFAULT_REDIRECT,
@@ -43,7 +45,10 @@ import {
   STATIC_URL,
   NOTIFICATIONS_ENABLED,
   CYPHON_API_URL,
+  CYPHON_API_TIMEOUT,
 } from '../../cyclops.config';
+import { logger } from '../utils/logger';
+import { cyphonApiProxy } from '../middlewares/proxy';
 
 // --------------------------------------------------------------------------
 // Router
@@ -92,17 +97,26 @@ export class RootRouter {
    */
   private routes(): void {
     // Cyphon API Proxy.
-    this.router.use(PROXY_URL, isAuthenticated, proxy({
-      changeOrigin: true,
-      target: CYPHON_API_URL,
-      pathRewrite: {
-        [RootRouter.PROXY_URL_REGEX]: '',
-      },
-      onProxyReq: (proxyReq, req) => {
-        console.log(getToken(req));
-        proxyReq.setHeader('Authorization', `JWT ${getToken(req)}`);
-      },
-    }));
+    // this.router.use(PROXY_URL, isAuthenticated, removeCookie, proxy({
+    //   // changeOrigin: true,
+    //   target: CYPHON_API_URL,
+    //   pathRewrite: { [RootRouter.PROXY_URL_REGEX]: '' },
+    //   logProvider: () => logger,
+    //   proxyTimeout: CYPHON_API_TIMEOUT,
+    //   onError: (error) => {
+    //     console.log(error);
+    //   },
+    //   onProxyReq: (proxyReq) => {
+    //     console.log(proxyReq._headers);
+    //     console.log((proxyReq as any)._headerNames);
+    //   },
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'accept': 'application/json, */*',
+    //   },
+    // }));
+
+    this.router.use(PROXY_URL, isAuthenticated, cyphonApiProxy);
 
     // React application route.
     this.router.use(APP_URL, new AppRouter().router);

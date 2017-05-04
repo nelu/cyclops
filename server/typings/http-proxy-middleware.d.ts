@@ -4,7 +4,8 @@ declare module 'http-proxy-middleware' {
 
   namespace HttpProxyMiddleware {
     interface ProxyReq {
-      setHeader(header: string, value: string): void;
+      _headers: any;
+      setHeader(header: string, value?: string | null): void;
     }
     /**
      * Rewrite target's url path. Key will be used as a regex to match paths.
@@ -20,7 +21,11 @@ declare module 'http-proxy-middleware' {
       pathRewrite?: PathRewrite;
       logLevel?: 'debug' | 'info' | 'warn' | 'error' | 'silent';
       changeOrigin?: boolean;
+      headers?: { [key: string]: string };
+      proxyTimeout?: number;
+      onError?(error: any): void;
       onProxyReq?(proxyReq: ProxyReq, req: Request, res: Response): void;
+      logProvider?(provider: any): any;
     }
   }
 

@@ -17,7 +17,7 @@
  */
 
 // Vendor
-import axios, { CancelTokenSource, CancelToken, Canceler } from 'axios';
+import axios, { CancelTokenSource } from 'axios';
 
 /**
  * Helper function that gets a CancelTokenSource object from axios.

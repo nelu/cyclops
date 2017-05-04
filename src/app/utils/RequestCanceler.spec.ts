@@ -16,14 +16,36 @@
  * are made]
  */
 
-// Local
-import { CONFIG } from '../../config';
+// Vendor
+import * as sinon from 'sinon';
+import * as chai from 'chai';
 
-/**
- * Returns the alerts URI of a given alerts ID.
- * @param {Number} id The ID of the alerts.
- * @return {String} The URI of the alerts.
- */
-export function getAlertUri(id: number) {
-  return `${CONFIG.CYPHON_API_URL}/alerts/${id}/`;
-}
+// Local
+import { RequestCanceler } from './RequestCanceler';
+
+describe('RequestCanceler', () => {
+  let requestCanceler: RequestCanceler;
+  let canceler: sinon.SinonSpy;
+
+  beforeEach(() => {
+    requestCanceler = new RequestCanceler();
+    canceler = sinon.spy();
+  });
+
+  describe('set()', () => {
+    it('should set the canceler function', () => {
+      requestCanceler.set(canceler);
+
+      chai.expect(requestCanceler.canceler).to.equal(canceler);
+    });
+  });
+
+  describe('cancel()', () => {
+    it('should run the canceler function', () => {
+      requestCanceler.set(canceler);
+      requestCanceler.cancel();
+
+      chai.expect(canceler.called).to.be.true;
+    });
+  });
+});

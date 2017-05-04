@@ -65,7 +65,9 @@ export const CYPHON_API_VERSION = process.env.CYPHON_API_VERSION || 1;
  * Time in milliseconds it takes for calls to Cyphon to timeout.
  * @type {number}
  */
-export const CYPHON_API_TIMEOUT = process.env.CYPHON_API_TIMEOUT || 30000;
+export const CYPHON_API_TIMEOUT = process.env.CYPHON_API_TIMEOUT
+  ? parseInt(process.env.CYPHON_API_TIMEOUT, 10)
+  : 30000;
 
 /**
  * URL of the Cyphon instance to connect to.
@@ -110,10 +112,16 @@ export const PRODUCTION = NODE_ENV === PRODUCTION_FLAG;
 export const MAIN_CSS_FILE = 'css/styles.css';
 
 /**
+ * API URL path off the base Cyphon URL.
+ * @type {string}
+ */
+export const CYPHON_API_PATH = `/api/v${CYPHON_API_VERSION}`;
+
+/**
  * URL of the Cyphon API to proxy to.
  * @type {string}
  */
-export const CYPHON_API_URL = resolveURL(CYPHON_URL, `/api/v${CYPHON_API_VERSION}`);
+export const CYPHON_API_URL = resolveURL(CYPHON_URL, CYPHON_API_PATH);
 
 /**
  * URL that static assets are served from.

@@ -21,6 +21,7 @@ import { Dispatch, Action, ThunkAction } from 'redux';
 
 // Local
 import { StoreState } from '../store';
+import { Reducer } from 'redux-actions';
 
 /** Redux dispatch function configured with this redux store state. */
 export type ReduxDispatch = Dispatch<StoreState>;

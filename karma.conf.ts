@@ -42,7 +42,6 @@ export default (config: Config) => {
       'karma-sinon',
       'karma-phantomjs-launcher',
       'karma-sourcemap-loader',
-      'karma-source-map-support',
       'karma-remap-istanbul',
     ],
 

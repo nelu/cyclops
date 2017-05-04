@@ -8,6 +8,7 @@
     "interface-name": false,
     "one-line": [true, "check-catch"],
     "semicolon": [true, "always", "ignore-bound-class-methods"],
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "no-string-literal": false
   }
 }

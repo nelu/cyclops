@@ -28,8 +28,9 @@ import {
 } from '../../../types/redux';
 import { createAction } from '../../../utils/createReduxAction';
 import {
+  Alert,
   AlertDetail,
-  AlertUpdateFields,
+  AlertUpdateRequest,
 } from '../../../api/alerts/types';
 import { getCancelTokenSource } from '../../../api/utils';
 import {
@@ -53,6 +54,8 @@ import { Container } from '../../../api/containers/types';
 import { getFieldsOfType } from '../../../api/containers/utils';
 import { CONTAINER_FIELDS } from '../../../api/containers/schemas';
 import { Dictionary } from '../../../types/object';
+import { checkAlertUpdate } from '../../../api/alerts/utils/checkAlertUpdate';
+import { modifyAlertUpdate } from '../../../api/alerts/utils/modifyAlertUpdate';
 
 // --------------------------------------------------------------------------
 // Helper Functions/Variables
@@ -82,6 +85,7 @@ function handleError(dispatch: ReduxDispatch) {
 function updateAlertDetailObject(dispatch: ReduxDispatch) {
   return (alert: AlertDetail): void => {
     dispatch(updateAlertSuccess(alert));
+    dispatch(closeErrorMessage());
   };
 }
 
@@ -160,7 +164,7 @@ export const FETCH_ALERT_SUCCESS = `${ACTION_PREFIX}/FETCH_ALERT_SUCCESS`;
 /** FETCH_ALERT_SUCCESS payload type. */
 export interface FetchAlertSuccessPayload {
   alert: AlertDetail;
-  locations: LocationFieldAddress[];
+  locations: LocationFieldAddress[] | null;
   markers: Markers | null;
 }
 
@@ -173,7 +177,7 @@ export type FetchAlertSuccessAction = ReduxAction<FetchAlertSuccessPayload>;
  */
 export function fetchAlertSuccess(
   alert: AlertDetail,
-  locations: LocationFieldAddress[],
+  locations: LocationFieldAddress[] | null,
   markers: Markers | null,
 ): FetchAlertSuccessAction {
   return createAction(FETCH_ALERT_SUCCESS, { alert, locations, markers });
@@ -236,6 +240,58 @@ export function updateAlertSuccess(
   alert: AlertDetail,
 ): UpdateAlertSuccessAction {
   return createAction(UPDATE_ALERT_SUCCESS, alert);
+}
+
+// --------------------------------------------------------------------------
+// ADD_ERROR_MESSAGE
+// --------------------------------------------------------------------------
+
+/**
+ * Action Type: When an error message should be displayed over the alert detail.
+ * @type {string}
+ */
+export const ADD_ERROR_MESSAGE = `${ACTION_PREFIX}/ADD_ERROR_MESSAGE`;
+
+/** ADD_ERROR_MESSAGE payload type. */
+export type AddErrorMessagePayload = string[];
+
+/** ADD_ERROR_MESSAGE action type. */
+export type AddErrorMessageAction = ReduxAction<AddErrorMessagePayload>;
+
+/**
+ * Creates a ADD_ERROR_MESSAGE action.
+ * @returns {AddErrorMessageAction}
+ */
+export function addErrorMessage(message: string[]): AddErrorMessageAction {
+  return createAction(ADD_ERROR_MESSAGE, message);
+}
+
+// --------------------------------------------------------------------------
+// CLOSE_ERROR_MESSAGE
+// --------------------------------------------------------------------------
+
+/**
+ * Action Type: When the alert detail error message is requested to be cleared.
+ * @type {string}
+ */
+export const CLOSE_ERROR_MESSAGE = `${ACTION_PREFIX}/CLOSE_ERROR_MESSAGE`;
+
+/**
+ * CLOSE_ERROR_MESSAGE payload type.
+ */
+export type CloseErrorMessagePayload = undefined;
+
+/**
+ * CLOSE_ERROR_MESSAGE action type.
+ */
+export type CloseErrorMessageAction = ReduxAction<CloseErrorMessagePayload>;
+
+/**
+ * Creates a CLOSE_ERROR_MESSAGE action.
+ * @returns {CloseErrorMessageAction}
+ */
+export function closeErrorMessage(): CloseErrorMessageAction {
+  return createAction(CLOSE_ERROR_MESSAGE, undefined);
 }
 
 // --------------------------------------------------------------------------
@@ -358,11 +414,17 @@ export function fetchAlertDetail(alertId: number): ThunkActionPromise {
       .then((alert) => {
         nestedAlert = alert;
 
-        return getLocationsWithAddress(
-          alert.distillery.container,
-          alert.data,
-          source.token,
-        );
+        if (alert.distillery) {
+          return getLocationsWithAddress(
+            alert.distillery.container,
+            alert.data,
+            source.token,
+          );
+        }
+
+        dispatch(fetchAlertSuccess(nestedAlert, null, null));
+
+        return Promise.reject(new Error('Alert object missing distillery'));
       })
       .then((locations) => {
         const markers = locations.length ?
@@ -376,22 +438,31 @@ export function fetchAlertDetail(alertId: number): ThunkActionPromise {
 
 /**
  * Updates the alert detail object with new fields.
- * @param alertId ID of the alert to update.
+ * @param alert Alert object to update.
  * @param fields Fields to update the alert with.
  * @returns {ThunkActionPromise}
  */
 export function updateAlertDetail(
-  alertId: number,
-  fields: AlertUpdateFields,
+  alert: Alert,
+  fields: AlertUpdateRequest,
 ): ThunkActionPromise {
   return (dispatch) => {
-    const source = getCancelTokenSource();
+    const request = checkAlertUpdate(alert, fields);
 
-    dispatch(requestPending(source.cancel));
+    if (request.valid) {
+      const modifiedFields = modifyAlertUpdate(alert, fields);
+      const source = getCancelTokenSource();
 
-    return updateAlert(alertId, fields, source.token)
-      .then(updateAlertDetailObject(dispatch))
-      .catch(handleError(dispatch));
+      dispatch(requestPending(source.cancel));
+
+      return updateAlert(alert.id, modifiedFields, source.token)
+        .then(updateAlertDetailObject(dispatch))
+        .catch(handleError(dispatch));
+    }
+
+    dispatch(addErrorMessage(request.errors));
+
+    return Promise.reject('Alert update request invalid');
   };
 }
 

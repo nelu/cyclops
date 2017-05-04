@@ -16,14 +16,24 @@
  * are made]
  */
 
-// Local
-import { CONFIG } from '../../config';
+// Vendor
+import { Canceler } from 'axios';
 
-/**
- * Returns the alerts URI of a given alerts ID.
- * @param {Number} id The ID of the alerts.
- * @return {String} The URI of the alerts.
- */
-export function getAlertUri(id: number) {
-  return `${CONFIG.CYPHON_API_URL}/alerts/${id}/`;
+/** Controls an axios request canceler function. */
+export class RequestCanceler {
+  /** Canceler function to control. */
+  public canceler: Canceler;
+
+  /** Runs the canceler function. */
+  public cancel(): void {
+    if (this.canceler) { this.canceler(); }
+  }
+
+  /**
+   * Sets the canceler function.
+   * @param canceler Canceler function to control.
+   */
+  public set(canceler: Canceler) {
+    this.canceler = canceler;
+  }
 }

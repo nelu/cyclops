@@ -19,6 +19,7 @@
 // Vendor
 import {
   handleActions,
+  Reducer,
   ReducerMap,
 } from 'redux-actions';
 import * as _ from 'lodash';
@@ -30,15 +31,15 @@ import {
 } from '../../../services/map/types';
 import { AlertDetail } from '../../../api/alerts/types';
 import * as actions from '../actions/detail';
-import { Canceler } from 'axios';
 import { ResultIPAdresses } from '../../../types/result';
+import { RequestCanceler } from '../../../utils/RequestCanceler';
 
 /** State shape of the AlertDetail reducer. */
 export interface State {
   /** ID of the currently selected alerts. */
   alertId: number | null;
   /** Locations from the alerts data with their addresses. */
-  locations: LocationFieldAddress[];
+  locations: LocationFieldAddress[] | null;
   /** GeoJSON markers of the currently selected alerts. */
   markers: Markers | null;
   /** Currently selected alerts. */
@@ -49,13 +50,15 @@ export interface State {
   ipAddresses: ResultIPAdresses | null;
   /** If the data modal is active. */
   modalActive: boolean;
+  /** Error message that doesn't require the error popup. */
+  error: string[];
 }
 
 /**
  * Initial state of the AlertDetail reducer.
  * @type {State}
  */
-const INITIAL_STATE: State = {
+export const INITIAL_STATE: State = {
   alert: null,
   alertId: null,
   ipAddresses: null,
@@ -63,24 +66,12 @@ const INITIAL_STATE: State = {
   locations: [],
   markers: null,
   modalActive: false,
+  error: [],
 };
 
 const reducers: ReducerMap<State, any> = {};
 
-/**
- * Function that cancels a pending request.
- */
-let requestCanceler: Canceler;
-
-/**
- * Cancels a pending request related to the alert detail view and replaces
- * the requestCanceler function with a new one.
- * @param canceler Function that cancels a request.
- */
-function cancelRequest(canceler?: Canceler): void {
-  if (requestCanceler) { requestCanceler(); }
-  if (canceler) { requestCanceler = canceler; }
-}
+const request = new RequestCanceler();
 
 /**
  * Updates the AlertDetail reducer based on a(n) CLOSE_ALERT action.
@@ -92,9 +83,9 @@ reducers[actions.CLOSE_ALERT] = (
   state: State,
   action: actions.CloseAlertAction,
 ): State => {
-  cancelRequest();
+  request.cancel();
 
-  return _.assign({}, state, INITIAL_STATE);
+  return Object.assign({}, state, INITIAL_STATE);
 };
 
 /**
@@ -112,9 +103,10 @@ reducers[actions.FETCH_ALERT_PENDING] = (
     loading: true,
   };
 
-  cancelRequest(action.payload.canceler);
+  request.cancel();
+  request.set(action.payload.canceler);
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -134,7 +126,7 @@ reducers[actions.FETCH_ALERT_SUCCESS] = (
     markers: action.payload.markers,
   };
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -151,10 +143,10 @@ reducers[actions.REQUEST_PENDING] = (
     loading: true,
   };
 
-  // Cancel any pending requests that haven't returned.
-  cancelRequest(action.payload);
+  request.cancel();
+  request.set(action.payload);
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -171,7 +163,7 @@ reducers[actions.REQUEST_FAILED] = (
     loading: false,
   };
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -185,11 +177,11 @@ reducers[actions.UPDATE_ALERT_SUCCESS] = (
   action: actions.UpdateAlertSuccessAction,
 ): State => {
   const update: Partial<State> = {
-    alert: _.assign({}, state.alert, action.payload),
+    alert: Object.assign({}, state.alert, action.payload),
     loading: false,
   };
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -207,7 +199,7 @@ reducers[actions.OPEN_DATA_MODAL] = (
     modalActive: true,
   };
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
 };
 
 /**
@@ -224,7 +216,41 @@ reducers[actions.CLOSE_DATA_MODAL] = (
     modalActive: false,
   };
 
-  return _.assign({}, state, update);
+  return Object.assign({}, state, update);
+};
+
+/**
+ * Updates the AlertDetailReducer based on a(n) ADD_ERROR_MESSAGE action.
+ * @param state Current AlertDetailReducer state.
+ * @param action ADD_ERROR_MESSAGE action.
+ * @returns {State} Updated AlertDetailReducer state.
+ */
+reducers[actions.ADD_ERROR_MESSAGE] = (
+  state: State,
+  action: actions.AddErrorMessageAction,
+): State => {
+  const update: Partial<State> = {
+    error: action.payload,
+  };
+
+  return Object.assign({}, state, update);
+};
+
+/**
+ * Updates the AlertDetailReducer based on a(n) CLOSE_ERROR_MESSAGE action.
+ * @param state Current AlertDetailReducer state.
+ * @param action CLOSE_ERROR_MESSAGE action.
+ * @returns {State} Updated AlertDetailReducer state.
+ */
+reducers[actions.CLOSE_ERROR_MESSAGE] = (
+  state: State,
+  action: actions.CloseErrorMessageAction,
+): State => {
+  const update: Partial<State> = {
+    error: [],
+  };
+
+  return Object.assign({}, state, update);
 };
 
 /**

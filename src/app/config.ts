@@ -1,3 +1,4 @@
+import { User } from './api/users/types';
 /**
  * The contents of this file are subject to the CYPHON Proprietary Non-
  * Commercial Registered User Use License Agreement (the "Agreement”). You
@@ -21,7 +22,7 @@ interface AppConfig {
   /** ID of the element that will contain the react application. */
   APP_CONTAINER_ID: string;
   /** User object of the currently authenticated user. */
-  CURRENT_USER: any;
+  CURRENT_USER: User;
   /** URL of the Cyphon API proxy. */
   EXPRESS_CYPHON_PROXY_URL: string;
   /** URL of the Cyphon API this Cyclops instance points to. */
@@ -53,7 +54,7 @@ interface ExtendedWindow extends Window {
 
 export const DEFAULT_CONFIG: AppConfig = {
   APP_CONTAINER_ID: 'app',
-  CURRENT_USER: {},
+  CURRENT_USER: {} as any,
   EXPRESS_CYPHON_PROXY_URL: '/api',
   CYPHON_API_URL: 'http://localhost:8000/',
   MAPBOX_ACCESS_TOKEN: '',

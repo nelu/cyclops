@@ -2,8 +2,7 @@
   "compileOnSave": false,
   "buildOnSave": false,
   "compilerOptions": {
-    "sourceMap": false,
-    "inlineSourceMap": true,
+    "sourceMap": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "noEmitHelpers": false,

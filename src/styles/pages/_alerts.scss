@@ -39,7 +39,7 @@
 
 .alert-detail-header {
   padding: $padding-large-vertical $padding-large-horizontal;
-  border-bottom: 5px solid transparent;
+  //border-bottom: 5px solid transparent;
 
   &--critical { border-color: $alert-color-critical; }
   &--high { border-color: $alert-color-high; }
@@ -73,6 +73,36 @@
   &:disabled:hover {
     color: lighten($color-dark, 40%);
     background-color: lighten($color-dark, 6%);
+  }
+}
+
+.alert-detail__errors {
+  height: 8px;
+  padding: 0 $padding-base-horizontal;
+  color: #fff;
+  overflow: hidden;
+  transition: background-color .5s;
+
+  &--critical { background-color: $alert-color-critical; }
+  &--high { background-color: $alert-color-high; }
+  &--medium { background-color: $alert-color-medium; }
+  &--low { background-color: $alert-color-low; }
+  &--info { background-color: $alert-color-info; }
+
+  &--open {
+    height: auto;
+    background-color: $brand-danger;
+  }
+
+  h3 {
+    border-bottom: 1px solid rgba(#fff, .3);
+    font-size: $font-size-base;
+    padding-bottom: $padding-base-vertical;
+    margin: 12px 0 5px 0;
+  }
+
+  p {
+    margin: 0 0 12px 0;
   }
 }
 

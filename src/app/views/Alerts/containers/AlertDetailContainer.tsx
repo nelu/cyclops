@@ -22,11 +22,13 @@ import { Router } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import * as classnames from 'classnames';
 
 // Local
 import {
+  Alert,
   AlertDetail as AlertDetailResponse,
-  AlertUpdateFields,
+  AlertUpdateRequest,
 } from '../../../api/alerts/types';
 import { Loading } from '../../../components/Loading';
 import { AlertDetailComments } from '../components/AlertDetailComments';
@@ -59,6 +61,8 @@ import {
   updateAlertDetail,
   fetchAlertDetail,
   closeDataModal,
+  addErrorMessage,
+  closeErrorMessage,
 } from '../actions/detail';
 import { Action } from '../../../api/actions/types';
 import { Container } from '../../../api/containers/types';
@@ -80,11 +84,13 @@ interface ValueProps {
   /** GeoJSON markers of the current alerts location. */
   markers: Markers | null;
   /** Alert location, field the location was found on, and the address. */
-  locations: LocationFieldAddress[];
+  locations: LocationFieldAddress[] | null;
   /** IP addresses of the alert data. */
   ipAddresses: ResultIPAdresses | null;
   /** If the alert data modal is active. */
   modalActive: boolean;
+  /** Error message related to the alert detail. */
+  error: string[];
 }
 
 /** Properties of the AlertDetail component that are functions. */
@@ -99,6 +105,8 @@ interface FunctionProps {
   closeAlert(): any;
   /** Closes the modal used to analyze the alert data. */
   closeDataModal(): any;
+  /** Closes any alert update error messages. */
+  closeErrorMessage(): any;
   /**
    * Opens a modal used to analyze the alert data.
    * @param data Data to analyze.
@@ -113,10 +121,10 @@ interface FunctionProps {
   performAction(alertId: number, actionId: number): any;
   /**
    * Updates the fields of the alert.
-   * @param alertId ID of the alert to update the files of.
+   * @param alert Alert object to update the files of.
    * @param fields Fields to update.
    */
-  updateAlert(alertId: number, fields: AlertUpdateFields): any;
+  updateAlert(alert: Alert, fields: AlertUpdateRequest): any;
   /**
    * Fetches the alerts from the API to display.
    * @param alertId
@@ -219,8 +227,9 @@ export class AlertDetail extends React.Component<Props, {}> {
    * @param notes
    */
   public updateNotes = (notes: string): void => {
-    const alert = this.props.alert;
-    if (alert) this.props.updateAlert(alert.id, { notes });
+    if (this.props.alert) {
+      this.props.updateAlert(this.props.alert, { notes });
+    }
   };
 
   /**
@@ -240,6 +249,7 @@ export class AlertDetail extends React.Component<Props, {}> {
       closeDataModal,
       modalActive,
       actions,
+      error,
     } = this.props;
     const { updateNotes } = this;
     const popupGenerator = AlertDetail.popupGenerator;
@@ -260,7 +270,7 @@ export class AlertDetail extends React.Component<Props, {}> {
     ) : null;
     const alertHeaderElement = alert ? (
       <AlertDetailHeader
-        alertContainer={alert.distillery.container}
+        alertContainer={alert.distillery ? alert.distillery.container : undefined}
         alertId={alert.id}
         alertLevel={alert.level}
         closeAlert={this.dismissAlert}
@@ -268,6 +278,35 @@ export class AlertDetail extends React.Component<Props, {}> {
         openDataModal={openDataModal}
       />
     ) : null;
+    const alertDetailErrorClasses = classnames(
+      'flex-item',
+      'flex--shrink',
+      'alert-detail__errors',
+      `alert-detail__errors--${alert ? alert.level.toLowerCase() : ''}`,
+      { 'alert-detail__errors--open': !!this.props.error.length },
+    );
+    const errors = this.props.error.map((detailError, index) => (
+      <p key={index}>{detailError}</p>
+    ));
+    const errorsTitle = this.props.error.length
+      ? (
+        <h3>
+          Errors
+          <button
+            className="btn-close"
+            onClick={this.props.closeErrorMessage}
+          >
+            <i className="fa fa-close " />
+          </button>
+        </h3>
+      ) : null;
+    const alertDetailErrors = alert
+      ? (
+        <div className={alertDetailErrorClasses}>
+          {errorsTitle}
+          {errors}
+        </div>
+      ) : null;
     const alertDetailElement = alert ? (
       <div className="flex-item content">
         <div className="spacing-section">
@@ -321,6 +360,7 @@ export class AlertDetail extends React.Component<Props, {}> {
     return (
       <section className="alert-detail flex-box flex-box--column flex--shrink">
         {alertHeaderElement}
+        {alertDetailErrors}
         {alertDetailElement}
         {loading ? <Loading /> : null}
       </section>
@@ -343,6 +383,7 @@ const mapStateToProps: MapStateToProps<ValueProps, OwnProps> = (
 ) => ({
   actions: state.alert.view.actions,
   alert: state.alert.detail.alert,
+  error: state.alert.detail.error,
   ipAddresses: state.alert.detail.ipAddresses,
   loading: state.alert.detail.loading,
   location: ownProps.location,
@@ -362,6 +403,7 @@ const mapDispatchToProps: MapDispatchToProps<FunctionProps, undefined> = (
   dispatch,
 ) => ({
   addComment: bindActionCreators(addAlertDetailComment, dispatch),
+  addErrorMessage: bindActionCreators(addErrorMessage, dispatch),
   closeAlert: bindActionCreators(closeAlert, dispatch),
   closeDataModal: bindActionCreators(closeDataModal, dispatch),
   openDataModal: bindActionCreators(openDataModal, dispatch),
@@ -369,6 +411,7 @@ const mapDispatchToProps: MapDispatchToProps<FunctionProps, undefined> = (
   performAction: bindActionCreators(performAlertDetailAction, dispatch),
   updateAlert: bindActionCreators(updateAlertDetail, dispatch),
   viewAlert: bindActionCreators(fetchAlertDetail, dispatch),
+  closeErrorMessage: bindActionCreators(closeErrorMessage, dispatch),
 });
 
 /**
