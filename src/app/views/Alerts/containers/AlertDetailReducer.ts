@@ -22,7 +22,6 @@ import {
   Reducer,
   ReducerMap,
 } from 'redux-actions';
-import * as _ from 'lodash';
 
 // Local
 import {
@@ -30,12 +29,12 @@ import {
   Markers,
 } from '../../../services/map/types';
 import { AlertDetail } from '../../../api/alerts/types';
-import * as actions from '../actions/detail';
+import * as actions from './AlertDetailActions';
 import { ResultIPAdresses } from '../../../types/result';
 import { RequestCanceler } from '../../../utils/RequestCanceler';
 
 /** State shape of the AlertDetail reducer. */
-export interface State {
+export interface AlertDetailState {
   /** ID of the currently selected alerts. */
   alertId: number | null;
   /** Locations from the alerts data with their addresses. */
@@ -58,7 +57,7 @@ export interface State {
  * Initial state of the AlertDetail reducer.
  * @type {State}
  */
-export const INITIAL_STATE: State = {
+export const INITIAL_STATE: AlertDetailState = {
   alert: null,
   alertId: null,
   ipAddresses: null,
@@ -69,7 +68,7 @@ export const INITIAL_STATE: State = {
   error: [],
 };
 
-const reducers: ReducerMap<State, any> = {};
+const reducers: ReducerMap<AlertDetailState, any> = {};
 
 const request = new RequestCanceler();
 
@@ -80,9 +79,9 @@ const request = new RequestCanceler();
  * @returns {State} Updated AlertDetail reducer state.
  */
 reducers[actions.CLOSE_ALERT] = (
-  state: State,
+  state: AlertDetailState,
   action: actions.CloseAlertAction,
-): State => {
+): AlertDetailState => {
   request.cancel();
 
   return Object.assign({}, state, INITIAL_STATE);
@@ -95,10 +94,10 @@ reducers[actions.CLOSE_ALERT] = (
  * @returns {State} Updated AlertDetail reducer state.
  */
 reducers[actions.FETCH_ALERT_PENDING] = (
-  state: State,
+  state: AlertDetailState,
   action: actions.FetchAlertPendingAction,
-): State => {
-  const update: Partial<State> = {
+): AlertDetailState => {
+  const update: Partial<AlertDetailState> = {
     alertId: action.payload.alertId,
     loading: true,
   };
@@ -116,10 +115,10 @@ reducers[actions.FETCH_ALERT_PENDING] = (
  * @returns {State} Updated AlertDetail reducer state.
  */
 reducers[actions.FETCH_ALERT_SUCCESS] = (
-  state: State,
+  state: AlertDetailState,
   action: actions.FetchAlertSuccessAction,
-): State => {
-  const update: Partial<State> = {
+): AlertDetailState => {
+  const update: Partial<AlertDetailState> = {
     alert: action.payload.alert,
     loading: false,
     locations: action.payload.locations,
@@ -136,10 +135,10 @@ reducers[actions.FETCH_ALERT_SUCCESS] = (
  * @returns {State} Updated AlertDetail reducer state.
  */
 reducers[actions.REQUEST_PENDING] = (
-  state: State,
+  state: AlertDetailState,
   action: actions.RequestPendingAction,
-): State => {
-  const update: Partial<State> = {
+): AlertDetailState => {
+  const update: Partial<AlertDetailState> = {
     loading: true,
   };
 
@@ -156,10 +155,10 @@ reducers[actions.REQUEST_PENDING] = (
  * @returns {State} Updated AlertDetail reducer state.
  */
 reducers[actions.REQUEST_FAILED] = (
-  state: State,
+  state: AlertDetailState,
   action: actions.RequestFailedAction,
-): State => {
-  const update: Partial<State> = {
+): AlertDetailState => {
+  const update: Partial<AlertDetailState> = {
     loading: false,
   };
 
@@ -173,10 +172,10 @@ reducers[actions.REQUEST_FAILED] = (
  * @returns {State} Updated AlertDetail reducer state.
  */
 reducers[actions.UPDATE_ALERT_SUCCESS] = (
-  state: State,
+  state: AlertDetailState,
   action: actions.UpdateAlertSuccessAction,
-): State => {
-  const update: Partial<State> = {
+): AlertDetailState => {
+  const update: Partial<AlertDetailState> = {
     alert: Object.assign({}, state.alert, action.payload),
     loading: false,
   };
@@ -191,10 +190,10 @@ reducers[actions.UPDATE_ALERT_SUCCESS] = (
  * @returns {State} Updated AlertDetail reducer state.
  */
 reducers[actions.OPEN_DATA_MODAL] = (
-  state: State,
+  state: AlertDetailState,
   action: actions.OpenDataModalAction,
-): State => {
-  const update: Partial<State> = {
+): AlertDetailState => {
+  const update: Partial<AlertDetailState> = {
     ipAddresses: action.payload,
     modalActive: true,
   };
@@ -209,10 +208,10 @@ reducers[actions.OPEN_DATA_MODAL] = (
  * @returns {State} Updated AlertDetail reducer state.
  */
 reducers[actions.CLOSE_DATA_MODAL] = (
-  state: State,
+  state: AlertDetailState,
   action: actions.CloseDataModalAction,
-): State => {
-  const update: Partial<State> = {
+): AlertDetailState => {
+  const update: Partial<AlertDetailState> = {
     modalActive: false,
   };
 
@@ -226,10 +225,10 @@ reducers[actions.CLOSE_DATA_MODAL] = (
  * @returns {State} Updated AlertDetailReducer state.
  */
 reducers[actions.ADD_ERROR_MESSAGE] = (
-  state: State,
+  state: AlertDetailState,
   action: actions.AddErrorMessageAction,
-): State => {
-  const update: Partial<State> = {
+): AlertDetailState => {
+  const update: Partial<AlertDetailState> = {
     error: action.payload,
   };
 
@@ -243,10 +242,10 @@ reducers[actions.ADD_ERROR_MESSAGE] = (
  * @returns {State} Updated AlertDetailReducer state.
  */
 reducers[actions.CLOSE_ERROR_MESSAGE] = (
-  state: State,
+  state: AlertDetailState,
   action: actions.CloseErrorMessageAction,
-): State => {
-  const update: Partial<State> = {
+): AlertDetailState => {
+  const update: Partial<AlertDetailState> = {
     error: [],
   };
 
@@ -257,4 +256,7 @@ reducers[actions.CLOSE_ERROR_MESSAGE] = (
  * Reducer for the alert detail view.
  * @type {Reducer<State, any>}
  */
-export const reducer = handleActions<State, any>(reducers, INITIAL_STATE);
+export const AlertDetailReducer = handleActions<AlertDetailState, any>(
+  reducers,
+  INITIAL_STATE,
+);

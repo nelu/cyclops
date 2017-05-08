@@ -33,7 +33,7 @@ import { store } from './store';
 import { DashboardContainer } from './views/Dashboard/containers/Dashboard';
 import { LayoutContainer } from './views/App/components/Layout';
 import { AlertViewContainer } from './views/Alerts/containers/AlertView';
-import { AlertDetailContainer } from './views/Alerts/containers/AlertDetailContainer';
+import { AlertDetailContainer } from './views/Alerts/containers/AlertDetail';
 
 const browserHistory = useRouterHistory(createHistory)({
   basename: CONFIG.APP_BASE_URL,

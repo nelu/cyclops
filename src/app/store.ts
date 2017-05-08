@@ -31,7 +31,7 @@ import thunkMiddleware from 'redux-thunk';
 import {
   reducer as alertsReducer,
   State as AlertsState,
-} from './views/Alerts/reducers/root';
+} from './views/Alerts/reducer';
 import {
   State as MonitorStatusState,
   reducer as monitorStatusReducer,

@@ -30,13 +30,13 @@ export type ReduxDispatch = Dispatch<StoreState>;
  * Local interface of react-redux functions that map the redux state to
  * a react component properties.
  */
-export type MapStateToProps<R, P> = (state: StoreState, ownProps: P) => R;
+export type StateToProps<R, P> = (state: StoreState, ownProps: P) => R;
 
 /**
  * Local interface of react-redux function that maps redux dispatch actions
  * to a react component properties.
  */
-export type MapDispatchToProps<R, P> = (
+export type DispatchToProps<R, P> = (
   dispatch: ReduxDispatch,
   ownProps: P,
 ) => R;

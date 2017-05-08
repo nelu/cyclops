@@ -6,7 +6,7 @@ import * as enzyme from 'enzyme';
 import * as _ from 'lodash';
 
 // Local
-import { AlertDataContextSearch } from './AlertDataContextSearchContainer';
+import { AlertDataContextSearch } from './AlertDataContextSearch';
 
 /**
  * Creates a specified number of fake result objects in an array.

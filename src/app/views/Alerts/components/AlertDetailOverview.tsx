@@ -24,18 +24,24 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { AlertDetailLevelSelect } from './AlertDetailLevelSelect';
 import { AlertDetailStatusSelect } from './AlertDetailStatusSelect';
 import { AlertDetailUserSelect } from './AlertDetailUserSelect';
-import { AlertDetailOutcomeSelect } from './AlertDetailOutcomeSelect';
+import { AlertDetailOutcome } from '../containers/AlertDetailOutcome';
 import {
   AlertUpdateRequest,
   AlertDetail,
   AlertLevelChoices,
   AlertStatusChoices,
   Alert,
+  AlertOutcomeChoices,
 } from '../../../api/alerts/types';
 import { User } from '../../../api/users/types';
 import { CONFIG } from '../../../config';
 import { shortenDistilleryName } from '../../../api/distilleries/utils';
 import { formatDate } from '../../../utils/formatDate';
+import { AlertStatusIcon } from './AlertStatusIcon';
+import { STATUS_OPTIONS } from '../constants';
+import { AlertDetailUnassignButton } from './AlertDetailUnassignButton';
+import { AlertDetailSelfAssignButton } from './AlertDetailSelfAssignButton';
+import { AlertDetailOutcomeRemove } from './AlertDetailOutcomeRemove';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -63,26 +69,6 @@ interface Props {
  * Displays a list of details about a given alerts.
  */
 export class AlertDetailOverview extends React.Component<Props, {}> {
-  /**
-   * Popover for the assign to self button.
-   * @type {JSX.Element}
-   */
-  public static assignToSelfOverlay = (
-    <Popover id="alert-detail-assign-to-me-overlay">
-      Assign to Self
-    </Popover>
-  );
-
-  /**
-   * Popover for the unassign button.
-   * @type {JSX.Element}
-   */
-  public static unassignOverlay = (
-    <Popover id="alert-detail-unassign-overlay">
-      Unassign
-    </Popover>
-  );
-
   /**
    * Changes the alerts level.
    * @param level
@@ -114,7 +100,7 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
    * Changes the outcome of the alerts.
    * @param outcome
    */
-  public selectOutcome = (outcome: string | null): void => {
+  public selectOutcome = (outcome: AlertOutcomeChoices): void => {
     this.props.updateAlert(this.props.alert, { outcome });
   };
 
@@ -135,52 +121,20 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
     this.props.updateAlert(this.props.alert, { assigned_user: null });
   };
 
+  /**
+   * Removes the current alert outcome.
+   */
+  public removeOutcome = (): void => {
+    this.props.updateAlert(this.props.alert, { outcome: null });
+  };
+
   public render(): JSX.Element {
-    const isDone = this.props.alert.status === 'DONE';
-    const assignedUser = this.props.alert.assigned_user;
-    const assignToSelfDisabled = assignedUser
-      ? assignedUser.id === CONFIG.CURRENT_USER.id
-      : false;
-    const unnassignDisabled = assignedUser === null;
     const contentDate = this.props.alert.content_date
       ? formatDate(this.props.alert.content_date)
       : 'Unknown';
     const distilleryName = this.props.alert.distillery
       ? shortenDistilleryName(this.props.alert.distillery.name)
       : 'None';
-    const assignToMeButton = this.props.alert.assigned_user || isDone
-      ? null
-      : (
-        <OverlayTrigger
-          overlay={AlertDetailOverview.assignToSelfOverlay}
-          placement="top"
-          animation={false}
-        >
-          <button
-            className="alert-detail__assign-btn"
-            onClick={this.assignToSelf}
-          >
-            <i className="fa fa-plus" />
-          </button>
-        </OverlayTrigger>
-      );
-    const unassignButton = this.props.alert.assigned_user && !isDone
-      ? this.props.alert.assigned_user.id === CONFIG.CURRENT_USER.id
-        ? (
-          <OverlayTrigger
-            overlay={AlertDetailOverview.unassignOverlay}
-            placement="top"
-            animation={false}
-          >
-            <button
-              className="alert-detail__assign-btn"
-              onClick={this.unassign}
-            >
-              <i className="fa fa-minus" />
-            </button>
-          </OverlayTrigger>
-        ) : null
-      : null;
 
     return (
       <div className="spacing-section">
@@ -205,30 +159,29 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
 
           <dt>Status:</dt>
           <dd>
-            <AlertDetailStatusSelect
-              currentStatus={this.props.alert.status}
-              selectStatus={this.selectStatus}
-            />
+            <AlertStatusIcon status={this.props.alert.status}/>
+            <span className="alert-icon-spacing">
+              {STATUS_OPTIONS[this.props.alert.status].name}
+            </span>
           </dd>
 
           <dt>
             Assigned:
-            {assignToMeButton}
-            {unassignButton}
+            <AlertDetailSelfAssignButton
+              user={this.props.alert.assigned_user}
+              assign={this.assignToSelf}
+            />
+            <AlertDetailUnassignButton
+              user={this.props.alert.assigned_user}
+              status={this.props.alert.status}
+              unassign={this.unassign}
+            />
           </dt>
           <dd>
             <AlertDetailUserSelect
               currentUser={this.props.alert.assigned_user}
               users={this.props.users}
               selectUser={this.selectUser}
-            />
-          </dd>
-
-          <dt>Outcome:</dt>
-          <dd>
-            <AlertDetailOutcomeSelect
-              currentOutcome={this.props.alert.outcome}
-              selectOutcome={this.selectOutcome}
             />
           </dd>
 

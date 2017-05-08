@@ -18,22 +18,22 @@
 
 // Vendor
 import * as React from 'react';
+import {
+  OverlayTrigger,
+  Popover,
+} from 'react-bootstrap';
 
 // Local
-import { SubtleTextArea } from '../../../components/SubtleTextArea';
-import { AlertDetailOutcome } from '../containers/AlertDetailOutcome';
 import { AlertOutcomeChoices } from '../../../api/alerts/types';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties for AlertDetailAnalysis component. */
+/** Properties of the AlertDetailOutcomeRemove component. */
 interface Props {
-  /** Current alert notes. */
-  notes: string;
   outcome: AlertOutcomeChoices;
-  selectOutcome(outcome: AlertOutcomeChoices, notes: string): any;
+  remove(): void;
 }
 
 // --------------------------------------------------------------------------
@@ -41,16 +41,35 @@ interface Props {
 // --------------------------------------------------------------------------
 
 /**
- * Displays the current analysis of an alerts and allows the user to make
- * changes to it.
+ * Displays a button that removes the current outcome for an alert.
  */
-export class AlertDetailAnalysis extends React.Component<Props, {}> {
-  public render(): JSX.Element {
-    return (
-      <div className="spacing-section">
-        <h3 className="sub-title">Outcome</h3>
+export class AlertDetailOutcomeRemove extends React.Component<Props, {}> {
+  /**
+   * Popover explaining that this button removes the current alert outcome.
+   * @type {JSX.Element}
+   */
+  public static POPOVER = (
+    <Popover id="alert-detail-outcome-remove-popover">
+      Remove Outcome
+    </Popover>
+  );
 
-      </div>
+  public render() {
+    if (this.props.outcome === null) { return null; }
+
+    return (
+      <OverlayTrigger
+        overlay={AlertDetailOutcomeRemove.POPOVER}
+        placement="top"
+        animation={false}
+      >
+        <button
+          className="alert-detail__assign-btn"
+          onClick={this.props.remove}
+        >
+          <i className="fa fa-minus" />
+        </button>
+      </OverlayTrigger>
     );
   }
 }

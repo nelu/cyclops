@@ -22,15 +22,18 @@ import * as _ from 'lodash';
 
 // Local
 import { ReduxAction } from '../../../types/redux';
-import * as actions from '../actions/list';
+import * as actions from './AlertViewActions';
 import {
   UPDATE_ALERT_SUCCESS,
   UpdateAlertSuccessPayload,
-} from '../actions/detail';
+} from './AlertDetailActions';
 import {
   AlertListItem,
   AlertSearchParams,
 } from '../../../api/alerts/types';
+import { User } from '../../../api/users/types';
+import { Distillery } from '../../../api/distilleries/types';
+import { Action } from '../../../api/actions/types';
 
 /** State shape of the AlertList reducer. */
 export interface State {
@@ -54,6 +57,12 @@ export interface State {
   pollingEnabled: boolean;
   /** Promise ID of the request. */
   promiseId: string | null;
+  /** Current list of users. */
+  users: User[];
+  /** List of distilleries that have alerts associated with them. */
+  distilleries: Distillery[];
+  /** Current list of actions that can be performed on an alert. */
+  actions: Action[];
 }
 
 /**
@@ -71,10 +80,13 @@ const INITIAL_STATE: State = {
   timeout: null,
   pollingEnabled: true,
   promiseId: null,
+  actions: [],
+  distilleries: [],
+  users: [],
 };
 
 /**
- * Mapped reducer functions that make up the AlertList reducer.
+ * Mapped reducer functions that make up the AlertList AlertDetailReducer.
  * @type {ReducerMap<State, any>}
  */
 const reducers: ReducerMap<State, any> = {};
@@ -292,6 +304,25 @@ reducers[UPDATE_ALERT_SUCCESS] = (
   const update: Partial<State> = { alerts: copiedAlerts };
 
   return Object.assign({}, state, update);
+};
+
+/**
+ * Updates the AlertList reducer based on a(n)  action.
+ * @param state Current AlertList reducer state.
+ * @param action  action.
+ * @returns {State} Updated AlertList reducer state.
+ */
+reducers[actions.FETCH_VIEW_RESOURCES_SUCCESS] = (
+  state: State,
+  action: actions.FetchViewResourcesSuccessAction,
+): State => {
+  const update: Partial<State> = {
+    actions: action.payload.actions,
+    distilleries: action.payload.distilleries,
+    users: action.payload.users,
+  };
+
+  return _.assign({}, state, update);
 };
 
 /**

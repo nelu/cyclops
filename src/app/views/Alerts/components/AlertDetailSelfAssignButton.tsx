@@ -18,24 +18,24 @@
 
 // Vendor
 import * as React from 'react';
+import {
+  OverlayTrigger,
+  Popover,
+} from 'react-bootstrap';
 
 // Local
-import { SubtleSelect } from '../../../components/SubtleSelect';
-import { OUTCOME_OPTIONS, OUTCOME_OPTIONS_LIST } from '../constants';
+import { User } from '../../../api/users/types';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties of the AlertDetailOutcomeSelect component. */
+/** Properties of the AlertDetailSelfAssignButton component. */
 interface Props {
-  /** Current alert outcome. */
-  currentOutcome: string | null;
-  /**
-   * Changes the outcome of the alert.
-   * @param outcome Outcome to change to.
-   */
-  selectOutcome(outcome: string | null): any;
+  /** User assigned to the alert. */
+  user: User | null;
+  /** Assigns the current user to the alert. */
+  assign(): void;
 }
 
 // --------------------------------------------------------------------------
@@ -43,31 +43,35 @@ interface Props {
 // --------------------------------------------------------------------------
 
 /**
- * Displays a subtle select that allows the user to change the outcome
- * of an alert.
+ * Displays a button that assigns an alert to the current user.
  */
-export class AlertDetailOutcomeSelect extends React.Component<Props, {}> {
+export class AlertDetailSelfAssignButton extends React.Component<Props, {}> {
   /**
-   * Selects the new outcome whenever it's changed in the SubtleSelect.
-   * @param outcome New outcome.
+   * Popover for the assign to self button.
+   * @type {JSX.Element}
    */
-  public handleSelect = (outcome: string) => {
-    if (outcome === 'null') { this.props.selectOutcome(null); }
-    else { this.props.selectOutcome(outcome); }
-  };
+  public static POPOVER = (
+    <Popover id="alert-detail-assign-to-me-overlay">
+      Assign to Self
+    </Popover>
+  );
 
-  public render(): JSX.Element {
-    const currentOutcomeString = String(this.props.currentOutcome);
-    const currentlySelected = OUTCOME_OPTIONS[currentOutcomeString].name;
+  public render() {
+    if (!!this.props.user) { return null; }
 
     return (
-      <SubtleSelect
-        options={OUTCOME_OPTIONS_LIST}
-        currentValue={currentOutcomeString}
-        onSelect={this.handleSelect}
+      <OverlayTrigger
+        overlay={AlertDetailSelfAssignButton.POPOVER}
+        placement="top"
+        animation={false}
       >
-        {currentlySelected}
-      </SubtleSelect>
+        <button
+          className="alert-detail__assign-btn"
+          onClick={this.props.assign}
+        >
+          <i className="fa fa-plus" />
+        </button>
+      </OverlayTrigger>
     );
   }
 }

@@ -38,8 +38,8 @@ import { PopupGenerator } from '../../../services/map/types';
 import { PieChartTable } from '../../../services/chart/components/PieChartTable';
 import { StackedAreaChart } from '../../../services/chart/components/StackedAreaChart';
 import {
-  MapDispatchToProps,
-  MapStateToProps,
+  DispatchToProps,
+  StateToProps,
 } from '../../../types/redux';
 import { fetchAlertStatistics } from '../actions/dashboard';
 
@@ -254,7 +254,7 @@ export class Dashboard extends React.Component<Props, {}> {
  * @param state Redux state.
  * @param ownProps Properties passed AlertDetailContainer.
  */
-const mapStateToProps: MapStateToProps<ValueProps, undefined> = (
+const mapStateToProps: StateToProps<ValueProps, undefined> = (
   state,
   ownProps,
 ) => ({
@@ -277,7 +277,7 @@ const mapStateToProps: MapStateToProps<ValueProps, undefined> = (
  * Maps redux dispatch functions to AlertDetail component properties.
  * @param dispatch Dispatch function from the redux store.
  */
-const mapDispatchToProps: MapDispatchToProps<FunctionProps, undefined> = (
+const mapDispatchToProps: DispatchToProps<FunctionProps, undefined> = (
   dispatch,
 ) => ({
   getAlertStatistics: bindActionCreators(fetchAlertStatistics, dispatch),

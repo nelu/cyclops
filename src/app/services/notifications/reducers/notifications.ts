@@ -38,7 +38,7 @@ const INITIAL_STATE: State = {
 };
 
 /**
- * Mapped reducer functions of the Notifications reducer.
+ * Mapped reducer functions of the Notifications AlertDetailReducer.
  * @type {ReducerMap<State, any>}
  */
 const reducers: ReducerMap<State, any> = {};

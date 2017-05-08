@@ -30,8 +30,8 @@ import { ErrorPopupContent } from '../components/ErrorPopupContent';
 import { StoredError } from '../types';
 import { Close } from '../../../components/Close';
 import {
-  MapStateToProps,
-  MapDispatchToProps,
+  StateToProps,
+  DispatchToProps,
 } from '../../../types/redux';
 import {
   clearErrors,
@@ -138,7 +138,7 @@ export class ErrorPopup extends React.Component<Props, {}> {
  * Maps redux state variables to the ErrorPopup component.
  * @param state Redux state.
  */
-const mapStateToProps: MapStateToProps<ValueProps, undefined> = (state) => ({
+const mapStateToProps: StateToProps<ValueProps, undefined> = (state) => ({
   currentError: state.error.current,
   errors: state.error.errors,
 });
@@ -147,7 +147,7 @@ const mapStateToProps: MapStateToProps<ValueProps, undefined> = (state) => ({
  * Maps redux dispatch functions to the ErrorPopup component.
  * @param dispatch Redux state dispatch function.
  */
-const mapDispatchToProps: MapDispatchToProps<FunctionsProps, undefined> = (
+const mapDispatchToProps: DispatchToProps<FunctionsProps, undefined> = (
   dispatch,
 ) => ({
   clearErrors: bindActionCreators(clearErrors, dispatch),

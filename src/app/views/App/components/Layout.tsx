@@ -25,7 +25,7 @@ import { connect } from 'react-redux';
 // Local
 import { Header } from './Header';
 import { ErrorPopupContainer } from '../containers/ErrorPopupContainer';
-import { MapDispatchToProps, MapStateToProps } from '../../../types/redux';
+import { DispatchToProps, StateToProps } from '../../../types/redux';
 import { setupNotifications } from '../../../services/notifications/actions/notifications';
 
 // --------------------------------------------------------------------------
@@ -88,7 +88,7 @@ export class Layout extends React.Component<Props, {}> {
  * @param state Redux state.
  * @param ownProps
  */
-const mapStateToProps: MapStateToProps<ValueProps, OwnProps> = (
+const mapStateToProps: StateToProps<ValueProps, OwnProps> = (
   state,
   ownProps,
 ) => ({
@@ -99,7 +99,7 @@ const mapStateToProps: MapStateToProps<ValueProps, OwnProps> = (
  * Maps redux dispatch functions to the ErrorPopup component.
  * @param dispatch Redux state dispatch function.
  */
-const mapDispatchToProps: MapDispatchToProps<FunctionProps, OwnProps> = (
+const mapDispatchToProps: DispatchToProps<FunctionProps, OwnProps> = (
   dispatch,
 ) => ({
   activateNotifications: bindActionCreators(setupNotifications, dispatch),

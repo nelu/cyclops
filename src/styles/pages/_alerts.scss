@@ -54,13 +54,23 @@
   font-weight: bold;
 }
 
+.alert-detail-outcome__button {
+  margin-left: $padding-base-horizontal - 7px;
+}
+
+.alert-detail-outcome__well {
+  margin-top: 10px;
+}
+
+
 .alert-detail__assign-btn {
-  @extend .btn;
+  //@extend .btn;
 
   padding: 3px 5px 1px;
   border-color: transparent;
   background-color: lighten($color-dark, 6%);
   border-width: 0;
+  border-radius: $border-radius-base;
   color: lighten($color-dark, 40%);
   font-size: 10px;
   margin-left: 5px;

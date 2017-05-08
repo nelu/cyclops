@@ -24,7 +24,8 @@
 
 $color-base: #313236;
 $color-dark: darken($color-base, 3%);
-$color-darker: darken($color-base, 8%);
+$color-darker: darken($color-base, 6%);
+$color-darkest: darken($color-base, 8%);
 $color-light: darken(#4F5054, 6%);
 $color-lighter: #4F5054;
 $color-primary: desaturate(#00ADBB, 15%);

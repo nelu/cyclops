@@ -26,13 +26,13 @@ import * as _ from 'lodash';
 
 // Local
 import { Result } from '../../../types/result';
-import * as actions from '../actions/contextSearch';
-import { CLOSE_DATA_MODAL, CloseDataModalAction } from '../actions/detail';
+import * as actions from './AlertDataContextSearchActions';
+import { CLOSE_DATA_MODAL, CloseDataModalAction } from './AlertDetailActions';
 
 /**
  * State shape of the ContextSearch reducer.
  */
-export interface State {
+export interface AlertDataContextSearchState {
   /** If the results for a search are currently loading. */
   loading: boolean;
   /** Current page number of the context search results. */
@@ -51,7 +51,7 @@ export interface State {
  * Initial state of the AlertDataContextSearch reducer.
  * @type {State}
  */
-const INITIAL_STATE: State = {
+const INITIAL_STATE: AlertDataContextSearchState = {
   loading: false,
   page: null,
   pageSize: 25,
@@ -65,7 +65,7 @@ const INITIAL_STATE: State = {
  * modifying the AlertDataContextSearch reducer state.
  * @type {ReducerMap<State, any>}
  */
-const reducers: ReducerMap<State, any> = {};
+const reducers: ReducerMap<AlertDataContextSearchState, any> = {};
 
 /**
  * Function that cancels a pending request.
@@ -89,10 +89,12 @@ function cancelRequest(canceler?: Canceler): void {
  * @returns {State} Updated ContextSearch reducer state.
  */
 reducers[actions.SELECT_CONTEXT] = (
-  state: State,
+  state: AlertDataContextSearchState,
   action: actions.SelectContextAction,
-): State => {
-  const update: Partial<State> = { selectedContext: action.payload };
+): AlertDataContextSearchState => {
+  const update: Partial<AlertDataContextSearchState> = {
+    selectedContext: action.payload,
+  };
 
   return _.assign({}, state, update);
 };
@@ -105,10 +107,10 @@ reducers[actions.SELECT_CONTEXT] = (
  * @returns {State} Updated ContextSearch reducer state.
  */
 reducers[actions.SEARCH_CONTEXT_PENDING] = (
-  state: State,
+  state: AlertDataContextSearchState,
   action: actions.SearchContextPendingAction,
-): State => {
-  const update: Partial<State> = { loading: true };
+): AlertDataContextSearchState => {
+  const update: Partial<AlertDataContextSearchState> = { loading: true };
 
   cancelRequest(action.payload);
 
@@ -123,10 +125,10 @@ reducers[actions.SEARCH_CONTEXT_PENDING] = (
  * @returns {State} Updated ContextSearch reducer state.
  */
 reducers[actions.SEARCH_CONTEXT_SUCCESS] = (
-  state: State,
+  state: AlertDataContextSearchState,
   action: actions.SearchContextSuccessAction,
-): State => {
-  const update: Partial<State> = {
+): AlertDataContextSearchState => {
+  const update: Partial<AlertDataContextSearchState> = {
     loading: false,
     page: action.payload.page,
     pageSize: action.payload.pageSize,
@@ -145,10 +147,10 @@ reducers[actions.SEARCH_CONTEXT_SUCCESS] = (
  * @returns {State} Updated ContextSearch reducer state.
  */
 reducers[actions.SEARCH_CONTEXT_FAILURE] = (
-  state: State,
+  state: AlertDataContextSearchState,
   action: actions.SearchContextFailureAction,
-): State => {
-  const update: Partial<State> = { loading: false };
+): AlertDataContextSearchState => {
+  const update: Partial<AlertDataContextSearchState> = { loading: false };
 
   return _.assign({}, state, update);
 };
@@ -160,9 +162,9 @@ reducers[actions.SEARCH_CONTEXT_FAILURE] = (
  * @returns {State} Updated ContextSearch reducer state.
  */
 reducers[CLOSE_DATA_MODAL] = (
-  state: State,
+  state: AlertDataContextSearchState,
   action: CloseDataModalAction,
-): State => {
+): AlertDataContextSearchState => {
   cancelRequest();
 
   return _.assign({}, state, INITIAL_STATE);
@@ -172,4 +174,10 @@ reducers[CLOSE_DATA_MODAL] = (
  * ContextSearch reducer.
  * @type {Reducer<State, any>}
  */
-export const reducer = handleActions<State, any>(reducers, INITIAL_STATE);
+export const AlertDataContextSearchReducer = handleActions<
+  AlertDataContextSearchState,
+  any
+>(
+  reducers,
+  INITIAL_STATE,
+);

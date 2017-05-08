@@ -16,6 +16,9 @@
  * are made]
  */
 
+// Vendor
+import axios from 'axios';
+
 // Local
 import { createAction } from '../../../utils/createReduxAction';
 import {
@@ -31,6 +34,12 @@ import { fetchAlertList } from '../../../api/alerts/api';
 import { addError } from '../../App/actions/errorPopup';
 import { createRandomId } from '../../../utils/createRandomId';
 import { StoreState } from '../../../store';
+import { DistilleryFlat } from '../../../api/distilleries/types';
+import { Action } from '../../../api/actions/types';
+import { User } from '../../../api/users/types';
+import { fetchAllUsers } from '../../../api/users/api';
+import { fetchAllActions } from '../../../api/actions/api';
+import { fetchAllAlertDistilleries } from '../../../api/distilleries/api';
 
 /**
  * Action type prefix for AlertList actions.
@@ -45,7 +54,7 @@ const ACTION_PREFIX = 'ALERT_LIST';
  * @returns {boolean} If the promise is valid.
  */
 function isValidPromise(promiseId: string, state: StoreState): boolean {
-  return promiseId === state.alert.list.promiseId;
+  return promiseId === state.alert.view.promiseId;
 }
 
 // --------------------------------------------------------------------------
@@ -291,6 +300,44 @@ export function disablePolling(): ReduxAction<DisablePollingPayload> {
 }
 
 // --------------------------------------------------------------------------
+// FETCH_VIEW_RESOURCES_SUCCESS
+// --------------------------------------------------------------------------
+
+/**
+ * Action Type:
+ * @type {string}
+ */
+export const FETCH_VIEW_RESOURCES_SUCCESS =
+  `${ACTION_PREFIX}/FETCH_VIEW_RESOURCES_SUCCESS`;
+
+/** FETCH_VIEW_RESOURCES_SUCCESS payload type. */
+export interface FetchViewResourcesSuccessPayload {
+  users: User[];
+  actions: Action[];
+  distilleries: DistilleryFlat[];
+}
+
+/** FETCH_VIEW_RESOURCES_SUCCESS action type. */
+export type FetchViewResourcesSuccessAction = ReduxAction<
+  FetchViewResourcesSuccessPayload
+  >;
+
+/**
+ * Creates a FETCH_VIEW_RESOURCES_SUCCESS action.
+ * @returns {ReduxAction<Payload>;
+ */
+export function fetchViewResourcesSuccess(
+  users: User[],
+  actions: Action[],
+  distilleries: DistilleryFlat[],
+): FetchViewResourcesSuccessAction {
+  return createAction(
+    FETCH_VIEW_RESOURCES_SUCCESS,
+    { users, actions, distilleries },
+  );
+}
+
+// --------------------------------------------------------------------------
 // Thunk Actions
 // --------------------------------------------------------------------------
 
@@ -382,5 +429,29 @@ export function pollAlertsTimeout(
 
       dispatch(pollAlertsWait(timeoutId, interval));
     }
+  };
+}
+
+/**
+ * Fetches the resources for the alert view.
+ * @returns {ThunkActionPromise}
+ */
+export function fetchViewResources(): ThunkActionPromise {
+  return (dispatch) => {
+    const promises = [
+      fetchAllUsers(),
+      fetchAllActions(),
+      fetchAllAlertDistilleries(),
+    ];
+    const spread = axios.spread<any, any>((
+      users: User[],
+      actions: Action[],
+      distilleries: DistilleryFlat[],
+    ) => {
+      dispatch(fetchViewResourcesSuccess(users, actions, distilleries));
+    });
+
+    return axios.all<any>(promises)
+      .then(spread);
   };
 }

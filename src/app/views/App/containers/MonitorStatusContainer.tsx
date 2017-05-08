@@ -25,8 +25,8 @@ import { connect } from 'react-redux';
 import { MonitorModal } from '../components/MonitorModal';
 import { NormalizedMonitorList } from '../../../api/monitors/types';
 import {
-  MapStateToProps,
-  MapDispatchToProps,
+  StateToProps,
+  DispatchToProps,
 } from '../../../types/redux';
 import {
   fetchMonitors,
@@ -121,7 +121,7 @@ export class MonitorStatus extends React.Component<Props, {}> {
  * Maps the current redux state to the MonitorStatus component.
  * @param state
  */
-const mapStateToProps: MapStateToProps<ValueProps, undefined> = (state) => ({
+const mapStateToProps: StateToProps<ValueProps, undefined> = (state) => ({
   loading: state.monitor.loading,
   modalActive: state.monitor.modalActive,
   monitors: state.monitor.monitors,
@@ -134,7 +134,7 @@ const mapStateToProps: MapStateToProps<ValueProps, undefined> = (state) => ({
  * Maps redux dispatch actions to the MonitorStatus component.
  * @param dispatch
  */
-const mapDispatchToProps: MapDispatchToProps<FunctionProps, undefined> = (
+const mapDispatchToProps: DispatchToProps<FunctionProps, undefined> = (
   dispatch,
 ) => ({
   closeModal: bindActionCreators(closeModal, dispatch),

@@ -21,7 +21,7 @@
 // --------------------------------------------------------------------------
 
 .header {
-  background-color: $color-darker;
+  background-color: $color-darkest;
   color: $text-color;
 }
 
@@ -36,7 +36,7 @@
 
   &:hover {
     color: #fff;
-    background-color: lighten($color-darker, 10%);
+    background-color: lighten($color-darkest, 10%);
   }
 }
 

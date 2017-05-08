@@ -16,24 +16,17 @@
  * are made]
  */
 
-// --------------------------------------------------------------------------
-// Form Classes
-// --------------------------------------------------------------------------
+// Vendor
+import * as sinon from 'sinon';
+import * as chai from 'chai';
 
-.text-area__input {
-  @extend .form-control;
+// Local
+import * as test from './AlertDetailOutcomeReducer';
 
-  min-height: 200px;
-  max-width: 100%;
-  margin-bottom: $padding-large-vertical;
-}
+describe('AlertDetailOutcomeReducer', () => {
+  let state: test.AlertDetailOutcomeState;
 
-.subtle-text-area__button {
-  @extend .subtle-button;
+  beforeEach(() => {
 
-  white-space: pre-line;
-}
-
-.input--danger {
-  border-color: darken($brand-danger, 20%);
-}
+  });
+});

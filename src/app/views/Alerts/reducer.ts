@@ -21,38 +21,36 @@ import { combineReducers} from 'redux';
 
 // Local
 import {
-  reducer as alertDetailReducer,
-  State as AlertDetailState,
-} from './detail';
+  AlertDetailReducer,
+  AlertDetailState,
+} from './containers/AlertDetailReducer';
 import {
   reducer as alertListReducer,
   State as AlertListState,
-} from './list';
+} from './containers/AlertViewReducer';
 import {
-  State as ContextSearchState,
-  reducer as contextSearchReducer,
-} from './contextSearch';
+  AlertDataContextSearchState,
+  AlertDataContextSearchReducer,
+} from './containers/AlertDataContextSearchReducer';
 import {
-  State as AlertViewState,
-  reducer as alertViewReducer,
-} from './view';
+  AlertDetailOutcomeReducer,
+  AlertDetailOutcomeState,
+} from './containers/AlertDetailOutcomeReducer';
 
-/**
- * State shape of the alerts domain.
- */
+/** State shape of the alerts domain. */
 export interface State {
-  context: ContextSearchState;
+  context: AlertDataContextSearchState;
   detail: AlertDetailState;
-  list: AlertListState;
-  view: AlertViewState;
+  outcome: AlertDetailOutcomeState;
+  view: AlertListState;
 }
 
 /**
  * Redux reducer for the alerts domain.
  */
 export const reducer = combineReducers<State>({
-  context: contextSearchReducer,
-  detail: alertDetailReducer,
-  list: alertListReducer,
-  view: alertViewReducer,
+  context: AlertDataContextSearchReducer,
+  detail: AlertDetailReducer,
+  outcome: AlertDetailOutcomeReducer,
+  view: alertListReducer,
 });

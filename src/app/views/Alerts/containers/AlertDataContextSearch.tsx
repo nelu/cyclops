@@ -37,13 +37,13 @@ import { Result } from '../../../types/result';
 import { getResultPaginationRange } from '../../../utils/getResultPaginationRange';
 import { denormalizeContext } from '../../../api/contexts/utils';
 import {
-  MapStateToProps,
-  MapDispatchToProps,
+  StateToProps,
+  DispatchToProps,
 } from '../../../types/redux';
 import {
   searchAlertDataContext,
   selectContext,
-} from '../actions/contextSearch';
+} from './AlertDataContextSearchActions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -269,7 +269,7 @@ export class AlertDataContextSearch extends React.Component<Props, State> {
  * @param state Redux state.
  * @param ownProps Properties passed AlertDetailContainer.
  */
-const mapStateToProps: MapStateToProps<ValueProps, OwnProps> = (
+const mapStateToProps: StateToProps<ValueProps, OwnProps> = (
   state,
   ownProps,
 ) => ({
@@ -287,7 +287,7 @@ const mapStateToProps: MapStateToProps<ValueProps, OwnProps> = (
  * Maps redux dispatch functions to AlertDetail component properties.
  * @param dispatch Dispatch function from the redux store.
  */
-const mapDispatchToProps: MapDispatchToProps<FunctionProps, undefined> = (
+const mapDispatchToProps: DispatchToProps<FunctionProps, undefined> = (
   dispatch,
 ) => ({
   searchContext: bindActionCreators(searchAlertDataContext, dispatch),

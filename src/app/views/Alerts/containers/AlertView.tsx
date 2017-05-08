@@ -34,16 +34,16 @@ import {
 import { Distillery } from '../../../api/distilleries/types';
 import { User } from '../../../api/users/types';
 import {
-  MapStateToProps,
-  MapDispatchToProps,
+  StateToProps,
+  DispatchToProps,
 } from '../../../types/redux';
 import {
   stopPolling,
   searchAlerts,
   pollAlerts,
   disablePolling,
-} from '../actions/list';
-import { fetchViewResources } from '../actions/view';
+  fetchViewResources,
+} from './AlertViewActions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -126,7 +126,7 @@ export class AlertView extends React.Component<Props, {}> {
    * Search fields found in the route parameters.
    * @type {string[]}
    */
-  public static searchParamFields = [
+  public static SEARCH_PARAM_FIELDS = [
     'level',
     'status',
     'assigned_user',
@@ -148,7 +148,7 @@ export class AlertView extends React.Component<Props, {}> {
   ): AlertSearchParams {
     const params: AlertSearchParams = _.pick(
       location.query as AlertSearchParams,
-      AlertView.searchParamFields,
+      AlertView.SEARCH_PARAM_FIELDS,
     );
 
     return _.assign({}, { limit: 30, offset: 0 }, params);
@@ -343,18 +343,18 @@ export class AlertView extends React.Component<Props, {}> {
  * @param state Redux state.
  * @param ownProps Properties passed AlertDetailContainer.
  */
-const mapStateToProps: MapStateToProps<ValueProps, OwnProps> = (
+const mapStateToProps: StateToProps<ValueProps, OwnProps> = (
   state,
   ownProps,
 ) => ({
-  alerts: state.alert.list.alerts,
-  count: state.alert.list.count,
+  alerts: state.alert.view.alerts,
+  count: state.alert.view.count,
   distilleries: state.alert.view.distilleries,
-  interval: state.alert.list.interval,
-  loading: state.alert.list.loading,
+  interval: state.alert.view.interval,
+  loading: state.alert.view.loading,
   location: ownProps.location,
-  polling: state.alert.list.polling,
-  pollingEnabled: state.alert.list.pollingEnabled,
+  polling: state.alert.view.polling,
+  pollingEnabled: state.alert.view.pollingEnabled,
   router: ownProps.router,
   selectedAlert: state.alert.detail.alertId,
   users: state.alert.view.users,
@@ -364,7 +364,7 @@ const mapStateToProps: MapStateToProps<ValueProps, OwnProps> = (
  * Maps redux dispatch functions to AlertDetail component properties.
  * @param dispatch Dispatch function from the redux store.
  */
-const mapDispatchToProps: MapDispatchToProps<FunctionProps, OwnProps> = (
+const mapDispatchToProps: DispatchToProps<FunctionProps, OwnProps> = (
   dispatch,
 ) => ({
   disablePolling: bindActionCreators(disablePolling, dispatch),

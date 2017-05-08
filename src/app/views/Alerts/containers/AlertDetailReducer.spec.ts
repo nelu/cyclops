@@ -21,8 +21,8 @@ import * as sinon from 'sinon';
 import * as chai from 'chai';
 
 // Local
-import * as reducer from './detail';
-import * as actions from '../actions/detail';
+import * as reducer from './AlertDetailReducer';
+import * as actions from './AlertDetailActions';
 import { Canceler } from 'axios';
 import * as d3 from 'd3';
 import second = d3.time.second;
@@ -30,7 +30,7 @@ import second = d3.time.second;
 describe('Alert Detail Reducer', () => {
   describe('CLOSE_ALERT', () => {
     it('should return the initial state', () => {
-      const state = reducer.reducer({} as any, actions.closeAlert());
+      const state = reducer.AlertDetailReducer({} as any, actions.closeAlert());
 
       chai.expect(state).to.deep.equal(reducer.INITIAL_STATE);
     });
@@ -39,8 +39,8 @@ describe('Alert Detail Reducer', () => {
       const state: any = {};
       const canceler = sinon.spy();
 
-      reducer.reducer(state, actions.fetchAlertPending(1, canceler));
-      reducer.reducer(state, actions.closeAlert());
+      reducer.AlertDetailReducer(state, actions.fetchAlertPending(1, canceler));
+      reducer.AlertDetailReducer(state, actions.closeAlert());
 
       chai.expect(canceler.called).to.be.true;
     });
@@ -56,7 +56,7 @@ describe('Alert Detail Reducer', () => {
     it('should update the state with the given payload', () => {
       const alertId = 1;
       const action = actions.fetchAlertPending(alertId, canceler);
-      const state = reducer.reducer({} as any, action);
+      const state = reducer.AlertDetailReducer({} as any, action);
 
       chai.expect(state).to.deep.equal({
         alertId: 1,
@@ -68,8 +68,8 @@ describe('Alert Detail Reducer', () => {
       const state: any = {};
       const secondCanceler = sinon.spy();
 
-      reducer.reducer(state, actions.fetchAlertPending(1, canceler));
-      reducer.reducer(state, actions.fetchAlertPending(2, secondCanceler));
+      reducer.AlertDetailReducer(state, actions.fetchAlertPending(1, canceler));
+      reducer.AlertDetailReducer(state, actions.fetchAlertPending(2, secondCanceler));
 
       chai.expect(canceler.called).to.be.true;
     });
@@ -79,7 +79,7 @@ describe('Alert Detail Reducer', () => {
     it('should add the error message to the state', () => {
       const message = ['message'];
       const action = actions.addErrorMessage(message);
-      const state = reducer.reducer({} as any, action);
+      const state = reducer.AlertDetailReducer({} as any, action);
 
       chai.expect(state).to.deep.equal({ error: message });
     });
@@ -87,7 +87,7 @@ describe('Alert Detail Reducer', () => {
 
   describe('CLOSE_ERROR_MESSAGE', () => {
     it('should set the error message to an empty string', () => {
-      const state = reducer.reducer({} as any, actions.closeErrorMessage());
+      const state = reducer.AlertDetailReducer({} as any, actions.closeErrorMessage());
 
       chai.expect(state).to.deep.equal({ error: [] });
     });

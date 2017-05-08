@@ -23,7 +23,7 @@ import axios from 'axios';
 
 // Local
 import * as alertsAPI from '../../../api/alerts/api';
-import * as actions from './detail';
+import * as actions from './AlertDetailActions';
 import * as errorActions from '../../App/actions/errorPopup';
 import * as checkAlertUpdate from '../../../api/alerts/utils/checkAlertUpdate';
 import * as modifyAlertUpdate from '../../../api/alerts/utils/modifyAlertUpdate';
@@ -221,8 +221,7 @@ describe('Alert Detail actions', () => {
           type: actions.REQUEST_PENDING,
           payload: cancel,
           error: undefined,
-          }],
-        );
+        }]);
       });
     });
 

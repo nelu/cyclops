@@ -19,21 +19,19 @@
 // Vendor
 import * as React from 'react';
 
-// Local
-import { SubtleTextArea } from '../../../components/SubtleTextArea';
-import { AlertDetailOutcome } from '../containers/AlertDetailOutcome';
-import { AlertOutcomeChoices } from '../../../api/alerts/types';
-
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties for AlertDetailAnalysis component. */
+/** Properties of the TextAreaPlain component. */
 interface Props {
-  /** Current alert notes. */
-  notes: string;
-  outcome: AlertOutcomeChoices;
-  selectOutcome(outcome: AlertOutcomeChoices, notes: string): any;
+  /** Current text to place in the text area. */
+  value?: string;
+  /**
+   * Function to run whenever the text changes.
+   * @param value Current text in the text area.
+   */
+  onChange(value: string): any;
 }
 
 // --------------------------------------------------------------------------
@@ -41,15 +39,28 @@ interface Props {
 // --------------------------------------------------------------------------
 
 /**
- * Displays the current analysis of an alerts and allows the user to make
- * changes to it.
+ * Displays a text area that handles the onChange event.
  */
-export class AlertDetailAnalysis extends React.Component<Props, {}> {
-  public render(): JSX.Element {
-    return (
-      <div className="spacing-section">
-        <h3 className="sub-title">Outcome</h3>
+export class TextAreaPlain extends React.Component<Props, {}> {
+  /**
+   * Handles the onChange event from a text area.
+   * @param event Text area onChange event.
+   */
+  public handleChange: React.FormEventHandler<HTMLTextAreaElement> = (
+    event,
+  ) => {
+    this.props.onChange(event.currentTarget.value);
+  };
 
+  public render() {
+    return (
+      <div className="form-group">
+        <textarea
+          className="form-control"
+          rows={8}
+          onChange={this.handleChange}
+          value={this.props.value}
+        />
       </div>
     );
   }

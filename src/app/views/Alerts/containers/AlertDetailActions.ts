@@ -415,22 +415,21 @@ export function fetchAlertDetail(alertId: number): ThunkActionPromise {
         nestedAlert = alert;
 
         if (alert.distillery) {
-          return getLocationsWithAddress(
-            alert.distillery.container,
-            alert.data,
-            source.token,
-          );
+          const { container } = alert.distillery;
+          const { data } = alert;
+          const { token } = source;
+
+          return getLocationsWithAddress(container, data, token)
+            .then((locations) => {
+              const markers = locations.length
+                ? createLocationGeoJSON(locations)
+                : null;
+
+              dispatch(fetchAlertSuccess(nestedAlert, locations, markers));
+            });
         }
 
         dispatch(fetchAlertSuccess(nestedAlert, null, null));
-
-        return Promise.reject(new Error('Alert object missing distillery'));
-      })
-      .then((locations) => {
-        const markers = locations.length ?
-          createLocationGeoJSON(locations) : null;
-
-        dispatch(fetchAlertSuccess(nestedAlert, locations, markers));
       })
       .catch(handleError(dispatch));
   };

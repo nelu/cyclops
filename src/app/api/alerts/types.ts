@@ -38,7 +38,21 @@ import { NormalizedList, NormalizedEntity } from '../../types/normalizr';
 export type AlertStatusChoices = 'NEW' | 'BUSY' | 'DONE';
 
 /** Level choices for alerts. */
-export type AlertLevelChoices = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW' | 'INFO';
+export type AlertLevelChoices = (
+  'CRITICAL' |
+  'HIGH' |
+  'MEDIUM' |
+  'LOW' |
+  'INFO'
+);
+
+export type AlertOutcomeChoices = (
+  'completed' |
+  'duplicate' |
+  'false positive' |
+  'N/A' |
+  null
+);
 
 /** Base interface of the alert object from the Cyphon API. */
 export interface Alert {
@@ -53,7 +67,7 @@ export interface Alert {
   /** Priority level of the alert. */
   level: AlertLevelChoices;
   /** Outcome of the alert. */
-  outcome: string | null;
+  outcome: AlertOutcomeChoices;
   /** Workflow status of the alert. */
   status: AlertStatusChoices;
   /** Short description of the alert. */
@@ -101,7 +115,7 @@ export interface AlertUpdateRequest {
   /** Current status of the alert. */
   status?: AlertStatusChoices;
   /** Current outcome of the alert. */
-  outcome?: string | null;
+  outcome?: AlertOutcomeChoices;
   /** Current user of the alert. */
   assigned_user?: number | null;
 }

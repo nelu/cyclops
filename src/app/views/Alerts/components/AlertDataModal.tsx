@@ -37,7 +37,7 @@ import { AlertDataLocationMap } from './AlertDataLocationMap';
 import { AlertData } from './AlertData';
 import { Close } from '../../../components/Close';
 import { AlertDetail } from '../../../api/alerts/types';
-import { AlertDataContextSearchContainer } from '../containers/AlertDataContextSearchContainer';
+import { AlertDataContextSearchContainer } from '../containers/AlertDataContextSearch';
 import { normalizeContexts } from '../../../api/contexts/utils';
 
 // --------------------------------------------------------------------------

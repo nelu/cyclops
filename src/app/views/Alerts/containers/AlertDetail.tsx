@@ -28,6 +28,7 @@ import * as classnames from 'classnames';
 import {
   Alert,
   AlertDetail as AlertDetailResponse,
+  AlertOutcomeChoices,
   AlertUpdateRequest,
 } from '../../../api/alerts/types';
 import { Loading } from '../../../components/Loading';
@@ -36,6 +37,7 @@ import { AlertDetailOverview } from '../components/AlertDetailOverview';
 import { AlertDetailActions } from '../components/AlertDetailActions';
 import { AlertDetailAnalysis } from '../components/AlertDetailAnalysis';
 import { AlertDetailHeader } from '../components/AlertDetailHeader';
+import { AlertDetailOutcomeContainer } from '../containers/AlertDetailOutcome';
 import {
   LocationFieldAddress,
   Markers,
@@ -47,8 +49,8 @@ import { SubTitle } from '../../../components/SubTitle';
 import { Map } from '../../../services/map/components/Map';
 import { JSONFormatter } from '../../../components/JSONFormatter';
 import {
-  MapStateToProps,
-  MapDispatchToProps,
+  StateToProps,
+  DispatchToProps,
 } from '../../../types/redux';
 import { User } from '../../../api/users/types';
 import { AlertDataModal } from '../components/AlertDataModal';
@@ -63,7 +65,7 @@ import {
   closeDataModal,
   addErrorMessage,
   closeErrorMessage,
-} from '../actions/detail';
+} from './AlertDetailActions';
 import { Action } from '../../../api/actions/types';
 import { Container } from '../../../api/containers/types';
 
@@ -233,6 +235,20 @@ export class AlertDetail extends React.Component<Props, {}> {
   };
 
   /**
+   * Changes the alert outcome and notes.
+   * @param outcome Alert outcome to change to.
+   * @param notes Notes describing the reason behind the outcome.
+   */
+  public selectOutcome = (
+    outcome: AlertOutcomeChoices,
+    notes: string,
+  ): void => {
+    if (this.props.alert) {
+      this.props.updateAlert(this.props.alert, { outcome, notes });
+    }
+  };
+
+  /**
    * Renders an HTML element based on the current properties.
    */
   public render() {
@@ -322,10 +338,7 @@ export class AlertDetail extends React.Component<Props, {}> {
 
         {map}
 
-        <AlertDetailAnalysis
-          notes={alert.notes}
-          updateNotes={updateNotes}
-        />
+        <AlertDetailOutcomeContainer alert={alert} />
 
         <AlertDetailComments
           alertId={alert.id}
@@ -377,7 +390,7 @@ export class AlertDetail extends React.Component<Props, {}> {
  * @param state Redux state.
  * @param ownProps Properties passed AlertDetailContainer.
  */
-const mapStateToProps: MapStateToProps<ValueProps, OwnProps> = (
+const mapStateToProps: StateToProps<ValueProps, OwnProps> = (
   state,
   ownProps,
 ) => ({
@@ -399,7 +412,7 @@ const mapStateToProps: MapStateToProps<ValueProps, OwnProps> = (
  * Maps redux dispatch functions to AlertDetail component properties.
  * @param dispatch Dispatch function from the redux store.
  */
-const mapDispatchToProps: MapDispatchToProps<FunctionProps, undefined> = (
+const mapDispatchToProps: DispatchToProps<FunctionProps, undefined> = (
   dispatch,
 ) => ({
   addComment: bindActionCreators(addAlertDetailComment, dispatch),
