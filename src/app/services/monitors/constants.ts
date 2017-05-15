@@ -22,7 +22,11 @@ import { schema } from 'normalizr';
  * Normalizr schema of a monitor object.
  * @type {schema.Entity}
  */
-export const MONITOR_SCHEMA = new schema.Entity('monitors');
+export const MONITOR_SCHEMA = new schema.Entity(
+  'monitors',
+  {},
+  { idAttribute: 'name' },
+);
 
 /**
  * Normalizr schema of a list of monitor objects.
