@@ -44,8 +44,9 @@ export class AlertDetailOutcomeRemove extends React.Component<Props, {}> {
       <div>
         <div className="well">
           <p className="well__content">
-            Are you sure you want to remove the current outcome? This will
-            remove the description and set the alert status back to Busy.
+            Are you sure you want to remove the current outcome?
+            The outcome description will be removed and the alert
+            status will be set back to busy.
           </p>
         </div>
 

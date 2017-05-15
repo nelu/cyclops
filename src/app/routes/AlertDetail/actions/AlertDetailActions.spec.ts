@@ -30,6 +30,7 @@ import * as modifyAlertUpdate from '../../../services/alerts/utils/modifyAlertUp
 import * as apiUtils from '../../../services/cyphon/utils/getCancelTokenSource';
 import {
   Alert,
+  AlertDetail,
   AlertUpdateRequest
 } from '../../../services/alerts/types';
 
@@ -167,7 +168,7 @@ describe('Alert Detail actions', () => {
         .stub(alertsAPI, 'updateAlert')
         .returns(promise);
 
-      testAction = (alert: Alert, fields: AlertUpdateRequest) => {
+      testAction = (alert: AlertDetail, fields: AlertUpdateRequest) => {
         return actions.updateAlertDetail(alert, fields)(dispatch, getState, undefined);
       };
     });

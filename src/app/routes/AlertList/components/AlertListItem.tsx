@@ -71,6 +71,9 @@ export class AlertListItem extends React.Component<Props, {}> {
       `alert-list-item--${alert.level.toLowerCase()}`,
       { active: isActive },
     );
+    const user = alert.assigned_user
+      ? getUserFullName(alert.assigned_user)
+      : 'Unassigned';
 
     return (
       <tr className={classes} onClick={this.selectAlert}>
@@ -91,7 +94,7 @@ export class AlertListItem extends React.Component<Props, {}> {
             </div>
             <div className="alert-list-item__user flex-item flex--shrink">
               <span className="text--emphasis">
-                {alert.assigned_user ? getUserFullName(alert.assigned_user) : 'Unassigned'}
+                {user}
               </span>
             </div>
           </div>

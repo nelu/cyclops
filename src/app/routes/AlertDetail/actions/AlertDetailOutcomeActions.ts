@@ -25,6 +25,7 @@ import {
 } from '../../../types/redux';
 import {
   Alert,
+  AlertDetail,
   AlertOutcomeChoices,
 } from '../../../services/alerts/types';
 import { updateAlertDetail } from './AlertDetailActions';
@@ -222,7 +223,7 @@ export function changeNotes(notes: string): ChangeNotesAction {
  * @returns {ThunkActionPromise}
  */
 export function submit(
-  alert: Alert,
+  alert: AlertDetail,
   outcome: AlertOutcomeChoices,
   notes: string,
 ): ThunkActionPromise {
@@ -237,7 +238,7 @@ export function submit(
  * Removes the current alert outcome.
  * @returns {ThunkActionPromise}
  */
-export function removeOutcome(alert: Alert): ThunkActionPromise {
+export function removeOutcome(alert: AlertDetail): ThunkActionPromise {
   return (dispatch) => {
     const update = { outcome: null, notes: '' };
 

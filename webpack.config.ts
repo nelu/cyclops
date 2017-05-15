@@ -38,10 +38,24 @@ import {
 } from './cyclops.config';
 
 // --------------------------------------------------------------------------
+// Interfaces/Types
+// --------------------------------------------------------------------------
+
+/**
+ * Dictionary of possible environments paired with a function that
+ * returns that environments plugins.
+ */
+type PluginAssignments = { [environment: string]: () => Plugin[] };
+
+// --------------------------------------------------------------------------
 // Constants
 // --------------------------------------------------------------------------
 
-const ENV = process.env.NODE_ENV;
+/**
+ * Current running environment.
+ * @type {string}
+ */
+const ENV = process.env.NODE_ENV || 'development';
 
 /**
  * If webpack is being run in a production environment.
@@ -55,7 +69,11 @@ const PRODUCTION = ENV === 'production';
  */
 const TESTING = ENV === 'test';
 
-const DEVELOPMENT = ENV === 'development' || !ENV;
+/**
+ * If webpack is being run in a development environment.
+ * @type {boolean}
+ */
+const DEVELOPMENT = ENV === 'development';
 
 // --------------------------------------------------------------------------
 // Loaders
@@ -90,6 +108,12 @@ const CSS_LOADER: Loader = {
 
 const JS_SOURCEMAP_RULE: Rule = {
   test: /\.js$/,
+  enforce: 'pre',
+  use: ['source-map-loader'],
+};
+
+const TS_SOURCEMAP_RULE: Rule = {
+  test: /\.tsx?$/,
   enforce: 'pre',
   use: ['source-map-loader'],
 };
@@ -151,7 +175,8 @@ const COVERAGE_RULE: Rule = {
  * @type {Rule[]}
  */
 const BASE_RULES: Rule[] = [
-  // JS_SOURCEMAP_RULE,
+  JS_SOURCEMAP_RULE,
+  TS_SOURCEMAP_RULE,
   CSS_RULE,
   TYPESCRIPT_RULE,
   SCSS_RULE,
@@ -182,11 +207,18 @@ const RULES: Rule[] = TESTING
  * @type {Plugin[]}
  */
 const BASE_PLUGINS: Plugin[] = [
+  new ExtractTextPlugin(MAIN_CSS_FILE),
+];
+
+/**
+ * Plugins that are used in a testing environment.
+ * @type {Plugin[]}
+ */
+const TEST_PLUGINS: Plugin[] = [
   new SourceMapDevToolPlugin({
     filename: null, // if no value is provided the sourcemap is inlined
     test: /\.(tsx?|js)($|\?)/i, // process .js and .ts files only
   }),
-  new ExtractTextPlugin(MAIN_CSS_FILE),
 ];
 
 /**
@@ -203,12 +235,20 @@ const PRODUCTION_PLUGINS: Plugin[] = [
 ];
 
 /**
+ * Plugins specific to each environment.
+ * @type {PluginAssignments}
+ */
+const PLUGIN_ASSIGNMENTS: PluginAssignments = {
+  development: () => BASE_PLUGINS,
+  production: () => BASE_PLUGINS.concat(PRODUCTION_PLUGINS),
+  test: () => BASE_PLUGINS.concat(TEST_PLUGINS),
+};
+
+/**
  * Plugins used in the webpack configuration.
  * @type {Plugin[]}
  */
-const PLUGINS: Plugin[] = PRODUCTION
-  ? BASE_PLUGINS.concat(PRODUCTION_PLUGINS)
-  : BASE_PLUGINS;
+const PLUGINS: Plugin[] = PLUGIN_ASSIGNMENTS[ENV]();
 
 // --------------------------------------------------------------------------
 // Configuration
@@ -241,7 +281,7 @@ const config: Configuration = {
     },
   },
 
-  devtool: TESTING ? 'inline-source-map' : 'source-map',
+  devtool: TESTING || DEVELOPMENT ? 'inline-source-map' : 'source-map',
 
   module: {
     rules: RULES,

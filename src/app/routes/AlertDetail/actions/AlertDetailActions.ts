@@ -25,37 +25,38 @@ import {
   ReduxAction,
   ThunkActionPromise,
   ReduxDispatch,
-} from '../../../types/redux';
-import { createAction } from '../../../utils/createReduxAction';
+} from '~/types/redux';
+import { createAction } from '~/utils/createReduxAction';
 import {
   Alert,
   AlertDetail,
   AlertUpdateRequest,
-} from '../../../services/alerts/types';
-import { getCancelTokenSource } from '../../../services/cyphon/utils/getCancelTokenSource';
+} from '~/services/alerts/types';
+import { getCancelTokenSource } from '~/services/cyphon/utils/getCancelTokenSource';
 import {
   fetchAlert,
   updateAlert,
   performAction,
   addComment,
-} from '../../../services/alerts/api';
+} from '~/services/alerts/api';
 import { addError } from '../../App/actions/ErroPopupActions';
-import { getLocationsWithAddress } from '../../../services/map/utils/getLocationsWithAddress';
-import { createLocationGeoJSON } from '../../../services/map/utils/createLocationGeoJSON';
+import { getLocationsWithAddress } from '~/services/map/utils/getLocationsWithAddress';
+import { createLocationGeoJSON } from '~/services/map/utils/createLocationGeoJSON';
 import {
   LocationFieldAddress,
   Markers,
-} from '../../../services/map/types';
+} from '~/services/map/types';
 import {
   Result,
   ResultIPAdresses,
-} from '../../../types/result';
-import { Container } from '../../../services/containers/types';
-import { getFieldsOfType } from '../../../services/containers/utils/getFieldsOfType';
-import { CONTAINER_FIELDS } from '../../../services/containers/constants';
-import { Dictionary } from '../../../types/object';
-import { checkAlertUpdate } from '../../../services/alerts/utils/checkAlertUpdate';
-import { modifyAlertUpdate } from '../../../services/alerts/utils/modifyAlertUpdate';
+} from '~/types/result';
+import { Container } from '~/services/containers/types';
+import { getFieldsOfType } from '~/services/containers/utils/getFieldsOfType';
+import { CONTAINER_FIELDS } from '~/services/containers/constants';
+import { Dictionary } from '~/types/object';
+import { checkAlertUpdate } from '~/services/alerts/utils/checkAlertUpdate';
+import { modifyAlertUpdate } from '~/services/alerts/utils/modifyAlertUpdate';
+import { createAlertUpdateComment } from '~/routes/AlertDetail/utils/createAlertUpdateComment';
 
 // --------------------------------------------------------------------------
 // Helper Functions/Variables
@@ -69,7 +70,7 @@ import { modifyAlertUpdate } from '../../../services/alerts/utils/modifyAlertUpd
  */
 function handleError(dispatch: ReduxDispatch) {
   return (error: any): void => {
-    if (axios.isCancel(error)) return;
+    if (axios.isCancel(error)) { return; }
 
     dispatch(requestFailed());
     dispatch(addError(error));
@@ -448,10 +449,11 @@ export function fetchAlertDetail(alertId: number): ThunkActionPromise {
  * @returns {ThunkActionPromise}
  */
 export function updateAlertDetail(
-  alert: Alert,
+  alert: AlertDetail,
   fields: AlertUpdateRequest,
 ): ThunkActionPromise {
   return (dispatch) => {
+    console.log('yay');
     const request = checkAlertUpdate(alert, fields);
 
     if (request.valid) {
@@ -461,7 +463,20 @@ export function updateAlertDetail(
       dispatch(requestPending(source.cancel));
 
       return updateAlert(alert.id, modifiedFields, source.token)
-        .then(updateAlertDetailObject(dispatch))
+        .then((update) => {
+          const comment = createAlertUpdateComment(alert, fields);
+
+          if (comment) {
+            return addComment(alert.id, comment, source.token)
+              .then(updateAlertDetailObject(dispatch))
+              .catch((error) => {
+                updateAlertDetailObject(dispatch)(update);
+                handleError(dispatch)(error);
+              });
+          }
+
+          updateAlertDetailObject(dispatch)(update);
+        })
         .catch(handleError(dispatch));
     }
 
