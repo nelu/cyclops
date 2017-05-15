@@ -67,7 +67,10 @@ export function unauthenticateSession(req: Request): void {
  * the next parameter in the url query.
  */
 export function redirectToLogin(req: Request, res: Response): void {
-  const nextUrl = encodeURIComponent(req.originalUrl);
+  const isLogout = req.originalUrl === '/logout';
+  const nextUrl = isLogout
+    ? encodeURIComponent('/app')
+    : encodeURIComponent(req.originalUrl);
   const redirectUrl = `${LOGIN_URL}?next=${nextUrl}`;
 
   res.redirect(redirectUrl);
