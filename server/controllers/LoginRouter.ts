@@ -117,7 +117,7 @@ interface LoginTemplateOptions {
  */
 export class LoginRouter {
   /**
-   * Login template options that are the same between all views.
+   * Login template options that are the same between all routes.
    * @type {LoginTemplateOptions}
    */
   public static BASE_LOGIN_TEMPLATE_OPTIONS: LoginTemplateOptions = {

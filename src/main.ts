@@ -21,11 +21,13 @@ import { render } from 'react-dom';
 
 // Local
 import { CONFIG } from './app/config';
-import { App } from './app/index';
+import { App } from './app';
 
 // CSS
 require('../node_modules/nvd3/build/nv.d3.css');
 require('./styles/app.scss');
-require('./pollyfill');
+
+// Polyfills
+require('core-js/shim');
 
 render(App, document.getElementById(CONFIG.APP_CONTAINER_ID));

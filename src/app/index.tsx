@@ -30,25 +30,28 @@ import { Provider } from 'react-redux';
 // Local
 import { CONFIG } from './config';
 import { store } from './store';
-import { DashboardContainer } from './views/Dashboard/containers/Dashboard';
-import { LayoutContainer } from './views/App/components/Layout';
-import { AlertViewContainer } from './views/Alerts/containers/AlertView';
-import { AlertDetailContainer } from './views/Alerts/containers/AlertDetail';
+import { Routes } from './routes';
 
+/** React router history that uses the base url given by the parent template. */
 const browserHistory = useRouterHistory(createHistory)({
   basename: CONFIG.APP_BASE_URL,
 });
 
+// --------------------------------------------------------------------------
+// Main Application
+// --------------------------------------------------------------------------
+
+/**
+ * Root component of the application.
+ * @type {JSX.Element}
+ */
 export const App = (
   <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/" component={LayoutContainer}>
-        <IndexRoute component={DashboardContainer}/>
-        <Route path="alerts" component={AlertViewContainer}>
-          <Route
-            path=":alertId"
-            component={AlertDetailContainer}
-          />
+      <Route path="/" component={Routes.App}>
+        <IndexRoute component={Routes.Dashboard}/>
+        <Route path="alerts" component={Routes.AlertList}>
+          <Route path=":alertId" component={Routes.AlertDetail}/>
         </Route>
       </Route>
     </Router>

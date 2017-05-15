@@ -58,24 +58,12 @@ export default (config: Config) => {
     webpack: webpackConfig,
 
     webpackMiddleware: {
-      noInfo: true,
+      stats: 'errors-only',
     },
 
     client: {
       captureConsole: true,
     },
-
-    // coverageReporter: {
-    //   dir: 'coverage',
-    //   reporters: [
-    //     { type: 'html' },
-    //     { type: 'lcov' },
-    //     { type: 'text-summary' },
-    //   ],
-    //   instrumenterOptions: {
-    //     istanbul: { noCompact: true },
-    //   },
-    // },
 
     coverageReporter: {
       dir: 'coverage',
@@ -95,12 +83,5 @@ export default (config: Config) => {
       timeoutNotCreated: 2000,
       timeoutNoMoreFiles: 2000,
     },
-
-    // coverageIstanbulReporter: {
-    //   reporters: ['html'],
-    //   dir: 'coverage',
-    //   fixWebpackSourcePaths: true,
-    //   skipFilesWithNoCoverage: true,
-    // },
   });
 };

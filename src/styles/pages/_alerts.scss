@@ -58,6 +58,14 @@
   margin-left: $padding-base-horizontal - 7px;
 }
 
+.alert-detail-outcome__remove {
+  margin-left: 8px;
+}
+
+.alert-detail-outcome__description {
+  margin-bottom: 5px;
+}
+
 .alert-detail-outcome__well {
   margin-top: 10px;
 }
@@ -337,7 +345,7 @@ $alert-search-bar-height: 35px;
 //== Comment
 
 .alert-comment {
-  border-bottom: darken($border-color-light, 7%) 1px solid;
+  //border-bottom: darken($border-color-light, 7%) 1px solid;
   margin-bottom: 15px;
 }
 
@@ -354,7 +362,12 @@ $alert-search-bar-height: 35px;
 
 .alert-comment__content {
   white-space: pre-line;
-  margin-top: $padding-large-vertical;
+  margin-top: 15px;
+  margin-bottom: 0;
+}
+
+.alert-comment__date {
+  margin-left: 10px;
 }
 
 .alert-action__select {

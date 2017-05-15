@@ -22,9 +22,9 @@ import { CancelToken } from 'axios';
 
 // Local
 import { Result } from '../../../types/result';
-import { Container } from '../../../api/containers/types';
-import { getFieldsOfType } from '../../../api/containers/utils';
-import { CONTAINER_FIELDS } from '../../../api/containers/schemas';
+import { Container } from '../../containers/types';
+import { getFieldsOfType } from '../../containers/utils/getFieldsOfType';
+import { CONTAINER_FIELDS } from '../../containers/constants';
 import { LocationFieldAddress, LocationField } from '../types';
 import { reverseLookup } from './reverseLookup';
 

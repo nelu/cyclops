@@ -16,7 +16,7 @@
  * are made]
  */
 
-require('./pollyfill');
+require('core-js/shim');
 
 const testContext = require.context('./app', true, /\.tsx?$/);
 

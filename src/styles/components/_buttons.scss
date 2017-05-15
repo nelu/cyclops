@@ -75,6 +75,17 @@ $btn-default-dark-border: darken($color-dark, 3%);
   }
 }
 
+.btn-basic {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  color: $text-color;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
 .btn-close {
   background-color: transparent;
   border-color: transparent;

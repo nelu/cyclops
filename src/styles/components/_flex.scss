@@ -55,6 +55,15 @@
   justify-content: center;
 }
 
+.flex-box--spaced {
+  > .flex-item {
+    margin-right: $padding-base-horizontal;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
 
 .flex-item {
   display: block;

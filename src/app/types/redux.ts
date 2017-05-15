@@ -18,6 +18,8 @@
 
 // Vendor
 import { Dispatch, Action, ThunkAction } from 'redux';
+import { Component } from 'react';
+import { ComponentClass } from 'react-redux';
 
 // Local
 import { StoreState } from '../store';
@@ -60,3 +62,6 @@ export type ThunkActionPromise = ThunkAction<
 
 /** Thunk action that returns undefined. */
 export type ThunkActionVoid = ThunkAction<void, StoreState, undefined>;
+
+/** Root component of a route specified in react-router. */
+export type ViewComponent = ComponentClass<any>;

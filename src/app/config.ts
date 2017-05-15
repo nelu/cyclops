@@ -1,4 +1,3 @@
-import { User } from './api/users/types';
 /**
  * The contents of this file are subject to the CYPHON Proprietary Non-
  * Commercial Registered User Use License Agreement (the "Agreement”). You
@@ -16,6 +15,9 @@ import { User } from './api/users/types';
  * Contributor/Change Made By: ________________. [Only apply if changes
  * are made]
  */
+
+// Local
+import { User } from './services/users/types';
 
 // Local
 interface AppConfig {
@@ -54,7 +56,7 @@ interface ExtendedWindow extends Window {
 
 export const DEFAULT_CONFIG: AppConfig = {
   APP_CONTAINER_ID: 'app',
-  CURRENT_USER: {} as any,
+  CURRENT_USER: { id: 1 } as any,
   EXPRESS_CYPHON_PROXY_URL: '/api',
   CYPHON_API_URL: 'http://localhost:8000/',
   MAPBOX_ACCESS_TOKEN: '',

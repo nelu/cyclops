@@ -236,6 +236,9 @@ const config: Configuration = {
       '.tsx',
       '.json',
     ],
+    alias: {
+      '~': resolve(__dirname, 'src/app/'),
+    },
   },
 
   devtool: TESTING ? 'inline-source-map' : 'source-map',

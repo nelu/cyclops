@@ -29,32 +29,18 @@ import thunkMiddleware from 'redux-thunk';
 
 // Local
 import {
-  reducer as alertsReducer,
-  State as AlertsState,
-} from './views/Alerts/reducer';
+  RoutesState,
+  RoutesReducer,
+} from './routes';
 import {
-  State as MonitorStatusState,
-  reducer as monitorStatusReducer,
-} from './views/App/reducers/monitorStatus';
-import {
-  State as ErrorPopupState,
-  reducer as errorPopupReducer,
-} from './views/App/reducers/errorPopup';
-import {
-  State as DashboardState,
-  reducer as dashboardReducer,
-} from './views/Dashboard/reducers/dashboard';
+  ServiceState,
+  ServiceReducer,
+} from './services/index';
 
 /** Shape of the redux store state. */
 export interface StoreState {
-  /** State related to the alerts view. */
-  alert: AlertsState;
-  /** State related to the dashboard view. */
-  dashboard: DashboardState;
-  /** State related to the monitor modal. */
-  monitor: MonitorStatusState;
-  /** State related to the error popup. */
-  error: ErrorPopupState;
+  routes: RoutesState;
+  services: ServiceState,
 }
 
 /**
@@ -62,10 +48,8 @@ export interface StoreState {
  * @type {Reducer<StoreState>}
  */
 const reducers = combineReducers<StoreState>({
-  alert: alertsReducer,
-  dashboard: dashboardReducer,
-  error: errorPopupReducer,
-  monitor: monitorStatusReducer,
+  routes: RoutesReducer,
+  services: ServiceReducer,
 });
 
 /**

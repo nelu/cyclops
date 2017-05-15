@@ -161,9 +161,13 @@ $panel-default-heading-bg: $color-darkest;
 
 //== Badges
 
-$badge-color: darken(#fff, 10%);
+$badge-color: #fff;
 $badge-link-hover-color: #fff !default;
 $badge-bg: $color-lighter;
+
+//== Labels
+
+$label-default-bg: $color-lighter;
 
 //== Close
 
@@ -384,4 +388,5 @@ dd {
 
 .badge {
   font-weight: 400;
+  padding: 4px 8px;
 }
