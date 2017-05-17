@@ -48,7 +48,7 @@ interface Props {
  */
 export class JSONFormatter extends React.Component<Props, {}> {
   /**
-   * Default formatter config for all formatter instances.
+   * Default formatter getConfig for all formatter instances.
    * @type {Formatter.Configuration}
    */
   public static DEFAULT_FORMATTER_CONFIG: Formatter.Configuration = {

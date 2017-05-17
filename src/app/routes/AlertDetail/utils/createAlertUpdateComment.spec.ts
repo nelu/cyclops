@@ -17,15 +17,28 @@
  */
 
 // Vendor
+import * as sinon from 'sinon';
 import * as chai from 'chai';
 
 // Local
 import { createAlertUpdateComment } from './createAlertUpdateComment';
+import * as cyclops from '~/config';
 
 describe('createAlertUpdateComment()', () => {
   const self: any = { id: 1 };
   const user1: any = { id: 2, first_name: 'George', last_name: 'Costanza' };
   const user2: any = { id: 2, first_name: 'Bob', last_name: 'Bob' };
+  const fakeConfig = { CURRENT_USER: self };
+  let getConfig: sinon.SinonStub;
+
+  beforeEach(() => {
+    getConfig = sinon.stub(cyclops, 'getConfig').returns(fakeConfig);
+  });
+
+  afterEach(() => {
+    getConfig.restore();
+  });
+
   it('should add a comment about changed levels', () => {
     const alert: any = { level: 'HIGH' };
     const update: any = { level: 'MEDIUM' };

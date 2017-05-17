@@ -24,9 +24,9 @@ import {
 } from 'react-bootstrap';
 
 // Local
-import { User } from '../../../services/users/types';
-import { AlertStatusChoices } from '../../../services/alerts/types';
-import { CONFIG } from '../../../config';
+import { User } from '~/services/users/types';
+import { AlertStatusChoices } from '~/services/alerts/types';
+import { getConfig } from '~/config';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -64,7 +64,7 @@ export class AlertDetailUnassignButton extends React.Component<Props, {}> {
     const isDone = this.props.status === 'DONE';
     const isAssigned = !!this.props.user;
     const isCurrentUser = this.props.user
-      ? this.props.user.id === CONFIG.CURRENT_USER.id
+      ? this.props.user.id === getConfig().CURRENT_USER.id
       : false;
 
     if (!isAssigned || !isCurrentUser || isDone) { return null; }

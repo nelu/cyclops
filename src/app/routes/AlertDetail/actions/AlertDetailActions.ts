@@ -361,15 +361,15 @@ export function openDataModal(
     CONTAINER_FIELDS.IP_ADDRESS, container, data,
   );
 
-  if (!ipAddresses) return createAction(OPEN_DATA_MODAL, null);
+  if (!ipAddresses) { return createAction(OPEN_DATA_MODAL, null); }
 
   const nonNullIPS: Dictionary<string> = {};
 
   _.forEach(ipAddresses, (value: string | null, key: string) => {
-    if (value !== null) nonNullIPS[key] = value;
+    if (value !== null) { nonNullIPS[key] = value; }
   });
 
-  if (_.isEmpty(nonNullIPS)) return createAction(OPEN_DATA_MODAL, null);
+  if (_.isEmpty(nonNullIPS)) { return createAction(OPEN_DATA_MODAL, null); }
 
   return createAction(OPEN_DATA_MODAL, ipAddresses || null);
 }
@@ -453,7 +453,6 @@ export function updateAlertDetail(
   fields: AlertUpdateRequest,
 ): ThunkActionPromise {
   return (dispatch) => {
-    console.log('yay');
     const request = checkAlertUpdate(alert, fields);
 
     if (request.valid) {

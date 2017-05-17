@@ -33,6 +33,14 @@ import {
   MONITOR_SCHEMA,
 } from './constants';
 
+/** Monitor names sorted by if they're currently active. */
+interface SortedMonitors {
+  /** Monitors that are currently active. */
+  down: string[];
+  /** Monitors that are currently inactive. */
+  up: string[];
+}
+
 /**
  * Normalize a list of monitors.
  * @param monitors Monitor objects to normalize.
@@ -79,9 +87,7 @@ export function denormalizeMonitor(
  * @param monitors List of monitors to sort.
  * @returns {{up: string[], down: string[]}}
  */
-export function sortMonitorsByStatus(
-  monitors: Monitor[],
-): { up: string[], down: string[] } {
+export function sortMonitorsByStatus(monitors: Monitor[]): SortedMonitors {
   const up: string[] = [];
   const down: string[] = [];
 

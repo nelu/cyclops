@@ -39,6 +39,12 @@ const DEVELOPMENT_FLAG = 'development';
  */
 const PRODUCTION_FLAG = 'production';
 
+/**
+ * Default localhost link to Cyphon.
+ * @type {string}
+ */
+const CYPHON_LOCALHOST = 'http://localhost:8000/';
+
 // --------------------------------------------------------------------------
 // Configuration
 // --------------------------------------------------------------------------
@@ -73,7 +79,26 @@ export const CYPHON_API_TIMEOUT = process.env.CYPHON_API_TIMEOUT
  * URL of the Cyphon instance to connect to.
  * @type {string}
  */
-export const CYPHON_URL = process.env.CYPHON_URL || 'http://localhost:8000/';
+export const CYPHON_URL = process.env.CYPHON_URL || CYPHON_LOCALHOST;
+
+/**
+ * URL of Cyphon that a user can reach from their browser. This has a
+ * possibility of being different from the Cyphon URL because
+ * the Cyclops instance could be communicating to the API over
+ * a different network, such as a docker network.
+ * @type {string}
+ */
+export const CYPHON_EXTERNAL_URL = CYPHON_URL === CYPHON_LOCALHOST
+  ? CYPHON_LOCALHOST
+  : process.env.CYPHON_EXTERNAL_URL || '';
+
+/**
+ * Admin URL of the Cyphon instance.
+ * @type {string}
+ */
+export const CYPHON_ADMIN_URL = CYPHON_EXTERNAL_URL
+  ? resolveURL(CYPHON_EXTERNAL_URL, '/admin/')
+  : '';
 
 /**
  * Access token for mapbox services. Needed to display maps.

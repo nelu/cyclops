@@ -27,11 +27,12 @@ import {
 import {
   LocationFieldAddress,
   Markers,
-} from '../../../services/map/types';
-import { AlertDetail } from '../../../services/alerts/types';
+} from '~/services/map/types';
+import { AlertDetail } from '~/services/alerts/types';
 import * as actions from '../actions/AlertDetailActions';
-import { ResultIPAdresses } from '../../../types/result';
-import { RequestCanceler } from '../../../utils/RequestCanceler';
+import { ResultIPAdresses } from '~/types/result';
+import { RequestCanceler } from '~/utils/RequestCanceler';
+import * as requests from '~/services/cyphon/utils/requests';
 
 /** State shape of the AlertDetail reducer. */
 export interface AlertDetailState {
@@ -70,7 +71,11 @@ export const INITIAL_STATE: AlertDetailState = {
 
 const reducers: ReducerMap<AlertDetailState, any> = {};
 
-const request = new RequestCanceler();
+/**
+ * Unique identifier of the canceler function on the requests store.
+ * @type {string}
+ */
+export const REQUEST_ID = 'ALERT_DETAIL';
 
 /**
  * Updates the AlertDetail reducer based on a(n) CLOSE_ALERT action.
@@ -82,7 +87,7 @@ reducers[actions.CLOSE_ALERT] = (
   state: AlertDetailState,
   action: actions.CloseAlertAction,
 ): AlertDetailState => {
-  request.cancel();
+  requests.cancel(REQUEST_ID);
 
   return Object.assign({}, state, INITIAL_STATE);
 };
@@ -102,8 +107,8 @@ reducers[actions.FETCH_ALERT_PENDING] = (
     loading: true,
   };
 
-  request.cancel();
-  request.set(action.payload.canceler);
+  requests.cancel(REQUEST_ID);
+  requests.set(REQUEST_ID, action.payload.canceler);
 
   return Object.assign({}, state, update);
 };
@@ -142,8 +147,8 @@ reducers[actions.REQUEST_PENDING] = (
     loading: true,
   };
 
-  request.cancel();
-  request.set(action.payload);
+  requests.cancel(REQUEST_ID);
+  requests.set(REQUEST_ID, action.payload);
 
   return Object.assign({}, state, update);
 };

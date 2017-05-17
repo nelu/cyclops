@@ -18,11 +18,13 @@
 
 // Vendor
 import * as React from 'react';
-import { Link, IndexLink } from 'react-router';
-import * as classNames from 'classnames';
+import {
+  Link,
+  IndexLink,
+} from 'react-router';
 
 // Local
-import { CONFIG } from '../../../config';
+import { getConfig } from '~/config';
 import { MonitorStatusContainer } from './MonitorStatus';
 import { LogoutModal } from './LogoutModal';
 
@@ -46,17 +48,24 @@ interface HeaderProps {
  */
 export class Header extends React.Component<HeaderProps, {}> {
   public render(): JSX.Element {
-    const alertNavClasses = classNames({
-      active: new RegExp('^\/alerts\/').test(this.props.location),
-    });
-    const dashboardNavClasses = classNames({
-      active: new RegExp('^\/?$').test(this.props.location),
-    });
+    const adminLink = getConfig().ADMIN_URL
+      ? (
+        <div className="flex-item flex--shrink">
+          <a
+            id="admin-link"
+            className="header__link"
+            target="_blank"
+            href={getConfig().ADMIN_URL}
+          >
+            Admin
+          </a>
+        </div>
+      ) : null;
 
     return (
       <nav className="flex-box header">
         <div className="flex-box flex-box--align-center flex--shrink">
-          <img className="header__logo" src={CONFIG.CYPHON_LOGO_URL} alt="Cyphon"/>
+          <img className="header__logo" src={getConfig().CYPHON_LOGO_URL} alt="Cyphon"/>
         </div>
 
         <div className="flex-box">
@@ -79,26 +88,11 @@ export class Header extends React.Component<HeaderProps, {}> {
             </Link>
           </div>
         </div>
-        {/*<ul className="nav navbar-nav">*/}
-          {/*<li className={dashboardNavClasses}>*/}
-            {/*<Link to="/">*/}
-              {/*Dashboard*/}
-            {/*</Link>*/}
-          {/*</li>*/}
-          {/*<li className={alertNavClasses}>*/}
-            {/*<Link to="/alerts/">*/}
-              {/*Alerts*/}
-            {/*</Link>*/}
-          {/*</li>*/}
-        {/*</ul>*/}
         <div className="flex-box flex--shrink">
+          {adminLink}
           <MonitorStatusContainer />
           <LogoutModal />
         </div>
-        {/*<ul className="nav navbar-nav navbar-right">*/}
-          {/*<li><MonitorStatusContainer /></li>*/}
-          {/*/!*<LogoutModal />*!/*/}
-        {/*</ul>*/}
       </nav>
     );
   }

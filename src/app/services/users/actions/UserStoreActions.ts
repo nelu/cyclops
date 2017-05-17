@@ -26,6 +26,7 @@ import {
 import { NormalizedUserList } from '~/services/users/types';
 import { fetchAllUsers as getAllUsers } from '~/services/users/api';
 import { normalizeUsers } from '~/services/users/utils/normalizeUsers';
+import { addError } from '~/routes/App/actions/ErroPopupActions';
 
 /**
  * Action type prefix for UserCache actions.
@@ -67,8 +68,12 @@ export function storeUsers(users: NormalizedUserList): StoreUsersAction {
  */
 export function fetchAllUsers(): ThunkActionPromise {
   return (dispatch) => {
-    return getAllUsers().then((users) => {
-      dispatch(storeUsers(normalizeUsers(users)));
-    });
+    return getAllUsers()
+      .then((users) => {
+        dispatch(storeUsers(normalizeUsers(users)));
+      })
+      .catch((error) => {
+        dispatch(addError(error));
+      });
   };
 }

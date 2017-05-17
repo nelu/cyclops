@@ -20,26 +20,29 @@
 import axios from 'axios';
 
 // Local
-import { createAction } from '../../../utils/createReduxAction';
+import { createAction } from '~/utils/createReduxAction';
 import {
   ReduxAction,
   ThunkActionPromise,
   ThunkActionVoid,
-} from '../../../types/redux';
+} from '~/types/redux';
 import {
   AlertSearchParams,
   AlertListItem,
-} from '../../../services/alerts/types';
-import { fetchAlertList } from '../../../services/alerts/api';
+} from '~/services/alerts/types';
+import { fetchAlertList } from '~/services/alerts/api';
 import { addError } from '../../App/actions/ErroPopupActions';
-import { createRandomId } from '../../../utils/createRandomId';
-import { StoreState } from '../../../store';
-import { DistilleryFlat } from '../../../services/distilleries/types';
-import { Action } from '../../../services/actions/types';
-import { User } from '../../../services/users/types';
-import { fetchAllUsers } from '../../../services/users/api';
-import { fetchAllActions } from '../../../services/actions/api';
-import { fetchAllAlertDistilleries } from '../../../services/distilleries/api';
+import { createRandomId } from '~/utils/createRandomId';
+import { StoreState } from '~/store';
+import {
+  Distillery,
+  DistilleryFlat
+} from '~/services/distilleries/types';
+import { Action } from '~/services/actions/types';
+import { User } from '~/services/users/types';
+import { fetchAllUsers } from '~/services/users/api';
+import { fetchAllActions } from '~/services/actions/api';
+import { fetchAllAlertDistilleries } from '~/services/distilleries/api';
 
 /**
  * Action type prefix for AlertList actions.

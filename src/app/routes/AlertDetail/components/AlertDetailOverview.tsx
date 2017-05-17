@@ -18,30 +18,24 @@
 
 // Vendor
 import * as React from 'react';
-import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 // Local
 import { AlertDetailLevelSelect } from './AlertDetailLevelSelect';
-import { AlertDetailStatusSelect } from './AlertDetailStatusSelect';
 import { AlertDetailUserSelect } from './AlertDetailUserSelect';
-import { AlertDetailOutcome } from './AlertDetailOutcome';
 import {
   AlertUpdateRequest,
   AlertDetail,
   AlertLevelChoices,
-  AlertStatusChoices,
   Alert,
-  AlertOutcomeChoices,
-} from '../../../services/alerts/types';
-import { User } from '../../../services/users/types';
-import { CONFIG } from '../../../config';
-import { shortenDistilleryName } from '../../../services/distilleries/utils';
-import { formatDate } from '../../../utils/formatDate';
-import { AlertStatusIcon } from '../../../services/alerts/components/AlertStatusIcon';
+} from '~/services/alerts/types';
+import { User } from '~/services/users/types';
+import { getConfig } from '~/config';
+import { shortenDistilleryName } from '~/services/distilleries/utils';
+import { formatDate } from '~/utils/formatDate';
+import { AlertStatusIcon } from '~/services/alerts/components/AlertStatusIcon';
 import { STATUS_OPTIONS } from '../../AlertList/constants';
 import { AlertDetailUnassignButton } from './AlertDetailUnassignButton';
 import { AlertDetailSelfAssignButton } from './AlertDetailSelfAssignButton';
-import { AlertDetailOutcomeRemove } from './AlertDetailOutcomeRemove';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -94,7 +88,7 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
   public assignToSelf = (): void => {
     this.props.updateAlert(
       this.props.alert,
-      { assigned_user: CONFIG.CURRENT_USER },
+      { assigned_user: getConfig().CURRENT_USER },
     );
   };
 
