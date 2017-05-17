@@ -1,5 +1,35 @@
 # Change log
 
+<a name=2.1.0"></a>
+## [2.1.0](https://github.com/dunbarcyber/cyclops/compare/2.0.2...2.1.0) (2017-05-17)
+
+### Added
+
+- Better alert workflow. Status changing has been removed from the UI and is now changed based on assigned user and outcome. Outcomes must also now include an anaylsis before changing.
+- Alert update errors. If there are any errors in changing alert fields, it shows them in the alert detail view.
+- Alert sources sorted by warehouse name.
+- More tests for the alert redux store.
+- Link to the Cyphon Admin page. The environment variable ``CYPHON_EXTERNAL_URL`` must be set to activate this. This is because the value for ``CYPHON_URL``, which is what connects to the API, could possibly be for another network such as a Docker network, so an externally available URL that can be reached from a browser must be used instead.
+
+### Fixed
+
+- Infinite logout loop that occured when a user traveled from the logout page to the login page.
+- Missing source maps from the production and development builds.
+- Bug that didn't allow any changes to be made to the Alert object.
+- Bug that didn't properly set the Authorization header for API requests.
+
+### Changed
+
+- Views folder to routes.
+- ``index.ts`` for the root route and each route. This is explained more [here](http://cyphon-ui.readthedocs.io/en/latest/contributing.html).
+- Names for route reducers and actions. They now correspond to the component they are used for.
+- State shape of the redux store. It now corresponds to the folder structure for easier data retrieval.
+
+
+### Removed
+
+- ``api`` folder. All of these resources have been moved to ``services`` or ``types``.
+
 <a name="2.0.2"></a>
 ## [2.0.2](https://github.com/dunbarcyber/cyclops/compare/2.0.1...2.0.2) (2017-04-28)
 - Add endpoint tests for distilleries, users, contexts, and actions.
