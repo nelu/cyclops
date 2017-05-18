@@ -19,30 +19,35 @@
 // Vendor
 import { Canceler } from 'axios';
 
-/** Controls an axios request canceler function. */
-export class RequestCanceler {
-  /** Canceler function to control. */
-  public canceler: Canceler | null = null;
+// Local
+import { Dictionary } from '~/types/object';
 
-  /**
-   * Runs the canceler function.
-   * @returns {boolean} If the function was run.
-   */
-  public cancel(): boolean {
-    if (this.canceler) {
-      this.canceler();
-      this.canceler = null;
-      return true;
-    }
+/**
+ * Cancel functions for axios requests mapped to unique identifiers.
+ * @type {Dictionary<Canceler>}
+ */
+const requests: Dictionary<Canceler> = {};
 
-    return false;
-  }
+/**
+ * Cancels a request with a cancel function.
+ * @param requestID Unique identifier of the request.
+ * @returns {boolean} If the request was successfully canceled.
+ */
+export function cancel(requestID: string): boolean {
+  const request = requests[requestID];
 
-  /**
-   * Sets the canceler function.
-   * @param canceler Canceler function to control.
-   */
-  public set(canceler: Canceler) {
-    this.canceler = canceler;
-  }
+  if (!request) { return false; }
+
+  request();
+
+  return true;
+}
+
+/**
+ * Sets the cancel function for a request.
+ * @param requestID Unique identifier of the request.
+ * @param canceler The cancel function to store.
+ */
+export function set(requestID: string, canceler: Canceler): void {
+  requests[requestID] = canceler;
 }

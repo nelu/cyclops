@@ -21,42 +21,45 @@ import * as sinon from 'sinon';
 import * as chai from 'chai';
 
 // Local
-import * as reducer from './AlertDetailReducer';
+import { AlertDetailReducer, INITIAL_STATE, REQUEST_ID } from './AlertDetailReducer';
 import * as actions from '../actions/AlertDetailActions';
-import { Canceler } from 'axios';
-import * as d3 from 'd3';
-import second = d3.time.second;
+import * as requests from '~/services/cyphon/utils/requests';
+import { CONTAINER_FIELDS } from '~/services/containers/constants';
 
-describe('Alert Detail Reducer', () => {
+describe('AlertDetailReducer', () => {
+  let cancel: sinon.SinonStub;
+  let set: sinon.SinonStub;
+
+  beforeEach(() => {
+    cancel = sinon.stub(requests, 'cancel');
+    set = sinon.stub(requests, 'set');
+  });
+
+  afterEach(() => {
+    cancel.restore();
+    set.restore();
+  });
+
   describe('CLOSE_ALERT', () => {
     it('should return the initial state', () => {
-      const state = reducer.AlertDetailReducer({} as any, actions.closeAlert());
+      const state = AlertDetailReducer({} as any, actions.closeAlert());
 
-      chai.expect(state).to.deep.equal(reducer.INITIAL_STATE);
+      chai.expect(state).to.deep.equal(INITIAL_STATE);
     });
 
     it('should cancel an active request', () => {
-      const state: any = {};
-      const canceler = sinon.spy();
+      AlertDetailReducer({} as any, actions.closeAlert());
 
-      reducer.AlertDetailReducer(state, actions.fetchAlertPending(1, canceler));
-      reducer.AlertDetailReducer(state, actions.closeAlert());
-
-      chai.expect(canceler.called).to.be.true;
+      chai.expect(cancel.called).to.be.true;
+      chai.expect(cancel.args[0][0]).to.equal(REQUEST_ID);
     });
   });
 
   describe('FETCH_ALERT_PENDING', () => {
-    let canceler: sinon.SinonSpy;
-
-    beforeEach(() => {
-      canceler = sinon.spy();
-    });
-
     it('should update the state with the given payload', () => {
       const alertId = 1;
-      const action = actions.fetchAlertPending(alertId, canceler);
-      const state = reducer.AlertDetailReducer({} as any, action);
+      const action = actions.fetchAlertPending(alertId, {} as any);
+      const state = AlertDetailReducer({} as any, action);
 
       chai.expect(state).to.deep.equal({
         alertId: 1,
@@ -65,13 +68,138 @@ describe('Alert Detail Reducer', () => {
     });
 
     it('should cancel an active request', () => {
-      const state: any = {};
-      const secondCanceler = sinon.spy();
+      AlertDetailReducer({} as any, actions.fetchAlertPending(1, {} as any));
 
-      reducer.AlertDetailReducer(state, actions.fetchAlertPending(1, canceler));
-      reducer.AlertDetailReducer(state, actions.fetchAlertPending(2, secondCanceler));
+      chai.expect(cancel.called).to.be.true;
+      chai.expect(cancel.args[0][0]);
+    });
 
-      chai.expect(canceler.called).to.be.true;
+    it('should set the cancel function of a new request', () => {
+      const canceler: any = {};
+
+      AlertDetailReducer({} as any, actions.fetchAlertPending(1, canceler));
+
+      chai.expect(set.called).to.be.true;
+      chai.expect(set.args[0][0]).to.equal(REQUEST_ID);
+      chai.expect(set.args[0][1]).to.equal(canceler);
+    });
+  });
+
+  describe('FETCH_ALERT_SUCCESS', () => {
+    it('should update the state with the given payload data', () => {
+      const alert: any = { id: 4 };
+      const locations: any = { data: 'data' };
+      const markers: any = { markers: 'markers' };
+      const action = actions.fetchAlertSuccess(alert, locations, markers);
+      const state = AlertDetailReducer({} as any, action);
+
+      chai.expect(state).to.deep.equal({
+        alert,
+        loading: false,
+        locations,
+        markers,
+      });
+    });
+  });
+
+  describe('REQUEST_PENDING', () => {
+    it('should update the state with the given payload', () => {
+      const canceler: any = {};
+      const action = actions.requestPending(canceler);
+      const state = AlertDetailReducer({} as any, action);
+
+      chai.expect(state).to.deep.equal({ loading: true });
+    });
+
+    it('should cancel an active request', () => {
+      const action = actions.requestPending({} as any);
+
+      AlertDetailReducer({} as any, action);
+
+      chai.expect(cancel.called).to.be.true;
+      chai.expect(cancel.args[0][0]).to.equal(REQUEST_ID);
+    });
+
+    it('should set the canceler for a new request', () => {
+      const canceler: any = {};
+      const action = actions.requestPending(canceler);
+
+      AlertDetailReducer({} as any, action);
+
+      chai.expect(set.called).to.be.true;
+      chai.expect(set.args[0][0]).to.equal(REQUEST_ID);
+      chai.expect(set.args[0][1]).to.equal(canceler);
+    });
+  });
+
+  describe('REQUEST_FAILED', () => {
+    it('should update the state with the given payload data', () => {
+      const action = actions.requestFailed();
+      const state = AlertDetailReducer({} as any, action);
+
+      chai.expect(state).to.deep.equal({ loading: false });
+    });
+  });
+
+  describe('UPDATE_ALERT_SUCCESS', () => {
+    it('should update the state with the given payload data', () => {
+      const alert: any = { id: 1 };
+      const action = actions.updateAlertSuccess(alert);
+      const state = AlertDetailReducer({} as any, action);
+
+      chai.expect(state).to.deep.equal({
+        alert,
+        loading: false,
+      });
+    });
+
+    it('should update the current alert', () => {
+      const alert: any = { id: 1, level: 'MEDIUM' };
+      const alertUpdated: any = { id: 1, level: 'HIGH' };
+      const action = actions.updateAlertSuccess(alertUpdated);
+      const state: any = { alert };
+      const update = AlertDetailReducer(state, action);
+
+      chai.expect(update.alert).to.deep.equal(alertUpdated);
+    });
+  });
+
+  describe('OPEN_DATA_MODAL', () => {
+    it('should update the state with the given payload data', () => {
+      const result: any = {
+        ip: '124.567.323.432',
+      };
+      const container: any = {
+        fields: [{
+          field_type: CONTAINER_FIELDS.IP_ADDRESS,
+          field_name: 'ip',
+        }],
+      };
+      const action = actions.openDataModal(result, container);
+      const state = AlertDetailReducer({} as any, action);
+
+      chai.expect(state).to.deep.equal({
+        ipAddresses: result,
+        modalActive: true,
+      });
+    });
+
+    it('should return null ipaddresses if there aren\'t any', () => {
+      const result: any = {};
+      const container: any = { fields: [] };
+      const action = actions.openDataModal(result, container);
+      const state = AlertDetailReducer({} as any, action);
+
+      chai.expect(state.ipAddresses).to.be.null;
+    });
+  });
+
+  describe('CLOSE_DATA_MODAL', () => {
+    it('should update the state with the given payload data', () => {
+      const action = actions.closeDataModal();
+      const state = AlertDetailReducer({} as any, action);
+
+      chai.expect(state).to.deep.equal({ modalActive: false });
     });
   });
 
@@ -79,7 +207,7 @@ describe('Alert Detail Reducer', () => {
     it('should add the error message to the state', () => {
       const message = ['message'];
       const action = actions.addErrorMessage(message);
-      const state = reducer.AlertDetailReducer({} as any, action);
+      const state = AlertDetailReducer({} as any, action);
 
       chai.expect(state).to.deep.equal({ error: message });
     });
@@ -87,7 +215,7 @@ describe('Alert Detail Reducer', () => {
 
   describe('CLOSE_ERROR_MESSAGE', () => {
     it('should set the error message to an empty string', () => {
-      const state = reducer.AlertDetailReducer({} as any, actions.closeErrorMessage());
+      const state = AlertDetailReducer({} as any, actions.closeErrorMessage());
 
       chai.expect(state).to.deep.equal({ error: [] });
     });

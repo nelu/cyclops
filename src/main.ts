@@ -20,7 +20,7 @@
 import { render } from 'react-dom';
 
 // Local
-import { CONFIG } from './app/config';
+import { getConfig } from '~/config';
 import { App } from './app';
 
 // CSS
@@ -30,4 +30,4 @@ require('./styles/app.scss');
 // Polyfills
 require('core-js/shim');
 
-render(App, document.getElementById(CONFIG.APP_CONTAINER_ID));
+render(App, document.getElementById(getConfig().APP_CONTAINER_ID));

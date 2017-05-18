@@ -21,7 +21,7 @@ import axios, { AxiosInstance } from 'axios';
 import * as _ from 'lodash';
 
 // Local
-import { CONFIG } from '../../config';
+import { getConfig } from '~/config';
 import { APIConfig, APIList } from './types';
 import { paramsSerializer } from './params';
 import * as cache from './cache';
@@ -31,9 +31,9 @@ import * as cache from './cache';
  * @type {AxiosInstance}
  */
 const cyphonAPI: AxiosInstance = axios.create({
-  baseURL: CONFIG.EXPRESS_CYPHON_PROXY_URL,
+  baseURL: getConfig().EXPRESS_CYPHON_PROXY_URL,
   paramsSerializer,
-  timeout: CONFIG.API_TIMEOUT,
+  timeout: getConfig().API_TIMEOUT,
 });
 
 /**

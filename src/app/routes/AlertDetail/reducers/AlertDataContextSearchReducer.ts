@@ -25,9 +25,13 @@ import {
 import * as _ from 'lodash';
 
 // Local
-import { Result } from '../../../types/result';
+import { Result } from '~/types/result';
 import * as actions from '../actions/AlertDataContextSearchActions';
-import { CLOSE_DATA_MODAL, CloseDataModalAction } from '../actions/AlertDetailActions';
+import {
+  CLOSE_DATA_MODAL,
+  CloseDataModalAction,
+} from '../actions/AlertDetailActions';
+import * as requests from '~/services/cyphon/utils/requests';
 
 /**
  * State shape of the ContextSearch reducer.
@@ -51,7 +55,7 @@ export interface AlertDataContextSearchState {
  * Initial state of the AlertDataContextSearch reducer.
  * @type {State}
  */
-const INITIAL_STATE: AlertDataContextSearchState = {
+export const INITIAL_STATE: AlertDataContextSearchState = {
   loading: false,
   page: null,
   pageSize: 25,
@@ -68,19 +72,10 @@ const INITIAL_STATE: AlertDataContextSearchState = {
 const reducers: ReducerMap<AlertDataContextSearchState, any> = {};
 
 /**
- * Function that cancels a pending request.
+ * Unique identifier for context search requests.
+ * @type {string}
  */
-let requestCanceler: Canceler;
-
-/**
- * Cancels a pending request related to the alert detail view and replaces
- * the requestCanceler function with a new one.
- * @param canceler Function that cancels a request.
- */
-function cancelRequest(canceler?: Canceler): void {
-  if (requestCanceler) { requestCanceler(); }
-  if (canceler) { requestCanceler = canceler; }
-}
+export const REQUEST_ID = 'ALERT_DATA_CONTEXT_SEARCH';
 
 /**
  * Updates the ContextSearch reducer based on a(n) SELECT_CONTEXT action.
@@ -112,7 +107,8 @@ reducers[actions.SEARCH_CONTEXT_PENDING] = (
 ): AlertDataContextSearchState => {
   const update: Partial<AlertDataContextSearchState> = { loading: true };
 
-  cancelRequest(action.payload);
+  requests.cancel(REQUEST_ID);
+  requests.set(REQUEST_ID, action.payload);
 
   return _.assign({}, state, update);
 };
@@ -165,7 +161,7 @@ reducers[CLOSE_DATA_MODAL] = (
   state: AlertDataContextSearchState,
   action: CloseDataModalAction,
 ): AlertDataContextSearchState => {
-  cancelRequest();
+  requests.cancel(REQUEST_ID);
 
   return _.assign({}, state, INITIAL_STATE);
 };

@@ -21,7 +21,7 @@ import axios, { CancelToken } from 'axios';
 import * as _ from 'lodash';
 
 // Local
-import { CONFIG } from '../../../config';
+import { getConfig } from '~/config';
 
 /**
  * Looks up the address from a pair of lat, lng coordinates.
@@ -35,7 +35,7 @@ export function reverseLookup(
 ): Promise<string | undefined> {
   const coordinatesString = coordinates.join(',');
   const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/` +
-    `${coordinatesString}.json?access_token=${CONFIG.MAPBOX_ACCESS_TOKEN}`;
+    `${coordinatesString}.json?access_token=${getConfig().MAPBOX_ACCESS_TOKEN}`;
 
   return axios.get(url, { cancelToken })
     .then((data) => {

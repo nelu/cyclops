@@ -1,7 +1,6 @@
 // Vendor
 import * as React from 'react';
 import * as sinon from 'sinon';
-import * as chai from 'chai';
 import * as enzyme from 'enzyme';
 import * as _ from 'lodash';
 
@@ -57,7 +56,7 @@ describe('<AlertDataContextSearch />', () => {
           selectContext={selectContext}
         />
       ));
-    }
+    };
   });
 
   it('should open the JSON objects to JSON_OPEN_LEVEL', () => {

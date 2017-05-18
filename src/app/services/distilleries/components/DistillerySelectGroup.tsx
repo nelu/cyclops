@@ -18,42 +18,40 @@
 
 // Vendor
 import * as React from 'react';
-import {
-  Router,
-  Route,
-  IndexRoute,
-  useRouterHistory,
-} from 'react-router';
-import { createHistory } from 'history';
-import { Provider } from 'react-redux';
 
 // Local
-import { getConfig } from './config';
-import { store } from './store';
-import { Routes } from './routes';
-
-/** React router history that uses the base url given by the parent template. */
-const browserHistory = useRouterHistory(createHistory)({
-  basename: getConfig().APP_BASE_URL,
-});
+import { Distillery } from '../types';
+import { shortenDistilleryName } from '../utils';
 
 // --------------------------------------------------------------------------
-// Main Application
+// Interfaces/Types
 // --------------------------------------------------------------------------
 
-/**
- * Root component of the application.
- * @type {JSX.Element}
- */
-export const App = (
-  <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path="/" component={Routes.App}>
-        <IndexRoute component={Routes.Dashboard}/>
-        <Route path="alerts" component={Routes.AlertList}>
-          <Route path=":alertId" component={Routes.AlertDetail}/>
-        </Route>
-      </Route>
-    </Router>
-  </Provider>
-);
+/** Properties of the DistillerySelectGroup component. */
+interface Props {
+  /** Title of the option group. */
+  title: string;
+  /** Distillery options to display. */
+  options: Distillery[];
+}
+
+// --------------------------------------------------------------------------
+// Component
+// --------------------------------------------------------------------------
+
+/** Creates an option group of a list of distilleries. */
+export class DistillerySelectGroup extends React.Component<Props, {}> {
+  public render() {
+    const options = this.props.options.map((distillery) => (
+      <option value={distillery.id} key={distillery.id}>
+        {shortenDistilleryName(distillery.name)}
+      </option>
+    ));
+
+    return (
+      <optgroup label={this.props.title}>
+        {options}
+      </optgroup>
+    );
+  }
+}

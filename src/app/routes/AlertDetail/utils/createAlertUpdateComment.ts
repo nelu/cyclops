@@ -25,7 +25,6 @@ import { getLevelDisplayName } from '~/services/alerts/utils/getLevelDisplayName
 import { Dictionary } from '~/types/object';
 import { getOutcomeDisplayName } from '~/services/alerts/utils/getOutcomeDisplayName';
 import { getUserFullName } from '~/services/users/utils/getUserFullName';
-import { CONFIG } from '~/config';
 import { isCurrentUser } from '~/services/users/utils/isCurrentUser';
 
 /** Function that creates a comment describing an alert update. */

@@ -24,7 +24,7 @@ import * as chai from 'chai';
 import * as actions from './AlertDetailOutcomeActions';
 import * as detail from './AlertDetailActions';
 
-describe('Alert detail outcome actions', () => {
+describe('AlertDetailOutcomeActions', () => {
   describe('open()', () => {
     it('should create an action with the OPEN type', () => {
       const outcome = 'N/A';

@@ -20,7 +20,7 @@
 import axios from 'axios';
 
 // Local
-import { CONFIG } from '../../../config';
+import { getConfig } from '~/config';
 
 /**
  * Unsubscribe from push notifications
@@ -38,7 +38,7 @@ export function unsubscribe(subscription: any): Promise<any> {
 export function registerServiceWorker(): Promise<any> {
   return (navigator as any)
     .serviceWorker
-    .register(CONFIG.NOTIFICATIONS_SERVICE_WORKER_URL);
+    .register(getConfig().NOTIFICATIONS_SERVICE_WORKER_URL);
 }
 
 /**

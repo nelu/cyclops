@@ -21,7 +21,7 @@ import { CancelToken } from 'axios';
 
 // Local
 import * as api from '../cyphon/api';
-import { CONFIG } from '~/config';
+import { getConfig } from '~/config';
 import { APIList } from '~/services/cyphon/types';
 import {
   AlertSearchParams,
@@ -117,7 +117,7 @@ export function addComment(
   comment: string,
   cancelToken?: CancelToken,
 ): Promise<AlertDetail> {
-  const userId = CONFIG.CURRENT_USER.id;
+  const userId = getConfig().CURRENT_USER.id;
   const commentObject = { alert: alertId, user: userId, content: comment };
 
   return api.post('/comments/', commentObject, { cancelToken })

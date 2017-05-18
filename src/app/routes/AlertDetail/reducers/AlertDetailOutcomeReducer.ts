@@ -43,7 +43,7 @@ export interface AlertDetailOutcomeState {
  * Initial state of the alert detail outcome reducer.
  * @type {State}
  */
-const INITIAL_STATE: AlertDetailOutcomeState = {
+export const INITIAL_STATE: AlertDetailOutcomeState = {
   active: false,
   outcome: null,
   notes: '',

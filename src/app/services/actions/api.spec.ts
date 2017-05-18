@@ -17,9 +17,7 @@
  */
 
 // Vendor
-import * as React from 'react';
 import * as sinon from 'sinon';
-import * as chai from 'chai';
 
 // Local
 import * as api from '../cyphon/api';

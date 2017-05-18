@@ -35,6 +35,7 @@ import {
   CYPHON_API_URL,
   NOTIFICATIONS_ENABLED,
   MAPBOX_ACCESS_TOKEN,
+  CYPHON_ADMIN_URL,
 } from '../../cyclops.config';
 import { isAuthenticated } from '../middlewares/auth';
 import { AppConfig } from '../types';
@@ -119,6 +120,7 @@ export class AppRouter {
       CYPHON_LOGO_URL,
       NOTIFICATIONS_ENABLED,
       NOTIFICATIONS_SERVICE_WORKER_URL,
+      ADMIN_URL: CYPHON_ADMIN_URL,
     };
     const templateOptions: AppTemplateOptions = {
       APP_BUNDLE_URL: AppRouter.APP_BUNDLE_URL,

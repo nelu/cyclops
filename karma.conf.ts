@@ -25,7 +25,7 @@ import webpackConfig from './webpack.config';
 export default (config: Config) => {
   config.set(<any> {
     files: [
-      'src/test.ts',
+      'src/specs.ts',
     ],
 
     frameworks: [
@@ -43,15 +43,21 @@ export default (config: Config) => {
       'karma-phantomjs-launcher',
       'karma-sourcemap-loader',
       'karma-remap-istanbul',
+      'karma-chrome-launcher',
+      'karma-mocha-reporter',
     ],
+
+    mime: {
+      'text/x-typescript': ['ts'],
+    },
 
     logLevel: config.LOG_WARN,
 
     preprocessors: {
-      './src/test.ts': ['webpack', 'sourcemap'],
+      './src/specs.ts': ['webpack', 'sourcemap'],
     },
 
-    reporters: ['dots', 'coverage', 'karma-remap-istanbul'],
+    reporters: ['mocha', 'coverage', 'karma-remap-istanbul'],
 
     browsers: ['PhantomJS'],
 
@@ -61,13 +67,8 @@ export default (config: Config) => {
       stats: 'errors-only',
     },
 
-    client: {
-      captureConsole: true,
-    },
-
     coverageReporter: {
       dir: 'coverage',
-
       reporters: [
         { type: 'text-summary' },
         { type: 'json', subdir: '.', file: 'coverage.json' },

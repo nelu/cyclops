@@ -113,7 +113,7 @@
     "@types/redux-logger": "2.6.32",
     "@types/redux-thunk": "2.1.31",
     "@types/request": "0.0.39",
-    "@types/sinon": "1.16.36",
+    "@types/sinon": "2.2.1",
     "@types/uuid": "2.0.29",
     "@types/webpack": "2.2.14",
     "@types/webpack-dev-middleware": "1.9.1",
