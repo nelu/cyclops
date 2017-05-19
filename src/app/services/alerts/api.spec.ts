@@ -90,4 +90,23 @@ describe('api.alerts.api', () => {
       });
     });
   });
+
+  describe('fetchAllCategories()', () => {
+    let getAll: sinon.SinonStub;
+
+    beforeEach(() => {
+      getAll = sinon.stub(api, 'getAll');
+    });
+
+    afterEach(() => {
+      getAll.restore();
+    });
+
+    it('should call the correct url', () => {
+      alertAPI.fetchAllCategories();
+
+      chai.expect(getAll.called).to.be.true;
+      chai.expect(getAll.args[0][0]).to.equal('/categories/');
+    });
+  });
 });

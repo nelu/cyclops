@@ -17,23 +17,20 @@
  */
 
 // Vendor
-import * as _ from 'lodash';
+import { combineReducers } from 'redux';
 
 // Local
-import { NormalizedList } from '~/types/normalizr';
+import {
+  CategoryStoreReducerState,
+  categoryStoreReducer,
+} from './reducers/categoryReducer';
 
-/**
- * Updates a normalized list of objects with another normalized list
- * of objects.
- * @param data Data to update.
- * @param update Data to add.
- * @returns {NormalizedList<any, any>}
- */
-export function updateNormalizedList(
-  data: NormalizedList<any, any>,
-  update: NormalizedList<any, any>,
-): NormalizedList<any, any> {
-  const result = _.union(data.result, update.result);
-
-  return _.assign({}, data, update, { result });
+/** Redux state shape for the alerts service. */
+export interface AlertServiceReducerState {
+  categories: CategoryStoreReducerState;
 }
+
+/** Redux reducer for the alerts service. */
+export const alertServiceReducer = combineReducers<AlertServiceReducerState>({
+  categories: categoryStoreReducer,
+});

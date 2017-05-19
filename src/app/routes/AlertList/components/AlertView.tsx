@@ -30,20 +30,10 @@ import { AlertParams } from './AlertParams';
 import {
   AlertSearchParams,
   AlertListItem,
-} from '../../../services/alerts/types';
-import { Distillery } from '../../../services/distilleries/types';
-import { User } from '../../../services/users/types';
-import {
-  StateToProps,
-  DispatchToProps,
-} from '../../../types/redux';
-import {
-  stopPolling,
-  searchAlerts,
-  pollAlerts,
-  disablePolling,
-  fetchViewResources,
-} from '../actions/AlertViewActions';
+  NormalizedCategoryList,
+} from '~/services/alerts/types';
+import { Distillery } from '~/services/distilleries/types';
+import { User } from '~/services/users/types';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -53,6 +43,8 @@ import {
 export interface ValueProps {
   /** Alert list to display. */
   alerts: AlertListItem[];
+  /** Categories to filter alerts with. */
+  categories: NormalizedCategoryList;
   /** Distilleries that have alerts associated with them. */
   distilleries: Distillery[];
   /** List of all the current users. */
@@ -103,6 +95,7 @@ export interface FunctionProps {
   ): any;
   /** Fetches the resources needed for the alert view. */
   fetchViewResources(): any;
+  fetchAllCategories(): any;
 }
 
 /** Combined prop interfaces for AlertView component. */
@@ -121,6 +114,7 @@ export class AlertView extends React.Component<Props, {}> {
    * @type {string[]}
    */
   public static SEARCH_PARAM_FIELDS = [
+    'categories',
     'level',
     'status',
     'assigned_user',
@@ -168,6 +162,7 @@ export class AlertView extends React.Component<Props, {}> {
 
     this.addWindowListeners();
     this.props.fetchViewResources();
+    this.props.fetchAllCategories();
     this.props.searchAlerts(
       query,
       this.props.pollingEnabled,
@@ -302,6 +297,7 @@ export class AlertView extends React.Component<Props, {}> {
       <div className="flex-box">
         <AlertParams
           params={params}
+          categories={this.props.categories}
           users={this.props.users}
           distilleries={this.props.distilleries}
           changeParams={this.changeParams}
