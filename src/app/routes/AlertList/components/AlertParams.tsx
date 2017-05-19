@@ -21,21 +21,18 @@ import * as React from 'react';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 
 // Local
-import { Distillery } from '../../../services/distilleries/types';
+import { Distillery } from '~/services/distilleries/types';
 import {
   AlertSearchParams,
   AlertTimeSearchParams,
-  Category,
-  NormalizedCategoryList
-} from '../../../services/alerts/types';
-import { User } from '../../../services/users/types';
+  NormalizedCategoryList,
+} from '~/services/alerts/types';
+import { User } from '~/services/users/types';
 import { AlertParamsLevelSelect } from './AlertParamsLevelSelect';
 import { AlertParamsStatusSelect } from './AlertParamsStatusSelect';
 import { AlertParamsUserSelect } from './AlertParamsUserSelect';
 import { AlertParamsDistillerySelect } from './AlertParamsDistillerySelect';
-import { AlertParamsDateSelect } from './AlertParamsDateSelect';
 import { AlertParamsDateCalendars } from './AlertParamsDateCalendars';
-import { formatDate } from '../../../utils/formatDate';
 import { AlertParamsDateTimeSelect } from '~/routes/AlertList/components/AlertParamsDateTimeSelect';
 import { AlertParamsCategorySelect } from '~/routes/AlertList/components/AlertParamsCategorySelect';
 

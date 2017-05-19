@@ -56,7 +56,7 @@ describe('categoryActions', () => {
       });
     });
   });
-  
+
   describe('fetchAllCategories()', () => {
     const addErrorAction: any = {};
     let fetchAllCategories: sinon.SinonStub;
