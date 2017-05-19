@@ -22,7 +22,12 @@ import { Popover, OverlayTrigger } from 'react-bootstrap';
 
 // Local
 import { Distillery } from '../../../services/distilleries/types';
-import { AlertSearchParams } from '../../../services/alerts/types';
+import {
+  AlertSearchParams,
+  AlertTimeSearchParams,
+  Category,
+  NormalizedCategoryList
+} from '../../../services/alerts/types';
 import { User } from '../../../services/users/types';
 import { AlertParamsLevelSelect } from './AlertParamsLevelSelect';
 import { AlertParamsStatusSelect } from './AlertParamsStatusSelect';
@@ -31,6 +36,8 @@ import { AlertParamsDistillerySelect } from './AlertParamsDistillerySelect';
 import { AlertParamsDateSelect } from './AlertParamsDateSelect';
 import { AlertParamsDateCalendars } from './AlertParamsDateCalendars';
 import { formatDate } from '../../../utils/formatDate';
+import { AlertParamsDateTimeSelect } from '~/routes/AlertList/components/AlertParamsDateTimeSelect';
+import { AlertParamsCategorySelect } from '~/routes/AlertList/components/AlertParamsCategorySelect';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -44,6 +51,8 @@ interface Props {
   params: AlertSearchParams;
   /** Current list of all users. */
   users: User[];
+  /** Current list of categories. */
+  categories: NormalizedCategoryList;
   /**
    * Changes the current alerts list search parameters.
    * @param params Parameters to change to.
@@ -65,22 +74,6 @@ interface State {
  * Displays a sidebar of possible alerts search parameters.
  */
 export class AlertParams extends React.Component<Props, State> {
-  /**
-   * Popover element that displays a tooltip for analyzing alerts data.
-   * @type {JSX.Element}
-   */
-  public static clearTimePopover: JSX.Element = (
-    <Popover id="alert-params-clear-time">Clear Filter</Popover>
-  );
-
-  /**
-   * Popover element that displays a tooltop for close the alerts.
-   * @type {JSX.Element}
-   */
-  public static chooseTimePopover: JSX.Element = (
-    <Popover id="alert-detail-choose-time">Expand Choices</Popover>
-  );
-
   constructor(props: Props) {
     super(props);
 
@@ -123,8 +116,16 @@ export class AlertParams extends React.Component<Props, State> {
    * Selects the time to filter alerts by.
    * @param timeObject
    */
-  public selectTime = (timeObject: { after?: string, before?: string }): void => {
+  public selectTime = (timeObject: AlertTimeSearchParams): void => {
     this.props.changeParams(timeObject);
+  };
+
+  /**
+   * Selects the category to filter alerts by.
+   * @param category
+   */
+  public selectCategory = (category: number): void => {
+    this.props.changeParams({ categories: category || undefined });
   };
 
   /**
@@ -141,102 +142,55 @@ export class AlertParams extends React.Component<Props, State> {
     this.setState({ timePanelActive: false });
   };
 
-  /**
-   * Clears the currently filtered time.
-   */
-  public clearTime = (): void => {
-    this.props.changeParams({ after: undefined, before: undefined });
-  };
-
   public render(): JSX.Element {
-    const { params, users, distilleries } = this.props;
-    const { selectLevel, selectStatus, selectUser, selectDistillery } = this;
     const timePanel = this.state.timePanelActive
       ? (
         <AlertParamsDateCalendars
-          after={params.after}
-          before={params.before}
+          after={this.props.params.after}
+          before={this.props.params.before}
           selectDate={this.selectTime}
           close={this.closeTimePanel}
         />
-      ) : null;
-    const timePanelToggle = this.state.timePanelActive
-      ? this.closeTimePanel
-      : this.openTimePanel;
-    const timeDisplay = this.props.params.after || this.props.params.before
-      ? (
-        <div className="alert-list-params__time-range">
-          <div>{params.after ? formatDate(params.after) : 'Any'}</div>
-          <div><b>-</b></div>
-          <div>{params.before ? formatDate(params.before) : 'Any'}</div>
-        </div>
       ) : null;
 
     return (
       <section className="alert-list-params flex-box flex-box--column flex--shrink">
         <div className="alert-list-params__container flex-item">
+          <AlertParamsCategorySelect
+            currentCategory={this.props.params.categories}
+            categories={this.props.categories}
+            selectCategory={this.selectCategory}
+          />
+
           <AlertParamsLevelSelect
-            currentLevel={params.level}
-            selectLevel={selectLevel}
+            currentLevel={this.props.params.level}
+            selectLevel={this.selectLevel}
           />
 
           <AlertParamsStatusSelect
-            currentStatus={params.status}
-            selectStatus={selectStatus}
+            currentStatus={this.props.params.status}
+            selectStatus={this.selectStatus}
           />
 
           <AlertParamsDistillerySelect
-            currentDistillery={params.collection}
-            distilleries={distilleries}
-            selectDistillery={selectDistillery}
+            currentDistillery={this.props.params.collection}
+            distilleries={this.props.distilleries}
+            selectDistillery={this.selectDistillery}
           />
 
-          <div className="alert-list-params__spacer alert-list-params__group">
-            <h3 className="sub-title">Time</h3>
-            <div className="flex-box form-group">
-              <div className="flex-item">
-                <AlertParamsDateSelect
-                  after={params.after}
-                  before={params.before}
-                  changeTime={this.selectTime}
-                />
-              </div>
-              <div className="flex--shrink">
-                <div className="alert-list-params__btn-group btn-group btn-group-alt">
-                  <OverlayTrigger
-                    overlay={AlertParams.clearTimePopover}
-                    placement="bottom"
-                    animation={false}
-                  >
-                    <button
-                      className="btn btn-alt"
-                      onClick={this.clearTime}
-                    >
-                      <i className="fa fa-times" />
-                    </button>
-                  </OverlayTrigger>
-                  <OverlayTrigger
-                    overlay={AlertParams.chooseTimePopover}
-                    placement="bottom"
-                    animation={false}
-                  >
-                    <button
-                      className="btn btn-alt"
-                      onClick={timePanelToggle}
-                    >
-                      <i className="fa fa-caret-right" />
-                    </button>
-                  </OverlayTrigger>
-                </div>
-              </div>
-            </div>
-            {timeDisplay}
-          </div>
+          <AlertParamsDateTimeSelect
+            after={this.props.params.after}
+            before={this.props.params.before}
+            openTimePanel={this.openTimePanel}
+            closeTimePanel={this.closeTimePanel}
+            timePanelActive={this.state.timePanelActive}
+            selectTime={this.selectTime}
+          />
 
           <AlertParamsUserSelect
-            users={users}
-            currentUser={params.assigned_user}
-            selectUser={selectUser}
+            users={this.props.users}
+            currentUser={this.props.params.assigned_user}
+            selectUser={this.selectUser}
           />
         </div>
         {timePanel}

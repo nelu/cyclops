@@ -17,23 +17,18 @@
  */
 
 // Vendor
-import * as _ from 'lodash';
+import { schema } from 'normalizr';
 
-// Local
-import { NormalizedList } from '~/types/normalizr';
+/** Constants for the alerts service. */
 
 /**
- * Updates a normalized list of objects with another normalized list
- * of objects.
- * @param data Data to update.
- * @param update Data to add.
- * @returns {NormalizedList<any, any>}
+ * Normalizr schema for an alert category object.
+ * @type {schema.Entity}
  */
-export function updateNormalizedList(
-  data: NormalizedList<any, any>,
-  update: NormalizedList<any, any>,
-): NormalizedList<any, any> {
-  const result = _.union(data.result, update.result);
+export const CATEGORY_SCHEMA = new schema.Entity('categories');
 
-  return _.assign({}, data, update, { result });
-}
+/**
+ * Normalizr schema for a list of alert categories.
+ * @type {schema.Array}
+ */
+export const CATEGORY_LIST_SCHEMA = new schema.Array(CATEGORY_SCHEMA);

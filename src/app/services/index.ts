@@ -28,15 +28,21 @@ import {
   UsersReducer,
   UsersState,
 } from '~/services/users/reducer';
+import {
+  AlertServiceReducerState,
+  alertServiceReducer,
+} from './alerts';
 
 /** Redux state shape for services. */
-export interface ServiceState {
+export interface ServicesReducerState {
+  alerts: AlertServiceReducerState;
   notifications: NotificationsState;
   users: UsersState;
 }
 
 /** Redux reducer for services. */
-export const ServiceReducer = combineReducers<ServiceState>({
+export const servicesReducer = combineReducers<ServicesReducerState>({
+  alerts: alertServiceReducer,
   notifications: NotificationsReducer,
   users: UsersReducer,
 });

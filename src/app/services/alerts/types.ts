@@ -128,7 +128,9 @@ export type AlertLevelParam = string | string[];
 export type AlertStatusParam = string | string[];
 
 /** Alert list search parameters. */
-export interface AlertSearchParams {
+export interface AlertSearchParams extends AlertTimeSearchParams {
+  /** Category to filter by. */
+  categories?: number;
   /** Alert level to search for. */
   level?: AlertLevelParam;
   /** Alert status to search for. */
@@ -143,8 +145,14 @@ export interface AlertSearchParams {
   limit?: number;
   /** How many alerts to offset. */
   offset?: number;
-  before?: string;
+}
+
+/** Alert time search parameters. */
+export interface AlertTimeSearchParams {
+  /** Time after to search for alerts. */
   after?: string;
+  /** Time before to search for alerts. */
+  before?: string;
 }
 
 /** Alert level timeseries object that shows level distribution per day. */
@@ -199,3 +207,20 @@ export interface AlertOption {
   /** Hex value of the option. */
   hexColor?: string;
 }
+
+/** Category that alerts are grouped into. */
+export interface Category {
+  /** ID of the category. */
+  id: number;
+  /** Name of the category. */
+  name: string;
+}
+
+/** Normalized category entities. */
+export interface CategoryEntities {
+  /** Normalized category objects. */
+  categories: NormalizedEntity<Category>;
+}
+
+/** List of normalized category objects. */
+export type NormalizedCategoryList = NormalizedList<number, CategoryEntities>;

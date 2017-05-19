@@ -30,6 +30,7 @@ import {
   AlertLocationResponse,
   AlertDetail,
   AlertListItem,
+  Category,
 } from './types';
 import { Dictionary } from '~/types/object';
 
@@ -198,4 +199,12 @@ export function fetchAlertLocations(
   const params = { days };
 
   return api.get('/alerts/locations/', { params, cancelToken });
+}
+
+/**
+ * Gets the categories that some alerts are grouped into.
+ * @returns {Promise<Category[]>}
+ */
+export function fetchAllCategories(): Promise<Category[]> {
+  return api.getAll('/categories/');
 }
