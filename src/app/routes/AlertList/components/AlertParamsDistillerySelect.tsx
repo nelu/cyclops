@@ -65,17 +65,7 @@ export class AlertParamsDistillerySelect extends React.Component<Props, {}> {
   };
 
   public render(): JSX.Element {
-    const distilleries: any[] = [{
-      id: 1,
-      name: 'elasticsearch.magic.magic',
-    }, {
-      id: 2,
-      name: 'elasticsearch.magic.wah',
-    }, {
-      id: 3,
-      name: 'mongodb.alakazam.boo',
-    }];
-    const sortedDistilleries = sortByWarehouse(distilleries);
+    const sortedDistilleries = sortByWarehouse(this.props.distilleries);
     const distilleryOptionGroups: JSX.Element[] = [];
 
     _.forEach(sortedDistilleries, (distilleries, warehouse) => {
