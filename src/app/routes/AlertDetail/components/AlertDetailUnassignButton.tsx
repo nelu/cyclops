@@ -27,6 +27,7 @@ import {
 import { User } from '~/services/users/types';
 import { AlertStatusChoices } from '~/services/alerts/types';
 import { getConfig } from '~/config';
+import { currentUserIsStaff } from '~/services/users/utils/currentUserIsStaff';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -67,7 +68,8 @@ export class AlertDetailUnassignButton extends React.Component<Props, {}> {
       ? this.props.user.id === getConfig().CURRENT_USER.id
       : false;
 
-    if (!isAssigned || !isCurrentUser || isDone) { return null; }
+    if (!currentUserIsStaff() || !isAssigned || !isCurrentUser || isDone) {
+      return null;}
 
     return (
       <OverlayTrigger

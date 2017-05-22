@@ -24,7 +24,8 @@ import {
 } from 'react-bootstrap';
 
 // Local
-import { User } from '../../../services/users/types';
+import { User } from '~/services/users/types';
+import { currentUserIsStaff } from '~/services/users/utils/currentUserIsStaff';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -57,7 +58,7 @@ export class AlertDetailSelfAssignButton extends React.Component<Props, {}> {
   );
 
   public render() {
-    if (!!this.props.user) { return null; }
+    if (!currentUserIsStaff() || !!this.props.user) { return null; }
 
     return (
       <OverlayTrigger

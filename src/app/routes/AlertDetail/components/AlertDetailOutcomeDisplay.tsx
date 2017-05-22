@@ -24,6 +24,7 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 import { AlertOutcomeChoices } from '../../../services/alerts/types';
 import { createRandomId } from '../../../utils/createRandomId';
 import { getOutcomeDisplayName } from '~/services/alerts/utils/getOutcomeDisplayName';
+import { currentUserIsStaff } from '~/services/users/utils/currentUserIsStaff';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -72,7 +73,8 @@ export class AlertDetailOutcomeDisplay extends React.Component<Props, {}> {
       getOutcomeDisplayName(this.props.outcome) ||
       <i>No outcome selected</i>;
     const notes = this.props.notes || <i>No analysis written</i>;
-    const removeOutcomeButton = this.props.outcome
+    const isStaff = currentUserIsStaff();
+    const removeOutcomeButton = this.props.outcome && isStaff
       ? (
         <OverlayTrigger
           overlay={this.removePopover}
@@ -80,6 +82,7 @@ export class AlertDetailOutcomeDisplay extends React.Component<Props, {}> {
           animation={false}
         >
           <button
+            id="alert-remove-outcome"
             className="btn-basic pull-right alert-detail-outcome__remove"
             onClick={this.props.showRemovePanel}
           >
@@ -87,24 +90,29 @@ export class AlertDetailOutcomeDisplay extends React.Component<Props, {}> {
           </button>
         </OverlayTrigger>
       ) : null;
+    const editOutcome = isStaff
+      ? (
+        <OverlayTrigger
+          overlay={this.editPopover}
+          placement="top"
+          animation={false}
+        >
+          <button
+            id="alert-edit-outcome"
+            className="btn-basic pull-right"
+            onClick={this.props.editOutcome}
+          >
+            <i className="fa fa-pencil" />
+          </button>
+        </OverlayTrigger>
+      ): null;
 
     return (
       <div className="well alert-detail-outcome__well">
         <div className="well__header">
           {outcome}
           {removeOutcomeButton}
-          <OverlayTrigger
-            overlay={this.editPopover}
-            placement="top"
-            animation={false}
-          >
-            <button
-              className="btn-basic pull-right"
-              onClick={this.props.editOutcome}
-            >
-              <i className="fa fa-pencil" />
-            </button>
-          </OverlayTrigger>
+          {editOutcome}
         </div>
         <p className="well__content text--pre-line">{notes}</p>
       </div>
