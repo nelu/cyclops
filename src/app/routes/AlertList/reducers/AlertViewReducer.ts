@@ -92,6 +92,12 @@ const INITIAL_STATE: AlertViewState = {
 const reducers: ReducerMap<AlertViewState, any> = {};
 
 /**
+ * Fields to update when the alert detail is updated.
+ * @type {string[]}
+ */
+const ALERT_UPDATE_FIELDS = ['level', 'status', 'assigned_user'];
+
+/**
  * Updates the AlertList reducer based on a(n) SEARCH_ALERTS_PENDING action.
  * @param state Current AlertList reducer state.
  * @param action SEARCH_ALERTS_PENDING action.
@@ -288,10 +294,7 @@ reducers[UPDATE_ALERT_SUCCESS] = (
   // Copy alert array.
   const copiedAlerts = state.alerts.slice();
   // Take out only the fields to update.
-  const fields = _.pick(
-    action.payload,
-    ['level', 'status', 'assigned_user'],
-  );
+  const fields = _.pick(action.payload, ALERT_UPDATE_FIELDS);
 
   // Assign new fields to alert object and place at the array index.
   copiedAlerts[alertIndex] = Object.assign(

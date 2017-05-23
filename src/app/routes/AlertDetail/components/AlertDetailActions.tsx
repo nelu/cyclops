@@ -27,6 +27,7 @@ import { SpacedSection } from '../../../components/SpacedSection';
 import { AlertDetailDispatch } from './AlertDetailDispatch';
 import { DispatchNested } from '../../../types/dispatches';
 import { Action } from '../../../services/actions/types';
+import { currentUserIsStaff } from '~/services/users/utils/currentUserIsStaff';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -89,43 +90,52 @@ export class AlertDetailActions extends React.Component<Props, State> {
     const { performAction, alertId } = this.props;
     const { actionId } = this.state;
 
-    if (actionId) performAction(alertId, actionId);
+    if (actionId) { performAction(alertId, actionId); }
   };
 
   public render(): JSX.Element {
     const { actions, dispatches } = this.props;
-    const dispatchList = dispatches.length ? dispatches.map((dispatch) => (
-      <AlertDetailDispatch dispatch={dispatch} />
-    )) : null;
+    const dispatchList = dispatches.length
+      ? dispatches.map((dispatch) => (
+        <AlertDetailDispatch dispatch={dispatch} />
+      )) : (
+        <div className="well">
+          <i>No previous actions performed</i>
+        </div>
+      );
     const actionOptions = actions.map((action) => (
       <option value={action.id} key={action.id}>{action.name}</option>
     ));
+    const selectActionButton = currentUserIsStaff()
+      ? (
+        <div className="flex-box flex-box--spaced">
+          <div className="flex-item">
+            <select
+              onChange={this.handleChange}
+              className="form-control alert-action__select"
+            >
+              <option value={0}>Select Action</option>
+              {actionOptions}
+            </select>
+          </div>
+          <div className="flex-item flex--shrink">
+            <button
+              className="btn btn-alt"
+              disabled={!this.state.actionId}
+              onClick={this.handleClick}
+            >
+              <i className="fa fa-check" />
+            </button>
+          </div>
+        </div>
+      ) : null;
 
     return (
       <SpacedSection>
         <SubTitle>Actions</SubTitle>
         <div>
           {dispatchList}
-          <div className="flex-box flex-box--spaced">
-            <div className="flex-item">
-              <select
-                onChange={this.handleChange}
-                className="form-control alert-action__select"
-              >
-                <option value={0}>Select Action</option>
-                {actionOptions}
-              </select>
-            </div>
-            <div className="flex-item flex--shrink">
-              <button
-                className="btn btn-alt"
-                disabled={!this.state.actionId}
-                onClick={this.handleClick}
-              >
-                <i className="fa fa-check" />
-              </button>
-            </div>
-          </div>
+          {selectActionButton}
         </div>
       </SpacedSection>
     );

@@ -19,7 +19,7 @@
 // Local
 import { User } from './services/users/types';
 
-// Local
+/** Cyclops application configuration. */
 interface AppConfig {
   /** ID of the element that will contain the react application. */
   APP_CONTAINER_ID: string;
@@ -44,6 +44,8 @@ interface AppConfig {
   NOTIFICATIONS_ENABLED: boolean;
   /** Path of the notification service worker. */
   NOTIFICATIONS_SERVICE_WORKER_URL: string;
+  /** URL of the cyphon admin page. */
+  ADMIN_URL: string;
 }
 
 /**
@@ -54,25 +56,17 @@ interface ExtendedWindow extends Window {
   CONFIG: AppConfig;
 }
 
-export const DEFAULT_CONFIG: AppConfig = {
-  APP_CONTAINER_ID: 'app',
-  CURRENT_USER: { id: 1 } as any,
-  EXPRESS_CYPHON_PROXY_URL: '/api',
-  CYPHON_API_URL: 'http://localhost:8000/',
-  MAPBOX_ACCESS_TOKEN: '',
-  APP_BASE_URL: '/app',
-  API_TIMEOUT: 30000,
-  CYPHON_LOGO_URL: '/static/img/Cyphon_Logo.svg',
-  NOTIFICATIONS_ENABLED: false,
-  NOTIFICATIONS_SERVICE_WORKER_URL: '/sw.js',
-};
-
 /**
  * Injected application configuration object from the express server.
  * @type {AppConfig}
  */
-export const CONFIG = Object.assign(
-  {},
-  DEFAULT_CONFIG,
-  (window as ExtendedWindow).CONFIG,
-);
+const CONFIG = (window as ExtendedWindow).CONFIG || {};
+
+/**
+ * Function that returns the current application configuration. Stub this
+ * function in tests to test different configurations.
+ * @returns {AppConfig}
+ */
+export function getConfig(): AppConfig {
+  return CONFIG;
+}

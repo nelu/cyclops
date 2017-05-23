@@ -24,9 +24,11 @@ import {
 } from 'react-bootstrap';
 
 // Local
-import { User } from '../../../services/users/types';
-import { AlertStatusChoices } from '../../../services/alerts/types';
-import { CONFIG } from '../../../config';
+import { User } from '~/services/users/types';
+import { AlertStatusChoices } from '~/services/alerts/types';
+import { getConfig } from '~/config';
+import { currentUserIsStaff } from '~/services/users/utils/currentUserIsStaff';
+import { isCurrentUser } from '~/services/users/utils/isCurrentUser';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -63,11 +65,13 @@ export class AlertDetailUnassignButton extends React.Component<Props, {}> {
   public render() {
     const isDone = this.props.status === 'DONE';
     const isAssigned = !!this.props.user;
-    const isCurrentUser = this.props.user
-      ? this.props.user.id === CONFIG.CURRENT_USER.id
+    const currentUser = this.props.user
+      ? isCurrentUser(this.props.user)
       : false;
 
-    if (!isAssigned || !isCurrentUser || isDone) { return null; }
+    if (!currentUserIsStaff() || !isAssigned || !currentUser || isDone) {
+      return null;
+    }
 
     return (
       <OverlayTrigger

@@ -39,6 +39,7 @@ import {
   AlertView,
 } from '../components/AlertView';
 import * as actions from '../actions/AlertViewActions';
+import { fetchAllCategories } from '~/services/alerts/actions/categoryActions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -70,6 +71,7 @@ type Container = ComponentClass<ContainerProps>;
  */
 const values: Values = (state, props) => ({
   alerts: state.routes.AlertList.AlertView.alerts,
+  categories: state.services.alerts.categories,
   count: state.routes.AlertList.AlertView.count,
   distilleries: state.routes.AlertList.AlertView.distilleries,
   interval: state.routes.AlertList.AlertView.interval,
@@ -87,6 +89,7 @@ const values: Values = (state, props) => ({
  * @param dispatch Dispatch function for the redux store.
  */
 const functions: Functions = (dispatch) => ({
+  fetchAllCategories: bind(fetchAllCategories, dispatch),
   disablePolling: bind(actions.disablePolling, dispatch),
   fetchViewResources: bind(actions.fetchViewResources, dispatch),
   searchAlerts: bind(actions.searchAlerts, dispatch),

@@ -88,3 +88,15 @@ Port number the express server will run on in localhost.
 *************
 GCM_SENDER_ID
 *************
+
+**Default:** ``''``
+
+Google Cloud Messenger sender ID for push notifications.
+
+*******************
+CYPHON_EXTERNAL_URL
+*******************
+
+**Default:** ``''``
+
+URL of the Cyphon instance that a user can reach from their browser. This has a possibility of being different from the Cyphon URL because the Cyclops instance could be communicating to the API over a different network, such as a docker network.

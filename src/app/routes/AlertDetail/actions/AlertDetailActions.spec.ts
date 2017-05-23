@@ -18,7 +18,6 @@
 
 // Vendor
 import * as sinon from 'sinon';
-import * as chai from 'chai';
 import axios from 'axios';
 
 // Local
@@ -34,7 +33,7 @@ import {
   AlertUpdateRequest
 } from '../../../services/alerts/types';
 
-describe('Alert Detail actions', () => {
+describe('AlertDetailActions', () => {
   let addError: sinon.SinonStub;
   let isCancel: sinon.SinonStub;
   let dispatch: sinon.SinonSpy;

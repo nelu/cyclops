@@ -16,6 +16,19 @@
  * are made]
  */
 
-// Local
-import { User } from '../types';
+// Vendor
+import { schema } from 'normalizr';
 
+/** Constants for the alerts service. */
+
+/**
+ * Normalizr schema for an alert category object.
+ * @type {schema.Entity}
+ */
+export const CATEGORY_SCHEMA = new schema.Entity('categories');
+
+/**
+ * Normalizr schema for a list of alert categories.
+ * @type {schema.Array}
+ */
+export const CATEGORY_LIST_SCHEMA = new schema.Array(CATEGORY_SCHEMA);

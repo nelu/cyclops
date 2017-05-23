@@ -17,15 +17,20 @@
  */
 
 // Vendor
-import * as chai from 'chai';
+import { combineReducers } from 'redux';
 
 // Local
-import { createLevelUpdateComment } from './createLevelUpdateComment';
+import {
+  CategoryStoreReducerState,
+  categoryStoreReducer,
+} from './reducers/categoryReducer';
 
-describe('createLevelUpdateComment()', () => {
-  it('should return a string with the level\'s display name' , () => {
-    const comment = createLevelUpdateComment('CRITICAL', 'HIGH');
+/** Redux state shape for the alerts service. */
+export interface AlertServiceReducerState {
+  categories: CategoryStoreReducerState;
+}
 
-    chai.expect(comment).to.equal('Changed level from Critical to High.');
-  });
+/** Redux reducer for the alerts service. */
+export const alertServiceReducer = combineReducers<AlertServiceReducerState>({
+  categories: categoryStoreReducer,
 });

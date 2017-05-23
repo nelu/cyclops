@@ -22,7 +22,7 @@ import * as _ from 'lodash';
 
 // Local
 import { DEFAULT_MAP_OPTIONS } from '../constants';
-import { CONFIG } from '../../../config';
+import { getConfig } from '~/config';
 
 /**
  * Creates a mapbox mapItem object with.
@@ -34,7 +34,7 @@ export function createMapboxMap(
   container: string | Element,
   options?: mapboxgl.MapboxOptions,
 ): mapboxgl.Map {
-  (mapboxgl as any).accessToken = CONFIG.MAPBOX_ACCESS_TOKEN;
+  (mapboxgl as any).accessToken = getConfig().MAPBOX_ACCESS_TOKEN;
   return new mapboxgl.Map(
     _.assign({}, DEFAULT_MAP_OPTIONS, options, { container }),
   );

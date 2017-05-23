@@ -35,5 +35,5 @@ export function updateNormalizedList(
 ): NormalizedList<any, any> {
   const result = _.union(data.result, update.result);
 
-  return { ...data, ...update, result};
+  return _.assign({}, data, update, { result });
 }

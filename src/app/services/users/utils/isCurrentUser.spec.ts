@@ -22,8 +22,21 @@ import * as chai from 'chai';
 
 // Local
 import { isCurrentUser } from './isCurrentUser';
+import * as cyclops from '~/config';
 
 describe('isCurrentUser()', () => {
+  const user: any = { id: 1 };
+  const config = { CURRENT_USER: user };
+  let getConfig: sinon.SinonStub;
+
+  beforeEach(() => {
+    getConfig = sinon.stub(cyclops, 'getConfig').returns(config);
+  });
+
+  afterEach(() => {
+    getConfig.restore();
+  });
+
   it('should return true if it is the current user', () => {
     chai.expect(isCurrentUser({ id: 1 } as any)).to.be.true;
   });

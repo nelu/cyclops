@@ -21,8 +21,9 @@ import * as React from 'react';
 
 // Local
 import { AlertDetailComment } from './AlertDetailComment';
-import { HiddenTextArea } from '../../../components/HiddenTextArea';
-import { CommentNested } from '../../../types/comments';
+import { HiddenTextArea } from '~/components/HiddenTextArea';
+import { CommentNested } from '~/types/comments';
+import { currentUserIsStaff } from '~/services/users/utils/currentUserIsStaff';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -64,6 +65,13 @@ export class AlertDetailComments extends React.Component<Props, {}> {
     const commentElements = comments.map((comment) => (
       <AlertDetailComment key={comment.id} comment={comment} />
     ));
+    const addCommentButton = currentUserIsStaff()
+      ? (
+        <HiddenTextArea
+          buttonText="Comment"
+          onSubmit={handleSubmit}
+        />
+      ) : null;
 
     return (
       <div className="spacing-section">
@@ -74,10 +82,7 @@ export class AlertDetailComments extends React.Component<Props, {}> {
         </h3>
         <div>
           {commentElements}
-          <HiddenTextArea
-            buttonText="Comment"
-            onSubmit={handleSubmit}
-          />
+          {addCommentButton}
         </div>
       </div>
     );

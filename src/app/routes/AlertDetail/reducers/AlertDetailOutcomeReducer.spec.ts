@@ -17,16 +17,83 @@
  */
 
 // Vendor
-import * as sinon from 'sinon';
 import * as chai from 'chai';
 
 // Local
-import * as test from './AlertDetailOutcomeReducer';
+import {
+  AlertDetailOutcomeReducer,
+  INITIAL_STATE,
+} from './AlertDetailOutcomeReducer';
+import * as actions from '../actions/AlertDetailOutcomeActions';
 
 describe('AlertDetailOutcomeReducer', () => {
-  let state: test.AlertDetailOutcomeState;
+  describe('OPEN', () => {
+    it('should update the state with the given payload data', () => {
+      const outcome = 'completed';
+      const notes = 'notes';
+      const action = actions.open(outcome, notes);
+      const state = AlertDetailOutcomeReducer({} as any, action);
 
-  beforeEach(() => {
+      chai.expect(state).to.deep.equal({
+        active: true,
+        outcome,
+        notes,
+      });
+    });
+  });
 
+  describe('CLOSE', () => {
+    it('should return the initial state', () => {
+      const action = actions.close();
+      const state = AlertDetailOutcomeReducer({} as any, action);
+
+      chai.expect(state).to.deep.equal(INITIAL_STATE);
+    });
+  });
+
+  describe('CHANGE_OUTCOME', () => {
+    it('should update the state with the given payload data', () => {
+      const outcome = 'completed';
+      const action = actions.changeOutcome(outcome);
+      const state = AlertDetailOutcomeReducer({} as any, action);
+
+      chai.expect(state).to.deep.equal({
+        outcome,
+      });
+    });
+  });
+
+  describe('CHANGE_NOTES', () => {
+    it('should update the state with the given payload data', () => {
+      const notes = 'notes';
+      const action = actions.changeNotes(notes);
+      const state = AlertDetailOutcomeReducer({} as any, action);
+
+      chai.expect(state).to.deep.equal({
+        notes,
+      });
+    });
+  });
+
+  describe('OPEN_REMOVE_PANEL', () => {
+    it('should update the state with the given payload data', () => {
+      const action = actions.openRemovePanel();
+      const state = AlertDetailOutcomeReducer({} as any, action);
+
+      chai.expect(state).to.deep.equal({
+        showRemovePanel: true,
+      });
+    });
+  });
+
+  describe('CLOSE_REMOVE_PANEL', () => {
+    it('should update the state with the given payload data', () => {
+      const action = actions.closeRemovePanel();
+      const state = AlertDetailOutcomeReducer({} as any, action);
+
+      chai.expect(state).to.deep.equal({
+        showRemovePanel: false,
+      });
+    });
   });
 });

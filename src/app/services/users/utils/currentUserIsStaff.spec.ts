@@ -16,23 +16,32 @@
  * are made]
  */
 
+// Vendor
+import * as sinon from 'sinon';
+import * as chai from 'chai';
+
 // Local
-import { AlertLevelChoices } from '../../../services/alerts/types';
-import { getLevelDisplayName } from '../../../services/alerts/utils/getLevelDisplayName';
+import { currentUserIsStaff } from './currentUserIsStaff';
+import * as config from '~/config';
 
-/**
- * Creates a message explaining that the current user changed an alert's level
- * to the specified value.
- * @param fromLevel Alert level the user changed from.
- * @param toLevel Alert level the user changed to.
- * @returns {string} Comment describing the alert update.
- */
-export function createLevelUpdateComment(
-  fromLevel: AlertLevelChoices,
-  toLevel: AlertLevelChoices,
-): string {
-  const displayFrom = getLevelDisplayName(fromLevel);
-  const displayTo = getLevelDisplayName(toLevel);
+describe('currentUserIsStaff()', () => {
+  let getConfig: sinon.SinonStub;
 
-  return `Changed level from ${displayFrom} to ${displayTo}.`;
-}
+  beforeEach(() => {
+    getConfig = sinon.stub(config, 'getConfig');
+  });
+
+  afterEach(() => {
+    getConfig.restore();
+  });
+
+  it('should return true if the current user is staff', () => {
+    getConfig.returns({ CURRENT_USER: { is_staff: true } });
+    chai.expect(currentUserIsStaff()).to.be.true;
+  });
+
+  it('should return false if the current user is not staff', () => {
+    getConfig.returns({ CURRENT_USER: { is_staff: false } });
+    chai.expect(currentUserIsStaff()).to.be.false;
+  });
+});

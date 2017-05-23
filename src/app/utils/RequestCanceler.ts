@@ -22,11 +22,20 @@ import { Canceler } from 'axios';
 /** Controls an axios request canceler function. */
 export class RequestCanceler {
   /** Canceler function to control. */
-  public canceler: Canceler;
+  public canceler: Canceler | null = null;
 
-  /** Runs the canceler function. */
-  public cancel(): void {
-    if (this.canceler) { this.canceler(); }
+  /**
+   * Runs the canceler function.
+   * @returns {boolean} If the function was run.
+   */
+  public cancel(): boolean {
+    if (this.canceler) {
+      this.canceler();
+      this.canceler = null;
+      return true;
+    }
+
+    return false;
   }
 
   /**

@@ -59,4 +59,6 @@ export interface AppConfig {
   NOTIFICATIONS_ENABLED: boolean;
   /** Path of the notification service worker. */
   NOTIFICATIONS_SERVICE_WORKER_URL: string;
+  /** URL of the cyphon admin page. */
+  ADMIN_URL: string;
 }

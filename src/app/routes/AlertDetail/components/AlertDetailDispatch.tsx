@@ -48,16 +48,18 @@ export class AlertDetailDispatch extends React.Component<Props, {}> {
    */
   public render(): JSX.Element {
     return (
-      <div key={this.props.dispatch.id} className="alert-dispatch">
-        <div className="clearfix list-title">
+      <div key={this.props.dispatch.id} className="well">
+        <div className="clearfix well__header">
           {this.props.dispatch.title}
           <span className="pull-right">
-            <span className="badge">
+            <span className="text--emphasis">
               {getUserFullName(this.props.dispatch.issued_by)}
             </span>
           </span>
         </div>
-        <JSONFormatter json={this.props.dispatch.data} />
+        <div className="well__content">
+          <JSONFormatter json={this.props.dispatch.data} />
+        </div>
       </div>
     );
   }

@@ -21,8 +21,8 @@ import * as React from 'react';
 import { Modal, NavDropdown, MenuItem } from 'react-bootstrap';
 
 // Local
-import { getUserFullName } from '../../../services/users/utils/getUserFullName';
-import { CONFIG } from '../../../config';
+import { getUserFullName } from '~/services/users/utils/getUserFullName';
+import { getConfig } from '~/config';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -71,7 +71,7 @@ export class LogoutModal extends React.Component<{}, State> {
     return (
       <div className="flex-box">
         <div className="flex-box flex-box--align-center flex--shrink text--emphasis header__user">
-          {getUserFullName(CONFIG.CURRENT_USER)}
+          {getUserFullName(getConfig().CURRENT_USER)}
         </div>
         <div className="flex-item flex--shrink">
           <a onClick={this.openModal} className="header__link header__logout">

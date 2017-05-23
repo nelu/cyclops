@@ -33,14 +33,14 @@ import {
   RoutesReducer,
 } from './routes';
 import {
-  ServiceState,
-  ServiceReducer,
+  ServicesReducerState,
+  servicesReducer,
 } from './services/index';
 
 /** Shape of the redux store state. */
 export interface StoreState {
   routes: RoutesState;
-  services: ServiceState,
+  services: ServicesReducerState,
 }
 
 /**
@@ -49,7 +49,7 @@ export interface StoreState {
  */
 const reducers = combineReducers<StoreState>({
   routes: RoutesReducer,
-  services: ServiceReducer,
+  services: servicesReducer,
 });
 
 /**

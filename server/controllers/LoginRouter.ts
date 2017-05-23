@@ -105,7 +105,7 @@ interface LoginTemplateOptions {
   /** URL of the main css file when accessed from a browser. */
   MAIN_CSS_URL: string;
   /** Any errors made when authenticating. */
-  errors?: AuthenticateErrorData;
+  ERRORS?: AuthenticateErrorData;
 }
 
 // --------------------------------------------------------------------------
@@ -136,8 +136,28 @@ export class LoginRouter {
     return Object.assign(
       {},
       LoginRouter.BASE_LOGIN_TEMPLATE_OPTIONS,
-      { errors },
+      { ERRORS: errors },
     );
+  }
+
+  /**
+   * Gets the authentication errors from an authentication error.
+   * @param error Authentication error.
+   * @returns {any} Error data from the server.
+   */
+  public static getAuthenticationErrors(
+    error: AuthenticateError,
+  ): AuthenticateErrorData {
+    if (!error.response) {
+      return {
+        non_field_errors: [
+          'Cannot connect to Cyphon instance. Make sure that the instance is ' +
+          'running and that CYPHON_URL is correctly set.',
+        ],
+      };
+    }
+
+    return error.response.data;
   }
 
   /**
@@ -185,9 +205,11 @@ export class LoginRouter {
         res.redirect(nextURL);
       })
       .catch((error: AuthenticateError) => {
+        const errors = LoginRouter.getAuthenticationErrors(error);
+
         res.render(
           LOGIN_TEMPLATE,
-          LoginRouter.createErrorTemplateOptions(error.response.data),
+          LoginRouter.createErrorTemplateOptions(errors),
         );
       });
   };

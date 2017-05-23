@@ -45,24 +45,24 @@ describe('api.distilleries.utils', () => {
     });
   });
 
-  describe('getWarehouseName()', () => {
+  describe('getBackendName()', () => {
     it('should return the warehouse name from a distillery name', () => {
       const name = 'backend.store.collection';
-      const warehouse = utils.getWarehouseName(name);
+      const warehouse = utils.getBackendName(name);
 
       chai.expect(warehouse).to.equal('backend');
     });
 
     it('should return an empty string if there is no warehouse name', () => {
       const name = 'name';
-      const warehouse = utils.getWarehouseName(name);
+      const warehouse = utils.getBackendName(name);
 
       chai.expect(warehouse).to.equal('');
     });
 
     it('should return an empty string if given an empty string', () => {
       const name = '';
-      const warehouse = utils.getWarehouseName(name);
+      const warehouse = utils.getBackendName(name);
 
       chai.expect(warehouse).to.equal('');
     });
@@ -88,14 +88,14 @@ describe('api.distilleries.utils', () => {
   describe('sortByWarehouse()', () => {
     it('should sort a list of distilleries by their warehouse names', () => {
       const distillery1 = { name: 'backend.one.collection' };
-      const distillery2 = { name: 'backend.two.collection' };
-      const distillery3 = { name: 'magic.three.collection' };
+      const distillery2 = { name: 'backend.one.collection' };
+      const distillery3 = { name: 'magic.two.collection' };
       const distilleries: any[] = [distillery1, distillery2, distillery3];
       const sorted = utils.sortByWarehouse(distilleries);
 
       chai.expect(sorted).to.deep.equal({
-        backend: [distillery1, distillery2],
-        magic: [distillery3],
+        one: [distillery1, distillery2],
+        two: [distillery3],
       });
     });
   });

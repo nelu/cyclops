@@ -259,13 +259,6 @@ React
 ::
 
     |── app/
-    |   |── api/
-    |   |   └── endpoint/
-    |   |       |── api.ts
-    |   |       |── constants.ts
-    |   |       |── schema.ts
-    |   |       |── types.ts
-    |   |       └── utils.ts
     |   |── components/
     |   |── services/
     |   |   └── service/
@@ -277,35 +270,27 @@ React
     |   |   └── utility.ts
     |   |── types/
     |   |   └── types.ts
-    |   |── views/
-    |   |   └── view/
-    |   |       |── actions/
-    |   |       |── components/
-    |   |       |── containers/
-    |   |       |── reducers/
-    |   |       |── utils/
-    |   |       |── constants.ts
-    |   |       └── types.ts
+    |   |── routes/
+    |   |   |── Route/
+    |   |   |   |── actions/
+    |   |   |   |── components/
+    |   |   |   |── containers/
+    |   |   |   |── reducers/
+    |   |   |   |── utils/
+    |   |   |   |── constants.ts
+    |   |   |   |── index.ts
+    |   |   |   └── types.ts
+    |   |   └── index.ts
     |   |── config.ts
     |   |── index.tsx
     |   └── store.ts
     |── styles/
     |── typings/
     |── main.tsx
-    |── pollyfill.ts
-    |── test.ts
+    |── specs.ts
     └── tsconfig.json
 
 - **app:** Main application source files.
-
-    - **api:** Contains files that connect to the Cyphon API. It's subdirectory's are correlated to the root of the Cyphon API to easily locate where endpoint types and functions live. Each subdirectory is named after the API url and can contains these files:
-
-        - **api.ts:** Functions that gets or sends information to the API endpoint.
-        - **constants.ts:** Constants for this endpoint.
-        - **schemas.ts:** Normalizr schema's used to created normalized data from the objects returned from this endpoint.
-        - **types.ts:** Object types returned from this endpoint.
-        - **utils.ts:** Helper functions for objects returned from this endpoint.
-
     - **components:** Contains react components that are reused across the application.
     - **services:** Related react components and utilities that are reused across the application. Each subdirectory can contain these directories and file names:
 
@@ -316,7 +301,7 @@ React
 
     - **types:** Interfaces/Types used across the application.
     - **utils:** Helper functions used across the entire application.
-    - **views:** Related react components and utilities that are specific to a particular route defined in react-router. Each subdirectory should be named for the route in the router definition and contain these directories and file names:
+    - **routes:** Related react components and utilities that are specific to a particular route defined in react-router. It has one file in this folder named index.ts that collects each routes root component, reducer, and reducer shape then displays it to the index.tsx of the application. Each subdirectory should be named for the route in the router definition and contain these directories and file names:
 
         - **actions:** Redux actions related to this view. Files in this directory should follow the style referenced here: :ref:`code-style-typescript-redux-actions`.
         - **components:** React components related to this view.
@@ -325,6 +310,7 @@ React
         - **utils:** Helper functions used in this view.
         - **constants.ts:** Constants used in this view.
         - **types.ts:** Interfaces/Types used in this view.
+        - **index.ts:** File containing the root route component, the redux state shape for the route, and the route reducer.
 
     - **config.ts:** Configuration for the react application that is injected from the express server.
     - **index.tsx:** Root file of the application. Includes the redux connector and react-router configuration. Subdirectories in the views directory should match the router configuration in here. New routes should be configured here.
@@ -333,8 +319,7 @@ React
 - **styles:** SCSS source files for the application stylesheets. See :ref:`directory-structure-scss` for more information.
 - **typings:** Typescript definition files for 3rd party libraries that are not located in the DefinitelyTyped github repository.
 - **main.ts:** Webpack entry point for the react application. Connects the react application to the root DOM element and includes any necessary CSS and JS to build the bundle.
-- **pollyfill.ts:** ES6 pollyfills for things like Promises and Object functions.
-- **test.ts:** Webpack entry point for test files.
+- **specs.ts:** Webpack entry point for test files.
 - **tsconfig.json:** Typescript configuration for the react application.
 
 .. _directory-structure-express:

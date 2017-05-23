@@ -24,13 +24,11 @@ import * as _ from 'lodash';
 import {
   SubtleSelect,
   SelectOption,
-} from '../../../components/SubtleSelect';
-import { User } from '../../../services/users/types';
-import { getUserFullName } from '../../../services/users/utils/getUserFullName';
-import { CONFIG } from '../../../config';
-import { AlertDetailSelfAssignButton } from './AlertDetailSelfAssignButton';
-import { AlertDetailUnassignButton } from './AlertDetailUnassignButton';
-import { AlertStatusChoices } from '../../../services/alerts/types';
+} from '~/components/SubtleSelect';
+import { User } from '~/services/users/types';
+import { getUserFullName } from '~/services/users/utils/getUserFullName';
+import { getConfig } from '~/config';
+import { currentUserIsStaff } from '~/services/users/utils/currentUserIsStaff';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -81,11 +79,10 @@ export class AlertDetailUserSelect extends React.Component<Props, {}> {
     const currentUserName = this.props.currentUser
       ? getUserFullName(this.props.currentUser)
       : 'None';
+    const userInfo = <span>{currentUserName}</span>;
 
     // Hide user select if the current user isn't staff
-    if (!CONFIG.CURRENT_USER.is_staff) {
-      return (<span>{currentUserName}</span>);
-    }
+    if (!currentUserIsStaff()) { return userInfo; }
 
     const currentUserId = this.props.currentUser
       ? this.props.currentUser.id
@@ -102,9 +99,9 @@ export class AlertDetailUserSelect extends React.Component<Props, {}> {
         currentValue={currentUserId}
         onSelect={this.handleSelect}
       >
-          <span>
-            {currentUserName}
-          </span>
+        <span>
+          {currentUserName}
+        </span>
         {' '}
         <i className="caret" />
       </SubtleSelect>

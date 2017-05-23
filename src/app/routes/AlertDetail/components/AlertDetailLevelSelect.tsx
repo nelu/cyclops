@@ -23,6 +23,7 @@ import * as React from 'react';
 import { AlertLevelIcon } from '../../../services/alerts/components/AlertLevelIcon';
 import { SubtleSelect } from '../../../components/SubtleSelect';
 import { LEVEL_OPTIONS, LEVEL_OPTIONS_LIST } from '../../AlertList/constants';
+import { currentUserIsStaff } from '~/services/users/utils/currentUserIsStaff';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -49,28 +50,26 @@ interface Props {
  * Selects a new level for an existing alerts.
  */
 export class AlertDetailLevelSelect extends React.Component<Props, {}> {
-  /**
-   * Changes the alert detail level.
-   * @param level Level to change the alert to.
-   */
-  public handleSelect = (level: string) => {
-    this.props.selectLevel(level);
-  };
-
   public render(): JSX.Element {
     const { currentLevel } = this.props;
-    const { handleSelect } = this;
+    const levelInfo = (
+      <span>
+        <AlertLevelIcon level={currentLevel}/>
+        <span className="alert-icon-spacing">
+          {LEVEL_OPTIONS[currentLevel].name}
+        </span>
+      </span>
+    );
+
+    if (!currentUserIsStaff()) { return levelInfo; }
 
     return (
       <SubtleSelect
         options={LEVEL_OPTIONS_LIST}
         currentValue={currentLevel}
-        onSelect={handleSelect}
+        onSelect={this.props.selectLevel}
       >
-        <AlertLevelIcon level={currentLevel}/>
-        <span className="alert-icon-spacing">
-          {LEVEL_OPTIONS[currentLevel].name}
-        </span>
+        {levelInfo}
         {' '}
         <i className="caret" />
       </SubtleSelect>

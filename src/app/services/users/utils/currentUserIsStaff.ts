@@ -17,18 +17,12 @@
  */
 
 // Local
-import * as cyphonAPI from '../cyphon/api';
-import { Container } from './types';
+import { getConfig } from '~/config';
 
 /**
- * Retrieves a container object from cyphon.
- * @param containerId ID of the container to fetch
- * @param cache If the result should be cached.
- * @returns {Promise<Container>}
+ * Determines if the current user is staff.
+ * @returns {boolean}
  */
-export function fetchContainer(
-  containerId: number,
-  cache?: boolean,
-): Promise<Container> {
-  return cyphonAPI.get(`/containers/${containerId}/`, { cache });
+export function currentUserIsStaff(): boolean {
+  return getConfig().CURRENT_USER.is_staff;
 }

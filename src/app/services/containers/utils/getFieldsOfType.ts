@@ -20,7 +20,7 @@
 import * as _ from 'lodash';
 
 import { Container } from '../types';
-import { Result } from '../../../types/result';
+import { Result } from '~/types/result';
 import { Field } from '../../cyphon/types';
 
 /**

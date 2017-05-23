@@ -76,6 +76,11 @@ export function redirectToLogin(req: Request, res: Response): void {
   res.redirect(redirectUrl);
 }
 
+/**
+ *
+ * @param req
+ * @returns {string}
+ */
 export function getToken(req: Request): string {
   return req.session && req.session.token ? req.session.token : '';
 }

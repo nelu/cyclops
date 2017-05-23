@@ -261,7 +261,7 @@ const PLUGINS: Plugin[] = PLUGIN_ASSIGNMENTS[ENV]();
 const config: Configuration = {
   context: __dirname,
 
-  entry: TESTING ? './src/test.ts' : './src/main.ts',
+  entry: './src/main.ts',
 
   output: TESTING ? undefined : {
     filename: WEBPACK_OUTPUT_FILENAME,

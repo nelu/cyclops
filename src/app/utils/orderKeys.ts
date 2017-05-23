@@ -20,14 +20,14 @@
 import * as _ from 'lodash';
 
 // Local
-import { Dictionary } from '../types/object';
+import { Dictionary } from '~/types/object';
 
 /**
  * Orders an objects keys in alphabetical order.
  * @param object
  * @return {object}
  */
-export function orderKeys(object: Dictionary<any>) {
+export function orderKeys(object: Dictionary<any>): Dictionary<any> {
   const objectKeys = _.sortBy(_.keys(object));
   const ordered: any = {};
 

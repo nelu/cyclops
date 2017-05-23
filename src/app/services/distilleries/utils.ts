@@ -22,6 +22,7 @@ import * as _ from 'lodash';
 // Local
 import { Dictionary } from '../../types/object';
 import { Distillery } from './types';
+import { orderKeys } from '~/utils/orderKeys';
 
 /**
  * Shortens the distillery name by removing the backend name.
@@ -33,12 +34,21 @@ export function shortenDistilleryName(name: string): string {
 }
 
 /**
+ * Returns the backend name from a distillery name.
+ * @param name Distillery name.
+ * @returns {string} Backend name.
+ */
+export function getBackendName(name: string): string {
+  return name.substr(0, name.indexOf('.')) || '';
+}
+
+/**
  * Returns the warehouse name from a distillery name.
  * @param name Distillery name.
  * @returns {string} Warehouse name.
  */
 export function getWarehouseName(name: string): string {
-  return name.substr(0, name.indexOf('.')) || '';
+  return getBackendName(shortenDistilleryName(name));
 }
 
 /**
@@ -59,7 +69,7 @@ export function shortenDistilleryDictionary(
 }
 
 /**
- * Sorts a list of distilleries by their warehouse.
+ * Sorts a list of distilleries by their warehouse alphabetically.
  * @param distilleries
  * @returns {Dictionary<Distillery[]>}
  */
@@ -76,5 +86,5 @@ export function sortByWarehouse(
     else { sorted[warehouse] = [copied]; }
   });
 
-  return sorted;
+  return orderKeys(sorted);
 }

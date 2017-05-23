@@ -19,7 +19,7 @@
 
 // Local
 import { User } from '../types';
-import { CONFIG } from '~/config';
+import { getConfig } from '~/config';
 
 /**
  * Determines if a user is the current user.
@@ -27,5 +27,5 @@ import { CONFIG } from '~/config';
  * @returns {boolean} If the user is the current user.
  */
 export function isCurrentUser(user: User): boolean {
-  return user.id === CONFIG.CURRENT_USER.id;
+  return user.id === getConfig().CURRENT_USER.id;
 }

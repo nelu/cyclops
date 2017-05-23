@@ -23,9 +23,7 @@ import * as chai from 'chai';
 import * as enzyme from 'enzyme';
 
 // Local
-import { AlertDetailUserSelect } from './AlertDetailUserSelect';
-import { CONFIG } from '../../../config';
-import { User } from '../../../services/users/types';
+import { User } from '~/services/users/types';
 
 describe('<AlertDetailUserSelect />', () => {
   let wrapper: enzyme.ShallowWrapper<any, any>;

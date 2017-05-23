@@ -20,9 +20,8 @@
 import * as _ from 'lodash';
 
 // Local
-import { CONFIG } from '../../config';
-import { AlertOption } from '../../services/alerts/types';
-import { Dictionary } from '../../types/object';
+import { AlertOption } from '~/services/alerts/types';
+import { Dictionary } from '~/types/object';
 
 /**
  * The display options of the level choices.
