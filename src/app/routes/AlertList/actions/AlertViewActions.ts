@@ -30,14 +30,11 @@ import {
   AlertSearchParams,
   AlertListItem,
 } from '~/services/alerts/types';
-import { fetchAlertList } from '~/services/alerts/api';
+import { fetchAlertList } from '~/services/alerts/utils/alertsAPI';
 import { addError } from '../../App/actions/ErroPopupActions';
 import { createRandomId } from '~/utils/createRandomId';
 import { StoreState } from '~/store';
-import {
-  Distillery,
-  DistilleryFlat
-} from '~/services/distilleries/types';
+import { DistilleryFlat } from '~/services/distilleries/types';
 import { Action } from '~/services/actions/types';
 import { User } from '~/services/users/types';
 import { fetchAllUsers } from '~/services/users/api';

@@ -28,7 +28,7 @@ import {
   NormalizedCategoryList,
 } from '~/services/alerts/types';
 import { normalizeCategories } from '~/services/alerts/utils/categoryUtils';
-import { fetchAllCategories as getCategories } from '../api';
+import { fetchAllCategories as getCategories } from '../utils/alertsAPI';
 import { addError } from '~/routes/App/actions/ErroPopupActions';
 
 /**

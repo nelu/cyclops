@@ -20,7 +20,7 @@
 import { CancelToken } from 'axios';
 
 // Local
-import * as api from '../cyphon/api';
+import * as api from '~/services/cyphon/api';
 import { getConfig } from '~/config';
 import { APIList } from '~/services/cyphon/types';
 import {
@@ -31,7 +31,7 @@ import {
   AlertDetail,
   AlertListItem,
   Category,
-} from './types';
+} from '../types';
 import { Dictionary } from '~/types/object';
 
 /**

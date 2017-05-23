@@ -20,7 +20,7 @@
 import * as chai from 'chai';
 
 // Local
-import * as test from './utils';
+import * as test from './monitorUtils';
 
 describe('Monitor Utilities', () => {
   const monitor1: any = { name: 'monitor', status: 'GREEN' };

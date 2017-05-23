@@ -22,7 +22,7 @@ import * as chai from 'chai';
 
 // Local
 import * as actions from './categoryActions';
-import * as api from '../api';
+import * as api from '../utils/alertsAPI';
 import * as errorActions from '~/routes/App/actions/ErroPopupActions';
 
 describe('categoryActions', () => {

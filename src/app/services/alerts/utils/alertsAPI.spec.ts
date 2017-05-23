@@ -1,0 +1,401 @@
+/**
+ * The contents of this file are subject to the CYPHON Proprietary Non-
+ * Commercial Registered User Use License Agreement (the "Agreement”). You
+ * may not use this file except in compliance with the Agreement, a copy
+ * of which may be found at https://github.com/dunbarcyber/cyclops/. The
+ * developer of the CYPHON technology and platform is Dunbar Security
+ * Systems, Inc.
+ *
+ * The CYPHON technology or platform are distributed under the Agreement on
+ * an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the Agreement for specific terms.
+ *
+ * Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
+ *
+ * Contributor/Change Made By: ________________. [Only apply if changes
+ * are made]
+ */
+
+// Vendor
+import * as sinon from 'sinon';
+import * as chai from 'chai';
+
+// Local
+import * as api from '~/services/cyphon/api';
+import * as alertsAPI from './alertsAPI';
+import * as config from '~/config';
+
+describe('alertsAPI', () => {
+  let get: sinon.SinonStub;
+  let post: sinon.SinonStub;
+
+  beforeEach(() => {
+    get = sinon.stub(api, 'get').resolves();
+    post = sinon.stub(api, 'post').resolves();
+  });
+
+  afterEach(() => {
+    get.restore();
+    post.restore();
+  });
+
+  describe('fetchAlert', () => {
+    it('should call get with the correct url', () => {
+      const alertId = 1;
+
+      alertsAPI.fetchAlert(alertId);
+
+      chai.expect(get.called).to.be.true;
+      chai.expect(get.args[0][0]).to.equal('/alerts/1/');
+    });
+
+    it('should pass the cancel token to the get options', () => {
+      const alertId = 1;
+      const cancelToken: any = 'token';
+
+      alertsAPI.fetchAlert(alertId, cancelToken);
+
+      chai.expect(get.called).to.be.true;
+      chai.expect(get.args[0][1]).to.deep.equal({ cancelToken });
+    });
+  });
+
+  describe('fetchAlertList', () => {
+    it('should call get with the correct url', () => {
+      alertsAPI.fetchAlertList({} as any);
+
+      chai.expect(get.called).to.be.true;
+      chai.expect(get.args[0][0]).to.equal('/alerts/');
+    });
+
+    it('should pass the parameters to the get options', () => {
+      const params: any = {};
+
+      alertsAPI.fetchAlertList(params);
+
+      chai.expect(get.called).to.be.true;
+      chai.expect(get.args[0][1]).to.deep.equal({
+        params,
+        cancelToken: undefined,
+      });
+    });
+
+    it('should pass the cancel token to the get options', () => {
+      const params: any = {};
+      const cancelToken: any = {};
+
+      alertsAPI.fetchAlertList(params, cancelToken);
+
+      chai.expect(get.called).to.be.true;
+      chai.expect(get.args[0][1]).to.deep.equal({
+        params,
+        cancelToken,
+      });
+    });
+  });
+
+  describe('performAction()', () => {
+    const actionId = 1;
+    const alertId = 2;
+    let fetchAlert: sinon.SinonStub;
+
+    beforeEach(() => {
+      post.resolves();
+    });
+
+    it('should post to the correct url', () => {
+      return alertsAPI.performAction(actionId, alertId).then(() => {
+        chai.expect(post.called).to.be.true;
+        chai.expect(post.args[0][0]).to.equal('/actions/1/run/');
+      });
+    });
+
+    it('should post the alertId as the post data', () => {
+      return alertsAPI.performAction(actionId, alertId).then(() => {
+        chai.expect(post.called).to.be.true;
+        chai.expect(post.args[0][1]).to.deep.equal({ alert: alertId });
+      });
+    });
+
+    it('should pass the cancel token', () => {
+      const cancelToken: any = {};
+
+      return alertsAPI.performAction(actionId, alertId, cancelToken).then(() => {
+        chai.expect(post.called).to.be.true;
+        chai.expect(post.args[0][2]).to.deep.equal({ cancelToken });
+      });
+    });
+
+    it('should call fetchAlert on a successful call', () => {
+      return alertsAPI.performAction(actionId, alertId).then(() => {
+        chai.expect(get.called).to.be.true;
+        chai.expect(get.args[0]).to.deep.equal(['/alerts/2/', { cancelToken: undefined }]);
+      });
+    });
+  });
+
+  describe('updateAlert()', () => {
+    const alertId = 5;
+    const fields: any = {};
+    let patch: sinon.SinonStub;
+
+    beforeEach(() => {
+      patch = sinon.stub(api, 'patch').resolves();
+    });
+
+    afterEach(() => {
+      patch.restore();
+    });
+
+    it('should call the correct url', () => {
+      return alertsAPI.updateAlert(alertId, fields).then(() => {
+        chai.expect(patch.called).to.be.true;
+        chai.expect(patch.args[0][0]).to.equal('/alerts/5/');
+      });
+    });
+
+    it('should pass the fields to patch', () => {
+      return alertsAPI.updateAlert(alertId, fields).then(() => {
+        chai.expect(patch.called).to.be.true;
+        chai.expect(patch.args[0][1]).to.deep.equal(fields);
+      });
+    });
+
+    it('should modify the assigned_user field to be the id', () => {
+      const userFields: any = {
+        assigned_user: { id: 3 },
+      };
+      return alertsAPI.updateAlert(alertId, userFields).then(() => {
+        chai.expect(patch.called).to.be.true;
+        chai.expect(patch.args[0][1]).to.deep.equal({
+          assigned_user: 3,
+        });
+      });
+    });
+
+    it('should pass through the cancel token', () => {
+      const cancelToken: any = {};
+
+      return alertsAPI.updateAlert(alertId, fields, cancelToken).then(() => {
+        chai.expect(patch.called).to.be.true;
+        chai.expect(patch.args[0][2]).to.deep.equal({ cancelToken });
+      });
+    });
+  });
+
+  describe('addComment()', () => {
+    const userId = 5;
+    const alertId = 3;
+    const comment = 'comment';
+    let getConfig: sinon.SinonStub;
+
+    beforeEach(() => {
+      getConfig = sinon
+        .stub(config, 'getConfig')
+        .returns({ CURRENT_USER: { id: userId } });
+    });
+
+    afterEach(() => {
+      getConfig.restore();
+    });
+
+    it('should call the correct url', () => {
+      return alertsAPI.addComment(alertId, comment).then(() => {
+        chai.expect(post.called).to.be.true;
+        chai.expect(post.args[0][0]).to.equal('/comments/');
+      });
+    });
+
+    it('should post a comment object to the url based on the args', () => {
+      const expected = { alert: alertId, user: userId, content: comment };
+
+      return alertsAPI.addComment(alertId, comment).then(() => {
+        chai.expect(post.called).to.be.true;
+        chai.expect(post.args[0][1]).to.deep.equal(expected);
+      });
+    });
+
+    it('should pass through the cancelToken', () => {
+      const cancelToken: any = {};
+
+      return alertsAPI.addComment(alertId, comment, cancelToken).then(() => {
+        chai.expect(post.called).to.be.true;
+        chai.expect(post.args[0][2]).to.deep.equal({ cancelToken });
+      });
+    });
+
+    it('should call fetchAlert after a successfull call', () => {
+      const cancelToken: any = {};
+      return alertsAPI.addComment(alertId, comment, cancelToken).then(() => {
+        chai.expect(get.called).to.be.true;
+        chai.expect(get.args[0][0]).to.equal('/alerts/3/');
+        chai.expect(get.args[0][1]).to.deep.equal({ cancelToken });
+      });
+    });
+  });
+
+  describe('fetchAllCategories()', () => {
+    let getAll: sinon.SinonStub;
+
+    beforeEach(() => {
+      getAll = sinon.stub(api, 'getAll');
+    });
+
+    afterEach(() => {
+      getAll.restore();
+    });
+
+    it('should call the correct url', () => {
+      alertsAPI.fetchAllCategories();
+
+      chai.expect(getAll.called).to.be.true;
+      chai.expect(getAll.args[0][0]).to.equal('/categories/');
+    });
+  });
+
+  describe('fetchAlertLevelDistribution()', () => {
+    const days = 4;
+
+    it('should call the correct url', () => {
+      alertsAPI.fetchAlertLevelDistribution(days);
+      chai.expect(get.args[0][0]).to.equal('/alerts/levels/');
+    });
+
+    it('should pass the days parameter to the get params', () => {
+      alertsAPI.fetchAlertLevelDistribution(days);
+      chai.expect(get.args[0][1]).to.deep.equal({
+        params: { days },
+        cancelToken: undefined,
+      });
+    });
+
+    it('should pass the cancelToken to the configuration', () => {
+      const cancelToken: any = {};
+      alertsAPI.fetchAlertLevelDistribution(days, cancelToken);
+      chai.expect(get.args[0][1]).to.deep.equal({
+        params: { days },
+        cancelToken,
+      });
+    });
+  });
+
+  describe('fetchAlertStatusDistribution()', () => {
+    const days = 6;
+
+    it('should call the correct url', () => {
+      alertsAPI.fetchAlertStatusDistribution(days);
+
+      chai.expect(get.args[0][0]).to.equal('/alerts/statuses/');
+    });
+
+    it('should pass the days parameter to the get params', () => {
+      alertsAPI.fetchAlertStatusDistribution(days);
+
+      chai.expect(get.args[0][1]).to.deep.equal({
+        params: { days: 5 },
+        cancelToken: undefined,
+      });
+    });
+
+    it('should pass the cancelToken to the configuration', () => {
+      const cancelToken: any = {};
+
+      alertsAPI.fetchAlertStatusDistribution(days, cancelToken);
+
+      chai.expect(get.args[0][1]).to.deep.equal({
+        params: { days: 5 },
+        cancelToken,
+      });
+    });
+  });
+
+  describe('fetchAlertCollectionDistribution()', () => {
+    const days = 9;
+
+    it('should call the correct url', () => {
+      alertsAPI.fetchAlertCollectionDistribution(days);
+
+      chai.expect(get.args[0][0]).to.equal('/alerts/collections/');
+    });
+
+    it('should pass the days parameter to the get params', () => {
+      alertsAPI.fetchAlertCollectionDistribution(days);
+
+      chai.expect(get.args[0][1]).to.deep.equal({
+        params: { days: 8 },
+        cancelToken: undefined,
+      });
+    });
+
+    it('should pass the cancelToken to the configuration', () => {
+      const cancelToken: any = {};
+
+      alertsAPI.fetchAlertCollectionDistribution(days, cancelToken);
+
+      chai.expect(get.args[0][1]).to.deep.equal({
+        params: { days: 8 },
+        cancelToken,
+      });
+    });
+  });
+
+  describe('fetchAlertLevelTimeseries()', () => {
+    const days = 9;
+
+    it('should call the correct url', () => {
+      alertsAPI.fetchAlertLevelTimeseries(days);
+
+      chai.expect(get.args[0][0]).to.equal('/alerts/level-timeseries/');
+    });
+
+    it('should pass the days parameter to the get params', () => {
+      alertsAPI.fetchAlertLevelTimeseries(days);
+
+      chai.expect(get.args[0][1]).to.deep.equal({
+        params: { days: 8 },
+        cancelToken: undefined,
+      });
+    });
+
+    it('should pass the cancelToken to the configuration', () => {
+      const cancelToken: any = {};
+
+      alertsAPI.fetchAlertLevelTimeseries(days, cancelToken);
+
+      chai.expect(get.args[0][1]).to.deep.equal({
+        params: { days: 8 },
+        cancelToken,
+      });
+    });
+  });
+
+  describe('fetchAlertLocations()', () => {
+    const days = 9;
+
+    it('should call the correct url', () => {
+      alertsAPI.fetchAlertLocations(days);
+
+      chai.expect(get.args[0][0]).to.equal('/alerts/locations/');
+    });
+
+    it('should pass the days parameter to the get params', () => {
+      alertsAPI.fetchAlertLocations(days);
+
+      chai.expect(get.args[0][1]).to.deep.equal({
+        params: { days },
+        cancelToken: undefined,
+      });
+    });
+
+    it('should pass the cancelToken to the configuration', () => {
+      const cancelToken: any = {};
+
+      alertsAPI.fetchAlertLocations(days, cancelToken);
+
+      chai.expect(get.args[0][1]).to.deep.equal({
+        params: { days },
+        cancelToken,
+      });
+    });
+  });
+});

@@ -17,18 +17,14 @@
  */
 
 // Local
-import * as cyphonAPI from '../cyphon/api';
-import { Container } from './types';
+import * as cyphonAPI from '../../cyphon/api';
+import { MonitorNested } from '../types';
+import { APIList } from '../../cyphon/types';
 
 /**
- * Retrieves a container object from cyphon.
- * @param containerId ID of the container to fetch
- * @param cache If the result should be cached.
- * @returns {Promise<Container>}
+ * Returns a list of current Monitors.
+ * @return {Promise<APIList<MonitorNested>>}
  */
-export function fetchContainer(
-  containerId: number,
-  cache?: boolean,
-): Promise<Container> {
-  return cyphonAPI.get(`/containers/${containerId}/`, { cache });
+export function fetchMonitorList(): Promise<APIList<MonitorNested>> {
+  return cyphonAPI.get('/monitors/enabled/');
 }

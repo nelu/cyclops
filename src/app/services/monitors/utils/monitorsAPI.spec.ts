@@ -16,15 +16,29 @@
  * are made]
  */
 
-// Local
-import * as cyphonAPI from '../cyphon/api';
-import { MonitorNested } from './types';
-import { APIList } from '../cyphon/types';
+// Vendor
+import * as sinon from 'sinon';
+import * as chai from 'chai';
 
-/**
- * Returns a list of current Monitors.
- * @return {Promise<APIList<MonitorNested>>}
- */
-export function fetchMonitorList(): Promise<APIList<MonitorNested>> {
-  return cyphonAPI.get('/monitors/enabled/');
-}
+// Local
+import * as monitorsAPI from './monitorsAPI';
+import * as cyphonAPI from '~/services/cyphon/api';
+
+describe('monitorsAPI', () => {
+  let get: sinon.SinonStub;
+
+  beforeEach(() => {
+    get = sinon.stub(cyphonAPI, 'get');
+  });
+
+  afterEach(() => {
+    get.restore();
+  });
+
+  describe('fetchMonitorList()', () => {
+    it('should call the correct url', () => {
+      monitorsAPI.fetchMonitorList();
+      chai.expect(get.args[0][0]).to.equal('/monitors/enabled/');
+    });
+  });
+});
