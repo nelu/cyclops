@@ -27,11 +27,11 @@ import {
   MonitorNested,
   NormalizedMonitorList,
   Monitor,
-} from './types';
+} from '../types';
 import {
   MONITOR_LIST_SCHEMA,
   MONITOR_SCHEMA,
-} from './constants';
+} from '../constants';
 
 /** Monitor names sorted by if they're currently active. */
 interface SortedMonitors {

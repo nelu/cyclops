@@ -30,8 +30,8 @@ import {
 import {
   sortMonitorsByStatus,
   normalizeMonitors,
-} from '../../../services/monitors/utils';
-import { fetchMonitorList } from '../../../services/monitors/api';
+} from '../../../services/monitors/utils/monitorUtils';
+import { fetchMonitorList } from '../../../services/monitors/utils/monitorsAPI';
 import { addError } from './ErroPopupActions';
 
 /**

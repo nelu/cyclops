@@ -26,7 +26,7 @@ import { NormalizedMonitorList } from '../../../services/monitors/types';
 import {
   denormalizeMonitors,
   denormalizeMonitor,
-} from '../../../services/monitors/utils';
+} from '../../../services/monitors/utils/monitorUtils';
 import { MonitorModalListItem } from './MonitorModalListItem';
 
 // --------------------------------------------------------------------------

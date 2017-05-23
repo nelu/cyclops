@@ -17,9 +17,9 @@
  */
 
 // Local
-import * as cyphonAPI from '../cyphon/api';
-import { MonitorNested } from './types';
-import { APIList } from '../cyphon/types';
+import * as cyphonAPI from '../../cyphon/api';
+import { MonitorNested } from '../types';
+import { APIList } from '../../cyphon/types';
 
 /**
  * Returns a list of current Monitors.
