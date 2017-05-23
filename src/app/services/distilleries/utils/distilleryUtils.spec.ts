@@ -20,7 +20,7 @@
 import * as chai from 'chai';
 
 // Local
-import * as utils from './utils';
+import * as utils from './distilleryUtils';
 
 describe('api.distilleries.utils', () => {
   describe('shortenDistilleryName()', () => {

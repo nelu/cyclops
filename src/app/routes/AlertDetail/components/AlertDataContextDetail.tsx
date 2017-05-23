@@ -25,7 +25,7 @@ import { SpacedList } from '../../../components/SpacedList';
 import { SpacedSection } from '../../../components/SpacedSection';
 import { SubTitle } from '../../../components/SubTitle';
 import { AlertDataContextFilters } from './AlertDataContextFilters';
-import { shortenDistilleryName } from '../../../services/distilleries/utils';
+import { shortenDistilleryName } from '../../../services/distilleries/utils/distilleryUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

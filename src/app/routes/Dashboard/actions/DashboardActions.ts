@@ -59,7 +59,7 @@ import { createDashboardPieChartData } from '../utils/createDashboardPieChartDat
 import { getPieChartDataTotal } from '../../../services/chart/utils/getPieChartDataTotal';
 import { addLevelPieChartColor } from '../utils/addLevelPieChartColor';
 import { addColorProperty } from '../../../services/chart/utils/addColorProperty';
-import { shortenDistilleryDictionary } from '../../../services/distilleries/utils';
+import { shortenDistilleryDictionary } from '../../../services/distilleries/utils/distilleryUtils';
 
 /**
  * Action type prefix for Dashboard actions.

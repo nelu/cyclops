@@ -17,15 +17,15 @@
  */
 
 // Local
-import { createAction } from '../../utils/createReduxAction';
+import { createAction } from '../../../utils/createReduxAction';
 import {
   ReduxAction,
   ThunkActionPromise,
   ThunkActionVoid,
-} from '../../types/redux';
-import * as notifications from './utils/notifications';
-import { addError } from '../../routes/App/actions/ErroPopupActions';
-import { subscribeToPushManager } from './utils/notifications';
+} from '../../../types/redux';
+import * as notifications from '../utils/notifications';
+import { addError } from '../../../routes/App/actions/ErroPopupActions';
+import { subscribeToPushManager } from '../utils/notifications';
 
 /**
  * Action type prefix for Notification actions.
@@ -84,7 +84,7 @@ export type NotificationsNotSupportedPayload = undefined;
  */
 export type NotificationsNotSupportedAction = ReduxAction<
   NotificationsNotSupportedPayload
-  >;
+>;
 
 /**
  * Creates a NOTIFICATIONS_NOT_SUPPORTED action.
@@ -256,7 +256,7 @@ export function setupNotifications(): ThunkActionPromise {
         }
 
         return notifications.getServiceWorkerRegistration()
-          .then(subscribeToPushManager)
+          .then(notifications.subscribeToPushManager)
           .then((subscription) => {
             if (subscription) {
               notifications.sendSubscriptionToServer(subscription)
@@ -275,7 +275,7 @@ export function setupNotifications(): ThunkActionPromise {
 
     dispatch(serviceWorkersNotSupported());
 
-    return Promise.reject('Service workers aren\'t supported in this browser');
+    return Promise.resolve();
   };
 }
 

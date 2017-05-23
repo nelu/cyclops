@@ -26,7 +26,7 @@ import { AlertStatusIcon } from '../../../services/alerts/components/AlertStatus
 import { AlertListItem as Alert } from '../../../services/alerts/types';
 import { getUserFullName } from '../../../services/users/utils/getUserFullName';
 import { formatDate } from '../../../utils/formatDate';
-import { shortenDistilleryName } from '../../../services/distilleries/utils';
+import { shortenDistilleryName } from '../../../services/distilleries/utils/distilleryUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

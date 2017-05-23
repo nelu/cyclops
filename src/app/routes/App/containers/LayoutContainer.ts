@@ -34,7 +34,7 @@ import {
   FunctionProps,
   Layout,
 } from '../components/Layout';
-import { setupNotifications } from '../../../services/notifications/actions';
+import { setupNotifications } from '../../../services/notifications/actions/notificationActions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

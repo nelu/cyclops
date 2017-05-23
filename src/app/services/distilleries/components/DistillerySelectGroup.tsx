@@ -21,7 +21,7 @@ import * as React from 'react';
 
 // Local
 import { Distillery } from '../types';
-import { shortenDistilleryName } from '../utils';
+import { shortenDistilleryName } from '../utils/distilleryUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

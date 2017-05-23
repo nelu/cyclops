@@ -23,7 +23,7 @@ import * as React from 'react';
 import { Result } from '../../../types/result';
 import { DistilleryNested } from '../../../services/distilleries/types';
 import { JSONFormatter } from '../../../components/JSONFormatter';
-import { shortenDistilleryName } from '../../../services/distilleries/utils';
+import { shortenDistilleryName } from '../../../services/distilleries/utils/distilleryUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
