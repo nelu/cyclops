@@ -24,18 +24,39 @@ import * as enzyme from 'enzyme';
 
 // Local
 import { AlertDetailUnassignButton } from './AlertDetailUnassignButton';
+import * as userUtils from '~/services/users/utils/currentUserIsStaff';
+import * as otherUtils from '~/services/users/utils/isCurrentUser';
 
 describe('<AlertDetailUnassignButton />', () => {
-  let component: (props: any) => enzyme.ShallowWrapper<any, any>;
+  const user: any = { id: 1 };
+  let component: (props?: any) => enzyme.ShallowWrapper<any, any>;
+  let currentUserIsStaff: sinon.SinonStub;
+  let isCurrentUser: sinon.SinonStub;
 
   beforeEach(() => {
+    currentUserIsStaff = sinon
+      .stub(userUtils, 'currentUserIsStaff')
+      .returns(true);
+    isCurrentUser = sinon.stub(otherUtils, 'isCurrentUser').returns(true);
     component = (props) => {
-      const defaults = {};
+      const defaults = { user };
       const passed = Object.assign({}, defaults, props);
 
       return enzyme.shallow(<AlertDetailUnassignButton {...passed} />);
     };
   });
 
+  afterEach(() => {
+    currentUserIsStaff.restore();
+    isCurrentUser.restore();
+  });
 
+  it('should not display a button if the user is not staff', () => {
+    currentUserIsStaff.returns(false);
+    chai.expect(component().find('button')).to.have.length(0);
+  });
+
+  it('should display a button if the user is staff', () => {
+    chai.expect(component().find('button')).to.have.length(1);
+  });
 });

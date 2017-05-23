@@ -105,7 +105,7 @@ export class AlertDetailOutcomeDisplay extends React.Component<Props, {}> {
             <i className="fa fa-pencil" />
           </button>
         </OverlayTrigger>
-      ): null;
+      ) : null;
 
     return (
       <div className="well alert-detail-outcome__well">

@@ -206,7 +206,6 @@ export class LoginRouter {
       })
       .catch((error: AuthenticateError) => {
         const errors = LoginRouter.getAuthenticationErrors(error);
-        console.log(errors);
 
         res.render(
           LOGIN_TEMPLATE,
