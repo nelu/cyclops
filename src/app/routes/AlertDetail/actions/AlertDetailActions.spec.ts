@@ -22,7 +22,7 @@ import * as chai from 'chai';
 import axios from 'axios';
 
 // Local
-import * as alertsAPI from '../../../services/alerts/api';
+import * as alertsAPI from '../../../services/alerts/utils/alertsAPI';
 import * as actions from './AlertDetailActions';
 import * as errorActions from '../../App/actions/ErroPopupActions';
 import * as checkAlertUpdate from '../../../services/alerts/utils/checkAlertUpdate';

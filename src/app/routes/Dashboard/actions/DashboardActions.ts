@@ -46,7 +46,7 @@ import {
   fetchAlertCollectionDistribution,
   fetchAlertStatusDistribution,
   fetchAlertLevelDistribution,
-} from '../../../services/alerts/api';
+} from '../../../services/alerts/utils/alertsAPI';
 import { createStackedChartFromTimeseries } from '../utils/createStackedChartFromTimeseries';
 
 import { getCancelTokenSource } from '../../../services/cyphon/utils/getCancelTokenSource';

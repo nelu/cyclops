@@ -17,23 +17,25 @@
  */
 
 // Vendor
-import * as React from 'react';
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 
 // Local
-import * as api from '../cyphon/api';
-import * as alertAPI from './api';
+import * as api from '~/services/cyphon/api';
+import * as alertAPI from './alertsAPI';
 
-describe('api.alerts.api', () => {
+describe('alertsAPI', () => {
   let get: sinon.SinonStub;
+  let post: sinon.SinonStub;
 
   beforeEach(() => {
     get = sinon.stub(api, 'get');
+    post = sinon.stub(api, 'post');
   });
 
   afterEach(() => {
     get.restore();
+    post.restore();
   });
 
   describe('fetchAlert', () => {
@@ -88,6 +90,29 @@ describe('api.alerts.api', () => {
         params,
         cancelToken,
       });
+    });
+  });
+
+  describe('performAction()', () => {
+    const actionId = 1;
+    const alertId = 2;
+
+    beforeEach(() => {
+      post.resolves();
+    });
+
+    it('should post to the correct url', () => {
+      alertAPI.performAction(actionId, alertId);
+
+      chai.expect(post.called).to.be.true;
+      chai.expect(post.args[0][0]).to.equal('/actions/1/run/');
+    });
+
+    it('should post the alertId as the post data', () => {
+      alertAPI.performAction(actionId, alertId);
+
+      chai.expect(post.called).to.be.true;
+      chai.expect(post.args[0][1]).to.deep.equal({ alert: alertId });
     });
   });
 });

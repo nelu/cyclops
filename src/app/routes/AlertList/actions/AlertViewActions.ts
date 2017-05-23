@@ -30,7 +30,7 @@ import {
   AlertSearchParams,
   AlertListItem,
 } from '../../../services/alerts/types';
-import { fetchAlertList } from '../../../services/alerts/api';
+import { fetchAlertList } from '../../../services/alerts/utils/alertsAPI';
 import { addError } from '../../App/actions/ErroPopupActions';
 import { createRandomId } from '../../../utils/createRandomId';
 import { StoreState } from '../../../store';
