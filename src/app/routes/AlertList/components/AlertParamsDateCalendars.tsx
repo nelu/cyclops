@@ -20,9 +20,10 @@
 import * as React from 'react';
 import * as DateTime from 'react-datetime';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 
 // Local
-import { Close } from '../../../components/Close';
+import { Close } from '~/components/Close';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -51,6 +52,9 @@ interface State {
   before?: Date;
 }
 
+/** Date properties of the state. */
+type DateProperties = 'after' | 'before';
+
 // --------------------------------------------------------------------------
 // Component
 // --------------------------------------------------------------------------
@@ -59,11 +63,32 @@ interface State {
  * Displays a slide out panel that allows user to search alerts by date.
  */
 export class AlertParamsDateCalendars extends React.Component<Props, State> {
+  /**
+   * Creates a date from a date time string.
+   * @param date Date time string to convert.
+   * @returns {Date | undefined} Date or undefined if there is no given string.
+   */
+  public static createDate(date?: string): Date | undefined {
+    return date ? new Date(date) : undefined;
+  }
+
+  /**
+   * Determines if two dates match.
+   * @param date1 First date to compare
+   * @param date2 Second date to compare.
+   * @returns {boolean} If the two dates match.
+   */
+  public static datesEqual(date1?: Date, date2?: Date): boolean {
+    if (date1 && date2) { return date1.getTime() === date2.getTime(); }
+
+    return !date1 && !date2;
+  }
+
   constructor(props: Props) {
     super(props);
 
-    const after = props.after ? new Date(props.after) : undefined;
-    const before = props.before ? new Date(props.before) : undefined;
+    const after = AlertParamsDateCalendars.createDate(props.after);
+    const before = AlertParamsDateCalendars.createDate(props.before);
 
     this.state = { after, before };
   }
@@ -74,64 +99,50 @@ export class AlertParamsDateCalendars extends React.Component<Props, State> {
    * @param props New properties the component will receive.
    */
   public componentWillReceiveProps(props: Props): void {
-    const after = props.after ? new Date(props.after) : undefined;
-    const before = props.before ? new Date(props.before) : undefined;
+    const after = AlertParamsDateCalendars.createDate(props.after);
+    const before = AlertParamsDateCalendars.createDate(props.before);
 
-    if (this.state.after) {
-      if (after){
-        if (this.state.after.getTime() !== after.getTime()) {
-          this.setState({ after });
-        }
-      } else {
-        this.setState({ after: undefined });
-      }
-    } else {
-      if (after) { this.setState({ after }); }
-    }
-
-    if (this.state.before) {
-      if (before) {
-        if (this.state.before.getTime() !== before.getTime()) {
-          this.setState({ before });
-        }
-      } else {
-        this.setState({ before: undefined });
-      }
-    } else {
-      if (before) { this.setState({ before }); }
-    }
+    this.updateDate('after', after);
+    this.updateDate('before', before);
   }
+
+  /**
+   * Updates a date property on the state.
+   * @param property Name of the date property to update.
+   * @param date Date to update with.
+   */
+  public updateDate = (property: DateProperties, date?: Date): void => {
+    if (!AlertParamsDateCalendars.datesEqual(this.state[property], date)) {
+      return this.setState({ [property]: date });
+    }
+  };
 
   /**
    * Changes the currently set after date.
    * @param value New date to set to.
    */
-  public changeAfter = (value: moment.Moment): void => {
-    // The DateTime will sometimes return a string instead of a moment object,
-    // so whenever that happens just ignore it.
-    try {
-      this.setState({ after: value.toDate() });
-      this.props.selectDate({
-        after: value.format(),
-        before: this.state.before ? moment(this.state.before).format() : undefined,
-      });
-    } catch (error) { return; }
+  public handleAfterChange = (value: moment.Moment | string): void => {
+    if (_.isString(value)) { return; }
+
+    this.setState({ after: value.toDate() });
+    this.props.selectDate({
+      after: value.format(),
+      before: this.state.before ? moment(this.state.before).format() : undefined,
+    });
   };
 
   /**
    * Changes the currently set before date.
    * @param value New date to set to.
    */
-  public changeBefore = (value: moment.Moment): void => {
-    // The DateTime will sometimes return a string instead of a moment object,
-    // so whenever that happens just ignore it.
-    try {
-      this.setState({ before: value.toDate() });
-      this.props.selectDate({
-        after: this.state.after ? moment(this.state.after).format() : undefined,
-        before: value.format(),
-      });
-    } catch (error) { return; }
+  public handleBeforeChange = (value: moment.Moment | string): void => {
+    if (_.isString(value)) { return; }
+
+    this.setState({ before: value.toDate() });
+    this.props.selectDate({
+      after: this.state.after ? moment(this.state.after).format() : undefined,
+      before: value.format(),
+    });
   };
 
   /**
@@ -147,13 +158,13 @@ export class AlertParamsDateCalendars extends React.Component<Props, State> {
         <h3 className="sub-title">After</h3>
         <DateTime
           value={this.state.after}
-          onChange={this.changeAfter}
+          onChange={this.handleAfterChange}
         />
 
         <h3 className="sub-title">Before</h3>
         <DateTime
           value={this.state.before}
-          onChange={this.changeBefore}
+          onChange={this.handleBeforeChange}
         />
       </div>
     );
