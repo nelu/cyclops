@@ -1,4 +1,4 @@
-/*!
+/**
  * The contents of this file are subject to the CYPHON Proprietary Non-
  * Commercial Registered User Use License Agreement (the "Agreement”). You
  * may not use this file except in compliance with the Agreement, a copy
@@ -16,20 +16,29 @@
  * are made]
  */
 
-// Local
-import { ReduxAction } from '../types/redux';
+// Vendor
+import * as sinon from 'sinon';
+import * as chai from 'chai';
 
-/**
- * Creates a flux standard action with the given payload type.
- * @param type Action type.
- * @param payload Data to attach to the action.
- * @param error If the action is an error.
- * @returns {ReduxAction<Payload>}
- */
-export function createAction<Payload>(
-  type: string,
-  payload: Payload,
-  error?: boolean,
-): ReduxAction<Payload> {
-  return { type, payload, error };
-}
+// Local
+import * as monitorsAPI from './monitorAPI';
+import * as cyphonAPI from '~/services/cyphon/utils/cyphonAPI';
+
+describe('monitorsAPI', () => {
+  let get: sinon.SinonStub;
+
+  beforeEach(() => {
+    get = sinon.stub(cyphonAPI, 'get');
+  });
+
+  afterEach(() => {
+    get.restore();
+  });
+
+  describe('fetchMonitorList()', () => {
+    it('should call the correct url', () => {
+      monitorsAPI.fetchMonitorList();
+      chai.expect(get.args[0][0]).to.equal('/monitors/enabled/');
+    });
+  });
+});

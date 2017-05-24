@@ -23,7 +23,7 @@ import axios, {
 } from 'axios';
 
 // / Local
-import { createAction } from '../../../utils/createReduxAction';
+import { createAction } from '../../../utils/reduxUtils';
 import {
   ReduxAction,
   ThunkActionPromise,
@@ -49,12 +49,12 @@ import {
 } from '../../../services/alerts/utils/alertsAPI';
 import { createStackedChartFromTimeseries } from '../utils/createStackedChartFromTimeseries';
 
-import { getCancelTokenSource } from '../../../services/cyphon/utils/getCancelTokenSource';
+import { getCancelTokenSource } from '../../../services/cyphon/utils/cancelTokens';
 import { addError } from '../../App/actions/ErroPopupActions';
 import { Dictionary } from '../../../types/object';
 import { createPieChartDataFromObject } from '../../../services/chart/utils/createPieChartData';
 import { sortPieChartData } from '../../../services/chart/utils/sortPieChartData';
-import { createRandomId } from '../../../utils/createRandomId';
+import { createRandomId } from '../../../utils/stringUtils';
 import { createDashboardPieChartData } from '../utils/createDashboardPieChartData';
 import { getPieChartDataTotal } from '../../../services/chart/utils/getPieChartDataTotal';
 import { addLevelPieChartColor } from '../utils/addLevelPieChartColor';

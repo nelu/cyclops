@@ -24,7 +24,7 @@ import {
 } from 'react-bootstrap';
 
 // Local
-import { createRandomId } from '../utils/createRandomId';
+import { createRandomId } from '../utils/stringUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

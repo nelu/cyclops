@@ -21,15 +21,13 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 
 // Local
-import { AlertLevelTimeseries } from '../../../services/alerts/types';
+import { AlertLevelTimeseries } from '~/services/alerts/types';
 import {
-  StackedAreaChartData,
   StackedAreaChartValues,
   StackedAreaChartDataWithColor,
-} from '../../../services/chart/types';
-import { capitalize } from '../../../utils/capitalize';
+} from '~/services/chart/types';
 import { LEVEL_OPTIONS } from '../../AlertList/constants';
-import { Dictionary } from '../../../types/object';
+import { Dictionary } from '~/types/object';
 
 /**
  * Creates a list of stacked area chart data from the data of an

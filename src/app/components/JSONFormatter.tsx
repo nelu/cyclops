@@ -22,8 +22,8 @@ import * as Formatter from 'json-formatter-js';
 import * as _ from 'lodash';
 
 // Local
-import { orderKeys } from '../utils/orderKeys';
-import { createRandomId } from '../utils/createRandomId';
+import { orderKeys } from '../utils/objectUtils';
+import { createRandomId } from '../utils/stringUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

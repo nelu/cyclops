@@ -16,9 +16,6 @@
  * are made]
  */
 
-// Vendor
-import { schema } from 'normalizr';
-
 /**
  * All the different container field types.
  * @type {Object<string, string>}
@@ -27,15 +24,3 @@ export const CONTAINER_FIELDS = {
   POINT_FIELD: 'PointField',
   IP_ADDRESS: 'GenericIPAddressField',
 };
-
-/**
- * Container normalizr schema.
- * @type {schema}
- */
-export const CONTAINER_SCHEMA = new schema.Entity('containers');
-
-/**
- * Normalized list of container objects.
- * @type {schema.Array}
- */
-export const CONTAINER_LIST_SCHEMA = new schema.Array(CONTAINER_SCHEMA);

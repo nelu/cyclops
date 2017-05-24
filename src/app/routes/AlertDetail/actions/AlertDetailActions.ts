@@ -26,13 +26,13 @@ import {
   ThunkActionPromise,
   ReduxDispatch,
 } from '~/types/redux';
-import { createAction } from '~/utils/createReduxAction';
+import { createAction } from '~/utils/reduxUtils';
 import {
   Alert,
   AlertDetail,
   AlertUpdateRequest,
 } from '~/services/alerts/types';
-import { getCancelTokenSource } from '~/services/cyphon/utils/getCancelTokenSource';
+import { getCancelTokenSource } from '~/services/cyphon/utils/cancelTokens';
 import {
   fetchAlert,
   updateAlert,
@@ -51,7 +51,7 @@ import {
   ResultIPAdresses,
 } from '~/types/result';
 import { Container } from '~/services/containers/types';
-import { getFieldsOfType } from '~/services/containers/utils/getFieldsOfType';
+import { getFieldsOfType } from '~/services/containers/utils';
 import { CONTAINER_FIELDS } from '~/services/containers/constants';
 import { Dictionary } from '~/types/object';
 import { checkAlertUpdate } from '~/services/alerts/utils/checkAlertUpdate';

@@ -22,7 +22,7 @@ import { MapboxOptions } from 'mapbox-gl';
 import * as _ from 'lodash';
 
 // Local
-import { createRandomId } from '../../../utils/createRandomId';
+import { createRandomId } from '../../../utils/stringUtils';
 import {
   Markers,
   PopupGenerator,

@@ -20,7 +20,7 @@
 import * as React from 'react';
 
 // Local
-import { formatDate } from '../../../utils/formatDate';
+import { formatDate } from '../../../utils/dateUtils';
 import { CommentNested } from '../../../types/comments';
 import { getUserFullName } from '../../../services/users/utils/getUserFullName';
 

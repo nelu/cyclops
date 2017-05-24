@@ -1,4 +1,4 @@
-/**
+/*!
  * The contents of this file are subject to the CYPHON Proprietary Non-
  * Commercial Registered User Use License Agreement (the "Agreement”). You
  * may not use this file except in compliance with the Agreement, a copy
@@ -17,19 +17,19 @@
  */
 
 // Local
-import { createRandomId } from './createRandomId';
+import { ReduxAction } from '~/types/redux';
 
-describe('createRandomId', () => {
-  it('should return a string', () => {
-    const id = createRandomId();
-
-    chai.expect(id).to.be.a('string');
-  });
-
-  it('should return a string that starts with id', () => {
-    const id = createRandomId();
-    const chars = id.slice(0, 2);
-
-    chai.expect(chars).to.equal('id');
-  });
-});
+/**
+ * Creates a flux standard action with the given payload type.
+ * @param type Action type.
+ * @param payload Data to attach to the action.
+ * @param error If the action is an error.
+ * @returns {ReduxAction<Payload>}
+ */
+export function createAction<Payload>(
+  type: string,
+  payload: Payload,
+  error?: boolean,
+): ReduxAction<Payload> {
+  return { type, payload, error };
+}

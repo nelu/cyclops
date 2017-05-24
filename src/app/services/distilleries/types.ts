@@ -17,7 +17,7 @@
  */
 
 // Local
-import { Container } from '../../services/containers/types';
+import { Container } from '../containers/types';
 import { ContextNested } from '../../services/contexts/types';
 
 /** Distillery object returned from the Cyphon API. */

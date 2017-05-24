@@ -21,7 +21,7 @@ import * as React from 'react';
 import { pascalize } from 'humps';
 
 // Local
-import { formatDate } from '../../../utils/formatDate';
+import { formatDate } from '../../../utils/dateUtils';
 import { MonitorNested } from '../../../services/monitors/types';
 
 // --------------------------------------------------------------------------

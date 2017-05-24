@@ -17,7 +17,7 @@
  */
 
 // Local
-import { getAll } from '../../cyphon/api';
+import { getAll } from '../../cyphon/utils/cyphonAPI';
 import { DistilleryFlat } from '../types';
 
 /**

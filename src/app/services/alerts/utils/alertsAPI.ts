@@ -20,7 +20,7 @@
 import { CancelToken } from 'axios';
 
 // Local
-import * as api from '~/services/cyphon/api';
+import * as api from '~/services/cyphon/utils/cyphonAPI';
 import { getConfig } from '~/config';
 import { APIList } from '~/services/cyphon/types';
 import {

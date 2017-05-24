@@ -26,7 +26,7 @@ import * as actions from './AlertDetailActions';
 import * as errorActions from '../../App/actions/ErroPopupActions';
 import * as checkAlertUpdate from '../../../services/alerts/utils/checkAlertUpdate';
 import * as modifyAlertUpdate from '../../../services/alerts/utils/modifyAlertUpdate';
-import * as apiUtils from '../../../services/cyphon/utils/getCancelTokenSource';
+import * as apiUtils from '../../../services/cyphon/utils/cancelTokens';
 import {
   Alert,
   AlertDetail,

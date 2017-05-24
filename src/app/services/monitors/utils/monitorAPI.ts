@@ -17,7 +17,7 @@
  */
 
 // Local
-import * as cyphonAPI from '../../cyphon/api';
+import * as cyphonAPI from '../../cyphon/utils/cyphonAPI';
 import { MonitorNested } from '../types';
 import { APIList } from '../../cyphon/types';
 

@@ -16,29 +16,20 @@
  * are made]
  */
 
-// Vendor
-import * as sinon from 'sinon';
-import * as chai from 'chai';
-
 // Local
-import * as monitorsAPI from './monitorsAPI';
-import * as cyphonAPI from '~/services/cyphon/api';
+import { createRandomId } from './stringUtils';
 
-describe('monitorsAPI', () => {
-  let get: sinon.SinonStub;
+describe('createRandomId', () => {
+  it('should return a string', () => {
+    const id = createRandomId();
 
-  beforeEach(() => {
-    get = sinon.stub(cyphonAPI, 'get');
+    chai.expect(id).to.be.a('string');
   });
 
-  afterEach(() => {
-    get.restore();
-  });
+  it('should return a string that starts with id', () => {
+    const id = createRandomId();
+    const chars = id.slice(0, 2);
 
-  describe('fetchMonitorList()', () => {
-    it('should call the correct url', () => {
-      monitorsAPI.fetchMonitorList();
-      chai.expect(get.args[0][0]).to.equal('/monitors/enabled/');
-    });
+    chai.expect(chars).to.equal('id');
   });
 });

@@ -24,10 +24,12 @@ import { ListGroupItem } from 'react-bootstrap';
 import {
   AlertOption,
   AlertLevelParam,
-} from '../../../services/alerts/types';
-import { includesOrEquals } from '../../../utils/includesOrEquals';
-import { toggleValue } from '../../../utils/toggleValue';
-import { AlertLevelIcon } from '../../../services/alerts/components/AlertLevelIcon';
+} from '~/services/alerts/types';
+import {
+  toggleValue,
+  includesOrEquals,
+} from '~/utils/arrayUtils';
+import { AlertLevelIcon } from '~/services/alerts/components/AlertLevelIcon';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

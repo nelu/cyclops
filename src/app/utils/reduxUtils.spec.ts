@@ -20,28 +20,22 @@
 import * as chai from 'chai';
 
 // Local
-import { capitalize, lowercaseKeys } from './capitalize';
+import { createAction } from './reduxUtils';
 
-describe('capitalize', () => {
-  it('should capitalize a string', () => {
-    const str = 'hello';
-    const result = capitalize(str);
+describe('createAction', () => {
+  it('should create an action with a type and payload', () => {
+    const type = 'type';
+    const payload = 'payload';
+    const action = createAction(type, payload);
 
-    chai.expect(result).to.equal('Hello');
+    chai.expect(action).to.deep.equal({ type, payload, error: undefined });
   });
-});
 
-describe('lowercaseKeys', () => {
-  it('should lowercase the keys of an object', () => {
-    const object = {
-      AH: 'test',
-      MEH: 'test',
-    };
-    const lowercased = lowercaseKeys(object);
+  it('should create an action with an error', () => {
+    const type = 'type';
+    const payload = 'payload';
+    const action = createAction(type, payload, true);
 
-    chai.expect(lowercased).to.deep.equal({
-      ah: 'test',
-      meh: 'test',
-    });
+    chai.expect(action).to.deep.equal({ type, payload, error: true });
   });
 });

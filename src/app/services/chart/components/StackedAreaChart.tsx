@@ -22,7 +22,7 @@ import * as _ from 'lodash';
 
 // Local
 import { StackedAreaChartData } from '../types';
-import { createRandomId } from '../../../utils/createRandomId';
+import { createRandomId } from '../../../utils/stringUtils';
 import { createStackedAreaChart } from '../utils/createStackedAreaChart';
 
 // --------------------------------------------------------------------------

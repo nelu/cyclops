@@ -19,9 +19,9 @@
 // Vendor
 import * as _ from 'lodash';
 
-import { Container } from '../types';
+import { Container } from './types';
 import { Result } from '~/types/result';
-import { Field } from '../../cyphon/types';
+import { Field } from '../cyphon/types';
 
 /**
  * Gets the fields of a certain field type and returns them in an object.

@@ -17,7 +17,7 @@
  */
 
 // Local
-import { createAction } from '~/utils/createReduxAction';
+import { createAction } from '~/utils/reduxUtils';
 import {
   ReduxAction,
   ThunkActionPromise,

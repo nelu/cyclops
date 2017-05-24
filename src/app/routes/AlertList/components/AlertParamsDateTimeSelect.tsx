@@ -25,7 +25,7 @@ import {
 
 // Local
 import { AlertParamsDateSelect } from './AlertParamsDateSelect';
-import { formatDate } from '~/utils/formatDate';
+import { formatDate } from '~/utils/dateUtils';
 import { AlertTimeSearchParams } from '~/services/alerts/types';
 
 // --------------------------------------------------------------------------

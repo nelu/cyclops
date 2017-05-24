@@ -21,7 +21,7 @@ import * as React from 'react';
 
 // Local
 import { SubtleButton } from './SubtleButton';
-import { createRandomId } from '../utils/createRandomId';
+import { createRandomId } from '../utils/stringUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

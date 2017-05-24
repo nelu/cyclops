@@ -20,7 +20,7 @@
 import axios from 'axios';
 
 // Local
-import { createAction } from '~/utils/createReduxAction';
+import { createAction } from '~/utils/reduxUtils';
 import {
   ReduxAction,
   ThunkActionPromise,
@@ -32,7 +32,7 @@ import {
 } from '~/services/alerts/types';
 import { fetchAlertList } from '~/services/alerts/utils/alertsAPI';
 import { addError } from '../../App/actions/ErroPopupActions';
-import { createRandomId } from '~/utils/createRandomId';
+import { createRandomId } from '~/utils/stringUtils';
 import { StoreState } from '~/store';
 import { DistilleryFlat } from '~/services/distilleries/types';
 import { Action } from '~/services/actions/types';
