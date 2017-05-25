@@ -17,7 +17,6 @@
  */
 
 // Vendor
-import * as sinon from 'sinon';
 import * as chai from 'chai';
 
 // Local
@@ -48,7 +47,7 @@ describe('arrayUtils', () => {
 
       chai.expect(toggled).to.deep.equal([target, value]);
     });
-    
+
     it('should return a single value if there are two values in the array ' +
       'and the value to toggle is in the array', () => {
       const value = 5;

@@ -17,15 +17,13 @@
  */
 
 // Local
-import { createAction } from '../../../utils/reduxUtils';
+import { createAction } from '~/utils/reduxUtils';
 import {
   ReduxAction,
   ThunkActionPromise,
-  ThunkActionVoid,
-} from '../../../types/redux';
+} from '~/types/redux';
 import * as notifications from '../utils/notifications';
-import { addError } from '../../../routes/App/actions/ErroPopupActions';
-import { subscribeToPushManager } from '../utils/notifications';
+import { addError } from '~/routes/App/actions/ErroPopupActions';
 
 /**
  * Action type prefix for Notification actions.
@@ -159,7 +157,6 @@ export function pushMessagingNotSupported(): PushMessagingNotSupportedAction {
   return createAction(PUSH_MESSAGING_NOT_SUPPORTED, undefined);
 }
 
-
 // --------------------------------------------------------------------------
 // SERVICE_WORKERS_NOT_SUPPORTED
 // --------------------------------------------------------------------------
@@ -279,45 +276,45 @@ export function setupNotifications(): ThunkActionPromise {
   };
 }
 
-/**
- * Enables push notifications
- * @returns {ThunkActionPromise}
- */
-export function enableNotifications(): ThunkActionPromise {
-  return (dispatch) => {
-    return notifications.getServiceWorkerRegistration()
-      .then(notifications.subscribeToPushManager)
-      .then((subscription) => {
-        notifications.setWorkerVariables(subscription);
-
-        return notifications.sendSubscriptionToServer(subscription);
-      })
-      .then(() => {
-        dispatch(notificationsEnabled(true));
-      })
-      .catch((error) => {
-        dispatch(notificationsEnabled(false));
-        dispatch(addError(error));
-      });
-  };
-}
-
-/**
- * Disables push notifications.
- * @returns {ThunkActionPromise}
- */
-export function disableNotifications(): ThunkActionPromise {
-  return (dispatch) => {
-    return notifications.getServiceWorkerRegistration()
-      .then(notifications.getRegistrationSubscription)
-      .then((subscription) => {
-        if (subscription) { return notifications.unsubscribe(subscription); }
-      })
-      .then(() => {
-        dispatch(notificationsEnabled(false));
-      })
-      .catch((error) => {
-        dispatch(addError(error));
-      });
-  };
-}
+// /**
+//  * Enables push notifications
+//  * @returns {ThunkActionPromise}
+//  */
+// export function enableNotifications(): ThunkActionPromise {
+//   return (dispatch) => {
+//     return notifications.getServiceWorkerRegistration()
+//       .then(notifications.subscribeToPushManager)
+//       .then((subscription) => {
+//         notifications.setWorkerVariables(subscription);
+//
+//         return notifications.sendSubscriptionToServer(subscription);
+//       })
+//       .then(() => {
+//         dispatch(notificationsEnabled(true));
+//       })
+//       .catch((error) => {
+//         dispatch(notificationsEnabled(false));
+//         dispatch(addError(error));
+//       });
+//   };
+// }
+//
+// /**
+//  * Disables push notifications.
+//  * @returns {ThunkActionPromise}
+//  */
+// export function disableNotifications(): ThunkActionPromise {
+//   return (dispatch) => {
+//     return notifications.getServiceWorkerRegistration()
+//       .then(notifications.getRegistrationSubscription)
+//       .then((subscription) => {
+//         if (subscription) { return notifications.unsubscribe(subscription); }
+//       })
+//       .then(() => {
+//         dispatch(notificationsEnabled(false));
+//       })
+//       .catch((error) => {
+//         dispatch(addError(error));
+//       });
+//   };
+// }

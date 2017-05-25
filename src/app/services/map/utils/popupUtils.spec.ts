@@ -49,7 +49,7 @@ describe('addHoverPopup()', () => {
     popupGenerator = sinon.spy();
     features = [feature];
     map = {
-     on: sinon.stub().callsFake((event, func) => {
+     on: sinon.stub().callsFake((eve, func) => {
        mousemove = func;
      }),
      getCanvas: sinon.stub().returns(canvas),

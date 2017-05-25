@@ -63,7 +63,7 @@ describe('notificationActions', () => {
       });
     });
   });
-  
+
   describe('pushMessagingNotSupported()', () => {
     it('should create an action with the correct type and payload', () => {
       const action = actions.pushMessagingNotSupported();
