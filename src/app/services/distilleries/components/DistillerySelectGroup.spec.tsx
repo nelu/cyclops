@@ -24,7 +24,7 @@ import * as enzyme from 'enzyme';
 
 // Local
 import { DistillerySelectGroup } from './DistillerySelectGroup';
-import { shortenDistilleryName } from '~/services/distilleries/utils';
+import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 
 describe('<DistillerySelectGroup />', () => {
   const distillery1: any = { id: 1, name: 'magic.magic' };

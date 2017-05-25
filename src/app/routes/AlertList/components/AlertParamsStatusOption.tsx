@@ -21,13 +21,12 @@ import * as React from 'react';
 import { ListGroupItem } from 'react-bootstrap';
 
 // Local
-import { includesOrEquals } from '../../../utils/includesOrEquals';
 import {
   AlertStatusParam,
   AlertOption,
-} from '../../../services/alerts/types';
-import { toggleValue } from '../../../utils/toggleValue';
-import { AlertStatusIcon } from '../../../services/alerts/components/AlertStatusIcon';
+} from '~/services/alerts/types';
+import { toggleValue, includesOrEquals } from '~/utils/arrayUtils';
+import { AlertStatusIcon } from '~/services/alerts/components/AlertStatusIcon';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

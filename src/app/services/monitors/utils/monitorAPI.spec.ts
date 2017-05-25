@@ -16,15 +16,29 @@
  * are made]
  */
 
-// Local
-import { getAll } from '../cyphon/api';
-import { DistilleryFlat } from './types';
+// Vendor
+import * as sinon from 'sinon';
+import * as chai from 'chai';
 
-/**
- * Returns a list of all distilleries objects that have alerts
- * associated with them.
- * @returns {Promise<DistilleryFlat[]>}
- */
-export function fetchAllAlertDistilleries(): Promise<DistilleryFlat[]> {
-  return getAll<DistilleryFlat>('/alerts/distilleries/');
-}
+// Local
+import * as monitorsAPI from './monitorAPI';
+import * as cyphonAPI from '~/services/cyphon/utils/cyphonAPI';
+
+describe('monitorsAPI', () => {
+  let get: sinon.SinonStub;
+
+  beforeEach(() => {
+    get = sinon.stub(cyphonAPI, 'get');
+  });
+
+  afterEach(() => {
+    get.restore();
+  });
+
+  describe('fetchMonitorList()', () => {
+    it('should call the correct url', () => {
+      monitorsAPI.fetchMonitorList();
+      chai.expect(get.args[0][0]).to.equal('/monitors/enabled/');
+    });
+  });
+});

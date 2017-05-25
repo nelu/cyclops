@@ -21,7 +21,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 
 // Local
-import { createRandomId } from '../../../utils/createRandomId';
+import { createRandomId } from '../../../utils/stringUtils';
 import {
   PieChartData,
   PieChartOptions,

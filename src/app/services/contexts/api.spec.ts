@@ -21,7 +21,7 @@ import * as sinon from 'sinon';
 import * as chai from 'chai';
 
 // Local
-import * as api from '../cyphon/api';
+import * as api from '../cyphon/utils/cyphonAPI';
 import * as contextAPI from './api';
 
 describe('api.contexts.api', () => {

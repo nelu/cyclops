@@ -26,7 +26,7 @@ import {
 // Local
 import * as actions from '../actions/UserStoreActions';
 import { NormalizedUserList } from '~/services/users/types';
-import { updateNormalizedList } from '~/utils/updateNormalizedData';
+import { updateNormalizedList } from '~/utils/normalizrUtils';
 
 /** State shape of the UserStoreReducer. */
 export type UserStoreState = NormalizedUserList;

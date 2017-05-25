@@ -17,7 +17,7 @@
  */
 
 // Local
-import * as cyphon from '../cyphon/api';
+import * as cyphon from '../cyphon/utils/cyphonAPI';
 import { User } from './types';
 
 /**

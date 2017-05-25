@@ -16,34 +16,15 @@
  * are made]
  */
 
-// Vendor
-import * as _ from 'lodash';
+// Local
+import * as cyphonAPI from '../../cyphon/utils/cyphonAPI';
+import { MonitorNested } from '../types';
+import { APIList } from '../../cyphon/types';
 
 /**
- * Capitalize a string.
- * @param str String to modify
- * @returns {string} Capitalized string.
+ * Returns a list of current Monitors.
+ * @return {Promise<APIList<MonitorNested>>}
  */
-export function capitalize(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-/**
- * Lowercases all the keys of an object.
- * @param obj Object to modify.
- * @returns {Object} Modified object.
- */
-export function lowercaseKeys(obj: Object): Object {
-  const newObject: any = {};
-
-  _.forEach(obj, (value: any, key: string) => {
-    const lowercasedKey = key.toLowerCase();
-    if (_.isPlainObject(value)) {
-      newObject[lowercasedKey] = lowercaseKeys(value);
-    } else {
-      newObject[lowercasedKey] = value;
-    }
-  });
-
-  return newObject;
+export function fetchMonitorList(): Promise<APIList<MonitorNested>> {
+  return cyphonAPI.get('/monitors/enabled/');
 }

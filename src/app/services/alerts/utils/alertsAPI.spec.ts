@@ -21,7 +21,7 @@ import * as sinon from 'sinon';
 import * as chai from 'chai';
 
 // Local
-import * as api from '~/services/cyphon/api';
+import * as api from '~/services/cyphon/utils/cyphonAPI';
 import * as alertsAPI from './alertsAPI';
 import * as config from '~/config';
 

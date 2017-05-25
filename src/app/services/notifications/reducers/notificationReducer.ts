@@ -21,7 +21,7 @@ import { ReducerMap, handleActions } from 'redux-actions';
 import * as _ from 'lodash';
 
 // Local
-import * as actions from './actions';
+import * as actions from '../actions/notificationActions';
 
 /** State shape of the Notifications reducer. */
 export interface NotificationsState {

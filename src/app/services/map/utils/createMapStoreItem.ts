@@ -34,7 +34,7 @@ import { createMapboxMap } from './createMapboxMap';
 import { createMarkerSource } from './createMarkerSource';
 import { createMarkerLayer } from './createMarkerLayer';
 import { createClusterLayers } from './createClusterLayers';
-import { addHoverPopup } from './addHoverPopup';
+import { addHoverPopup } from './popupUtils';
 import { Deferred } from '../../../utils/Deferred';
 
 /**

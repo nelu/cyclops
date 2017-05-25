@@ -20,7 +20,7 @@
 import axios from 'axios';
 
 // Local
-import { createAction } from '~/utils/createReduxAction';
+import { createAction } from '~/utils/reduxUtils';
 import {
   ReduxAction,
   ThunkActionPromise,
@@ -32,14 +32,14 @@ import {
 } from '~/services/alerts/types';
 import { fetchAlertList } from '~/services/alerts/utils/alertsAPI';
 import { addError } from '../../App/actions/ErroPopupActions';
-import { createRandomId } from '~/utils/createRandomId';
+import { createRandomId } from '~/utils/stringUtils';
 import { StoreState } from '~/store';
 import { DistilleryFlat } from '~/services/distilleries/types';
 import { Action } from '~/services/actions/types';
 import { User } from '~/services/users/types';
 import { fetchAllUsers } from '~/services/users/api';
 import { fetchAllActions } from '~/services/actions/api';
-import { fetchAllAlertDistilleries } from '~/services/distilleries/api';
+import { fetchAllAlertDistilleries } from '~/services/distilleries/utils/distilleryAPI';
 
 /**
  * Action type prefix for AlertList actions.
@@ -196,9 +196,10 @@ export interface PollAlertsSuccessPayload {
  * Creates a POLL_ALERTS_SUCCESS action.
  * @returns {ReduxAction<PollAlertsSuccessPayload>;
  */
-export function pollAlertsSuccess(alerts: AlertListItem[], count: number):
-  ReduxAction<PollAlertsSuccessPayload> {
-
+export function pollAlertsSuccess(
+  alerts: AlertListItem[],
+  count: number,
+): ReduxAction<PollAlertsSuccessPayload> {
   return createAction(POLL_ALERTS_SUCCESS, { alerts, count });
 }
 
@@ -248,8 +249,10 @@ export interface PollAlertsWaitPayload {
  * Creates a POLL_ALERTS_WAIT action.
  * @returns {ReduxAction<PollAlertsWaitPayload>;
  */
-export function pollAlertsWait(timeoutId: number, interval: number):
-  ReduxAction<PollAlertsWaitPayload> {
+export function pollAlertsWait(
+  timeoutId: number,
+  interval: number,
+): ReduxAction<PollAlertsWaitPayload> {
   return createAction(POLL_ALERTS_WAIT, { timeoutId, interval });
 }
 
@@ -451,7 +454,6 @@ export function fetchViewResources(): ThunkActionPromise {
       dispatch(fetchViewResourcesSuccess(users, actions, distilleries));
     });
 
-    return axios.all<any>(promises)
-      .then(spread);
+    return axios.all<any>(promises).then(spread);
   };
 }

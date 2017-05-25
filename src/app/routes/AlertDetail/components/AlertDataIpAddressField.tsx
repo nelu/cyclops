@@ -22,7 +22,7 @@ import * as copy from 'copy-to-clipboard';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 
 // Local
-import { createRandomId } from '../../../utils/createRandomId';
+import { createRandomId } from '../../../utils/stringUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

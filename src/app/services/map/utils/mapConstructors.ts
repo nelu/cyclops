@@ -17,24 +17,13 @@
  */
 
 // Vendor
-import * as sinon from 'sinon';
-import * as chai from 'chai';
+import { PopupOptions, Popup } from 'mapbox-gl';
 
-// Local
-import * as api from '../cyphon/api';
-import * as distilleryAPI from './api';
-
-describe('api.distilleries.api', () => {
-  describe('fetchAlertDistilleries', () => {
-    it('should call out to the correct url', () => {
-      const getAll = sinon.stub(api, 'getAll');
-
-      distilleryAPI.fetchAllAlertDistilleries();
-
-      chai.expect(getAll.called).to.be.true;
-      chai.expect(getAll.args[0][0]).to.equal('/alerts/distilleries/');
-
-      getAll.restore();
-    });
-  });
-});
+/**
+ * Creates a new popup instance.
+ * @param options Options to create the popup with.
+ * @returns {Popup}
+ */
+export function createPopup(options?: PopupOptions): Popup {
+  return new Popup(options);
+}

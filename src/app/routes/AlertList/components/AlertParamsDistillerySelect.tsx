@@ -25,7 +25,7 @@ import { Distillery } from '../../../services/distilleries/types';
 import {
   shortenDistilleryName,
   sortByWarehouse
-} from '../../../services/distilleries/utils';
+} from '../../../services/distilleries/utils/distilleryUtils';
 import { DistillerySelectGroup } from '~/services/distilleries/components/DistillerySelectGroup';
 
 // --------------------------------------------------------------------------

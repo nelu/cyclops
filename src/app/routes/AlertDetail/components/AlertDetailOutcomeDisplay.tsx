@@ -22,7 +22,7 @@ import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 // Local
 import { AlertOutcomeChoices } from '../../../services/alerts/types';
-import { createRandomId } from '../../../utils/createRandomId';
+import { createRandomId } from '../../../utils/stringUtils';
 import { getOutcomeDisplayName } from '~/services/alerts/utils/getOutcomeDisplayName';
 import { currentUserIsStaff } from '~/services/users/utils/currentUserIsStaff';
 

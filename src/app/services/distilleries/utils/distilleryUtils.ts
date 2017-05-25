@@ -20,9 +20,9 @@
 import * as _ from 'lodash';
 
 // Local
-import { Dictionary } from '../../types/object';
-import { Distillery } from './types';
-import { orderKeys } from '~/utils/orderKeys';
+import { Dictionary } from '../../../types/object';
+import { Distillery } from '../types';
+import { orderKeys } from '~/utils/objectUtils';
 
 /**
  * Shortens the distillery name by removing the backend name.

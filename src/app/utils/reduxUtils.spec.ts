@@ -1,4 +1,4 @@
-/*!
+/**
  * The contents of this file are subject to the CYPHON Proprietary Non-
  * Commercial Registered User Use License Agreement (the "Agreement”). You
  * may not use this file except in compliance with the Agreement, a copy
@@ -16,20 +16,26 @@
  * are made]
  */
 
-// Local
-import { ReduxAction } from '../types/redux';
+// Vendor
+import * as chai from 'chai';
 
-/**
- * Creates a flux standard action with the given payload type.
- * @param type Action type.
- * @param payload Data to attach to the action.
- * @param error If the action is an error.
- * @returns {ReduxAction<Payload>}
- */
-export function createAction<Payload>(
-  type: string,
-  payload: Payload,
-  error?: boolean,
-): ReduxAction<Payload> {
-  return { type, payload, error };
-}
+// Local
+import { createAction } from './reduxUtils';
+
+describe('createAction', () => {
+  it('should create an action with a type and payload', () => {
+    const type = 'type';
+    const payload = 'payload';
+    const action = createAction(type, payload);
+
+    chai.expect(action).to.deep.equal({ type, payload, error: undefined });
+  });
+
+  it('should create an action with an error', () => {
+    const type = 'type';
+    const payload = 'payload';
+    const action = createAction(type, payload, true);
+
+    chai.expect(action).to.deep.equal({ type, payload, error: true });
+  });
+});

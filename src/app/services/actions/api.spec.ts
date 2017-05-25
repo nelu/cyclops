@@ -20,7 +20,7 @@
 import * as sinon from 'sinon';
 
 // Local
-import * as api from '../cyphon/api';
+import * as api from '../cyphon/utils/cyphonAPI';
 import * as actionAPI from './api';
 
 describe('api.actions.api', () => {

@@ -23,7 +23,7 @@ import { combineReducers } from 'redux';
 import {
   NotificationsState as NotificationsState,
   NotificationsReducer as NotificationsReducer,
-} from './notifications/reducer';
+} from './notifications/reducers/notificationReducer';
 import {
   UsersReducer,
   UsersState,

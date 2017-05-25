@@ -20,14 +20,14 @@
 import axios, { Canceler } from 'axios';
 
 // Local
-import { createAction } from '../../../utils/createReduxAction';
+import { createAction } from '../../../utils/reduxUtils';
 import {
   ReduxAction,
   ThunkActionPromise,
 } from '../../../types/redux';
 import { Result } from '../../../types/result';
 import { ContextSearchParams } from '../../../services/contexts/types';
-import { getCancelTokenSource } from '../../../services/cyphon/utils/getCancelTokenSource';
+import { getCancelTokenSource } from '../../../services/cyphon/utils/cancelTokens';
 import { searchContext } from '../../../services/contexts/api';
 import { addError } from '../../App/actions/ErroPopupActions';
 

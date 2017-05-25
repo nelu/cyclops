@@ -16,15 +16,25 @@
  * are made]
  */
 
-// Local
-import * as cyphonAPI from '../../cyphon/api';
-import { MonitorNested } from '../types';
-import { APIList } from '../../cyphon/types';
+// Vendor
+import * as sinon from 'sinon';
+import * as chai from 'chai';
 
-/**
- * Returns a list of current Monitors.
- * @return {Promise<APIList<MonitorNested>>}
- */
-export function fetchMonitorList(): Promise<APIList<MonitorNested>> {
-  return cyphonAPI.get('/monitors/enabled/');
-}
+// Local
+import * as api from '../../cyphon/utils/cyphonAPI';
+import * as distilleryAPI from './distilleryAPI';
+
+describe('distilleryAPI', () => {
+  describe('fetchAlertDistilleries', () => {
+    it('should call out to the correct url', () => {
+      const getAll = sinon.stub(api, 'getAll');
+
+      distilleryAPI.fetchAllAlertDistilleries();
+
+      chai.expect(getAll.called).to.be.true;
+      chai.expect(getAll.args[0][0]).to.equal('/alerts/distilleries/');
+
+      getAll.restore();
+    });
+  });
+});

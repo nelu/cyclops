@@ -17,7 +17,7 @@
  */
 
 // Local
-import { createAction } from '../../../utils/createReduxAction';
+import { createAction } from '../../../utils/reduxUtils';
 import {
   ReduxAction,
   ThunkActionPromise,
@@ -31,7 +31,7 @@ import {
   sortMonitorsByStatus,
   normalizeMonitors,
 } from '../../../services/monitors/utils/monitorUtils';
-import { fetchMonitorList } from '../../../services/monitors/utils/monitorsAPI';
+import { fetchMonitorList } from '../../../services/monitors/utils/monitorAPI';
 import { addError } from './ErroPopupActions';
 
 /**

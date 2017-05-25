@@ -16,32 +16,15 @@
  * are made]
  */
 
-// Vendor
-import * as chai from 'chai';
-
 // Local
-import { capitalize, lowercaseKeys } from './capitalize';
+import { getAll } from '../../cyphon/utils/cyphonAPI';
+import { DistilleryFlat } from '../types';
 
-describe('capitalize', () => {
-  it('should capitalize a string', () => {
-    const str = 'hello';
-    const result = capitalize(str);
-
-    chai.expect(result).to.equal('Hello');
-  });
-});
-
-describe('lowercaseKeys', () => {
-  it('should lowercase the keys of an object', () => {
-    const object = {
-      AH: 'test',
-      MEH: 'test',
-    };
-    const lowercased = lowercaseKeys(object);
-
-    chai.expect(lowercased).to.deep.equal({
-      ah: 'test',
-      meh: 'test',
-    });
-  });
-});
+/**
+ * Returns a list of all distilleries objects that have alerts
+ * associated with them.
+ * @returns {Promise<DistilleryFlat[]>}
+ */
+export function fetchAllAlertDistilleries(): Promise<DistilleryFlat[]> {
+  return getAll<DistilleryFlat>('/alerts/distilleries/');
+}

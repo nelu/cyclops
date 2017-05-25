@@ -17,10 +17,16 @@
  */
 
 // Vendor
-import { Map, Popup, MapMouseEvent } from 'mapbox-gl';
+import {
+  Map,
+  Popup,
+  MapMouseEvent,
+  PopupOptions,
+} from 'mapbox-gl';
 
 // Local
 import { PopupGenerator } from '../types';
+import { createPopup } from './mapConstructors';
 
 /**
  * Adds popups that show whenever a point is hovered over.
@@ -34,7 +40,7 @@ export function addHoverPopup(
   layers: string[],
   popupGenerator: PopupGenerator,
 ): void {
-  const popup = new Popup({ closeButton: false, closeOnClick: false });
+  const popup = createPopup({ closeButton: false, closeOnClick: false });
 
   map.on('mousemove', (event: MapMouseEvent) => {
     const features = map.queryRenderedFeatures(event.point, { layers });
@@ -48,8 +54,8 @@ export function addHoverPopup(
 
     const feature = features[0];
 
-    popup.setLngLat(feature.geometry.coordinates)
-      .setHTML(popupGenerator(feature))
-      .addTo(map);
+    popup.setLngLat(feature.geometry.coordinates);
+    popup.setHTML(popupGenerator(feature));
+    popup.addTo(map);
   });
 }

@@ -22,9 +22,9 @@ import * as _ from 'lodash';
 
 // Local
 import { getConfig } from '~/config';
-import { APIConfig, APIList } from './types';
-import { paramsSerializer } from './params';
-import * as cache from './cache';
+import { APIConfig, APIList } from '../types';
+import { paramsSerializer } from './URLParams';
+import * as cache from './APICache';
 
 /**
  * Instance of axios that connects to the Express Cyphon API Proxy.

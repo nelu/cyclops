@@ -20,7 +20,7 @@
 import * as chai from 'chai';
 
 // Local
-import { updateNormalizedList } from './updateNormalizedData';
+import { updateNormalizedList } from './normalizrUtils';
 
 describe('updateNormalizedData()', () => {
   const user1 = { id: 1, name: 'George' };

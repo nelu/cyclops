@@ -20,8 +20,8 @@
 import * as cache from 'memory-cache';
 
 // Local
-import { APIConfig } from './types';
-import { serializeUrl } from './params';
+import { APIConfig } from '../types';
+import { serializeUrl } from './URLParams';
 
 /**
  * Caches an Promise.
