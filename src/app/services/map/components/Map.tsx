@@ -18,11 +18,10 @@
 
 // Vendor
 import * as React from 'react';
-import { MapboxOptions } from 'mapbox-gl';
 import * as _ from 'lodash';
 
 // Local
-import { createRandomId } from '../../../utils/stringUtils';
+import { createRandomId } from '~/utils/stringUtils';
 import {
   Markers,
   PopupGenerator,
@@ -44,7 +43,7 @@ interface Props {
   /** Markers to display on the map. */
   markers?: Markers | null;
   /** Display options of the map. */
-  options?: MapboxOptions;
+  options?: mapboxgl.MapboxOptions;
   /** If the map should display controls. */
   controls?: boolean;
   // If the map should cluster together markers.

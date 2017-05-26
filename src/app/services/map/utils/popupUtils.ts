@@ -16,14 +16,6 @@
  * are made]
  */
 
-// Vendor
-import {
-  Map,
-  Popup,
-  MapMouseEvent,
-  PopupOptions,
-} from 'mapbox-gl';
-
 // Local
 import { PopupGenerator } from '../types';
 import { createPopup } from './mapConstructors';
@@ -36,13 +28,13 @@ import { createPopup } from './mapConstructors';
  *   hovers over marker.
  */
 export function addHoverPopup(
-  map: Map,
+  map: mapboxgl.Map,
   layers: string[],
   popupGenerator: PopupGenerator,
 ): void {
   const popup = createPopup({ closeButton: false, closeOnClick: false });
 
-  map.on('mousemove', (event: MapMouseEvent) => {
+  map.on('mousemove', (event: mapboxgl.MapMouseEvent) => {
     const features = map.queryRenderedFeatures(event.point, { layers });
 
     map.getCanvas().style.cursor = features.length ? 'pointer' : '';

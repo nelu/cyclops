@@ -16,9 +16,6 @@
  * are made]
  */
 
-// Vendor
-import { Map, GeoJSONSource } from 'mapbox-gl';
-
 export interface ClusterLayer {
   markerMinimum: number;
   color: string;
@@ -58,8 +55,8 @@ export interface MapSetupOptions {
 
 export interface MapStoreItem {
   elementId: string;
-  map: Map;
-  markerSource: GeoJSONSource;
+  map: mapboxgl.Map;
+  markerSource: mapboxgl.GeoJSONSource;
   markerSourceId: string;
   markerLayerId: string;
   features?: MapFeatures;

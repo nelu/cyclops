@@ -16,9 +16,6 @@
  * are made]
  */
 
-// Vendor
-import { MapboxOptions } from 'mapbox-gl';
-
 // Local
 import { ClusterLayer } from './types';
 
@@ -26,7 +23,7 @@ import { ClusterLayer } from './types';
  * Default options for creating mapbox maps.
  * @type {{style: string}}
  */
-export const DEFAULT_MAP_OPTIONS: MapboxOptions = {
+export const DEFAULT_MAP_OPTIONS: mapboxgl.MapboxOptions = {
   style: 'mapbox://styles/mapbox/dark-v9',
 };
 

@@ -16,14 +16,11 @@
  * are made]
  */
 
-// Vendor
-import { PopupOptions, Popup } from 'mapbox-gl';
-
 /**
  * Creates a new popup instance.
  * @param options Options to create the popup with.
  * @returns {Popup}
  */
-export function createPopup(options?: PopupOptions): Popup {
-  return new Popup(options);
+export function createPopup(options?: mapboxgl.PopupOptions): mapboxgl.Popup {
+  return new mapboxgl.Popup(options);
 }

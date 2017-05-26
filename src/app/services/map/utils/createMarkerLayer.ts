@@ -16,17 +16,14 @@
  * are made]
  */
 
-// Vendor
-import { Layer, SymbolLayout } from 'mapbox-gl';
-
 /**
  * Creates a marker layer for a given set of features in a mapbox source.
  * @param id Unique identifier for the layer.
  * @param source Mapbox source it will use to display symbols on.
  * @returns {Layer}
  */
-export function createMarkerLayer(id: string, source: string): Layer {
-  const layout: SymbolLayout = { 'icon-image': 'marker-15' };
+export function createMarkerLayer(id: string, source: string): mapboxgl.Layer {
+  const layout: mapboxgl.SymbolLayout = { 'icon-image': 'marker-15' };
 
   return { id, type: 'symbol', source, layout };
 }

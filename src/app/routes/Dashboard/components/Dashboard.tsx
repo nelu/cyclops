@@ -21,7 +21,6 @@ import * as React from 'react';
 import { Nav, NavItem } from 'react-bootstrap';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { MapboxOptions } from 'mapbox-gl';
 
 // Local
 import { Loading } from '../../../components/Loading';
@@ -101,7 +100,7 @@ export class Dashboard extends React.Component<Props, {}> {
    * Options for the dashboard map.
    * @type {MapboxOptions}
    */
-  public static MAP_OPTIONS: MapboxOptions = { zoom: 1 };
+  public static MAP_OPTIONS: mapboxgl.MapboxOptions = { zoom: 1 };
 
   /**
    * Popup generator to display information on an alerts in a giant map

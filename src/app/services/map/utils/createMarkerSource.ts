@@ -17,7 +17,6 @@
  */
 
 // Vendor
-import { GeoJSONSourceRaw } from 'mapbox-gl';
 import * as _ from 'lodash';
 import { parse } from 'geojson';
 
@@ -42,13 +41,13 @@ export interface MarkerSourceOptions {
  */
 export function createMarkerSource(
   options?: MarkerSourceOptions,
-): GeoJSONSourceRaw {
+): mapboxgl.GeoJSONSourceRaw {
   const sourceOptions = options ? options : {};
   const clusterOptions = sourceOptions.cluster
     ? _.assign({ cluster: true }, CLUSTER_OPTIONS)
     : {};
 
-  return _.assign<GeoJSONSourceRaw>(
+  return _.assign<mapboxgl.GeoJSONSourceRaw>(
     {},
     clusterOptions,
     {
