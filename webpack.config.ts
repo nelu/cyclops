@@ -292,6 +292,7 @@ const config: Configuration = {
     'react/lib/ReactContext': 'window',
     'react/lib/ExecutionEnvironment': true,
     'react/addons': true,
+    'mapboxgl': 'mapboxgl',
   },
 
   plugins: PLUGINS,

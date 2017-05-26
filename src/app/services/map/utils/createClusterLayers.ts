@@ -16,9 +16,6 @@
  * are made]
  */
 
-// Vendor
-import { Layer, SymbolLayout } from 'mapbox-gl';
-
 // Local
 import { CLUSTER_LAYERS } from '../constants';
 import { ClusterLayer } from '../types';
@@ -26,10 +23,10 @@ import { ClusterLayer } from '../types';
 /**
  * Creates a collection of cluster layers for the given mapbox source.
  * @param sourceId Unique identifier of the source.
- * @returns {mapboxgl.Layer[]}
+ * @returns {Mapboxgl.Layer[]}
  */
-export function createClusterLayers(sourceId: string): Layer[] {
-  const layers: Layer[] = [];
+export function createClusterLayers(sourceId: string): mapboxgl.Layer[] {
+  const layers: mapboxgl.Layer[] = [];
 
   CLUSTER_LAYERS.forEach((layer: ClusterLayer, index: number) => {
     layers.push({
@@ -50,7 +47,7 @@ export function createClusterLayers(sourceId: string): Layer[] {
     });
   });
 
-  const layout: SymbolLayout = {
+  const layout: mapboxgl.SymbolLayout = {
     'text-field': '{point_count}',
     'text-size': 12,
   };

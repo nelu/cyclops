@@ -16,14 +16,28 @@
  * are made]
  */
 
-/**
- * Creates a marker layer for a given set of features in a mapbox source.
- * @param id Unique identifier for the layer.
- * @param source Mapbox source it will use to display symbols on.
- * @returns {Layer}
- */
-export function createMarkerLayer(id: string, source: string): mapboxgl.Layer {
-  const layout: mapboxgl.SymbolLayout = { 'icon-image': 'marker-15' };
+// Vendor
+import * as React from 'react';
+import { Map } from '~/services/map/components/Map';
 
-  return { id, type: 'symbol', source, layout };
+// --------------------------------------------------------------------------
+// Interfaces/Types
+// --------------------------------------------------------------------------
+
+/** Properties of the Search component. */
+interface Props {}
+
+// --------------------------------------------------------------------------
+// Component
+// --------------------------------------------------------------------------
+
+/**
+ *
+ */
+export class Search extends React.Component<Props, {}> {
+  public render() {
+    return (
+      <Map />
+    );
+  }
 }

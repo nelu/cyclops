@@ -16,14 +16,6 @@
  * are made]
  */
 
-// Vendor
-import {
-  MapboxOptions,
-  Layer,
-  GeoJSONSource,
-  NavigationControl,
-} from 'mapbox-gl';
-
 // Local
 import {
   MapSetupOptions,
@@ -45,15 +37,15 @@ import { Deferred } from '../../../utils/Deferred';
  */
 export function createMapStoreItem(
   setupOptions: MapSetupOptions,
-  mapOptions?: MapboxOptions,
+  mapOptions?: mapboxgl.MapboxOptions,
 ): Promise<MapStoreItem> {
   const { markerLayerId, markerSourceId, elementId} = setupOptions;
   const features: MapFeatures = setupOptions.features || {};
   const { cluster, controls, popup } = features;
   const map = createMapboxMap(elementId, mapOptions);
   const markerSource = createMarkerSource({ cluster });
-  const markerLayer: Layer = createMarkerLayer(markerLayerId, markerSourceId);
-  const clusterLayers: Layer[] | undefined = cluster ?
+  const markerLayer: mapboxgl.Layer = createMarkerLayer(markerLayerId, markerSourceId);
+  const clusterLayers: mapboxgl.Layer[] | undefined = cluster ?
     createClusterLayers(markerSourceId) : undefined;
   const deferred = new Deferred<MapStoreItem>();
 
@@ -63,12 +55,12 @@ export function createMapStoreItem(
 
     let markerSourceObject = map.getSource(markerSourceId);
 
-    markerSourceObject = (<GeoJSONSource> markerSourceObject);
+    markerSourceObject = (<mapboxgl.GeoJSONSource> markerSourceObject);
 
     if (clusterLayers) {
       clusterLayers.forEach((layer) => map.addLayer(layer));
     }
-    if (controls) { map.addControl(new NavigationControl()); }
+    if (controls) { map.addControl(new mapboxgl.NavigationControl()); }
     if (popup) { addHoverPopup(map, [markerLayerId], popup); }
 
     deferred.resolve({

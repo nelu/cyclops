@@ -16,9 +16,6 @@
  * are made]
  */
 
-// Vendor
-import { MapboxOptions } from 'mapbox-gl';
-
 // Local
 import {
   MapStore,
@@ -38,7 +35,7 @@ const mapItemPromises: { [elementId: string]: Promise<MapStoreItem> } = {};
  */
 export function createMapItem(
   setupOptions: MapSetupOptions,
-  mapOptions?: MapboxOptions,
+  mapOptions?: mapboxgl.MapboxOptions,
 ): Promise<MapStoreItem> {
   const { elementId } = setupOptions;
 

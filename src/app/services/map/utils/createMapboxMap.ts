@@ -17,7 +17,6 @@
  */
 
 // Vendor
-import * as mapboxgl from 'mapbox-gl';
 import * as _ from 'lodash';
 
 // Local
