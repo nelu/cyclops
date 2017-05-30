@@ -222,8 +222,6 @@ export class AlertDetail extends React.Component<Props, {}> {
    * alerts search parameters in the url.
    */
   public dismissAlert = (): void => {
-    console.log(this.props)
-
     this.props.router.push({
       pathname: '/alerts/',
       query: this.props.location.query,
