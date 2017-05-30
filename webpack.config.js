@@ -17,35 +17,9 @@
  */
 
 // Vendor
-import { resolve } from 'path';
-import {
-  optimize,
-  Configuration,
-  Plugin,
-  Rule,
-  Loader,
-  DefinePlugin,
-  SourceMapDevToolPlugin,
-} from 'webpack';
-import * as ExtractTextPlugin from 'extract-text-webpack-plugin';
-
-// Local
-import {
-  MAIN_CSS_FILE,
-  WEBPACK_OUTPUT_PUBLIC_PATH,
-  WEBPACK_OUTPUT_PATH,
-  WEBPACK_OUTPUT_FILENAME,
-} from './cyclops.config';
-
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/**
- * Dictionary of possible environments paired with a function that
- * returns that environments plugins.
- */
-type PluginAssignments = { [environment: string]: () => Plugin[] };
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // --------------------------------------------------------------------------
 // Constants
@@ -83,10 +57,10 @@ const DEVELOPMENT = ENV === 'development';
  * Webpack loader for typescript files.
  * @type {Object}
  */
-const TYPESCRIPT_LOADER: Loader = {
+const TYPESCRIPT_LOADER = {
   loader: 'awesome-typescript-loader',
   options: {
-    configFileName: resolve(__dirname, 'src/tsconfig.json'),
+    configFileName: path.resolve(__dirname, 'src/tsconfig.json'),
   },
 };
 
@@ -94,7 +68,7 @@ const TYPESCRIPT_LOADER: Loader = {
  * Webpack loader for CSS files.
  * @type {Object}
  */
-const CSS_LOADER: Loader = {
+const CSS_LOADER = {
   loader: 'css-loader',
   options: {
     minimize: PRODUCTION,
@@ -106,13 +80,13 @@ const CSS_LOADER: Loader = {
 // Rules
 // --------------------------------------------------------------------------
 
-const JS_SOURCEMAP_RULE: Rule = {
+const JS_SOURCEMAP_RULE = {
   test: /\.js$/,
   enforce: 'pre',
   use: ['source-map-loader'],
 };
 
-const TS_SOURCEMAP_RULE: Rule = {
+const TS_SOURCEMAP_RULE = {
   test: /\.tsx?$/,
   enforce: 'pre',
   use: ['source-map-loader'],
@@ -122,7 +96,7 @@ const TS_SOURCEMAP_RULE: Rule = {
  * Webpack rule for CSS files.
  * @type {Object}
  */
-const CSS_RULE: Rule = {
+const CSS_RULE = {
   test: /\.css$/,
   use: [
     'style-loader',
@@ -134,9 +108,9 @@ const CSS_RULE: Rule = {
  * Webpack rule for Typescript files.
  * @type {Object}
  */
-const TYPESCRIPT_RULE: Rule = {
+const TYPESCRIPT_RULE = {
   test: /\.tsx?$/,
-  include: resolve(__dirname, 'src'),
+  include: path.resolve(__dirname, 'src'),
   use: [
     TYPESCRIPT_LOADER,
   ],
@@ -146,9 +120,9 @@ const TYPESCRIPT_RULE: Rule = {
  * Webpack rule for sass files.
  * @type {Object}
  */
-const SCSS_RULE: Rule = {
+const SCSS_RULE = {
   test: /\.scss$/,
-  include: resolve(__dirname, 'src/styles'),
+  include: path.resolve(__dirname, 'src/styles'),
   use: ExtractTextPlugin.extract({
     fallback: 'style-loader',
     use: [
@@ -162,10 +136,10 @@ const SCSS_RULE: Rule = {
  * Webpack rule for generating code coverage.
  * @type {Object}
  */
-const COVERAGE_RULE: Rule = {
+const COVERAGE_RULE = {
   test: /\.tsx?$/,
   enforce: 'post',
-  include: resolve(__dirname, 'src/app'),
+  include: path.resolve(__dirname, 'src/app'),
   exclude: /\.spec\.tsx?$/,
   use: ['istanbul-instrumenter-loader'],
 };
@@ -174,7 +148,7 @@ const COVERAGE_RULE: Rule = {
  * Rules that are used no matter the environment
  * @type {Rule[]}
  */
-const BASE_RULES: Rule[] = [
+const BASE_RULES = [
   JS_SOURCEMAP_RULE,
   TS_SOURCEMAP_RULE,
   CSS_RULE,
@@ -186,7 +160,7 @@ const BASE_RULES: Rule[] = [
  * Rules that are used in a test environment.
  * @type {Rule[]}
  */
-const TEST_RULES: Rule[] = [
+const TEST_RULES = [
   COVERAGE_RULE,
 ];
 
@@ -194,9 +168,7 @@ const TEST_RULES: Rule[] = [
  * Rules used in the webpack configuration.
  * @type {Rule[]}
  */
-const RULES: Rule[] = TESTING
-  ? BASE_RULES.concat(TEST_RULES)
-  : BASE_RULES;
+const RULES = TESTING ? BASE_RULES.concat(TEST_RULES) : BASE_RULES;
 
 // --------------------------------------------------------------------------
 // Plugins
@@ -206,16 +178,16 @@ const RULES: Rule[] = TESTING
  * Plugins that are used no matter the environment.
  * @type {Plugin[]}
  */
-const BASE_PLUGINS: Plugin[] = [
-  new ExtractTextPlugin(MAIN_CSS_FILE),
+const BASE_PLUGINS = [
+  new ExtractTextPlugin('cyclops.css'),
 ];
 
 /**
  * Plugins that are used in a testing environment.
  * @type {Plugin[]}
  */
-const TEST_PLUGINS: Plugin[] = [
-  new SourceMapDevToolPlugin({
+const TEST_PLUGINS = [
+  new webpack.SourceMapDevToolPlugin({
     filename: null, // if no value is provided the sourcemap is inlined
     test: /\.(tsx?|js)($|\?)/i, // process .js and .ts files only
   }),
@@ -225,20 +197,19 @@ const TEST_PLUGINS: Plugin[] = [
  * Plugins to add in a production environment.
  * @type {Plugin[]}
  */
-const PRODUCTION_PLUGINS: Plugin[] = [
-  new DefinePlugin({
+const PRODUCTION_PLUGINS = [
+  new webpack.DefinePlugin({
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
     },
   }),
-  new optimize.UglifyJsPlugin({ sourceMap: true }),
+  new webpack.optimize.UglifyJsPlugin({ sourceMap: true }),
 ];
 
 /**
  * Plugins specific to each environment.
- * @type {PluginAssignments}
  */
-const PLUGIN_ASSIGNMENTS: PluginAssignments = {
+const PLUGIN_ASSIGNMENTS = {
   development: () => BASE_PLUGINS,
   production: () => BASE_PLUGINS.concat(PRODUCTION_PLUGINS),
   test: () => BASE_PLUGINS.concat(TEST_PLUGINS),
@@ -248,7 +219,7 @@ const PLUGIN_ASSIGNMENTS: PluginAssignments = {
  * Plugins used in the webpack configuration.
  * @type {Plugin[]}
  */
-const PLUGINS: Plugin[] = PLUGIN_ASSIGNMENTS[ENV]();
+const PLUGINS = PLUGIN_ASSIGNMENTS[ENV]();
 
 // --------------------------------------------------------------------------
 // Configuration
@@ -258,15 +229,15 @@ const PLUGINS: Plugin[] = PLUGIN_ASSIGNMENTS[ENV]();
  * Webpack configuration.
  * @type {Object}
  */
-const config: Configuration = {
+module.exports = {
   context: __dirname,
 
   entry: './src/main.ts',
 
   output: TESTING ? undefined : {
-    filename: WEBPACK_OUTPUT_FILENAME,
-    path: WEBPACK_OUTPUT_PATH,
-    publicPath: WEBPACK_OUTPUT_PUBLIC_PATH,
+    filename: 'cyclops.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/static/',
   },
 
   resolve: {
@@ -277,7 +248,7 @@ const config: Configuration = {
       '.json',
     ],
     alias: {
-      '~': resolve(__dirname, 'src/app/'),
+      '~': path.resolve(__dirname, 'src/app/'),
     },
   },
 
@@ -292,10 +263,8 @@ const config: Configuration = {
     'react/lib/ReactContext': 'window',
     'react/lib/ExecutionEnvironment': true,
     'react/addons': true,
-    'mapboxgl': 'mapboxgl',
+    mapboxgl: 'mapboxgl',
   },
 
   plugins: PLUGINS,
 };
-
-export default config;

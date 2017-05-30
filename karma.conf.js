@@ -16,14 +16,11 @@
  * are made]
  */
 
-// Vendor
-import { Config } from 'karma';
-
 // Local
-import webpackConfig from './webpack.config';
+const webpackConfig = require('./webpack.config');
 
-export default (config: Config) => {
-  config.set(<any> {
+module.exports = function(config) {
+  config.set({
     files: [
       'src/specs.ts',
     ],
