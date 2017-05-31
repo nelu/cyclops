@@ -40,7 +40,7 @@ import {
 /** Shape of the redux store state. */
 export interface StoreState {
   routes: RoutesState;
-  services: ServicesReducerState,
+  services: ServicesReducerState;
 }
 
 /**

@@ -199,7 +199,7 @@ export class AlertDetail extends React.Component<Props, {}> {
     const currentAlertId = this.getAlertId();
     const newAlertId = parseInt(nextProps.routeParams.alertId, 10);
 
-    if (currentAlertId !== newAlertId) this.props.viewAlert(newAlertId);
+    if (currentAlertId !== newAlertId) { this.props.viewAlert(newAlertId); }
   }
 
   /**

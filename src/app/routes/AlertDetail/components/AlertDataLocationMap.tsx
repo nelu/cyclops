@@ -20,8 +20,8 @@
 import * as React from 'react';
 
 // Local
-import { Markers } from '../../../services/map/types';
-import { Map } from '../../../services/map/components/Map';
+import { Markers } from '~/services/map/types';
+import { Map } from '~/services/map/components/Map';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

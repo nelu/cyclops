@@ -73,7 +73,7 @@ export class AlertDataIpAddressField extends React.Component<Props, {}> {
           <OverlayTrigger
             trigger="click"
             placement="right"
-            rootClose
+            rootClose={true}
             overlay={this.copiedPopover}
           >
             <button className="btn btn-default" onClick={this.copyAddress}>

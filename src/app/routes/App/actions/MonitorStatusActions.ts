@@ -17,21 +17,21 @@
  */
 
 // Local
-import { createAction } from '../../../utils/reduxUtils';
+import { createAction } from '~/utils/reduxUtils';
 import {
   ReduxAction,
   ThunkActionPromise,
-  ThunkActionVoid
-} from '../../../types/redux';
+  ThunkActionVoid,
+} from '~/types/redux';
 import {
   MonitorNested,
   NormalizedMonitorList,
-} from '../../../services/monitors/types';
+} from '~/services/monitors/types';
 import {
   sortMonitorsByStatus,
   normalizeMonitors,
-} from '../../../services/monitors/utils/monitorUtils';
-import { fetchMonitorList } from '../../../services/monitors/utils/monitorAPI';
+} from '~/services/monitors/utils/monitorUtils';
+import { fetchMonitorList } from '~/services/monitors/utils/monitorAPI';
 import { addError } from './ErroPopupActions';
 
 /**

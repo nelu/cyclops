@@ -54,17 +54,6 @@ const DEVELOPMENT = ENV === 'development';
 // --------------------------------------------------------------------------
 
 /**
- * Webpack loader for typescript files.
- * @type {Object}
- */
-const TYPESCRIPT_LOADER = {
-  loader: 'awesome-typescript-loader',
-  options: {
-    configFileName: path.resolve(__dirname, 'src/tsconfig.json'),
-  },
-};
-
-/**
  * Webpack loader for CSS files.
  * @type {Object}
  */
@@ -80,16 +69,35 @@ const CSS_LOADER = {
 // Rules
 // --------------------------------------------------------------------------
 
+/**
+ * Webpack rule for loading javascript sourcemap files.
+ * @type {Object}
+ */
 const JS_SOURCEMAP_RULE = {
   test: /\.js$/,
   enforce: 'pre',
-  use: ['source-map-loader'],
+  loader: 'source-map-loader',
 };
 
+/**
+ * Webpack rule for loading typescript sourcemap files.
+ * @type {Object}
+ */
 const TS_SOURCEMAP_RULE = {
   test: /\.tsx?$/,
   enforce: 'pre',
-  use: ['source-map-loader'],
+  loader: 'source-map-loader',
+};
+
+/**
+ * Webpack rule for linting Typescript files.
+ * @type {Object}
+ */
+const TSLINT_RULE = {
+  test: /\.tsx?$/,
+  enforce: 'pre',
+  loader: 'tslint-loader',
+  options: { emitErrors: true },
 };
 
 /**
@@ -111,9 +119,7 @@ const CSS_RULE = {
 const TYPESCRIPT_RULE = {
   test: /\.tsx?$/,
   include: path.resolve(__dirname, 'src'),
-  use: [
-    TYPESCRIPT_LOADER,
-  ],
+  use: ['awesome-typescript-loader'],
 };
 
 /**
@@ -141,7 +147,7 @@ const COVERAGE_RULE = {
   enforce: 'post',
   include: path.resolve(__dirname, 'src/app'),
   exclude: /\.spec\.tsx?$/,
-  use: ['istanbul-instrumenter-loader'],
+  loader: 'istanbul-instrumenter-loader',
 };
 
 /**
@@ -149,6 +155,7 @@ const COVERAGE_RULE = {
  * @type {Rule[]}
  */
 const BASE_RULES = [
+  TSLINT_RULE,
   JS_SOURCEMAP_RULE,
   TS_SOURCEMAP_RULE,
   CSS_RULE,

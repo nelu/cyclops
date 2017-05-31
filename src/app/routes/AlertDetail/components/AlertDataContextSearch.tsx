@@ -305,4 +305,3 @@ export const AlertDataContextSearchContainer = connect<
   mapStateToProps,
   mapDispatchToProps,
 )(AlertDataContextSearch);
-

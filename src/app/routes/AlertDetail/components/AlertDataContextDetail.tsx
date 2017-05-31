@@ -20,12 +20,12 @@
 import * as React from 'react';
 
 // Local
-import { ContextNested } from '../../../services/contexts/types';
-import { SpacedList } from '../../../components/SpacedList';
-import { SpacedSection } from '../../../components/SpacedSection';
-import { SubTitle } from '../../../components/SubTitle';
+import { ContextNested } from '~/services/contexts/types';
+import { SpacedList } from '~/components/SpacedList';
+import { SpacedSection } from '~/components/SpacedSection';
+import { SubTitle } from '~/components/SubTitle';
 import { AlertDataContextFilters } from './AlertDataContextFilters';
-import { shortenDistilleryName } from '../../../services/distilleries/utils/distilleryUtils';
+import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

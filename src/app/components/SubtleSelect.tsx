@@ -125,7 +125,7 @@ export class SubtleSelect extends React.Component<Props, State> {
    */
   public activateSelect = (): void => {
     this.clickListener = (e: any) => {
-      if (e.toElement.id !== this.id) this.deactivateSelect();
+      if (e.toElement.id !== this.id) { this.deactivateSelect(); }
     };
 
     this.listenerActivated = false;

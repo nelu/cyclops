@@ -10,7 +10,7 @@
     "module": "commonjs",
     "jsx": "react",
     "lib": ["es2015", "dom"],
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
       "~/*": ["./app/*"]
     }

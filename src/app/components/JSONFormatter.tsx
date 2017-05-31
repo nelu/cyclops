@@ -128,7 +128,7 @@ export class JSONFormatter extends React.Component<Props, {}> {
     const element = document.getElementById(this.id);
 
     if (element) {
-      while (element.firstChild) element.removeChild(element.firstChild);
+      while (element.firstChild) { element.removeChild(element.firstChild); }
 
       element.appendChild(formatter.render());
     }
