@@ -21,7 +21,6 @@ FROM node:7.4
 MAINTAINER Chase Brewer <chase.brewer@dunbarsecured.com>
 
 ENV CYCLOPS_HOME=/usr/src/app/cyclops
-ENV CYCLOPS_PORT=3000
 
 # create unprivileged user
 RUN groupadd -r cyclops && useradd -r -g cyclops cyclops
@@ -37,8 +36,3 @@ WORKDIR $CYCLOPS_HOME
 
 # install node modules and compile source files
 RUN npm install && npm run build
-
-EXPOSE $CYCLOPS_PORT
-
-# start the server
-CMD npm run start "$@"
