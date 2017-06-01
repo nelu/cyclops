@@ -4,6 +4,18 @@
 Getting Started
 ###############
 
+************************
+Important Recent Changes
+************************
+
+Cyphon version 1.2 and onward will contain the most recent version of
+Cyclops with it. This new Cyphon version also serves the Cyclops assets
+instead of the Express server in Cyclops version 0.3. Due to this new
+functionality, the express server has been removed in Cyclops version 0.4.
+All of this means that this getting-started section is deprecated. To
+see how to configure Cyclops on Cyphon version 1.2+, view the Cyphon
+documentation `here <http://cyphon.readthedocs.io/en/latest/getting-started/configure-project.html#cyclops>`.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
