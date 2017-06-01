@@ -1,7 +1,6 @@
 # Change log
 
-<a name="0.4.0"></a>
-## [0.4.0](https://github.com/dunbarcyber/cyclops/compare/0.4.0...0.3.0) (2017-05-31)
+## Unreleased
 
 ### Added
 
@@ -12,18 +11,24 @@
 - Array utility tests.
 - AlertParamsDateCalenders test.
 - Map tests.
+- Ability to open formatted JSON links in a new tab.
 
 ### Removed
 
 - Staff functionality for non staff users.
-- Express server code.
+- ``server`` folder that contained the Express server code.
 - **cyclops.config.ts:** Cyclops configuration. This is no longer necessary
 
 ### Changed
 
-- Mapbox to a globally accessed variable due to some issues integreting with webpack.
+- Mapbox to a globally accessed variable injected into the application through the html template due to some issues integrating with webpack.
+- Sphinx documentation highlighting
 - **webpack.config.js:** Changed the webpack config back to js instead of ts.
 - **karma.conf.js:** Change the karma config back to js instead of ts.
+
+### Fixed
+
+- Improperly styled files that didn't pass the tslint inspection.
 
 <a name="0.3.0"></a>
 ## [0.3.0](https://github.com/dunbarcyber/cyclops/compare/0.3.0...0.2.2) (2017-05-17)
