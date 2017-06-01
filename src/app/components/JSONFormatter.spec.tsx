@@ -28,6 +28,24 @@ import { JSONFormatter } from './JSONFormatter';
 describe('<JSONFormatter />', () => {
   let wrapper: enzyme.ShallowWrapper<any, any>;
 
+  describe('addTargetBlankToLinks()', () => {
+    let element: any;
+    let links: any[];
+
+    beforeEach(() => {
+      links = [{}, {}];
+      element = { getElementsByTagName: sinon.stub().returns(links) };
+    });
+
+    it('should add target="_blank" to an element with links', () => {
+      JSONFormatter.addTargetBlankToLinks(element);
+
+      links.forEach((link) => {
+        chai.expect(link.target).to.equal('_blank');
+      });
+    });
+  });
+
   it('should create a div with a randomized ID', () => {
     wrapper = enzyme.shallow(<JSONFormatter json={1} />);
     chai.expect(wrapper.type()).to.equal('div');

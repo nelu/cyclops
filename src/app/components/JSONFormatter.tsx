@@ -22,8 +22,8 @@ import * as Formatter from 'json-formatter-js';
 import * as _ from 'lodash';
 
 // Local
-import { orderKeys } from '../utils/objectUtils';
-import { createRandomId } from '../utils/stringUtils';
+import { orderKeys } from '~/utils/objectUtils';
+import { createRandomId } from '~/utils/stringUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -65,6 +65,19 @@ export class JSONFormatter extends React.Component<Props, {}> {
    * @type {number}
    */
   public static DEFAULT_OPEN: number = 1;
+
+  /**
+   * Adds target='_blank' to all the links in the json so that they open in
+   * a new tab.
+   * @param element HTML element to get links from.
+   */
+  public static addTargetBlankToLinks = (element: HTMLDivElement): void => {
+    const links = element.getElementsByTagName('a');
+
+    _.forEach(links, (link) => {
+      link.target = '_blank';
+    });
+  };
 
   /**
    * ID of the created JSON formatter container.
@@ -130,7 +143,11 @@ export class JSONFormatter extends React.Component<Props, {}> {
     if (element) {
       while (element.firstChild) { element.removeChild(element.firstChild); }
 
-      element.appendChild(formatter.render());
+      const renderedJSON = formatter.render();
+
+      JSONFormatter.addTargetBlankToLinks(renderedJSON);
+
+      element.appendChild(renderedJSON);
     }
   };
 
