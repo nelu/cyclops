@@ -99,7 +99,7 @@ describe('ErrorPopup reducer', () => {
     it('should clear the list of errors', () => {
       state = {
         current: 0,
-        errors: [{} as any, {} as any]
+        errors: [{} as any, {} as any],
       };
 
       chai.expect(state.errors.length).to.equal(2);

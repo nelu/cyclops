@@ -16,7 +16,7 @@
  * are made]
  */
 
-import { User } from '../services/users/types';
+import { User } from '~/services/users/types';
 
 /**
  * Dispatch object from the Cyphon API.

@@ -56,7 +56,7 @@ describe('AlertViewReducer', () => {
       clearTimeout.restore();
     });
   });
-  
+
   describe('SEARCH_ALERTS_SUCCESS', () => {
     it('should update the state with the payload action', () => {
       const alerts: any[] = [];
@@ -64,7 +64,7 @@ describe('AlertViewReducer', () => {
       const polling = true;
       const action = actions.searchAlertsSuccess(alerts, count, polling);
       const state = AlertViewReducer({} as any, action);
-      
+
       chai.expect(state).to.deep.equal({
         alerts,
         count,
@@ -73,19 +73,19 @@ describe('AlertViewReducer', () => {
       });
     });
   });
-  
+
   describe('SEARCH_ALERTS_FAILURE', () => {
     it('should update the state with the payload action', () => {
       const action = actions.searchAlertsFailure();
       const state = AlertViewReducer({} as any, action);
-      
+
       chai.expect(state).to.deep.equal({
         loading: false,
         polling: false,
       });
     });
   });
-  
+
   describe('POLL_ALERTS_PENDING', () => {
     it('should update the state with the payload action', () => {
       const promiseId = 'meh';
@@ -149,7 +149,7 @@ describe('AlertViewReducer', () => {
         timeout: null,
       });
     });
-    
+
     it('should call clearTimeout if there is a timeout on state', () => {
       const clearTimeout = sinon.stub(window, 'clearTimeout');
       const action = actions.stopPolling();
@@ -176,7 +176,7 @@ describe('AlertViewReducer', () => {
         timeout: null,
       });
     });
-    
+
     it('should call clearTimeout if there is a timeout on state', () => {
       const clearTimeout = sinon.stub(window, 'clearTimeout');
       const action = actions.disablePolling();

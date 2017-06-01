@@ -17,7 +17,7 @@
  */
 
 // Local
-import { Field } from '../services/cyphon/types';
+import { Field } from '~/services/cyphon/types';
 
 /** Field of a bottle object. */
 export interface BottleField extends Field {
