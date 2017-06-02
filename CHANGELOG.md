@@ -1,7 +1,40 @@
 # Change log
 
-<a name=2.1.0"></a>
-## [2.1.0](https://github.com/dunbarcyber/cyclops/compare/2.0.2...2.1.0) (2017-05-17)
+<a name="0.4.0"></a>
+## [0.4.0](https://github.com/dunbarcyber/cyclops/compare/0.4.0...0.3.0) (2017-06-02)
+
+### Added
+
+- Filtering by category on the alerts page.
+- Grouping distillery by collection name on the alerts page.
+- Alert endpoint tests.
+- Redux store tests.
+- Array utility tests.
+- AlertParamsDateCalenders test.
+- Map tests.
+- Ability to open formatted JSON links in a new tab.
+- MonitorStatusContainer.
+
+### Removed
+
+- Staff functionality for non staff users.
+- ``server`` folder that contained the Express server code.
+- **cyclops.config.ts:** Cyclops configuration. This is no longer necessary
+
+### Changed
+
+- Mapbox to a globally accessed variable injected into the application through the html template due to some issues integrating with webpack.
+- Sphinx documentation highlighting
+- **webpack.config.js:** Changed the webpack config back to js instead of ts.
+- **karma.conf.js:** Change the karma config back to js instead of ts.
+
+### Fixed
+
+- Improperly styled files that didn't pass the tslint inspection.
+- Monitors status only displaying the first 10 monitors. 
+
+<a name="0.3.0"></a>
+## [0.3.0](https://github.com/dunbarcyber/cyclops/compare/0.3.0...0.2.2) (2017-05-17)
 
 ### Added
 
@@ -30,20 +63,20 @@
 
 - ``api`` folder. All of these resources have been moved to ``services`` or ``types``.
 
-<a name="2.0.2"></a>
-## [2.0.2](https://github.com/dunbarcyber/cyclops/compare/2.0.1...2.0.2) (2017-04-28)
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/dunbarcyber/cyclops/compare/0.2.2...0.2.1) (2017-04-28)
 - Add endpoint tests for distilleries, users, contexts, and actions.
 - Fix bug that caused alert id to be used when making Jira tickets instead of the action id.
 
-<a name="2.0.1"></a>
-## [2.0.1](https://github.com/dunbarcyber/cyclops/compare/2.0.0...2.0.1) (2017-04-28)
+<a name="0.2.1"></a>
+## [0.2.1](https://github.com/dunbarcyber/cyclops/compare/0.2.1...0.2.0) (2017-04-28)
 
 - Add push notification documentation.
 - Open context search result JSON so nested structures don't have to be toggled.
 - Simplify coverage generation so that it isn't necessary to run a seperate NPM task.
 
-<a name="2.0.0"></a>
-## [2.0.0](https://github.com/dunbarcyber/cyclops/compare/1.0.0...2.0.0) (2017-04-27)
+<a name="0.2.0"></a>
+## [0.2.0](https://github.com/dunbarcyber/cyclops/compare/0.2.0...0.1.0) (2017-04-27)
 
 ### Added
 
@@ -80,5 +113,5 @@
 - server code coverage removed in order to add coverage to coveralls and to possibly deprecate the express server and instead serve Cyclops through the Cyphon system to lessen code complexity.
 - `CYPHON_API_PATH` environment variable.
 
-<a name="1.0.0"></a>
-## [1.0.0](https://github.com/dunbarcyber/cyclops/releases/tag/1.0.0) (2017-04-05)
+<a name="0.1.0"></a>
+## [0.1.0](https://github.com/dunbarcyber/cyclops/releases/tag/0.1.0) (2017-04-05)

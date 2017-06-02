@@ -25,7 +25,7 @@ import {
 
 // Local
 import { getConfig } from '~/config';
-import { MonitorStatusContainer } from './MonitorStatus';
+import { MonitorStatusContainer } from '../containers/MonitorStatusContainer';
 import { LogoutModal } from './LogoutModal';
 
 // --------------------------------------------------------------------------

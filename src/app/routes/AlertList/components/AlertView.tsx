@@ -245,7 +245,6 @@ export class AlertView extends React.Component<Props, {}> {
    * Updates the url to view the alerts detail view.
    */
   public viewAlert = (alertId: number): void => {
-    console.log(this.props);
     this.props.router.push({
       pathname: `/alerts/${alertId}/`,
       query: this.props.location.query,

@@ -19,6 +19,7 @@
 // Vendor
 import * as React from 'react';
 import * as _ from 'lodash';
+import * as classnames from 'classnames';
 
 // Local
 import { createRandomId } from '~/utils/stringUtils';
@@ -33,6 +34,7 @@ import {
   getMapItem,
   removeMapItem,
 } from '../utils/mapStore';
+import { getConfig } from '~/config';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -100,24 +102,42 @@ export class Map extends React.Component<Props, {}> {
       features,
     };
 
-    createMapItem(
-      mapItemConfig,
-      this.props.options,
-    ).then((mapItem: MapStoreItem) => {
-      if (this.props.markers) {
-        mapItem.markerSource.setData(this.props.markers);
-      }
-    });
+    if (getConfig().MAPBOX_ACCESS_TOKEN) {
+      createMapItem(
+        mapItemConfig,
+        this.props.options,
+      ).then((mapItem: MapStoreItem) => {
+        if (this.props.markers) {
+          mapItem.markerSource.setData(this.props.markers);
+        }
+      });
+    }
   }
 
   /**
    * Removes the map element from the tracked map elements.
    */
   public componentWillUnmount(): void {
-    removeMapItem(this.id);
+    if (getConfig().MAPBOX_ACCESS_TOKEN){ removeMapItem(this.id); }
   }
 
   public render(): JSX.Element {
-    return (<div id={this.id} />);
+    const missingMapboxToken = getConfig().MAPBOX_ACCESS_TOKEN
+      ? null
+      : (
+        <strong>
+          Can't display map. Missing CYCLOPS.MAPBOX_ACCESS_TOKEN
+          in Cyphon configuration.
+        </strong>
+      );
+    const classes = classnames({
+      'mapbox--missing': !!missingMapboxToken,
+    });
+
+    return (
+      <div id={this.id} className={classes}>
+        {missingMapboxToken}
+      </div>
+    );
   }
 }

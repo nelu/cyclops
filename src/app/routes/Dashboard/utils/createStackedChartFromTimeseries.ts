@@ -60,6 +60,6 @@ export function createStackedChartFromTimeseries(
         key,
         values: chartData,
       };
-    }
+    },
   );
 }

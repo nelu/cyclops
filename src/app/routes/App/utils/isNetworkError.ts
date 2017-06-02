@@ -29,7 +29,7 @@ import { isApiError } from './isApiError';
  * @return {Boolean} Whether the error is a network error.
  */
 export function isNetworkError(error: Error | AxiosError): boolean {
-  if (!isApiError(error)) return false;
+  if (!isApiError(error)) { return false; }
 
   const responseIsUndefined = _.isEqual(
     (<AxiosError> error).response, undefined,

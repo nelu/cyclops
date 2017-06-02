@@ -25,8 +25,8 @@ import {
 import * as _ from 'lodash';
 
 // Local
-import * as monitorStatus from '../actions/MonitorStatusActions';
-import { NormalizedMonitorList } from '../../../services/monitors/types';
+import * as actions from '../actions/MonitorStatusActions';
+import { NormalizedMonitorList } from '~/services/monitors/types';
 
 /**
  * State shape for the MonitorStatus container.
@@ -42,6 +42,8 @@ export interface MonitorStatusState {
   monitorsDown: string[];
   /** Names of monitors that are current up. */
   monitorsUp: string[];
+  /** Current timeout ID of the monitor polling. */
+  pollTimeoutID: number | null;
   /** Selected monitor for more detail info. */
   selectedMonitor: string | null;
 }
@@ -58,6 +60,7 @@ export const INITIAL_STATE: MonitorStatusState = {
   monitors: null,
   monitorsDown: [],
   monitorsUp: [],
+  pollTimeoutID: null,
   selectedMonitor: null,
 };
 
@@ -70,11 +73,13 @@ const reducers: ReducerMap<MonitorStatusState, any> = {};
 /**
  * Changes the loading property to true.
  * @param state MonitorStatus state.
+ * @param action FETCH_MONITORS_PENDING action.
  */
-reducers[monitorStatus.FETCH_MONITORS_PENDING] = (
+reducers[actions.FETCH_MONITORS_PENDING] = (
   state: MonitorStatusState,
+  action: actions.FetchMonitorsPendingAction,
 ): MonitorStatusState => {
-  const update: PartialState = { loading: true };
+  const update: PartialState = { loading: action.payload };
 
   return _.assign({}, state, update);
 };
@@ -89,9 +94,9 @@ reducers[monitorStatus.FETCH_MONITORS_PENDING] = (
  * @param state MonitorStatus state.
  * @param action FETCH_MONITORS_SUCCESS action.
  */
-reducers[monitorStatus.FETCH_MONITORS_SUCCESS] = (
+reducers[actions.FETCH_MONITORS_SUCCESS] = (
   state: MonitorStatusState,
-  action: monitorStatus.FetchMonitorsSuccessAction,
+  action: actions.FetchMonitorsSuccessAction,
 ): MonitorStatusState => {
   const update: PartialState = {
     loading: false,
@@ -112,9 +117,9 @@ reducers[monitorStatus.FETCH_MONITORS_SUCCESS] = (
  * @param state MonitorStatus state.
  * @param action SELECT_MONITOR action.
  */
-reducers[monitorStatus.SELECT_MONITOR] = (
+reducers[actions.SELECT_MONITOR] = (
   state: MonitorStatusState,
-  action: monitorStatus.SelectMonitorAction,
+  action: actions.SelectMonitorAction,
 ): MonitorStatusState => {
   const update: PartialState = {
     selectedMonitor: action.payload,
@@ -132,9 +137,9 @@ reducers[monitorStatus.SELECT_MONITOR] = (
  * @param state MonitorStatus state.
  * @param action OPEN_MODAL action.
  */
-reducers[monitorStatus.OPEN_MODAL] = (
+reducers[actions.OPEN_MODAL] = (
   state: MonitorStatusState,
-  action: monitorStatus.OpenModalAction,
+  action: actions.OpenModalAction,
 ): MonitorStatusState => {
   const update: PartialState = { modalActive: true };
 
@@ -150,9 +155,9 @@ reducers[monitorStatus.OPEN_MODAL] = (
  * @param state MonitorStatus state.
  * @param action CLOSE_MODAL action.
  */
-reducers[monitorStatus.CLOSE_MODAL] = (
+reducers[actions.CLOSE_MODAL] = (
   state: MonitorStatusState,
-  action: monitorStatus.CloseModalAction,
+  action: actions.CloseModalAction,
 ): MonitorStatusState => {
   const update: PartialState = {
     modalActive: false,
@@ -160,6 +165,23 @@ reducers[monitorStatus.CLOSE_MODAL] = (
   };
 
   return _.assign({}, state, update);
+};
+
+/**
+ * Updates the MonitorStatusReducer based on a(n) POLL_MONITORS_WAIT action.
+ * @param state Current MonitorStatusReducer state.
+ * @param action POLL_MONITORS_WAIT action.
+ * @returns {State} Updated MonitorStatusReducer state.
+ */
+reducers[actions.POLL_MONITORS_WAIT] = (
+  state: MonitorStatusState,
+  action: actions.PollMonitorsWaitAction,
+): MonitorStatusState => {
+  const update: PartialState = {
+    pollTimeoutID: action.payload,
+  };
+
+  return Object.assign({}, state, update);
 };
 
 /**

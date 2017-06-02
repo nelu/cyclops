@@ -16,11 +16,9 @@
  * are made]
  */
 
-// Vendor
-import axios from 'axios';
-
 // Local
 import { getConfig } from '~/config';
+import { post } from '~/services/cyphon/utils/cyphonAPI';
 
 /**
  * Unsubscribe from push notifications
@@ -71,7 +69,7 @@ export function getRegistrationId(subscription: any): string {
 export function sendSubscriptionToServer(subscription: any): Promise<any> {
   const postData = { registration_id: getRegistrationId(subscription) };
 
-  return axios.post('/api/notifications/subscribe/', postData);
+  return post('/notifications/subscribe/', postData);
 }
 
 /**
@@ -124,10 +122,17 @@ export function getRegistrationSubscription(registration: any): Promise<any> {
   return registration.pushManager.getSubscription();
 }
 
+/**
+ * Sends any necessary information necessary for retrieving push notifications
+ * to the service worker.
+ * @param subscription
+ */
 export function setWorkerVariables(subscription: any): void {
   const registrationId = getRegistrationId(subscription);
 
   (navigator as any).serviceWorker.controller.postMessage({
-    notificationUrl: `/api/notifications/?registration_id=${registrationId}`,
+    notificationUrl:
+      `${getConfig().API_URL}/notifications/` +
+      `?registration_id=${registrationId}`,
   });
 }

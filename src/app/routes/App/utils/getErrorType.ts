@@ -37,9 +37,9 @@ import {
  * @return {string}
  */
 export function getErrorType(error: Error | AxiosError): string {
-  if (isNetworkError(error)) return NETWORK_ERROR;
-  if (isApiError(error)) return API_ERROR;
-  if (isRuntimeError(error)) return RUNTIME_ERROR;
+  if (isNetworkError(error)) { return NETWORK_ERROR; }
+  if (isApiError(error)) { return API_ERROR; }
+  if (isRuntimeError(error)) { return RUNTIME_ERROR; }
 
   return UNKNOWN_ERROR;
 }

@@ -21,10 +21,7 @@ import * as React from 'react';
 import { ListGroupItem } from 'react-bootstrap';
 
 // Local
-import {
-  Monitor,
-  MonitorNested
-} from '../../../services/monitors/types';
+import { Monitor } from '~/services/monitors/types';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

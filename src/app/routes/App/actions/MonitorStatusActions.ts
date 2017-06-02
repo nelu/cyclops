@@ -17,21 +17,19 @@
  */
 
 // Local
-import { createAction } from '../../../utils/reduxUtils';
 import {
   ReduxAction,
   ThunkActionPromise,
-  ThunkActionVoid
-} from '../../../types/redux';
+} from '~/types/redux';
 import {
   MonitorNested,
   NormalizedMonitorList,
-} from '../../../services/monitors/types';
+} from '~/services/monitors/types';
 import {
   sortMonitorsByStatus,
   normalizeMonitors,
-} from '../../../services/monitors/utils/monitorUtils';
-import { fetchMonitorList } from '../../../services/monitors/utils/monitorAPI';
+} from '~/services/monitors/utils/monitorUtils';
+import { fetchAllMonitors } from '~/services/monitors/utils/monitorAPI';
 import { addError } from './ErroPopupActions';
 
 /**
@@ -53,7 +51,7 @@ export const FETCH_MONITORS_PENDING = `${ACTION_PREFIX}/FETCH_MONITORS_PENDING`;
 /**
  * FETCH_MONITORS_PENDING payload type.
  */
-export type FetchMonitorsPendingPayload = undefined;
+export type FetchMonitorsPendingPayload = boolean;
 
 /**
  * FETCH_MONITORS_PENDING action type.
@@ -62,10 +60,15 @@ export type FetchMonitorsPendingAction = ReduxAction<FetchMonitorsPendingPayload
 
 /**
  * Creates a FETCH_MONITORS_PENDING action.
- * @returns {Action<FetchMonitorsPendingPayload>;
+ * @returns {Action<FetchMonitorsPendingPayload>}
  */
-export function fetchMonitorsPending(): FetchMonitorsPendingAction {
-  return createAction(FETCH_MONITORS_PENDING, undefined);
+export function fetchMonitorsPending(
+  loading: boolean,
+): FetchMonitorsPendingAction {
+  return {
+    type: FETCH_MONITORS_PENDING,
+    payload: loading,
+  };
 }
 
 // --------------------------------------------------------------------------
@@ -95,21 +98,21 @@ export type FetchMonitorsSuccessAction = ReduxAction<FetchMonitorsSuccessPayload
 
 /**
  * Creates a FETCH_MONITORS_SUCCESS action.
- * @returns {Action<FetchMonitorsSuccessPayload>;
+ * @returns {Action<FetchMonitorsSuccessPayload>}
  */
 export function fetchMonitorsSuccess(
   monitors: MonitorNested[],
 ): FetchMonitorsSuccessAction {
   const sortedMonitorsByStatus = sortMonitorsByStatus(monitors);
-  const monitorsUp = sortedMonitorsByStatus.up;
-  const monitorsDown = sortedMonitorsByStatus.down;
-  const normalizedMonitors = normalizeMonitors(monitors);
 
-  return createAction<FetchMonitorsSuccessPayload>(FETCH_MONITORS_SUCCESS, {
-    monitors: normalizedMonitors,
-    monitorsUp,
-    monitorsDown,
-  });
+  return {
+    type: FETCH_MONITORS_SUCCESS,
+    payload: {
+      monitors: normalizeMonitors(monitors),
+      monitorsUp: sortedMonitorsByStatus.up,
+      monitorsDown: sortedMonitorsByStatus.down,
+    },
+  };
 }
 
 // --------------------------------------------------------------------------
@@ -138,7 +141,10 @@ export type SelectMonitorAction = ReduxAction<SelectMonitorPayload>;
  * @returns {ReduxAction<string>}
  */
 export function selectMonitor(monitor: string): SelectMonitorAction {
-  return createAction(SELECT_MONITOR, monitor);
+  return {
+    type: SELECT_MONITOR,
+    payload: monitor,
+  };
 }
 
 // --------------------------------------------------------------------------
@@ -166,10 +172,10 @@ export type OpenModalAction = ReduxAction<OpenModalPayload>;
  * fetch a new list of monitors.
  * @returns {ThunkActionPromise}
  */
-export function openModal(): ThunkActionVoid {
-  return (dispatch) => {
-    dispatch({ type: OPEN_MODAL });
-    dispatch(fetchMonitors());
+export function openModal(): OpenModalAction {
+  return {
+    type: OPEN_MODAL,
+    payload: undefined,
   };
 }
 
@@ -198,7 +204,37 @@ export type CloseModalAction = ReduxAction<CloseModalPayload>;
  * @returns {Action<CloseModalPayload>;
  */
 export function closeModal(): CloseModalAction {
-  return createAction(CLOSE_MODAL, undefined);
+  return {
+    type: CLOSE_MODAL,
+    payload: undefined,
+  };
+}
+
+// --------------------------------------------------------------------------
+// POLL_MONITORS_WAIT
+// --------------------------------------------------------------------------
+
+/**
+ * Redux Action Type: When a timeout to poll monitors has been set.
+ * @type {string}
+ */
+export const POLL_MONITORS_WAIT = `${ACTION_PREFIX}/POLL_MONITORS_WAIT`;
+
+/** POLL_MONITORS_WAIT payload type. */
+export type PollMonitorsWaitPayload = number;
+
+/** POLL_MONITORS_WAIT action type. */
+export type PollMonitorsWaitAction = ReduxAction<PollMonitorsWaitPayload>;
+
+/**
+ * Creates a(n) POLL_MONITORS_WAIT action.
+ * @returns {PollMonitorsWaitAction}
+ */
+export function pollMonitorsWait(timeoutID: number): PollMonitorsWaitAction {
+  return {
+    type: POLL_MONITORS_WAIT,
+    payload: timeoutID,
+  };
 }
 
 // --------------------------------------------------------------------------
@@ -210,13 +246,25 @@ export function closeModal(): CloseModalAction {
  * were received or failed.
  * @returns {ThunkActionPromise}
  */
-export function fetchMonitors(): ThunkActionPromise {
+export function fetchMonitors(
+  loading: boolean,
+  delay: number,
+  timeoutID?: number,
+): ThunkActionPromise {
   return (dispatch) => {
-    dispatch(fetchMonitorsPending());
+    if (timeoutID) { window.clearTimeout(timeoutID); }
 
-    return fetchMonitorList()
-      .then((response) => {
-        dispatch(fetchMonitorsSuccess(response.results));
+    dispatch(fetchMonitorsPending(loading));
+
+    return fetchAllMonitors()
+      .then((monitors) => {
+        dispatch(fetchMonitorsSuccess(monitors));
+
+        const ID = window.setTimeout(() => {
+          dispatch(fetchMonitors(false, delay));
+        }, delay);
+
+        dispatch(pollMonitorsWait(ID));
       })
       .catch((error) => {
         dispatch(addError(error));

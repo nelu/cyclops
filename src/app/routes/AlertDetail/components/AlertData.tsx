@@ -20,10 +20,10 @@
 import * as React from 'react';
 
 // Local
-import { Result } from '../../../types/result';
-import { DistilleryNested } from '../../../services/distilleries/types';
-import { JSONFormatter } from '../../../components/JSONFormatter';
-import { shortenDistilleryName } from '../../../services/distilleries/utils/distilleryUtils';
+import { Result } from '~/types/result';
+import { DistilleryNested } from '~/services/distilleries/types';
+import { JSONFormatter } from '~/components/JSONFormatter';
+import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

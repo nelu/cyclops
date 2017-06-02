@@ -25,7 +25,7 @@ import * as _ from 'lodash';
  * @return {boolean}
  */
 export function isRuntimeError(error: Error): boolean {
-  if (!_.isError(error)) return false;
+  if (!_.isError(error)) { return false; }
 
   const hasMessageProperty = _.has(error, 'message');
   const hasStackProperty = _.has(error, 'stack');

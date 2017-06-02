@@ -23,43 +23,40 @@ import axios, {
 } from 'axios';
 
 // / Local
-import { createAction } from '../../../utils/reduxUtils';
+import { createAction } from '~/utils/reduxUtils';
 import {
   ReduxAction,
   ThunkActionPromise,
   ThunkActionVoid,
   ReduxDispatch,
-} from '../../../types/redux';
+} from '~/types/redux';
 import {
   DistributionDataTypes,
-  DashboardDataTypes
+  DashboardDataTypes,
 } from '../types';
 import {
-  StackedAreaChartData,
   PieChartDataWithColor,
   StackedAreaChartDataWithColor,
-} from '../../../services/chart/types';
-import { AlertLocationResponse } from '../../../services/alerts/types';
+} from '~/services/chart/types';
+import { AlertLocationResponse } from '~/services/alerts/types';
 import {
   fetchAlertLevelTimeseries,
   fetchAlertLocations,
   fetchAlertCollectionDistribution,
   fetchAlertStatusDistribution,
   fetchAlertLevelDistribution,
-} from '../../../services/alerts/utils/alertsAPI';
+} from '~/services/alerts/utils/alertsAPI';
 import { createStackedChartFromTimeseries } from '../utils/createStackedChartFromTimeseries';
 
-import { getCancelTokenSource } from '../../../services/cyphon/utils/cancelTokens';
+import { getCancelTokenSource } from '~/services/cyphon/utils/cancelTokens';
 import { addError } from '../../App/actions/ErroPopupActions';
-import { Dictionary } from '../../../types/object';
-import { createPieChartDataFromObject } from '../../../services/chart/utils/createPieChartData';
-import { sortPieChartData } from '../../../services/chart/utils/sortPieChartData';
-import { createRandomId } from '../../../utils/stringUtils';
-import { createDashboardPieChartData } from '../utils/createDashboardPieChartData';
-import { getPieChartDataTotal } from '../../../services/chart/utils/getPieChartDataTotal';
+import { createPieChartDataFromObject } from '~/services/chart/utils/createPieChartData';
+import { sortPieChartData } from '~/services/chart/utils/sortPieChartData';
+import { createRandomId } from '~/utils/stringUtils';
+import { getPieChartDataTotal } from '~/services/chart/utils/getPieChartDataTotal';
 import { addLevelPieChartColor } from '../utils/addLevelPieChartColor';
-import { addColorProperty } from '../../../services/chart/utils/addColorProperty';
-import { shortenDistilleryDictionary } from '../../../services/distilleries/utils/distilleryUtils';
+import { addColorProperty } from '~/services/chart/utils/addColorProperty';
+import { shortenDistilleryDictionary } from '~/services/distilleries/utils/distilleryUtils';
 
 /**
  * Action type prefix for Dashboard actions.

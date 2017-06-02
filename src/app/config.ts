@@ -26,9 +26,7 @@ interface AppConfig {
   /** User object of the currently authenticated user. */
   CURRENT_USER: User;
   /** URL of the Cyphon API proxy. */
-  EXPRESS_CYPHON_PROXY_URL: string;
-  /** URL of the Cyphon API this Cyclops instance points to. */
-  CYPHON_API_URL: string;
+  API_URL: string;
   /** Access token for mapbox services. Required for any map actions. */
   MAPBOX_ACCESS_TOKEN: string;
   /** Base URL for the react application. Used for routing purposes. */

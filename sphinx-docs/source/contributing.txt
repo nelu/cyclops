@@ -26,46 +26,7 @@ General
 
 The style uses `Typescript's coding guidelines <https://github.com/Microsoft/TypeScript/wiki/Coding-guidelines>`_ and `TSLint rules <https://palantir.github.io/tslint/>`_ with a few exceptions. These exceptions are outlined in the ``tslint.json`` file at the root of the project directory.
 
-Make sure to run TSLint before making a pull request.
-
-.. _code-style-express-router:
-
-Express Router
-==============
-
-::
-
-    import { Router, RequestHandler } from 'express';
-
-    export class NewRouter {
-      /** Express router object. */
-      public router: Router;
-
-      constructor() {
-        this.router = Router();
-        this.middleware();
-        this.routes();
-      }
-
-      /** Handles a routes request */
-      public route: RequestHandler = (req, res) => {};
-
-      /**
-       * Configures middleware for this router.
-       */
-      private middleware(): void {
-        this.router.use(URL, middleware);
-      }
-
-      /**
-       * Configure routes for this router.
-       */
-      private routes(): void {
-        this.router.get('*', this.route)
-      }
-    }
-
-Whenever you need to use the router, just call ``new NewRouter().router``.
+TSLint is run on every webpack compilation. If there are any style errors, there should be a warning/error in the webpack console output.
 
 .. _code-style-typescript-redux:
 
@@ -228,28 +189,23 @@ Root
 
     |── api-docs/
     |── dist/
-    |── server/
     |── sphinx-docs/
     |── src/
-    |── cyclops.config.ts
-    |── cyclops.env
-    |── cyclops.env.COPYME
-    |── karma.conf.ts
+    |── karma.conf.js
     |── tsconfig.json
     |── tslint.json
     |── typedoc.json
-    └── webpack.config.ts
+    └── webpack.config.js
 
-- **dist:** Webpack output folder.
-- **api-docs:** API documentation output folder.
-- **server:** Express server source files. See :ref:`directory-structure-express`.
+- **dist:** Webpack output folder. Ignored by git.
+- **api-docs:** API documentation output folder. Ignored by git.
 - **sphinx-docs:** Source files for creating this documentation.
 - **src:** Source files for the react application. See :ref:`directory-structure-react` for more information.
-- **cyclops.config.ts:** Environment variables and constants that are used by both the server and webpack.
-- **constants.d.ts:** Typescript definition file for the constants so it can be used in any of the Typescript code bases.
-- **cyclops.env:** Cyclops environment variables created whenever the express server is run. This is used for configuring the express server for runtime.
-- **cyclops.env.COPYME:** Outline of the possible environment variables that can be created for cyclops.env.
+- **karma.conf.js:** Karma configuration file.
+- **tsconfig.json:** Typescript configuration file used for the project.
+- **tslint.json:** Typescript linter configuration.
 - **typedoc.json:** Typescript configuration file used for creating the API documentation.
+- **webpack.config.js:** Webpack configuration file.
 
 .. _directory-structure-react:
 
@@ -320,34 +276,6 @@ React
 - **typings:** Typescript definition files for 3rd party libraries that are not located in the DefinitelyTyped github repository.
 - **main.ts:** Webpack entry point for the react application. Connects the react application to the root DOM element and includes any necessary CSS and JS to build the bundle.
 - **specs.ts:** Webpack entry point for test files.
-- **tsconfig.json:** Typescript configuration for the react application.
-
-.. _directory-structure-express:
-
-Express
-=======
-
-::
-
-    |── controllers/
-    |── middlewares/
-    |── static/
-    |── typings/
-    |── utils/
-    |── views/
-    |── constants.ts
-    |── index.ts
-    └── types.js
-
-- **controllers:** Controllers that handle the different routes of the server. Files in this directory should follow he style referenced here: :ref:`code-style-express-router`.
-- **middlewares:** Express middleware.
-- **static:** Static assets that are served at the url ``/static/``.
-- **typings:** Typescript definition files for 3rd party libraries that are not located in the DefinitelyTyped github repository.
-- **utils:** Helper functions.
-- **views:** Route templates.
-- **constants.ts:** Constants used across the server.
-- **index.ts:** Express server startup.
-- **types.js** Type definitions for the server.
 
 .. _directory-structure-scss:
 
@@ -416,10 +344,8 @@ Running this command will start a couple of concurrent processes that make it ea
 
 NPM Tasks
 *********
-- **server:dev:** Runs the server in watch mode and restarts whenever changes are made to the server source code.
-- **server:prod:** Runs the server in production mode.
-- **client:dev:** Runs webpack in watch mode.
-- **client:prod:** Runs webpack in production mode, which results in a minified webpack output.
+- **webpack:dev:** Runs webpack in watch mode.
+- **webpack:prod:** Runs webpack in production mode, which results in a minified webpack output.
 - **test:watch:** Runs tests in watch mode.
 - **test:** Runs tests once and creates a JSON coverage report.
 - **travis:** Runs tests once and sends the coverage report to coveralls.
@@ -427,6 +353,5 @@ NPM Tasks
 - **docs:sphinx:** Builds this documentation.
 - **livereload:** Starts a livereload server that sends a signal whenever there's a change in ``dist``.
 - **clean:** Deletes the ``dist`` directory.
-- **start:** Starts the server in production mode.
 - **build:** Compiles a minified version of the webpack bundle into ``dist``.
-- **dev:** Starts the server in development mode, starts webpack in watch mode, and starts a livereload server in parallel.
+- **dev:** Starts webpack in watch mode and starts a livereload server in parallel.

@@ -19,6 +19,7 @@
 // Vendor
 import axios, { AxiosInstance } from 'axios';
 import * as _ from 'lodash';
+import * as Cookies from 'js-cookie';
 
 // Local
 import { getConfig } from '~/config';
@@ -31,9 +32,10 @@ import * as cache from './APICache';
  * @type {AxiosInstance}
  */
 const cyphonAPI: AxiosInstance = axios.create({
-  baseURL: getConfig().EXPRESS_CYPHON_PROXY_URL,
+  baseURL: getConfig().API_URL,
   paramsSerializer,
   timeout: getConfig().API_TIMEOUT,
+  headers: { 'X-CSRFToken': Cookies.get('csrftoken') },
 });
 
 /**

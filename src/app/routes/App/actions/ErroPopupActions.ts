@@ -17,8 +17,8 @@
  */
 
 // Local
-import { createAction } from '../../../utils/reduxUtils';
-import { ReduxAction } from '../../../types/redux';
+import { createAction } from '~/utils/reduxUtils';
+import { ReduxAction } from '~/types/redux';
 import { StoredError } from '../types';
 
 /**
@@ -101,7 +101,7 @@ export type ClearErrorsPayload = undefined;
 /**
  * CLEAR_ERRORS action type.
  */
-export type ClearErrorsAction = ReduxAction<ClearErrorsPayload>
+export type ClearErrorsAction = ReduxAction<ClearErrorsPayload>;
 
 /**
  * Creates a CLEAR_ERRORS action.

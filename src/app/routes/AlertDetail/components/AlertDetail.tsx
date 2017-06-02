@@ -199,7 +199,7 @@ export class AlertDetail extends React.Component<Props, {}> {
     const currentAlertId = this.getAlertId();
     const newAlertId = parseInt(nextProps.routeParams.alertId, 10);
 
-    if (currentAlertId !== newAlertId) this.props.viewAlert(newAlertId);
+    if (currentAlertId !== newAlertId) { this.props.viewAlert(newAlertId); }
   }
 
   /**
@@ -222,8 +222,6 @@ export class AlertDetail extends React.Component<Props, {}> {
    * alerts search parameters in the url.
    */
   public dismissAlert = (): void => {
-    console.log(this.props)
-
     this.props.router.push({
       pathname: '/alerts/',
       query: this.props.location.query,

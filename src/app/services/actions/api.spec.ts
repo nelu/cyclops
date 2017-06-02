@@ -23,8 +23,8 @@ import * as sinon from 'sinon';
 import * as api from '../cyphon/utils/cyphonAPI';
 import * as actionAPI from './api';
 
-describe('api.actions.api', () => {
-  describe('fetchAllActions', () => {
+describe('actionsAPI', () => {
+  describe('fetchAllActions()', () => {
     let getAll: sinon.SinonStub;
 
     beforeEach(() => {

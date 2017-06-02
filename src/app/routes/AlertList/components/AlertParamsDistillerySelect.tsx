@@ -21,11 +21,8 @@ import * as React from 'react';
 import * as _ from 'lodash';
 
 // Local
-import { Distillery } from '../../../services/distilleries/types';
-import {
-  shortenDistilleryName,
-  sortByWarehouse
-} from '../../../services/distilleries/utils/distilleryUtils';
+import { Distillery } from '~/services/distilleries/types';
+import { sortByWarehouse } from '~/services/distilleries/utils/distilleryUtils';
 import { DistillerySelectGroup } from '~/services/distilleries/components/DistillerySelectGroup';
 
 // --------------------------------------------------------------------------

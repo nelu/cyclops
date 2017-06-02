@@ -21,17 +21,16 @@ import * as sinon from 'sinon';
 import axios from 'axios';
 
 // Local
-import * as alertsAPI from '../../../services/alerts/utils/alertsAPI';
+import * as alertsAPI from '~/services/alerts/utils/alertsAPI';
 import * as actions from './AlertDetailActions';
 import * as errorActions from '../../App/actions/ErroPopupActions';
-import * as checkAlertUpdate from '../../../services/alerts/utils/checkAlertUpdate';
-import * as modifyAlertUpdate from '../../../services/alerts/utils/modifyAlertUpdate';
-import * as apiUtils from '../../../services/cyphon/utils/cancelTokens';
+import * as checkAlertUpdate from '~/services/alerts/utils/checkAlertUpdate';
+import * as modifyAlertUpdate from '~/services/alerts/utils/modifyAlertUpdate';
+import * as apiUtils from '~/services/cyphon/utils/cancelTokens';
 import {
-  Alert,
   AlertDetail,
-  AlertUpdateRequest
-} from '../../../services/alerts/types';
+  AlertUpdateRequest,
+} from '~/services/alerts/types';
 
 describe('AlertDetailActions', () => {
   let addError: sinon.SinonStub;

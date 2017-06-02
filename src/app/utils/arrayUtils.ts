@@ -62,4 +62,3 @@ export function toggleValue<T>(target: any, value: any): T | T[] | undefined {
 export function includesOrEquals(target: any | any[], value: any): boolean {
   return _.includes(target, value) || _.isEqual(target, value);
 }
-

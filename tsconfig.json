@@ -1,15 +1,18 @@
 {
+  "compileOnSave": false,
+  "buildOnSave": false,
   "compilerOptions": {
     "sourceMap": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
+    "noEmitHelpers": false,
+    "target": "es5",
     "module": "commonjs",
-    "allowJs": false,
-    "target": "es6"
-  },
-  "exclude": [
-    "server/static",
-    "node_modules",
-    "src"
-  ]
+    "jsx": "react",
+    "lib": ["es2015", "dom"],
+    "baseUrl": "./src",
+    "paths": {
+      "~/*": ["./app/*"]
+    }
+  }
 }

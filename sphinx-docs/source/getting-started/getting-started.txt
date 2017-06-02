@@ -1,8 +1,19 @@
 .. _getting-started:
 
-###############
-Getting Started
-###############
+############################
+Getting Started: Version 0.3
+############################
+
+************************
+Important Recent Changes
+************************
+
+Cyphon version 1.2+ will serve Cyclops through it's templating system and
+retrieve the assets through a CDN. Due to this new
+functionality, the express server has been removed in Cyclops version 0.4
+and this getting-started section is deprecated. To
+see how to configure Cyclops on Cyphon version 1.2+, check out
+:ref:`migration-0.3-0.4`.
 
 .. toctree::
    :maxdepth: 2

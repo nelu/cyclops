@@ -73,8 +73,8 @@ export class AlertListSearchBar extends React.Component<Props, State> {
   public handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const value = event.currentTarget.value;
 
-    if (!value) this.setState({ content: undefined });
-    else this.setState({ content: value });
+    if (!value) { this.setState({ content: undefined }); }
+    else { this.setState({ content: value }); }
   };
 
   /**

@@ -7,6 +7,7 @@ import * as enzyme from 'enzyme';
 // Local
 import { Map } from './Map';
 import * as mapStore from '../utils/mapStore';
+import * as config from '~/config';
 
 describe('<Map />', () => {
   let setDataSpy: sinon.SinonSpy;
@@ -15,6 +16,7 @@ describe('<Map />', () => {
   let removeMapItemStub: sinon.SinonStub;
   let mapStoreItemPromise: Promise<any>;
   let mapStoreItem: any;
+  let getConfig: sinon.SinonStub;
 
   beforeEach(() => {
     setDataSpy = sinon.spy();
@@ -31,12 +33,16 @@ describe('<Map />', () => {
       .returns(mapStoreItemPromise);
 
     removeMapItemStub = sinon.stub(mapStore, 'removeMapItem');
+    getConfig = sinon.stub(config, 'getConfig').returns({
+      MAPBOX_ACCESS_TOKEN: 'blah',
+    });
   });
 
   afterEach(() => {
     createMapItemStub.restore();
     getMapItemStub.restore();
     removeMapItemStub.restore();
+    getConfig.restore();
   });
 
   it('should create a div with a random id', () => {

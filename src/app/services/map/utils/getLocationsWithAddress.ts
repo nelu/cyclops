@@ -21,7 +21,7 @@ import * as _ from 'lodash';
 import { CancelToken } from 'axios';
 
 // Local
-import { Result } from '../../../types/result';
+import { Result } from '~/types/result';
 import { Container } from '../../containers/types';
 import { getFieldsOfType } from '../../containers/utils';
 import { CONTAINER_FIELDS } from '../../containers/constants';
@@ -47,7 +47,7 @@ export function getLocationsWithAddress(
   );
 
   // If there aren't any location fields, return an empty array.
-  if (!locationFields) return Promise.resolve([]);
+  if (!locationFields) { return Promise.resolve([]); }
 
   const locationFieldArray: LocationField[] = [];
 

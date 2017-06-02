@@ -44,8 +44,10 @@ const MAX_TICK_MARKS = 6;
  * @param selector ID selector of the HTML element.
  * @param data Data to place in the chart.
  */
-export function createStackedAreaChart
-  (selector: string, data: StackedAreaChartData[]): void {
+export function createStackedAreaChart(
+  selector: string,
+  data: StackedAreaChartData[],
+): void {
   addGraph<StackedAreaChart>(() => {
     const chart = models.stackedAreaChart()
       .x((d: StackedAreaChartValues) => d.date)
@@ -84,7 +86,9 @@ export function createStackedAreaChart
  */
 function createXAxisTickValues(data: StackedAreaChartData): number[] {
   const values = data.values.slice(1, -1);
-  if (values.length <= MAX_TICK_MARKS) return values.map((item) => item.date);
+  if (values.length <= MAX_TICK_MARKS) {
+    return values.map((item) => item.date);
+  }
 
   const tickValues: number[] = [];
   const skipEvery = Math.ceil(values.length / MAX_TICK_MARKS);
@@ -92,7 +96,7 @@ function createXAxisTickValues(data: StackedAreaChartData): number[] {
   values.forEach((item, index) => {
     const skipValue = (index + 1) % skipEvery !== 0;
 
-    if (!skipValue) tickValues.push(item.date);
+    if (!skipValue) { tickValues.push(item.date); }
   });
 
   return tickValues;

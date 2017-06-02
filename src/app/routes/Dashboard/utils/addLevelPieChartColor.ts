@@ -20,12 +20,12 @@
 import {
   PieChartData,
   PieChartDataWithColor,
-} from '../../../services/chart/types';
+} from '~/services/chart/types';
 import { LEVEL_OPTIONS } from '../../AlertList/constants';
 import {
   addColorPropertyProgrammatically,
-} from '../../../services/chart/utils/addColorProperty';
-import { getRandomColor } from '../../../services/chart/utils/getRandomColor';
+} from '~/services/chart/utils/addColorProperty';
+import { getRandomColor } from '~/services/chart/utils/getRandomColor';
 
 /**
  * Add the color property to pie chart data that will be used to display
@@ -40,6 +40,6 @@ export function addLevelPieChartColor(
     data, (value) => {
       return LEVEL_OPTIONS[value.label.toUpperCase()].hexColor ||
         getRandomColor();
-    }
+    },
   );
 }

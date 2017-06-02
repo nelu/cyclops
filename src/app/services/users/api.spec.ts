@@ -24,8 +24,8 @@ import * as chai from 'chai';
 import * as api from '../cyphon/utils/cyphonAPI';
 import * as userAPI from './api';
 
-describe('api.users.api', () => {
-  describe('fetchAllUsers', () => {
+describe('usersAPI', () => {
+  describe('fetchAllUsers()', () => {
     it('should call the correct url', () => {
       const getAll = sinon.stub(api, 'getAll');
 
