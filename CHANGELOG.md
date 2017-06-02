@@ -1,6 +1,7 @@
 # Change log
 
-## Unreleased
+<a name="0.4.0"></a>
+## [0.4.0](https://github.com/dunbarcyber/cyclops/compare/0.4.0...0.3.0) (2017-06-02)
 
 ### Added
 
