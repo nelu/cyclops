@@ -12,6 +12,7 @@
 - AlertParamsDateCalenders test.
 - Map tests.
 - Ability to open formatted JSON links in a new tab.
+- MonitorStatusContainer.
 
 ### Removed
 
@@ -29,6 +30,7 @@
 ### Fixed
 
 - Improperly styled files that didn't pass the tslint inspection.
+- Monitors status only displaying the first 10 monitors. 
 
 <a name="0.3.0"></a>
 ## [0.3.0](https://github.com/dunbarcyber/cyclops/compare/0.3.0...0.2.2) (2017-05-17)

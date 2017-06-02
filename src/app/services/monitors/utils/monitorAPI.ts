@@ -28,3 +28,11 @@ import { APIList } from '../../cyphon/types';
 export function fetchMonitorList(): Promise<APIList<MonitorNested>> {
   return cyphonAPI.get('/monitors/enabled/');
 }
+
+/**
+ * Fetches all the enabled monitors.
+ * @returns {Promise<MonitorNested[]>}
+ */
+export function fetchAllMonitors(): Promise<MonitorNested[]> {
+  return cyphonAPI.getAll('/monitors/enabled/');
+}

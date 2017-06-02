@@ -29,8 +29,7 @@ import { Loading } from '../../../components/Loading';
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties of the MonitorModal component. */
-interface Props {
+export interface ValueProps {
   /** If the monitor list is currently loading. */
   loading: boolean;
   /** List of the current monitors. */
@@ -43,6 +42,9 @@ interface Props {
   modalActive: boolean;
   /** Monitor to view detailed information on. */
   selectedMonitor: string | null;
+}
+
+export interface FunctionProps {
   /**
    * Selects a monitor to view detailed information on.
    * @param monitor ID of the monitor to view.
@@ -51,6 +53,8 @@ interface Props {
   /** Closes the monitor modal. */
   closeModal(): any;
 }
+
+type Props = ValueProps & FunctionProps;
 
 /**
  * Displays a popup that contains data of the current list of monitors.

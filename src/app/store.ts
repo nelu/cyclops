@@ -35,7 +35,7 @@ import {
 import {
   ServicesReducerState,
   servicesReducer,
-} from './services/index';
+} from './services/reducer';
 
 /** Shape of the redux store state. */
 export interface StoreState {
