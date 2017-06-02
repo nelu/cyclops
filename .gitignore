@@ -1,6 +1,5 @@
 build/
 cache/
-dist/
 coverage/
 docs/
 api-docs/
@@ -8,5 +7,4 @@ node_modules/
 sphinx-docs/_*
 sphinx-docs/build
 .idea/
-cyclops.env
 npm-debug.log

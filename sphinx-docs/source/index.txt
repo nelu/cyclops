@@ -10,13 +10,14 @@ Cyclops documentation
 
 Cyclops is a single-page application that displays real time data from
 an instance of `Cyphon <https://cyphon.readthedocs.io/>`__. Cyclops is
-built on `React <https://facebook.github.io/react/>`__ and served
-through an `Express <https://expressjs.com/>`__ server.
+built on `React <https://facebook.github.io/react/>`__ and
+written in `Typescript <https://www.typescriptlang.org/>`_.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   migrating-0.3-0.4
    getting-started/getting-started
    contributing
    license
