@@ -32,6 +32,7 @@ export interface RoutesState {
   AlertList: AlertList.AlertListRouteState;
   App: App.AppRouteState;
   Dashboard: Dashboard.DashboardRouteState;
+  Search: Search.SearchRouteState;
 }
 
 /** Redux reducer for the routes. */
@@ -40,6 +41,7 @@ export const RoutesReducer = combineReducers<RoutesState>({
   AlertList: AlertList.AlertListRouteReducer,
   App: App.AppRouteReducer,
   Dashboard: Dashboard.DashboardRouteReducer,
+  Search: Search.SearchRouteReducer,
 });
 
 /** All the root route components for the react-router routes. */

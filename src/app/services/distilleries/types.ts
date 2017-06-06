@@ -64,12 +64,12 @@ export interface DistilleryMinimal {
 
 /** Entities in a normalized distillery or list of distilleries. */
 interface DistilleryEntities {
-  containers: NormalizedEntity<ContainerFlat>;
-  contextFilters: NormalizedEntity<ContextFilter>;
-  contexts: NormalizedEntity<ContextFlat>;
-  distilleries: NormalizedEntity<DistilleryMinimal>;
-  fields: NormalizedEntity<Field>;
-  tastes: NormalizedEntity<Taste>;
+  containers?: NormalizedEntity<ContainerFlat>;
+  contextFilters?: NormalizedEntity<ContextFilter>;
+  contexts?: NormalizedEntity<ContextFlat>;
+  distilleries?: NormalizedEntity<DistilleryMinimal>;
+  fields?: NormalizedEntity<Field>;
+  tastes?: NormalizedEntity<Taste>;
 }
 
 /** List of normalized distilleries. */

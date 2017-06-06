@@ -20,6 +20,7 @@
 import { ComponentClass } from 'react';
 import { combineReducers } from 'redux';
 
+// Vendor
 import { DashboardContainer } from './containers/DashboardContainer';
 import { DashboardState, DashboardReducer } from './reducers/DashboardReducer';
 

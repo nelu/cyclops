@@ -23,6 +23,7 @@ import {
   LocationDescriptor,
   InjectedRouter,
 } from 'react-router';
+import { NormalizedDistilleryList } from '~/services/distilleries/types';
 
 // Local
 
@@ -30,13 +31,14 @@ import {
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-interface ValueProps {
+export interface ValueProps {
+  distilleries: NormalizedDistilleryList;
   location: LocationDescriptor;
   router: InjectedRouter;
 }
-interface FunctionProps {
+export interface FunctionProps {
   /** Fetches all container objects for the page. */
-  fetchContainers(): any;
+  fetchDistilleries(): any;
 }
 
 /** Properties of the Search component. */
@@ -51,16 +53,14 @@ type Props = ValueProps & FunctionProps;
  */
 export class Search extends React.Component<Props, {}> {
   public componentWillMount(): void {
-    // this.props.fetchContainers();
+    this.props.fetchDistilleries();
   }
 
   public render() {
     return (
       <div className="flex-box">
         <div className="flex-box flex--shrink sidebar">
-          <div className="flex-item">
-
-          </div>
+          <div className="flex-item" />
         </div>
         <div className="flex-box" />
       </div>
