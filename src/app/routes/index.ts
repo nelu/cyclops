@@ -24,6 +24,7 @@ import * as AlertDetail from './AlertDetail';
 import * as AlertList from './AlertList';
 import * as Dashboard from './Dashboard';
 import * as App from './App';
+import * as Search from './Search';
 
 /** Redux state shape for the routes. */
 export interface RoutesState {
@@ -47,4 +48,5 @@ export const Routes = {
   AlertList: AlertList.AlertListRoute,
   App: App.AppRoute,
   Dashboard: Dashboard.DashboardRoute,
+  Search: Search.SearchRoute,
 };

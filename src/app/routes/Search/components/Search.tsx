@@ -18,43 +18,52 @@
 
 // Vendor
 import * as React from 'react';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 import {
-  Router,
-  Route,
-  IndexRoute,
-  useRouterHistory,
+  LocationDescriptor,
+  InjectedRouter,
 } from 'react-router';
-import { createHistory } from 'history';
-import { Provider } from 'react-redux';
 
 // Local
-import { getConfig } from './config';
-import { store } from './store';
-import { Routes } from './routes';
-
-/** React router history that uses the base url given by the parent template. */
-const browserHistory = useRouterHistory(createHistory)({
-  basename: getConfig().APP_BASE_URL,
-});
 
 // --------------------------------------------------------------------------
-// Main Application
+// Interfaces/Types
+// --------------------------------------------------------------------------
+
+interface ValueProps {
+  location: LocationDescriptor;
+  router: InjectedRouter;
+}
+interface FunctionProps {
+  /** Fetches all container objects for the page. */
+  fetchContainers(): any;
+}
+
+/** Properties of the Search component. */
+type Props = ValueProps & FunctionProps;
+
+// --------------------------------------------------------------------------
+// Component
 // --------------------------------------------------------------------------
 
 /**
- * Root component of the application.
- * @type {JSX.Element}
+ * Root component of the Search page.
  */
-export const App = (
-  <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path="/" component={Routes.App}>
-        <IndexRoute component={Routes.Dashboard}/>
-        <Route path="alerts" component={Routes.AlertList}>
-          <Route path=":alertId" component={Routes.AlertDetail}/>
-        </Route>
-        <Route path="search" component={Routes.Search} />
-      </Route>
-    </Router>
-  </Provider>
-);
+export class Search extends React.Component<Props, {}> {
+  public componentWillMount(): void {
+    // this.props.fetchContainers();
+  }
+
+  public render() {
+    return (
+      <div className="flex-box">
+        <div className="flex-box flex--shrink sidebar">
+          <div className="flex-item">
+
+          </div>
+        </div>
+        <div className="flex-box" />
+      </div>
+    );
+  }
+}
