@@ -51,7 +51,7 @@ import {
   ResultIPAdresses,
 } from '~/types/result';
 import { Container } from '~/services/containers/types';
-import { getFieldsOfType } from '~/services/containers/utils';
+import { getFieldsOfType } from '~/services/containers/utils/containerUtils';
 import { CONTAINER_FIELDS } from '~/services/containers/constants';
 import { Dictionary } from '~/types/object';
 import { checkAlertUpdate } from '~/services/alerts/utils/checkAlertUpdate';

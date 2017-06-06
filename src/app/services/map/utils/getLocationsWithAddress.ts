@@ -23,7 +23,7 @@ import { CancelToken } from 'axios';
 // Local
 import { Result } from '~/types/result';
 import { Container } from '../../containers/types';
-import { getFieldsOfType } from '../../containers/utils';
+import { getFieldsOfType } from '../../containers/utils/containerUtils';
 import { CONTAINER_FIELDS } from '../../containers/constants';
 import { LocationFieldAddress, LocationField } from '../types';
 import { reverseLookup } from './reverseLookup';
