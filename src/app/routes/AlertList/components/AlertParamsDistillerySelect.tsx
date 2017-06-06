@@ -21,7 +21,10 @@ import * as React from 'react';
 import * as _ from 'lodash';
 
 // Local
-import { Distillery } from '~/services/distilleries/types';
+import {
+  Distillery,
+  DistilleryMinimal
+} from '~/services/distilleries/types';
 import { sortByWarehouse } from '~/services/distilleries/utils/distilleryUtils';
 import { DistillerySelectGroup } from '~/services/distilleries/components/DistillerySelectGroup';
 
@@ -34,7 +37,7 @@ interface Props {
   /** Currently selected distillery in alerts list search parameters. */
   currentDistillery: number| undefined;
   /** Current list of distilleries that have alerts associated with them. */
-  distilleries: Distillery[];
+  distilleries: DistilleryMinimal[];
   /**
    * Changes the currently selected distillery.
    * @param distillery Distillery to filter alerts with.
