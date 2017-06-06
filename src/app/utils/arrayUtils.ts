@@ -62,3 +62,27 @@ export function toggleValue<T>(target: any, value: any): T | T[] | undefined {
 export function includesOrEquals(target: any | any[], value: any): boolean {
   return _.includes(target, value) || _.isEqual(target, value);
 }
+
+/**
+ * Parses a string number or an array of string numbers into a number or
+ * array of numbers.
+ * @param value Value to parse numbers from.
+ * @returns {undefined | number | number[]}
+ */
+export function parseIntArray(
+  value?: string | string[],
+): undefined | number | number[] {
+  if (!value) { return undefined; }
+
+  if (_.isArray(value)) {
+    const numbers: number[] = [];
+
+    value.forEach((num) => {
+      numbers.push(parseInt(num, 10));
+    });
+
+    return numbers;
+  }
+
+  return parseInt(value, 10);
+}

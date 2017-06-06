@@ -1,0 +1,28 @@
+
+.collapsible__caret {
+  width: 15px;
+  text-align: right;
+}
+
+.collapsible__spacer {
+  padding: 0 $padding-base-horizontal;
+}
+
+.collapsible__title--spaced {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.collapsible__ellipsis {
+  color: $text-muted;
+  margin-left: 10px;
+}
+.collapsible__title {
+  font-size: 14px;
+  color: #fff;
+  margin: 0;
+}
+
+.collapsible__action {
+  margin-left: 10px;
+}

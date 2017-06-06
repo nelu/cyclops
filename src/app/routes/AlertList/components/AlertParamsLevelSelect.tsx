@@ -22,8 +22,9 @@ import { ListGroup } from 'react-bootstrap';
 
 // Local
 import { LEVEL_OPTIONS_LIST } from '../constants';
-import { AlertLevelParam } from '../../../services/alerts/types';
+import { AlertLevelParam } from '~/services/alerts/types';
 import { AlertParamsLevelOption } from './AlertParamsLevelOption';
+import { Collapsible } from '~/components/Collapsible';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -48,6 +49,11 @@ interface Props {
  * Displays a list group of alert levels to filter alerts with.
  */
 export class AlertParamsLevelSelect extends React.Component<Props, {}> {
+  /** Clears any currently selected levels. */
+  public clearLevels = (): void => {
+    this.props.selectLevel(undefined);
+  };
+
   public render(): JSX.Element {
     const levelOptions = LEVEL_OPTIONS_LIST.map((level) => (
       <AlertParamsLevelOption
@@ -59,14 +65,16 @@ export class AlertParamsLevelSelect extends React.Component<Props, {}> {
     ));
 
     return (
-      <div>
-        <div className="alert-list-params__spacer">
-          <h3 className="sub-title">Level</h3>
-        </div>
+      <Collapsible
+        title="Level"
+        action={this.clearLevels}
+        actionName="Clear"
+        spaced={true}
+      >
         <ListGroup>
           {levelOptions}
         </ListGroup>
-      </div>
+      </Collapsible>
     );
   }
 }

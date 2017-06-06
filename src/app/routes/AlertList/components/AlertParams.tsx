@@ -35,6 +35,7 @@ import { AlertParamsDistillerySelect } from './AlertParamsDistillerySelect';
 import { AlertParamsDateCalendars } from './AlertParamsDateCalendars';
 import { AlertParamsDateTimeSelect } from '~/routes/AlertList/components/AlertParamsDateTimeSelect';
 import { AlertParamsCategorySelect } from '~/routes/AlertList/components/AlertParamsCategorySelect';
+import { parseIntArray } from '~/utils/arrayUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -151,12 +152,21 @@ export class AlertParams extends React.Component<Props, State> {
       ) : null;
 
     return (
-      <section className="alert-list-params flex-box flex-box--column flex--shrink">
+      <section className="flex-box flex-box--column flex--shrink sidebar">
         <div className="alert-list-params__container flex-item">
-          <AlertParamsCategorySelect
-            currentCategory={this.props.params.categories}
-            categories={this.props.categories}
-            selectCategory={this.selectCategory}
+          <AlertParamsUserSelect
+            users={this.props.users}
+            currentUser={this.props.params.assigned_user}
+            selectUser={this.selectUser}
+          />
+
+          <AlertParamsDateTimeSelect
+            after={this.props.params.after}
+            before={this.props.params.before}
+            openTimePanel={this.openTimePanel}
+            closeTimePanel={this.closeTimePanel}
+            timePanelActive={this.state.timePanelActive}
+            selectTime={this.selectTime}
           />
 
           <AlertParamsLevelSelect
@@ -169,25 +179,16 @@ export class AlertParams extends React.Component<Props, State> {
             selectStatus={this.selectStatus}
           />
 
+          <AlertParamsCategorySelect
+            currentCategory={parseIntArray(this.props.params.categories as any)}
+            categories={this.props.categories}
+            selectCategory={this.selectCategory}
+          />
+
           <AlertParamsDistillerySelect
             currentDistillery={this.props.params.collection}
             distilleries={this.props.distilleries}
             selectDistillery={this.selectDistillery}
-          />
-
-          <AlertParamsDateTimeSelect
-            after={this.props.params.after}
-            before={this.props.params.before}
-            openTimePanel={this.openTimePanel}
-            closeTimePanel={this.closeTimePanel}
-            timePanelActive={this.state.timePanelActive}
-            selectTime={this.selectTime}
-          />
-
-          <AlertParamsUserSelect
-            users={this.props.users}
-            currentUser={this.props.params.assigned_user}
-            selectUser={this.selectUser}
           />
         </div>
         {timePanel}

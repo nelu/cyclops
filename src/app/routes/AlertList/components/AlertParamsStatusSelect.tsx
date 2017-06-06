@@ -23,7 +23,8 @@ import { ListGroup } from 'react-bootstrap';
 // Local
 import { STATUS_OPTIONS_LIST } from '../constants';
 import { AlertParamsStatusOption } from './AlertParamsStatusOption';
-import { AlertStatusParam } from '../../../services/alerts/types';
+import { AlertStatusParam } from '~/services/alerts/types';
+import { Collapsible } from '~/components/Collapsible';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -47,6 +48,11 @@ interface Props {
  * be in or out of the current status.
  */
 export class AlertParamsStatusSelect extends React.Component<Props, {}> {
+  /** Clears any currently select statuses. */
+  public clearStatus = (): void => {
+    this.props.selectStatus(undefined);
+  };
+
   public render(): JSX.Element {
     const statusOptions = STATUS_OPTIONS_LIST.map((status) => (
       <AlertParamsStatusOption
@@ -58,14 +64,16 @@ export class AlertParamsStatusSelect extends React.Component<Props, {}> {
     ));
 
     return (
-      <div>
-        <div className="alert-list-params__spacer">
-          <h3 className="sub-title">Status</h3>
-        </div>
+      <Collapsible
+        title="Status"
+        action={this.clearStatus}
+        actionName="Clear"
+        spaced={true}
+      >
         <ListGroup>
           {statusOptions}
         </ListGroup>
-      </div>
+      </Collapsible>
     );
   }
 }

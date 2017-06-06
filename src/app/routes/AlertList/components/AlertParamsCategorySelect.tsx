@@ -18,6 +18,10 @@
 
 // Vendor
 import * as React from 'react';
+import {
+  ListGroup,
+  ListGroupItem,
+} from 'react-bootstrap';
 
 // Local
 import {
@@ -26,6 +30,8 @@ import {
 } from '~/components/Select';
 import { NormalizedCategoryList } from '~/services/alerts/types';
 import { denormalizeCategories } from '~/services/alerts/utils/categoryUtils';
+import { ListGroupItemToggle } from '~/components/ListGroupItemToggle';
+import { Collapsible } from '~/components/Collapsible';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -36,12 +42,12 @@ interface Props {
   /** List of all the current categories. */
   categories: NormalizedCategoryList;
   /** Currently selected category. */
-  currentCategory?: number;
+  currentCategory?: number | number[];
   /**
    * Selects a category to filter alerts with.
    * @param category Category to filter alerts with.
    */
-  selectCategory(category: number): any;
+  selectCategory(category?: number | number[]): any;
 }
 
 // --------------------------------------------------------------------------
@@ -71,21 +77,34 @@ export class AlertParamsCategorySelect extends React.Component<Props, {}> {
     this.props.selectCategory(category);
   };
 
-  public render() {
-    const options: SelectOption[] = denormalizeCategories(this.props.categories)
-      .map((category) => ({ name: category.name, value: category.id }));
+  public clearSelections = (): void => {
+    this.props.selectCategory(undefined);
+  };
 
-    options.unshift(AlertParamsCategorySelect.ALL_CATEGORIES_OPTION);
+  public render() {
+    const categories = denormalizeCategories(this.props.categories);
+    const listGroupItems = categories.map((category) => (
+      <ListGroupItemToggle
+        value={category.id}
+        currentValue={this.props.currentCategory}
+        onClick={this.props.selectCategory}
+        key={category.id}
+      >
+        {category.name}
+      </ListGroupItemToggle>
+    ));
 
     return (
-      <div className="alert-list-params__spacer alert-list-params__group">
-        <h3 className="sub-title">Category</h3>
-        <Select
-          options={options}
-          onChange={this.onSelectChange}
-          value={this.props.currentCategory || 0}
-        />
-      </div>
+      <Collapsible
+        title="Category"
+        action={this.clearSelections}
+        actionName="Clear"
+        spaced={true}
+      >
+        <ListGroup>
+          {listGroupItems}
+        </ListGroup>
+      </Collapsible>
     );
   }
 }

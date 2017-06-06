@@ -130,7 +130,7 @@ export type AlertStatusParam = string | string[];
 /** Alert list search parameters. */
 export interface AlertSearchParams extends AlertTimeSearchParams {
   /** Category to filter by. */
-  categories?: number;
+  categories?: number | number[];
   /** Alert level to search for. */
   level?: AlertLevelParam;
   /** Alert status to search for. */

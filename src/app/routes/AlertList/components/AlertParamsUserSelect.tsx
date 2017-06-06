@@ -20,7 +20,14 @@
 import * as React from 'react';
 
 // Local
-import { User } from '../../../services/users/types';
+import { User } from '~/services/users/types';
+import { getUserFullName } from '~/services/users/utils/getUserFullName';
+import { getConfig } from '~/config';
+import { Collapsible } from '~/components/Collapsible';
+import {
+  Select,
+  SelectOption,
+} from '~/components/Select';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -53,37 +60,55 @@ export class AlertParamsUserSelect extends React.Component<Props, {}> {
   /**
    * Handle the event emitted whenever the select value changes by
    * running the passed in selectUser function.
-   * @param event
+   * @param value
    */
-  public handleSelect = (event: React.FormEvent<HTMLSelectElement>): void => {
-    const value = parseInt(event.currentTarget.value, 10);
-    const user = (value === 0) ? undefined : value;
+  public handleSelect = (value: string): void => {
+    const userID = parseInt(value, 10);
+    const user = (userID === 0) ? undefined : userID;
 
     this.props.selectUser(user);
   };
 
+  /** Selects the current user to filter alerts by. */
+  public selectCurrentUser = (): void => {
+    this.props.selectUser(getConfig().CURRENT_USER.id);
+  };
+
+  /** Clears the currently selected user. */
+  public clearSelection = (): void => {
+    this.props.selectUser(undefined);
+  };
+
   public render(): JSX.Element {
-    const { currentUser, users } = this.props;
-    const { handleSelect } = this;
-    const userOptions = users.map((user) => (
-      <option value={user.id} key={user.id}>
-        {user.first_name} {user.last_name}
-      </option>
-    ));
+    const options: SelectOption[] = this.props.users.map((user) => ({
+      name: getUserFullName(user),
+      value: user.id,
+    }));
+    const currentUser = this.props.currentUser ? this.props.currentUser : 0;
+
+    options.unshift({ name: 'All', value: 0 });
 
     return (
-      <div className="alert-list-params__spacer alert-list-params__group">
-        <h3 className="sub-title">Assigned</h3>
-        <div className="form-group">
-          <select
-            className="form-control"
-            value={currentUser}
-            onChange={handleSelect}
-          >
-            <option value={0}>All</option>
-            {userOptions}
-          </select>
-        </div>
+      <div className="alert-list-params__spacer ">
+        <Collapsible
+          title="Assigned"
+          action={this.clearSelection}
+          actionName="Clear"
+        >
+          <div className="form-group alert-list-params__group">
+            <Select
+              options={options}
+              onChange={this.handleSelect}
+              value={currentUser}
+            />
+            <button
+              className="btn-basic"
+              onClick={this.selectCurrentUser}
+            >
+              Assigned to me
+            </button>
+          </div>
+        </Collapsible>
       </div>
     );
   }

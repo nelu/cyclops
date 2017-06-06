@@ -27,6 +27,7 @@ import {
 import { AlertParamsDateSelect } from './AlertParamsDateSelect';
 import { formatDate } from '~/utils/dateUtils';
 import { AlertTimeSearchParams } from '~/services/alerts/types';
+import { Collapsible } from '~/components/Collapsible';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -93,46 +94,35 @@ export class AlertParamsDateTimeSelect extends React.Component<Props, {}> {
       : this.props.openTimePanel;
 
     return (
-      <div className="alert-list-params__spacer alert-list-params__group">
-        <h3 className="sub-title">Time</h3>
-        <div className="flex-box form-group">
-          <div className="flex-item">
-            <AlertParamsDateSelect
-              after={this.props.after}
-              before={this.props.before}
-              changeTime={this.props.selectTime}
-            />
-          </div>
-          <div className="flex--shrink">
-            <div className="alert-list-params__btn-group btn-group btn-group-alt">
-              <OverlayTrigger
-                overlay={AlertParamsDateTimeSelect.clearTimePopover}
-                placement="bottom"
-                animation={false}
-              >
-                <button
-                  className="btn btn-alt"
-                  onClick={this.clearTime}
+      <div className="alert-list-params__spacer">
+        <Collapsible title="Time" action={this.clearTime} actionName="Clear">
+          <div className="alert-list-params__group">
+            <div className="flex-box form-group">
+              <div className="flex-item">
+                <AlertParamsDateSelect
+                  after={this.props.after}
+                  before={this.props.before}
+                  changeTime={this.props.selectTime}
+                />
+              </div>
+              <div className="flex--shrink alert-list-params__btn-group">
+                <OverlayTrigger
+                  overlay={AlertParamsDateTimeSelect.chooseTimePopover}
+                  placement="bottom"
+                  animation={false}
                 >
-                  <i className="fa fa-times" />
-                </button>
-              </OverlayTrigger>
-              <OverlayTrigger
-                overlay={AlertParamsDateTimeSelect.chooseTimePopover}
-                placement="bottom"
-                animation={false}
-              >
-                <button
-                  className="btn btn-alt"
-                  onClick={timePanelToggle}
-                >
-                  <i className="fa fa-caret-right" />
-                </button>
-              </OverlayTrigger>
+                  <button
+                    className="btn btn-alt"
+                    onClick={timePanelToggle}
+                  >
+                    <i className="fa fa-caret-right" />
+                  </button>
+                </OverlayTrigger>
+              </div>
             </div>
+            {timeDisplay}
           </div>
-        </div>
-        {timeDisplay}
+        </Collapsible>
       </div>
     );
   }
