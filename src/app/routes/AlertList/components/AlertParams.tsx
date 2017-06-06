@@ -21,7 +21,7 @@ import * as React from 'react';
 import { Popover, OverlayTrigger } from 'react-bootstrap';
 
 // Local
-import { Distillery } from '~/services/distilleries/types';
+import { DistilleryMinimal } from '~/services/distilleries/types';
 import {
   AlertSearchParams,
   AlertTimeSearchParams,
@@ -44,7 +44,7 @@ import { parseIntArray } from '~/utils/arrayUtils';
 /** Properties of the AlertParams component. */
 interface Props {
   /** List of all the distilleries that have alerts associated with them. */
-  distilleries: Distillery[];
+  distilleries: DistilleryMinimal[];
   /** Currently selected alerts list search parameters. */
   params: AlertSearchParams;
   /** Current list of all users. */

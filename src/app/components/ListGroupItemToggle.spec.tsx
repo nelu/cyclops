@@ -17,37 +17,33 @@
  */
 
 // Vendor
+import * as React from 'react';
 import * as sinon from 'sinon';
 import * as chai from 'chai';
+import * as enzyme from 'enzyme';
 
 // Local
-import * as api from '../../cyphon/utils/cyphonAPI';
-import * as distilleryAPI from './distilleryAPI';
+import { ListGroupItemToggle } from './ListGroupItemToggle';
 
-describe('distilleryAPI', () => {
-  describe('fetchAlertDistilleries', () => {
-    it('should call out to the correct url', () => {
-      const getAll = sinon.stub(api, 'getAll');
+describe('<ListGroupItemToggle />', () => {
+  let component: (props?: any) => enzyme.ShallowWrapper<any, any>;
+  let onClick: sinon.SinonSpy;
 
-      distilleryAPI.fetchAllAlertDistilleries();
+  beforeEach(() => {
+    onClick = sinon.spy();
+    component = (props) => {
+      const defaults = {
+        onClick,
+      };
+      const passed = Object.assign({}, defaults, props);
 
-      chai.expect(getAll.called).to.be.true;
-      chai.expect(getAll.args[0][0]).to.equal('/alerts/distilleries/');
-
-      getAll.restore();
-    });
+      return enzyme.shallow(<ListGroupItemToggle {...passed} />);
+    };
   });
 
-  describe('fetchAllDistilleries()', () => {
-    it('should call out to the correct url', () => {
-      const getAll = sinon.stub(api, 'getAll');
+  it('should display a ListGroupItem', () => {
+    const wrapper = component();
 
-      distilleryAPI.fetchAllDistilleries();
 
-      chai.expect(getAll.called).to.be.true;
-      chai.expect(getAll.args[0][0]).to.equal('/distilleries/');
-
-      getAll.restore();
-    });
   });
 });

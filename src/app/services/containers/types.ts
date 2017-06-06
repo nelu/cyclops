@@ -19,6 +19,32 @@
 // Local
 import { Field } from '../cyphon/types';
 
+/** Taste object from the Cyphon API. */
+export interface Taste {
+  /** Unique identifier. */
+  id: number;
+  /** Field of the associated container that contains author information. */
+  author: string;
+  /** Field of the associated container that contains title information. */
+  title: string;
+  /** ID of the associated container. */
+  container: number;
+  /** Field of the associated container that contains content information. */
+  content: string;
+  /** Field of the associated container that contains location information. */
+  location: string;
+  /** Format of the location information. */
+  location_format: string;
+  /** Field of the associated container that contains date information. */
+  datetime: string;
+  /**  */
+  date_string: string;
+  /** Format of the date information. */
+  date_format: string;
+  /** URI of this taste. */
+  url: string;
+}
+
 /** Container object from the Cyphon API. */
 export interface Container {
   /** Bottle associated with the container. */
@@ -28,11 +54,23 @@ export interface Container {
   /** Bottle and label fields combined together. */
   fields: Field[];
   /** Label associated with the container. */
-  label: number;
+  label: number | null;
   /** Name of the container. */
   name: string;
   /** URI of the container object. */
   url: string;
   /** Taste assocated with the container. */
+  taste: number | Taste;
+}
+
+/** Container object with nested objects. */
+export interface ContainerNested extends Container {
+  /** Related taste object. */
+  taste: Taste;
+}
+
+/** Container object with related objects represented by their ID's. */
+export interface ContainerFlat extends Container {
+  /** ID of the related taste object. */
   taste: number;
 }

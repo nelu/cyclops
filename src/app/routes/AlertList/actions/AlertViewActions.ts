@@ -34,7 +34,7 @@ import { fetchAlertList } from '~/services/alerts/utils/alertsAPI';
 import { addError } from '../../App/actions/ErroPopupActions';
 import { createRandomId } from '~/utils/stringUtils';
 import { StoreState } from '~/store';
-import { DistilleryFlat } from '~/services/distilleries/types';
+import { DistilleryMinimal } from '~/services/distilleries/types';
 import { Action } from '~/services/actions/types';
 import { User } from '~/services/users/types';
 import { fetchAllUsers } from '~/services/users/api';
@@ -317,7 +317,7 @@ export const FETCH_VIEW_RESOURCES_SUCCESS =
 export interface FetchViewResourcesSuccessPayload {
   users: User[];
   actions: Action[];
-  distilleries: DistilleryFlat[];
+  distilleries: DistilleryMinimal[];
 }
 
 /** FETCH_VIEW_RESOURCES_SUCCESS action type. */
@@ -332,7 +332,7 @@ export type FetchViewResourcesSuccessAction = ReduxAction<
 export function fetchViewResourcesSuccess(
   users: User[],
   actions: Action[],
-  distilleries: DistilleryFlat[],
+  distilleries: DistilleryMinimal[],
 ): FetchViewResourcesSuccessAction {
   return createAction(
     FETCH_VIEW_RESOURCES_SUCCESS,
@@ -449,7 +449,7 @@ export function fetchViewResources(): ThunkActionPromise {
     const spread = axios.spread<any, any>((
       users: User[],
       actions: Action[],
-      distilleries: DistilleryFlat[],
+      distilleries: DistilleryMinimal[],
     ) => {
       dispatch(fetchViewResourcesSuccess(users, actions, distilleries));
     });

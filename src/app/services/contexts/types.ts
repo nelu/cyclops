@@ -21,7 +21,7 @@ import {
   NormalizedList,
   NormalizedEntity,
 } from '../../types/normalizr';
-import { DistilleryFlat } from '../distilleries/types';
+import { DistilleryMinimal } from '../distilleries/types';
 
 /**
  * Context filter object from the cyphon API.
@@ -39,6 +39,8 @@ export interface ContextFilter {
   operator_text: string;
   /** Filed of the primary distillery this filter compares with. */
   value_field: string;
+  /** URI of the context filter object. */
+  url: string;
 }
 
 /**
@@ -63,9 +65,11 @@ export interface Context {
   /** Context filter objects related to the context. */
   filters: ContextFilter[] | number[];
   /** Distillery object this context uses as it's base comparison. */
-  primary_distillery: DistilleryFlat | number;
+  primary_distillery: DistilleryMinimal | number;
   /** Related distillery object this context searches in. */
-  related_distillery: DistilleryFlat | number;
+  related_distillery: DistilleryMinimal | number;
+  /** URI of the context object. */
+  url: string;
 }
 
 /** Nested context object. */
@@ -73,9 +77,9 @@ export interface ContextNested extends Context {
   /** Context filter objects related to the context. */
   filters: ContextFilter[];
   /** Distillery object this context uses as it's base comparison. */
-  primary_distillery: DistilleryFlat;
+  primary_distillery: DistilleryMinimal;
   /** Related distillery object this context searches in. */
-  related_distillery: DistilleryFlat;
+  related_distillery: DistilleryMinimal;
 }
 
 /** Flat context object. */

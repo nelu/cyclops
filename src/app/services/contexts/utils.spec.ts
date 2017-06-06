@@ -24,15 +24,14 @@ import {
   ContextFilter,
   ContextNested,
 } from './types';
-import { DistilleryFlat } from '../distilleries/types';
+import { DistilleryMinimal } from '../distilleries/types';
 import * as utils from './utils';
 
 describe('api.contexts.utils', () => {
-  const distillery: DistilleryFlat = {
+  const distillery: DistilleryMinimal = {
     id: 1,
     name: 'distillery',
-    container: 1,
-    contexts: [],
+    url: '',
   };
   const filter: ContextFilter = {
     id: 1,
@@ -41,6 +40,7 @@ describe('api.contexts.utils', () => {
     operator: 'eq',
     operator_text: 'equals',
     value_field: 'field',
+    url: '',
   };
   const context = {
     id: 1,
@@ -53,6 +53,7 @@ describe('api.contexts.utils', () => {
     filters: [filter],
     primary_distillery: distillery,
     related_distillery: distillery,
+    url: '',
   };
   const contexts: ContextNested[] = [context];
 

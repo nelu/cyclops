@@ -19,32 +19,27 @@
 // Vendor
 import { schema } from 'normalizr';
 
-/**
- * Normalized context filter object.
- * @type {schema.Entity}
- */
-export const CONTEXT_FILTER_SCHEMA = new schema.Entity('contextFilters');
+// Local
+import { CONTAINER_SCHEMA } from '~/services/containers/constants';
+import { CONTEXT_FILTER_LIST_SCHEMA } from '~/services/contexts/schemas';
 
-const DISTILLERY_FLAT_SCHEMA = new schema.Entity('distilleries');
-
-/**
- * Normalized list of context filter objects.
- * @type {schema.Array}
- */
-export const CONTEXT_FILTER_LIST_SCHEMA = new schema.Array(CONTEXT_FILTER_SCHEMA);
-
-/**
- * Normalized schema for context objects.
- * @type {schema.Entity}
- */
-export const CONTEXT_SCHEMA: schema.Entity = new schema.Entity('contexts', {
+const CONTEXT_FLAT_SCHEMA = new schema.Entity('contexts', {
   filters: CONTEXT_FILTER_LIST_SCHEMA,
-  primary_distillery: DISTILLERY_FLAT_SCHEMA,
-  related_distillery: DISTILLERY_FLAT_SCHEMA,
+});
+
+const CONTEXT_FLAT_LIST_SCHEMA = new schema.Array(CONTEXT_FLAT_SCHEMA);
+
+/**
+ * Normalizr schema of a distillery object.
+ * @type {schema.Entity}
+ */
+export const DISTILLERY_SCHEMA = new schema.Entity('distilleries', {
+  container: CONTAINER_SCHEMA,
+  contexts: CONTEXT_FLAT_LIST_SCHEMA,
 });
 
 /**
- * Normalized list of context objects.
+ * Normalizr schema of a list of distillery objects.
  * @type {schema.Array}
  */
-export const CONTEXT_LIST_SCHEMA: schema.Array = new schema.Array(CONTEXT_SCHEMA);
+export const DISTLLERY_LIST_SCHEMA = new schema.Array(DISTILLERY_SCHEMA);

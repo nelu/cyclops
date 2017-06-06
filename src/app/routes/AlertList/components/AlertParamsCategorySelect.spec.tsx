@@ -19,7 +19,6 @@
 // Vendor
 import * as React from 'react';
 import * as sinon from 'sinon';
-import * as chai from 'chai';
 import * as enzyme from 'enzyme';
 
 // Local
@@ -32,6 +31,10 @@ import {
 describe('<AlertParamsCategorySelect />', () => {
   const category1: Category = { id: 1, name: 'Category1' };
   const category2: Category = { id: 2, name: 'Category2' };
+  const categories = [
+    category1,
+    category2,
+  ];
   const normalized: NormalizedCategoryList = {
     result: [category1.id, category2.id],
     entities: {
@@ -60,29 +63,27 @@ describe('<AlertParamsCategorySelect />', () => {
   });
 
   it('should display the options of a normalized category list', () => {
-    const select = render().find('Select');
+    const listGroupItems = render().find('ListGroupItemToggle');
 
-    chai.expect(select).to.have.length(1);
-    chai.expect(select.first().prop('options')).to.deep.equal([
-      AlertParamsCategorySelect.ALL_CATEGORIES_OPTION,
-      { name: category1.name, value: category1.id },
-      { name: category2.name, value: category2.id },
-    ]);
+    chai.expect(listGroupItems).to.have.length(2);
+
+    listGroupItems.forEach((item, index) => {
+      chai.expect(item.prop('value')).to.equal(categories[index].id);
+      chai.expect(item.prop('currentValue')).to.be.undefined;
+      chai.expect(item.prop('onClick')).to.equal(selectCategory);
+    });
   });
 
-  it('should pass 0 as the selected category if there is none', () => {
-    const select = render().find('Select');
+  it('should display a Collapsible', () => {
+    const component = render();
+    const instance: any = component.instance();
+    const collapsible = component.find('Collapsible');
 
-    chai.expect(select).to.have.length(1);
-    chai.expect(select.first().prop('value')).to.equal(0);
-  });
-
-  it('should pass the currently selected category to the select element', () => {
-    const selected = 1;
-    const select = render({ currentCategory: selected }).find('Select');
-
-    chai.expect(select).to.have.length(1);
-    chai.expect(select.first().prop('value')).to.equal(1);
+    chai.expect(collapsible).to.have.length(1);
+    chai.expect(collapsible.prop('title')).to.equal('Category');
+    chai.expect(collapsible.prop('action')).to.equal(instance.clearSelections);
+    chai.expect(collapsible.prop('actionName')).to.equal('Clear');
+    chai.expect(collapsible.prop('spaced')).to.equal(true);
   });
 
   describe('onSelectChange', () => {
@@ -94,6 +95,17 @@ describe('<AlertParamsCategorySelect />', () => {
 
       chai.expect(selectCategory.called).to.be.true;
       chai.expect(selectCategory.args[0][0]).to.equal(4);
+    });
+  });
+
+  describe('clearSelections()', () => {
+    it('should pass undefined to the selectCategory prop', () => {
+      const component: any = render().instance();
+
+      component.clearSelections();
+
+      chai.expect(selectCategory.called).to.be.true;
+      chai.expect(selectCategory.args[0][0]).to.be.undefined;
     });
   });
 });

@@ -18,16 +18,9 @@
 
 // Vendor
 import * as React from 'react';
-import {
-  ListGroup,
-  ListGroupItem,
-} from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 
 // Local
-import {
-  Select,
-  SelectOption,
-} from '~/components/Select';
 import { NormalizedCategoryList } from '~/services/alerts/types';
 import { denormalizeCategories } from '~/services/alerts/utils/categoryUtils';
 import { ListGroupItemToggle } from '~/components/ListGroupItemToggle';
@@ -59,15 +52,6 @@ interface Props {
  */
 export class AlertParamsCategorySelect extends React.Component<Props, {}> {
   /**
-   * Category select option that selects all alert categories.
-   * @type {any}
-   */
-  public static ALL_CATEGORIES_OPTION: SelectOption = {
-    name: 'All',
-    value: 0,
-  };
-
-  /**
    * Handles the select on change event to select a category.
    * @param value Value from the select element onChange event.
    */
@@ -77,6 +61,7 @@ export class AlertParamsCategorySelect extends React.Component<Props, {}> {
     this.props.selectCategory(category);
   };
 
+  /** Clears the current category selections. */
   public clearSelections = (): void => {
     this.props.selectCategory(undefined);
   };

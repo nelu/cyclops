@@ -20,8 +20,11 @@
 import * as _ from 'lodash';
 
 // Local
-import { Dictionary } from '../../../types/object';
-import { Distillery } from '../types';
+import { Dictionary } from '~/types/object';
+import {
+  Distillery,
+  DistilleryMinimal
+} from '../types';
 import { orderKeys } from '~/utils/objectUtils';
 
 /**
@@ -74,9 +77,9 @@ export function shortenDistilleryDictionary(
  * @returns {Dictionary<Distillery[]>}
  */
 export function sortByWarehouse(
-  distilleries: Distillery[],
-): Dictionary<Distillery[]> {
-  const sorted: Dictionary<Distillery[]> = {};
+  distilleries: DistilleryMinimal[],
+): Dictionary<DistilleryMinimal[]> {
+  const sorted: Dictionary<DistilleryMinimal[]> = {};
 
   distilleries.forEach((distillery) => {
     const warehouse = getWarehouseName(distillery.name);

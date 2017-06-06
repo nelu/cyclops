@@ -16,6 +16,9 @@
  * are made]
  */
 
+// Vendor
+import { schema } from 'normalizr';
+
 /**
  * All the different container field types.
  * @type {Object<string, string>}
@@ -24,3 +27,38 @@ export const CONTAINER_FIELDS = {
   POINT_FIELD: 'PointField',
   IP_ADDRESS: 'GenericIPAddressField',
 };
+
+/**
+ * Normalizr schema of a container field object.
+ * @type {schema.Entity}
+ */
+export const FIELD_SCHEMA = new schema.Entity('fields', {}, {
+  idAttribute: 'field_name',
+});
+
+/**
+ * Normalizr schema of a list of container field objects.
+ * @type {schema.Array}
+ */
+export const FIELD_LIST_SCHEMA = new schema.Array(FIELD_SCHEMA);
+
+/**
+ * Normalizr schema for a taste object.
+ * @type {schema.Entity}
+ */
+export const TASTE_SCHEMA = new schema.Entity('tastes');
+
+/**
+ * Normalizr schema of a container object.
+ * @type {schema.Entity}
+ */
+export const CONTAINER_SCHEMA = new schema.Entity('containers', {
+  fields: FIELD_LIST_SCHEMA,
+  taste: TASTE_SCHEMA,
+});
+
+/**
+ * Normalizr schema of a list of container objects.
+ * @type {schema.Array}
+ */
+export const CONTAINER_LIST_SCHEMA = new schema.Array(CONTAINER_SCHEMA);

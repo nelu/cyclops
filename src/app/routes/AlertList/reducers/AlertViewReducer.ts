@@ -21,7 +21,7 @@ import { ReducerMap, handleActions } from 'redux-actions';
 import * as _ from 'lodash';
 
 // Local
-import { ReduxAction } from '../../../types/redux';
+import { ReduxAction } from '~/types/redux';
 import * as actions from '../actions/AlertViewActions';
 import {
   UPDATE_ALERT_SUCCESS,
@@ -30,10 +30,10 @@ import {
 import {
   AlertListItem,
   AlertSearchParams,
-} from '../../../services/alerts/types';
-import { User } from '../../../services/users/types';
-import { Distillery } from '../../../services/distilleries/types';
-import { Action } from '../../../services/actions/types';
+} from '~/services/alerts/types';
+import { User } from '~/services/users/types';
+import { DistilleryMinimal } from '~/services/distilleries/types';
+import { Action } from '~/services/actions/types';
 
 /** State shape of the AlertList reducer. */
 export interface AlertViewState {
@@ -60,7 +60,7 @@ export interface AlertViewState {
   /** Current list of users. */
   users: User[];
   /** List of distilleries that have alerts associated with them. */
-  distilleries: Distillery[];
+  distilleries: DistilleryMinimal[];
   /** Current list of actions that can be performed on an alert. */
   actions: Action[];
 }

@@ -20,7 +20,7 @@
 import * as React from 'react';
 
 // Local
-import { Distillery } from '../types';
+import { DistilleryMinimal } from '../types';
 import { shortenDistilleryName } from '../utils/distilleryUtils';
 
 // --------------------------------------------------------------------------
@@ -32,7 +32,7 @@ interface Props {
   /** Title of the option group. */
   title: string;
   /** Distillery options to display. */
-  options: Distillery[];
+  options: DistilleryMinimal[];
 }
 
 // --------------------------------------------------------------------------

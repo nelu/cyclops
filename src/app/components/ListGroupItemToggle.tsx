@@ -21,7 +21,7 @@ import * as React from 'react';
 import { ListGroupItem } from 'react-bootstrap';
 import {
   includesOrEquals,
-  toggleValue
+  toggleValue,
 } from '~/utils/arrayUtils';
 
 // --------------------------------------------------------------------------
@@ -30,8 +30,14 @@ import {
 
 /** Properties of the ListGroupItemToggle component. */
 interface Props {
+  /** Value of the list group item. */
   value: any;
+  /** Current value to toggle the value into. */
   currentValue: any;
+  /**
+   * Function to run when the value is toggled.
+   * @param value New value.
+   */
   onClick(value: any): any;
 }
 
@@ -40,7 +46,8 @@ interface Props {
 // --------------------------------------------------------------------------
 
 /**
- *
+ * List group item that toggles the passed in value onto the current value
+ * and marks it as active if the value is present in the current value.
  */
 export class ListGroupItemToggle extends React.Component<Props, {}> {
   /** Toggles the passed in value onto the current value. */

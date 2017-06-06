@@ -51,7 +51,7 @@ export interface Field {
   /** Type of data present on the field. */
   field_type: string;
   /** Generic type of data on the field. */
-  target_type: string;
+  target_type: string | null;
   /** Name of the field on the raw data object. */
   field_name: string;
 }

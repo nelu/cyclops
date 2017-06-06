@@ -32,7 +32,7 @@ import {
   AlertListItem,
   NormalizedCategoryList,
 } from '~/services/alerts/types';
-import { Distillery } from '~/services/distilleries/types';
+import { DistilleryMinimal } from '~/services/distilleries/types';
 import { User } from '~/services/users/types';
 
 // --------------------------------------------------------------------------
@@ -46,7 +46,7 @@ export interface ValueProps {
   /** Categories to filter alerts with. */
   categories: NormalizedCategoryList;
   /** Distilleries that have alerts associated with them. */
-  distilleries: Distillery[];
+  distilleries: DistilleryMinimal[];
   /** List of all the current users. */
   users: User[];
   /** Total number of alerts matching the search parameters. */

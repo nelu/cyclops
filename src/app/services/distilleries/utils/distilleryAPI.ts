@@ -18,13 +18,24 @@
 
 // Local
 import { getAll } from '../../cyphon/utils/cyphonAPI';
-import { DistilleryFlat } from '../types';
+import {
+  DistilleryMinimal,
+  DistilleryNested,
+} from '../types';
 
 /**
  * Returns a list of all distilleries objects that have alerts
  * associated with them.
- * @returns {Promise<DistilleryFlat[]>}
+ * @returns {Promise<DistilleryMinimal[]>}
  */
-export function fetchAllAlertDistilleries(): Promise<DistilleryFlat[]> {
-  return getAll<DistilleryFlat>('/alerts/distilleries/');
+export function fetchAllAlertDistilleries(): Promise<DistilleryMinimal[]> {
+  return getAll<DistilleryMinimal>('/alerts/distilleries/');
+}
+
+/**
+ * Returns a list of all the current distilleries.
+ * @returns {Promise<DistilleryNested[]>}
+ */
+export function fetchAllDistilleries(): Promise<DistilleryNested[]> {
+  return getAll('/distilleries/');
 }

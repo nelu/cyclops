@@ -17,7 +17,7 @@
  */
 
 // Local
-import { DistilleryFlat } from '../distilleries/types';
+import { DistilleryMinimal } from '../distilleries/types';
 import {
   NormalizedList,
   NormalizedEntity,
@@ -76,19 +76,19 @@ export interface Monitor {
   /**
    * Distilleries associated with this monitor.
    */
-  distilleries: DistilleryFlat[] | number[];
+  distilleries: DistilleryMinimal[] | number[];
   /**
    * Last distillery this monitor interacted with.
    */
-  last_active_distillery: DistilleryFlat | number;
+  last_active_distillery: DistilleryMinimal | number;
 }
 
 /**
  * Monitor with it's associated objects nested on the object.
  */
 export interface MonitorNested extends Monitor {
-  distilleries: DistilleryFlat[];
-  last_active_distillery: DistilleryFlat;
+  distilleries: DistilleryMinimal[];
+  last_active_distillery: DistilleryMinimal;
 }
 
 /**
@@ -104,7 +104,7 @@ export interface MonitorFlat extends Monitor {
  */
 interface MonitorEntity {
   monitors: NormalizedEntity<MonitorFlat>;
-  distilleries: NormalizedEntity<DistilleryFlat>;
+  distilleries: NormalizedEntity<DistilleryMinimal>;
 }
 
 /**

@@ -20,7 +20,7 @@
 import { Result } from '~/types/result';
 import { User } from '~/services/users/types';
 import {
-  DistilleryFlat,
+  DistilleryMinimal,
   DistilleryNested,
   Distillery,
 } from '~/services/distilleries/types';
@@ -80,7 +80,7 @@ export interface Alert {
   /** User assigned to the alert. */
   assigned_user: User | number | null;
   /** Distillery the alert came from. */
-  distillery?: Distillery | number;
+  distillery?: DistilleryMinimal | number;
   /** User comments associated with the alert. */
   comments?: Comment[];
   /** Previous actions performed on the alert. */
@@ -104,7 +104,7 @@ export interface AlertListItem extends Alert {
   /** Object of the user assigned to the alert. */
   assigned_user: User | null;
   /** Object of the distillery the alert came from. */
-  distillery?: DistilleryFlat;
+  distillery?: DistilleryMinimal;
 }
 
 /** Alert object fields that are able to be updated. */

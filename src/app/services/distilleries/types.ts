@@ -17,8 +17,21 @@
  */
 
 // Local
-import { Container } from '../containers/types';
-import { ContextNested } from '../../services/contexts/types';
+import {
+  Container,
+  ContainerFlat,
+  Taste,
+} from '../containers/types';
+import {
+  ContextFilter,
+  ContextFlat,
+  ContextNested,
+} from '~/services/contexts/types';
+import {
+  NormalizedEntity,
+  NormalizedList,
+} from '~/types/normalizr';
+import { Field } from '~/services/cyphon/types';
 
 /** Distillery object returned from the Cyphon API. */
 export interface Distillery {
@@ -30,10 +43,12 @@ export interface Distillery {
   container: Container | number;
   /** Contexts associated with the distillery. */
   contexts: ContextNested[] | number[];
+  url: string;
 }
 
 /** Distillery object with associated objects nested on the object. */
 export interface DistilleryNested extends Distillery {
+  collection: number;
   /** Contaienr object associated with the distillery. */
   container: Container;
   /** Context objects associated with the distillery. */
@@ -41,9 +56,21 @@ export interface DistilleryNested extends Distillery {
 }
 
 /** Distillery object with associated objects represented with their ID's. */
-export interface DistilleryFlat extends Distillery {
-  /** ID of the container associated with the distillery. */
-  container: number;
-  /** ID's of the context objects assocated with the distillery. */
-  contexts: number[];
+export interface DistilleryMinimal {
+  id: number;
+  name: string;
+  url: string;
 }
+
+/** Entities in a normalized distillery or list of distilleries. */
+interface DistilleryEntities {
+  containers: NormalizedEntity<ContainerFlat>;
+  contextFilters: NormalizedEntity<ContextFilter>;
+  contexts: NormalizedEntity<ContextFlat>;
+  distilleries: NormalizedEntity<DistilleryMinimal>;
+  fields: NormalizedEntity<Field>;
+  tastes: NormalizedEntity<Taste>;
+}
+
+/** List of normalized distilleries. */
+export type NormalizedDistilleryList = NormalizedList<number, DistilleryEntities>;
