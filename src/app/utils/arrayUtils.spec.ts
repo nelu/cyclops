@@ -107,4 +107,18 @@ describe('arrayUtils', () => {
       chai.expect(contains).to.be.false;
     });
   });
+
+  describe('parseIntArray()', () => {
+    it('should return undefined if no value is given', () => {
+      expect(arrayUtils.parseIntArray()).to.be.undefined;
+    });
+
+    it('should parse an individual string', () => {
+      expect(arrayUtils.parseIntArray('4')).to.equal(4);
+    });
+
+    it('should parse an array of strings into integers', () => {
+      expect(arrayUtils.parseIntArray(['4', '5'])).to.deep.equal([4, 5]);
+    });
+  });
 });
