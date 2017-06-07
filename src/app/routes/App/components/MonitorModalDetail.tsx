@@ -18,7 +18,7 @@
 
 // Vendor
 import * as React from 'react';
-import { pascalize } from 'humps';
+import * as _ from 'lodash';
 
 // Local
 import { formatDate } from '../../../utils/dateUtils';
@@ -68,7 +68,7 @@ export class MonitorDetail extends React.Component<MonitorDetailProps, {}> {
           <dd>{this.props.monitor.alerts_enabled.toString()}</dd>
 
           <dt>Alert Level:</dt>
-          <dd>{pascalize(this.props.monitor.alert_level.toLowerCase())}</dd>
+          <dd>{_.capitalize(this.props.monitor.alert_level)}</dd>
         </dl>
 
         <h4 className="sub-title">Dates</h4>

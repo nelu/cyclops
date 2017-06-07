@@ -32,16 +32,15 @@ module.exports = function(config) {
     ],
 
     plugins: [
-      'karma-webpack',
+      'karma-chai',
       'karma-coverage',
       'karma-mocha',
-      'karma-chai',
-      'karma-sinon',
-      'karma-phantomjs-launcher',
-      'karma-sourcemap-loader',
-      'karma-remap-istanbul',
-      'karma-chrome-launcher',
       'karma-mocha-reporter',
+      'karma-phantomjs-launcher',
+      'karma-remap-istanbul',
+      'karma-sinon',
+      'karma-sourcemap-loader',
+      'karma-webpack',
     ],
 
     mime: {
