@@ -11,7 +11,7 @@
     "travis": "npm run test && cat ./coverage/lcov.info | coveralls",
     "docs:api": "typedoc --out api-docs --target ES6 --tsconfig typedoc.json --readme DOCUMENTATION.md --includeDeclarations --ignoreCompilerErrors src/",
     "docs:sphinx": "cd sphinx-docs && make html",
-    "livereload": "livereload \"dist\"",
+    "livereload": "livereload \"build\"",
     "clean:prod": "del dist",
     "clean:dev": "del build",
     "build": "npm run clean:prod && npm run webpack:prod",
