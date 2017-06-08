@@ -18,7 +18,6 @@
 
 // Vendor
 import * as sinon from 'sinon';
-import * as chai from 'chai';
 
 // Local
 import * as api from '~/services/cyphon/utils/cyphonAPI';
@@ -45,8 +44,8 @@ describe('alertsAPI', () => {
 
       alertsAPI.fetchAlert(alertId);
 
-      chai.expect(get.called).to.be.true;
-      chai.expect(get.args[0][0]).to.equal('/alerts/1/');
+      expect(get.called).to.be.true;
+      expect(get.args[0][0]).to.equal('/alerts/1/');
     });
 
     it('should pass the cancel token to the get options', () => {
@@ -55,8 +54,8 @@ describe('alertsAPI', () => {
 
       alertsAPI.fetchAlert(alertId, cancelToken);
 
-      chai.expect(get.called).to.be.true;
-      chai.expect(get.args[0][1]).to.deep.equal({ cancelToken });
+      expect(get.called).to.be.true;
+      expect(get.args[0][1]).to.deep.equal({ cancelToken });
     });
   });
 
@@ -64,8 +63,8 @@ describe('alertsAPI', () => {
     it('should call get with the correct url', () => {
       alertsAPI.fetchAlertList({} as any);
 
-      chai.expect(get.called).to.be.true;
-      chai.expect(get.args[0][0]).to.equal('/alerts/');
+      expect(get.called).to.be.true;
+      expect(get.args[0][0]).to.equal('/alerts/');
     });
 
     it('should pass the parameters to the get options', () => {
@@ -73,8 +72,8 @@ describe('alertsAPI', () => {
 
       alertsAPI.fetchAlertList(params);
 
-      chai.expect(get.called).to.be.true;
-      chai.expect(get.args[0][1]).to.deep.equal({
+      expect(get.called).to.be.true;
+      expect(get.args[0][1]).to.deep.equal({
         params,
         cancelToken: undefined,
       });
@@ -86,8 +85,8 @@ describe('alertsAPI', () => {
 
       alertsAPI.fetchAlertList(params, cancelToken);
 
-      chai.expect(get.called).to.be.true;
-      chai.expect(get.args[0][1]).to.deep.equal({
+      expect(get.called).to.be.true;
+      expect(get.args[0][1]).to.deep.equal({
         params,
         cancelToken,
       });
@@ -105,15 +104,15 @@ describe('alertsAPI', () => {
 
     it('should post to the correct url', () => {
       return alertsAPI.performAction(actionId, alertId).then(() => {
-        chai.expect(post.called).to.be.true;
-        chai.expect(post.args[0][0]).to.equal('/actions/1/run/');
+        expect(post.called).to.be.true;
+        expect(post.args[0][0]).to.equal('/actions/1/run/');
       });
     });
 
     it('should post the alertId as the post data', () => {
       return alertsAPI.performAction(actionId, alertId).then(() => {
-        chai.expect(post.called).to.be.true;
-        chai.expect(post.args[0][1]).to.deep.equal({ alert: alertId });
+        expect(post.called).to.be.true;
+        expect(post.args[0][1]).to.deep.equal({ alert: alertId });
       });
     });
 
@@ -121,15 +120,15 @@ describe('alertsAPI', () => {
       const cancelToken: any = {};
 
       return alertsAPI.performAction(actionId, alertId, cancelToken).then(() => {
-        chai.expect(post.called).to.be.true;
-        chai.expect(post.args[0][2]).to.deep.equal({ cancelToken });
+        expect(post.called).to.be.true;
+        expect(post.args[0][2]).to.deep.equal({ cancelToken });
       });
     });
 
     it('should call fetchAlert on a successful call', () => {
       return alertsAPI.performAction(actionId, alertId).then(() => {
-        chai.expect(get.called).to.be.true;
-        chai.expect(get.args[0]).to.deep.equal(['/alerts/2/', { cancelToken: undefined }]);
+        expect(get.called).to.be.true;
+        expect(get.args[0]).to.deep.equal(['/alerts/2/', { cancelToken: undefined }]);
       });
     });
   });
@@ -149,15 +148,15 @@ describe('alertsAPI', () => {
 
     it('should call the correct url', () => {
       return alertsAPI.updateAlert(alertId, fields).then(() => {
-        chai.expect(patch.called).to.be.true;
-        chai.expect(patch.args[0][0]).to.equal('/alerts/5/');
+        expect(patch.called).to.be.true;
+        expect(patch.args[0][0]).to.equal('/alerts/5/');
       });
     });
 
     it('should pass the fields to patch', () => {
       return alertsAPI.updateAlert(alertId, fields).then(() => {
-        chai.expect(patch.called).to.be.true;
-        chai.expect(patch.args[0][1]).to.deep.equal(fields);
+        expect(patch.called).to.be.true;
+        expect(patch.args[0][1]).to.deep.equal(fields);
       });
     });
 
@@ -166,8 +165,8 @@ describe('alertsAPI', () => {
         assigned_user: { id: 3 },
       };
       return alertsAPI.updateAlert(alertId, userFields).then(() => {
-        chai.expect(patch.called).to.be.true;
-        chai.expect(patch.args[0][1]).to.deep.equal({
+        expect(patch.called).to.be.true;
+        expect(patch.args[0][1]).to.deep.equal({
           assigned_user: 3,
         });
       });
@@ -177,8 +176,8 @@ describe('alertsAPI', () => {
       const cancelToken: any = {};
 
       return alertsAPI.updateAlert(alertId, fields, cancelToken).then(() => {
-        chai.expect(patch.called).to.be.true;
-        chai.expect(patch.args[0][2]).to.deep.equal({ cancelToken });
+        expect(patch.called).to.be.true;
+        expect(patch.args[0][2]).to.deep.equal({ cancelToken });
       });
     });
   });
@@ -201,8 +200,8 @@ describe('alertsAPI', () => {
 
     it('should call the correct url', () => {
       return alertsAPI.addComment(alertId, comment).then(() => {
-        chai.expect(post.called).to.be.true;
-        chai.expect(post.args[0][0]).to.equal('/comments/');
+        expect(post.called).to.be.true;
+        expect(post.args[0][0]).to.equal('/comments/');
       });
     });
 
@@ -210,8 +209,8 @@ describe('alertsAPI', () => {
       const expected = { alert: alertId, user: userId, content: comment };
 
       return alertsAPI.addComment(alertId, comment).then(() => {
-        chai.expect(post.called).to.be.true;
-        chai.expect(post.args[0][1]).to.deep.equal(expected);
+        expect(post.called).to.be.true;
+        expect(post.args[0][1]).to.deep.equal(expected);
       });
     });
 
@@ -219,17 +218,17 @@ describe('alertsAPI', () => {
       const cancelToken: any = {};
 
       return alertsAPI.addComment(alertId, comment, cancelToken).then(() => {
-        chai.expect(post.called).to.be.true;
-        chai.expect(post.args[0][2]).to.deep.equal({ cancelToken });
+        expect(post.called).to.be.true;
+        expect(post.args[0][2]).to.deep.equal({ cancelToken });
       });
     });
 
     it('should call fetchAlert after a successfull call', () => {
       const cancelToken: any = {};
       return alertsAPI.addComment(alertId, comment, cancelToken).then(() => {
-        chai.expect(get.called).to.be.true;
-        chai.expect(get.args[0][0]).to.equal('/alerts/3/');
-        chai.expect(get.args[0][1]).to.deep.equal({ cancelToken });
+        expect(get.called).to.be.true;
+        expect(get.args[0][0]).to.equal('/alerts/3/');
+        expect(get.args[0][1]).to.deep.equal({ cancelToken });
       });
     });
   });
@@ -248,8 +247,8 @@ describe('alertsAPI', () => {
     it('should call the correct url', () => {
       alertsAPI.fetchAllCategories();
 
-      chai.expect(getAll.called).to.be.true;
-      chai.expect(getAll.args[0][0]).to.equal('/categories/');
+      expect(getAll.called).to.be.true;
+      expect(getAll.args[0][0]).to.equal('/categories/');
     });
   });
 
@@ -258,12 +257,12 @@ describe('alertsAPI', () => {
 
     it('should call the correct url', () => {
       alertsAPI.fetchAlertLevelDistribution(days);
-      chai.expect(get.args[0][0]).to.equal('/alerts/levels/');
+      expect(get.args[0][0]).to.equal('/alerts/levels/');
     });
 
     it('should pass the days parameter to the get params', () => {
       alertsAPI.fetchAlertLevelDistribution(days);
-      chai.expect(get.args[0][1]).to.deep.equal({
+      expect(get.args[0][1]).to.deep.equal({
         params: { days },
         cancelToken: undefined,
       });
@@ -272,7 +271,7 @@ describe('alertsAPI', () => {
     it('should pass the cancelToken to the configuration', () => {
       const cancelToken: any = {};
       alertsAPI.fetchAlertLevelDistribution(days, cancelToken);
-      chai.expect(get.args[0][1]).to.deep.equal({
+      expect(get.args[0][1]).to.deep.equal({
         params: { days },
         cancelToken,
       });
@@ -285,14 +284,14 @@ describe('alertsAPI', () => {
     it('should call the correct url', () => {
       alertsAPI.fetchAlertStatusDistribution(days);
 
-      chai.expect(get.args[0][0]).to.equal('/alerts/statuses/');
+      expect(get.args[0][0]).to.equal('/alerts/statuses/');
     });
 
     it('should pass the days parameter to the get params', () => {
       alertsAPI.fetchAlertStatusDistribution(days);
 
-      chai.expect(get.args[0][1]).to.deep.equal({
-        params: { days: 5 },
+      expect(get.args[0][1]).to.deep.equal({
+        params: { days: 6 },
         cancelToken: undefined,
       });
     });
@@ -302,8 +301,8 @@ describe('alertsAPI', () => {
 
       alertsAPI.fetchAlertStatusDistribution(days, cancelToken);
 
-      chai.expect(get.args[0][1]).to.deep.equal({
-        params: { days: 5 },
+      expect(get.args[0][1]).to.deep.equal({
+        params: { days: 6 },
         cancelToken,
       });
     });
@@ -315,14 +314,14 @@ describe('alertsAPI', () => {
     it('should call the correct url', () => {
       alertsAPI.fetchAlertCollectionDistribution(days);
 
-      chai.expect(get.args[0][0]).to.equal('/alerts/collections/');
+      expect(get.args[0][0]).to.equal('/alerts/collections/');
     });
 
     it('should pass the days parameter to the get params', () => {
       alertsAPI.fetchAlertCollectionDistribution(days);
 
-      chai.expect(get.args[0][1]).to.deep.equal({
-        params: { days: 8 },
+      expect(get.args[0][1]).to.deep.equal({
+        params: { days: 9 },
         cancelToken: undefined,
       });
     });
@@ -332,8 +331,8 @@ describe('alertsAPI', () => {
 
       alertsAPI.fetchAlertCollectionDistribution(days, cancelToken);
 
-      chai.expect(get.args[0][1]).to.deep.equal({
-        params: { days: 8 },
+      expect(get.args[0][1]).to.deep.equal({
+        params: { days: 9 },
         cancelToken,
       });
     });
@@ -345,14 +344,14 @@ describe('alertsAPI', () => {
     it('should call the correct url', () => {
       alertsAPI.fetchAlertLevelTimeseries(days);
 
-      chai.expect(get.args[0][0]).to.equal('/alerts/level-timeseries/');
+      expect(get.args[0][0]).to.equal('/alerts/level-timeseries/');
     });
 
     it('should pass the days parameter to the get params', () => {
       alertsAPI.fetchAlertLevelTimeseries(days);
 
-      chai.expect(get.args[0][1]).to.deep.equal({
-        params: { days: 8 },
+      expect(get.args[0][1]).to.deep.equal({
+        params: { days: 9 },
         cancelToken: undefined,
       });
     });
@@ -362,8 +361,8 @@ describe('alertsAPI', () => {
 
       alertsAPI.fetchAlertLevelTimeseries(days, cancelToken);
 
-      chai.expect(get.args[0][1]).to.deep.equal({
-        params: { days: 8 },
+      expect(get.args[0][1]).to.deep.equal({
+        params: { days: 9 },
         cancelToken,
       });
     });
@@ -375,13 +374,13 @@ describe('alertsAPI', () => {
     it('should call the correct url', () => {
       alertsAPI.fetchAlertLocations(days);
 
-      chai.expect(get.args[0][0]).to.equal('/alerts/locations/');
+      expect(get.args[0][0]).to.equal('/alerts/locations/');
     });
 
     it('should pass the days parameter to the get params', () => {
       alertsAPI.fetchAlertLocations(days);
 
-      chai.expect(get.args[0][1]).to.deep.equal({
+      expect(get.args[0][1]).to.deep.equal({
         params: { days },
         cancelToken: undefined,
       });
@@ -392,7 +391,7 @@ describe('alertsAPI', () => {
 
       alertsAPI.fetchAlertLocations(days, cancelToken);
 
-      chai.expect(get.args[0][1]).to.deep.equal({
+      expect(get.args[0][1]).to.deep.equal({
         params: { days },
         cancelToken,
       });

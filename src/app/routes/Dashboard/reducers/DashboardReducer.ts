@@ -53,7 +53,7 @@ export interface DashboardState {
  * @type {State}
  */
 const INITIAL_STATE: DashboardState = {
-  days: 1,
+  days: 0,
   total: 0,
   levelDistributionLoading: false,
   levelDistributionData: [],
