@@ -134,7 +134,7 @@ export class Dashboard extends React.Component<Props, {}> {
    * Searches for alerts statistics in the past day.
    */
   public searchDay = (): void => {
-    this.props.getAlertStatistics(1);
+    this.props.getAlertStatistics(0);
   };
 
   /**
@@ -169,7 +169,7 @@ export class Dashboard extends React.Component<Props, {}> {
     } = this.props;
     const { searchDay, searchWeek, searchMonth } = this;
     const { popupGenerator } = Dashboard;
-    const isDay = days === 1;
+    const isDay = days === 0;
     const isWeek = days === 7;
     const isMonth = days === 30;
 
@@ -243,50 +243,3 @@ export class Dashboard extends React.Component<Props, {}> {
     );
   }
 }
-
-// --------------------------------------------------------------------------
-// Container
-// --------------------------------------------------------------------------
-
-/**
- * Maps the redux state to AlertDetail component properties.
- * @param state Redux state.
- * @param ownProps Properties passed AlertDetailContainer.
- */
-const values: StateToProps<ValueProps, undefined> = (
-  state,
-  ownProps,
-) => ({
-  days: state.routes.Dashboard.Dashboard.days,
-  totalAlerts: state.routes.Dashboard.Dashboard.total,
-  levelDistribution: state.routes.Dashboard.Dashboard.levelDistributionData,
-  levelDistributionLoading: state.routes.Dashboard.Dashboard.levelDistributionLoading,
-  statusDistribution: state.routes.Dashboard.Dashboard.statusDistributionData,
-  statusDistributionLoading: state.routes.Dashboard.Dashboard.statusDistributionLoading,
-  collectionDistribution: state.routes.Dashboard.Dashboard.collectionDistributionData,
-  collectionDistributionLoading: state.routes.Dashboard.Dashboard.collectionDistributionLoading,
-  levelTimeseries: state.routes.Dashboard.Dashboard.levelTimeseriesData,
-  levelTimeseriesLoading: state.routes.Dashboard.Dashboard.levelTimeseriesLoading,
-  locations: state.routes.Dashboard.Dashboard.locations,
-  locationFeatureCount: state.routes.Dashboard.Dashboard.locationFeatureCount,
-  locationsLoading: state.routes.Dashboard.Dashboard.locationsLoading,
-});
-
-/**
- * Maps redux dispatch functions to AlertDetail component properties.
- * @param dispatch Dispatch function from the redux store.
- */
-const mapDispatchToProps: DispatchToProps<FunctionProps, undefined> = (
-  dispatch,
-) => ({
-  getAlertStatistics: bindActionCreators(fetchAlertStatistics, dispatch),
-});
-
-/**
- * Container component created from the Alert Detail component.
- * @type {Container}
- */
-export const DashboardContainer = connect(
-  values,
-  mapDispatchToProps,
-)(Dashboard);

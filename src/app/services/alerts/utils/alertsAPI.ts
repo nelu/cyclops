@@ -150,7 +150,7 @@ export function fetchAlertStatusDistribution(
   days: number,
   cancelToken?: CancelToken,
 ): Promise<Dictionary<number>> {
-  const params = { days: days - 1 };
+  const params = { days };
 
   return api.get('/alerts/statuses/', { params, cancelToken });
 }
@@ -166,7 +166,7 @@ export function fetchAlertCollectionDistribution(
   days: number,
   cancelToken?: CancelToken,
 ): Promise<Dictionary<number>> {
-  const params = { days: days - 1 };
+  const params = { days };
 
   return api.get('/alerts/collections/', { params, cancelToken });
 }
@@ -181,7 +181,7 @@ export function fetchAlertLevelTimeseries(
   days: number,
   cancelToken?: CancelToken,
 ): Promise<AlertLevelTimeseries> {
-  const params = { days: days - 1 };
+  const params = { days };
 
   return api.get('/alerts/level-timeseries/', { params, cancelToken });
 }
