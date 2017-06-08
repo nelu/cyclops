@@ -291,7 +291,7 @@ describe('alertsAPI', () => {
       alertsAPI.fetchAlertStatusDistribution(days);
 
       expect(get.args[0][1]).to.deep.equal({
-        params: { days: 5 },
+        params: { days: 6 },
         cancelToken: undefined,
       });
     });
@@ -302,7 +302,7 @@ describe('alertsAPI', () => {
       alertsAPI.fetchAlertStatusDistribution(days, cancelToken);
 
       expect(get.args[0][1]).to.deep.equal({
-        params: { days: 5 },
+        params: { days: 6 },
         cancelToken,
       });
     });
@@ -321,7 +321,7 @@ describe('alertsAPI', () => {
       alertsAPI.fetchAlertCollectionDistribution(days);
 
       expect(get.args[0][1]).to.deep.equal({
-        params: { days: 8 },
+        params: { days: 9 },
         cancelToken: undefined,
       });
     });
@@ -332,7 +332,7 @@ describe('alertsAPI', () => {
       alertsAPI.fetchAlertCollectionDistribution(days, cancelToken);
 
       expect(get.args[0][1]).to.deep.equal({
-        params: { days: 8 },
+        params: { days: 9 },
         cancelToken,
       });
     });
@@ -351,7 +351,7 @@ describe('alertsAPI', () => {
       alertsAPI.fetchAlertLevelTimeseries(days);
 
       expect(get.args[0][1]).to.deep.equal({
-        params: { days: 8 },
+        params: { days: 9 },
         cancelToken: undefined,
       });
     });
@@ -362,7 +362,7 @@ describe('alertsAPI', () => {
       alertsAPI.fetchAlertLevelTimeseries(days, cancelToken);
 
       expect(get.args[0][1]).to.deep.equal({
-        params: { days: 8 },
+        params: { days: 9 },
         cancelToken,
       });
     });
