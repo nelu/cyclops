@@ -21,12 +21,9 @@ import * as React from 'react';
 import * as _ from 'lodash';
 
 // Local
-import {
-  Distillery,
-  DistilleryMinimal
-} from '~/services/distilleries/types';
-import { sortByWarehouse } from '~/services/distilleries/utils/distilleryUtils';
-import { DistillerySelectGroup } from '~/services/distilleries/components/DistillerySelectGroup';
+import { DistilleryMinimal } from '~/services/distilleries/types';
+import { Collapsible } from '~/components/Collapsible';
+import { DistilleryMultiAutocomplete } from '~/services/distilleries/components/DistilleryMultiAutocomplete';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -35,14 +32,15 @@ import { DistillerySelectGroup } from '~/services/distilleries/components/Distil
 /** Properties of the AlertParamsDistillerySelect component. */
 interface Props {
   /** Currently selected distillery in alerts list search parameters. */
-  currentDistillery: number| undefined;
+  selected?: number[];
   /** Current list of distilleries that have alerts associated with them. */
   distilleries: DistilleryMinimal[];
   /**
    * Changes the currently selected distillery.
    * @param distillery Distillery to filter alerts with.
    */
-  selectDistillery(distillery: number | undefined): any;
+  onSelect(distillery: number): void;
+  onRemove(distillery: number): void;
 }
 
 // --------------------------------------------------------------------------
@@ -57,39 +55,25 @@ export class AlertParamsDistillerySelect extends React.Component<Props, {}> {
    * Selects the new distillery to filter alerts with.
    * @param event Event emitted from the select DOM element.
    */
-  public selectDistillery = (event: React.FormEvent<HTMLSelectElement>) => {
-    const value = parseInt(event.currentTarget.value, 10);
-    const collection = (value === 0) ? undefined : value;
+  public onSelect = (distillery: DistilleryMinimal) => {
+    this.props.onSelect(distillery.id);
+  };
 
-    this.props.selectDistillery(collection);
+  public onRemove = (distillery: DistilleryMinimal) => {
+    this.props.onRemove(distillery.id);
   };
 
   public render(): JSX.Element {
-    const sortedDistilleries = sortByWarehouse(this.props.distilleries);
-    const distilleryOptionGroups: JSX.Element[] = [];
-
-    _.forEach(sortedDistilleries, (distilleries, warehouse) => {
-      distilleryOptionGroups.push(
-        <DistillerySelectGroup
-          title={warehouse as string}
-          options={distilleries}
-        />,
-      );
-    });
-
     return (
       <div className="alert-list-params__spacer alert-list-params__group">
-        <h3 className="sub-title">Source</h3>
-        <div className="form-group">
-          <select
-            className="form-control"
-            value={this.props.currentDistillery}
-            onChange={this.selectDistillery}
-          >
-            <option value={0}>All</option>
-            {distilleryOptionGroups}
-          </select>
-        </div>
+        <Collapsible title="Source">
+          <DistilleryMultiAutocomplete
+            distilleries={this.props.distilleries}
+            selected={this.props.selected}
+            onSelect={this.onSelect}
+            onRemove={this.onRemove}
+          />
+        </Collapsible>
       </div>
     );
   }

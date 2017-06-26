@@ -19,7 +19,7 @@
 // Vendor
 import * as _ from 'lodash';
 
-import { Container } from '../types';
+import { ContainerNested } from '../types';
 import { Result } from '~/types/result';
 import { Field } from '../../cyphon/types';
 
@@ -32,7 +32,7 @@ import { Field } from '../../cyphon/types';
  */
 export function getFieldsOfType<T>(
   type: string,
-  container: Container,
+  container: ContainerNested,
   result: Result,
 ): { [field: string]: T } | undefined {
   const fields: Field[] = container.fields;

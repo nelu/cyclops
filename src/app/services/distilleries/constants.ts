@@ -29,11 +29,13 @@ const CONTEXT_FLAT_SCHEMA = new schema.Entity('contexts', {
 
 const CONTEXT_FLAT_LIST_SCHEMA = new schema.Array(CONTEXT_FLAT_SCHEMA);
 
+export const DISTILLERY_ENTITIES_KEY = 'distilleries';
+
 /**
  * Normalizr schema of a distillery object.
  * @type {schema.Entity}
  */
-export const DISTILLERY_SCHEMA = new schema.Entity('distilleries', {
+export const DISTILLERY_SCHEMA = new schema.Entity(DISTILLERY_ENTITIES_KEY, {
   container: CONTAINER_SCHEMA,
   contexts: CONTEXT_FLAT_LIST_SCHEMA,
 });

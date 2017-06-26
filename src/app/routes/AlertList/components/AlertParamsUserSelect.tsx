@@ -21,13 +21,9 @@ import * as React from 'react';
 
 // Local
 import { User } from '~/services/users/types';
-import { getUserFullName } from '~/services/users/utils/getUserFullName';
 import { getConfig } from '~/config';
 import { Collapsible } from '~/components/Collapsible';
-import {
-  Select,
-  SelectOption,
-} from '~/components/Select';
+import { UserAutocomplete } from '~/services/users/components/UserAutocomplete';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -40,12 +36,12 @@ interface Props {
   /** Current list of all users. */
   users: User[];
   /** Currently selected user. */
-  currentUser: number | undefined;
+  selected?: number;
   /**
    * Selects a new user to filter alerts with..
    * @param user ID of the user to filter alerts with.
    */
-  selectUser(user?: number): any;
+  select(user?: number): any;
 }
 
 // --------------------------------------------------------------------------
@@ -59,35 +55,24 @@ interface Props {
 export class AlertParamsUserSelect extends React.Component<Props, {}> {
   /**
    * Handle the event emitted whenever the select value changes by
-   * running the passed in selectUser function.
-   * @param value
+   * running the passed in select function.
+   * @param user
    */
-  public handleSelect = (value: string): void => {
-    const userID = parseInt(value, 10);
-    const user = (userID === 0) ? undefined : userID;
-
-    this.props.selectUser(user);
+  public onSelect = (user: User): void => {
+    this.props.select(user.id);
   };
 
   /** Selects the current user to filter alerts by. */
   public selectCurrentUser = (): void => {
-    this.props.selectUser(getConfig().CURRENT_USER.id);
+    this.props.select(getConfig().CURRENT_USER.id);
   };
 
   /** Clears the currently selected user. */
   public clearSelection = (): void => {
-    this.props.selectUser(undefined);
+    this.props.select(undefined);
   };
 
   public render(): JSX.Element {
-    const options: SelectOption[] = this.props.users.map((user) => ({
-      name: getUserFullName(user),
-      value: user.id,
-    }));
-    const currentUser = this.props.currentUser ? this.props.currentUser : 0;
-
-    options.unshift({ name: 'All', value: 0 });
-
     return (
       <div className="alert-list-params__spacer ">
         <Collapsible
@@ -96,10 +81,10 @@ export class AlertParamsUserSelect extends React.Component<Props, {}> {
           actionName="Clear"
         >
           <div className="form-group alert-list-params__group">
-            <Select
-              options={options}
-              onChange={this.handleSelect}
-              value={currentUser}
+            <UserAutocomplete
+              users={this.props.users}
+              selected={this.props.selected}
+              onSelect={this.onSelect}
             />
             <button
               className="btn-basic"

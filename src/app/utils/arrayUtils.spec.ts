@@ -121,4 +121,38 @@ describe('arrayUtils', () => {
       expect(arrayUtils.parseIntArray(['4', '5'])).to.deep.equal([4, 5]);
     });
   });
+
+  describe('toggleArrayValue()', () => {
+    it('should return the value in an array if there is no array', () => {
+      expect(arrayUtils.toggleArrayValue(4)).to.deep.equal([4]);
+    });
+
+    it('should return undefined if the array contains just the value', () => {
+      expect(arrayUtils.toggleArrayValue(4, [4])).to.be.undefined;
+    });
+
+    it('should add the value to the array if its not present', () => {
+      expect(arrayUtils.toggleArrayValue(3, [4])).to.deep.equal([4, 3]);
+    });
+
+    it('should remove the value from the array if its present', () => {
+      expect(arrayUtils.toggleArrayValue(3, [4, 3])).to.deep.equal([4]);
+    });
+  });
+
+  describe('findByID()', () => {
+    it('should return undefined if no values are given', () => {
+      expect(arrayUtils.findByID(2)).to.be.undefined;
+    });
+
+    it('should return undefined if it cant find the element', () => {
+      expect(arrayUtils.findByID(2, [{ id: 3 }])).to.be.undefined;
+    });
+
+    it('should return the element if its present', () => {
+      const element = { id: 2 };
+
+      expect(arrayUtils.findByID(2, [element])).to.equal(element);
+    });
+  });
 });

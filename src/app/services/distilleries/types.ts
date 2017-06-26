@@ -20,6 +20,7 @@
 import {
   Container,
   ContainerFlat,
+  ContainerNested,
   Taste,
 } from '../containers/types';
 import {
@@ -50,9 +51,14 @@ export interface Distillery {
 export interface DistilleryNested extends Distillery {
   collection: number;
   /** Contaienr object associated with the distillery. */
-  container: Container;
+  container: ContainerNested;
   /** Context objects associated with the distillery. */
   contexts: ContextNested[];
+}
+
+export interface DistilleryFlat extends Distillery {
+  container: number;
+  contexts: number[];
 }
 
 /** Distillery object with associated objects represented with their ID's. */
@@ -67,7 +73,7 @@ interface DistilleryEntities {
   containers?: NormalizedEntity<ContainerFlat>;
   contextFilters?: NormalizedEntity<ContextFilter>;
   contexts?: NormalizedEntity<ContextFlat>;
-  distilleries?: NormalizedEntity<DistilleryMinimal>;
+  distilleries?: NormalizedEntity<DistilleryFlat>;
   fields?: NormalizedEntity<Field>;
   tastes?: NormalizedEntity<Taste>;
 }

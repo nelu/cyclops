@@ -57,7 +57,7 @@ describe('<AlertParamsCategorySelect />', () => {
       return enzyme.shallow(
         <AlertParamsCategorySelect
           {...properties}
-          selectCategory={selectCategory}
+          change={selectCategory}
         />);
     };
   });
@@ -88,7 +88,7 @@ describe('<AlertParamsCategorySelect />', () => {
 
   describe('onSelectChange', () => {
     it('should parse an integer value from a string and pass that ' +
-      'to selectCategory', () => {
+      'to select', () => {
       const component: any = render().instance();
 
       component.onSelectChange('4');
@@ -99,7 +99,7 @@ describe('<AlertParamsCategorySelect />', () => {
   });
 
   describe('clearSelections()', () => {
-    it('should pass undefined to the selectCategory prop', () => {
+    it('should pass undefined to the select prop', () => {
       const component: any = render().instance();
 
       component.clearSelections();

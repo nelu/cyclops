@@ -16,15 +16,11 @@
  * are made]
  */
 
-.sidebar {
+.banner {
+  padding: $padding-base-vertical $padding-base-horizontal;
   background-color: $color-dark;
-  width: 250px;
 }
 
-.sidebar--large {
-  width: 320px;
-}
-
-.sidebar__spacing {
-  padding: 0 $padding-base-horizontal;
+.banner--dark {
+  background-color: $color-darker;
 }

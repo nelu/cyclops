@@ -183,4 +183,62 @@ describe('distilleryNormalizr', () => {
       chai.expect(result).to.deep.equal(distilleries);
     });
   });
+
+  describe('getDistilleryContainerIDs', () => {
+    it('should return empty if there are no distillery entities', () => {
+      const result = utils.getDistilleryContainerIDs(
+        { result: [], entities: {} },
+        [3, 4],
+      );
+
+      expect(result).to.deep.equal([]);
+    });
+
+    it('should return the container ids if ther are distilleries', () => {
+      const result = utils.getDistilleryContainerIDs(
+        normalized as any,
+        [distillery1.id, distillery2.id],
+      );
+
+      expect(result).to.deep.equal([container1.id, container2.id]);
+    });
+  });
+
+  describe('getSharedDistilleryFields()', () => {
+    it('should return empty if there are no distilleries', () => {
+      const result = utils.getSharedDistilleryFields(
+        { result: [], entities: {} },
+        [3, 4],
+      );
+
+      expect(result).to.deep.equal([]);
+    });
+
+    it('should return emptoy if there no containers', () => {
+      const test: any = {
+        result: [],
+        entities: {
+          distilleries: {
+            1: {
+              container: {
+                id: 1,
+              },
+            }
+          }
+        },
+      };
+      const result = utils.getSharedDistilleryFields(test, [1]);
+
+      expect(result).to.deep.equal([]);
+    });
+
+    it('should return the field_names of shared fields', () => {
+      const result = utils.getSharedDistilleryFields(
+        normalized as any,
+        [distillery1.id, distillery2.id],
+      );
+
+      expect(result).to.deep.equal([field1.field_name]);
+    });
+  });
 });

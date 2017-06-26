@@ -16,15 +16,17 @@
  * are made]
  */
 
-.sidebar {
-  background-color: $color-dark;
-  width: 250px;
-}
+// Local
+import { Dictionary } from '~/types/object';
+import { ContainerFlat } from '~/services/containers/types';
+import { getEntities } from '~/utils/normalizrUtils';
+import { CONTAINER_ENTITY_KEY } from '~/services/containers/constants';
 
-.sidebar--large {
-  width: 320px;
-}
-
-.sidebar__spacing {
-  padding: 0 $padding-base-horizontal;
+/**
+ * Returns the container entities from a dictionary of normalized entities.
+ * @param entities Normalized entities object.
+ * @returns {ContainerFlat[]}
+ */
+export function getContainerEntities(entities: Dictionary<any>): ContainerFlat[] {
+  return getEntities<ContainerFlat>(entities, CONTAINER_ENTITY_KEY);
 }

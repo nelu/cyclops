@@ -49,10 +49,16 @@ export const FIELD_LIST_SCHEMA = new schema.Array(FIELD_SCHEMA);
 export const TASTE_SCHEMA = new schema.Entity('tastes');
 
 /**
+ * Object key of container entities on a normalized list.
+ * @type {string}
+ */
+export const CONTAINER_ENTITY_KEY = 'containers';
+
+/**
  * Normalizr schema of a container object.
  * @type {schema.Entity}
  */
-export const CONTAINER_SCHEMA = new schema.Entity('containers', {
+export const CONTAINER_SCHEMA = new schema.Entity(CONTAINER_ENTITY_KEY, {
   fields: FIELD_LIST_SCHEMA,
   taste: TASTE_SCHEMA,
 });

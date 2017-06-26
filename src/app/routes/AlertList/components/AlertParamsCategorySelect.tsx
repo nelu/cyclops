@@ -18,13 +18,16 @@
 
 // Vendor
 import * as React from 'react';
-import { ListGroup } from 'react-bootstrap';
 
 // Local
-import { NormalizedCategoryList } from '~/services/alerts/types';
+import {
+  Category,
+  NormalizedCategoryList,
+} from '~/services/alerts/types';
 import { denormalizeCategories } from '~/services/alerts/utils/categoryUtils';
-import { ListGroupItemToggle } from '~/components/ListGroupItemToggle';
 import { Collapsible } from '~/components/Collapsible';
+import { CategoryAutocomplete } from '~/services/alerts/components/CategoryAutocomplete';
+import { toggleArrayValue } from '~/utils/arrayUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -35,12 +38,12 @@ interface Props {
   /** List of all the current categories. */
   categories: NormalizedCategoryList;
   /** Currently selected category. */
-  currentCategory?: number | number[];
+  selected?: number[];
   /**
    * Selects a category to filter alerts with.
    * @param category Category to filter alerts with.
    */
-  selectCategory(category?: number | number[]): any;
+  change(categories?: number[]): void;
 }
 
 // --------------------------------------------------------------------------
@@ -51,45 +54,35 @@ interface Props {
  * Displays options for filtering alerts by category.
  */
 export class AlertParamsCategorySelect extends React.Component<Props, {}> {
-  /**
-   * Handles the select on change event to select a category.
-   * @param value Value from the select element onChange event.
-   */
-  public onSelectChange = (value: string): void => {
-    const category = parseInt(value, 10);
-
-    this.props.selectCategory(category);
-  };
-
   /** Clears the current category selections. */
   public clearSelections = (): void => {
-    this.props.selectCategory(undefined);
+    this.props.change(undefined);
+  };
+
+  public toggleCategory = (category: Category) => {
+    const categories = toggleArrayValue(category.id, this.props.selected);
+
+    this.props.change(categories);
   };
 
   public render() {
     const categories = denormalizeCategories(this.props.categories);
-    const listGroupItems = categories.map((category) => (
-      <ListGroupItemToggle
-        value={category.id}
-        currentValue={this.props.currentCategory}
-        onClick={this.props.selectCategory}
-        key={category.id}
-      >
-        {category.name}
-      </ListGroupItemToggle>
-    ));
 
     return (
-      <Collapsible
-        title="Category"
-        action={this.clearSelections}
-        actionName="Clear"
-        spaced={true}
-      >
-        <ListGroup>
-          {listGroupItems}
-        </ListGroup>
-      </Collapsible>
+      <div className="sidebar__spacing">
+        <Collapsible
+          title="Category"
+          action={this.clearSelections}
+          actionName="Clear"
+        >
+          <CategoryAutocomplete
+            categories={categories}
+            selected={this.props.selected}
+            onSelect={this.toggleCategory}
+            onRemove={this.toggleCategory}
+          />
+        </Collapsible>
+      </div>
     );
   }
 }

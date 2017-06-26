@@ -22,7 +22,7 @@ import { CancelToken } from 'axios';
 
 // Local
 import { Result } from '~/types/result';
-import { Container } from '../../containers/types';
+import { ContainerNested } from '../../containers/types';
 import { getFieldsOfType } from '../../containers/utils/containerUtils';
 import { CONTAINER_FIELDS } from '../../containers/constants';
 import { LocationFieldAddress, LocationField } from '../types';
@@ -38,7 +38,7 @@ import { reverseLookup } from './reverseLookup';
  * @returns {AxiosPromise<LocationFieldAddress[]>}
  */
 export function getLocationsWithAddress(
-  container: Container,
+  container: ContainerNested,
   result: Result,
   cancelToken?: CancelToken,
 ): Promise<LocationFieldAddress[]> {

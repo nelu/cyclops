@@ -53,6 +53,34 @@ export function toggleValue<T>(target: any, value: any): T | T[] | undefined {
 }
 
 /**
+ * Toggles a value on an array. If the array is empty, it returns undefined.
+ * @param value Value to toggle.
+ * @param array Array to modify.
+ * @returns {any[] | undefined}
+ */
+export function toggleArrayValue(value: any, array?: any[]): any[] | undefined {
+  if (array) {
+    const toggled = _.xor(array, [value]);
+
+    return toggled.length ? toggled : undefined;
+  }
+
+  return [value];
+}
+
+/**
+ * Finds an element in an array of elements that matches the given id.
+ * @param id ID of the element to return.
+ * @param values Values to search for the element.
+ * @returns {any} Element or undefined.
+ */
+export function findByID(id: number, values?: Array<{ id: number }>): any {
+  return values
+    ? _.find(values, ['id', id])
+    : undefined;
+}
+
+/**
  * Determines if a value is included in the target value if the target
  * is an array, or if it equals if it is not an array.
  * @param target

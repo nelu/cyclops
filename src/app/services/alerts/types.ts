@@ -127,10 +127,23 @@ export type AlertLevelParam = string | string[];
 /** Alert status search parameter types. */
 export type AlertStatusParam = string | string[];
 
+export interface AlertViewParams {
+  categories?: string | string[];
+  level?: AlertLevelChoices | AlertLevelChoices[];
+  status?: AlertStatusChoices | AlertStatusChoices[];
+  assigned_user?: string;
+  collection?: string;
+  content?: string;
+  limit?: string;
+  offset?: string;
+  after?: string;
+  before?: string;
+}
+
 /** Alert list search parameters. */
 export interface AlertSearchParams extends AlertTimeSearchParams {
   /** Category to filter by. */
-  categories?: number | number[];
+  categories?: number[];
   /** Alert level to search for. */
   level?: AlertLevelParam;
   /** Alert status to search for. */
@@ -138,7 +151,7 @@ export interface AlertSearchParams extends AlertTimeSearchParams {
   /** Assigned user to search for. */
   assigned_user?: number;
   /** Distillery the alert came from. */
-  collection?: number;
+  collection?: number[];
   /** String content the alert data contains. */
   content?: string;
   /** Limit of alerts to return. */

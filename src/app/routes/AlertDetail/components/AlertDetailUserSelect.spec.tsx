@@ -48,9 +48,9 @@ describe('<AlertDetailUserSelect />', () => {
     //
     //   wrapper = enzyme.shallow((
     //     <AlertDetailUserSelect
-    //       currentUser={user}
+    //       selected={user}
     //       users={[]}
-    //       selectUser={selectUser}
+    //       select={select}
     //     />
     //   ));
     //

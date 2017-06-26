@@ -31,9 +31,11 @@ import {
   AlertSearchParams,
   AlertListItem,
   NormalizedCategoryList,
+  AlertViewParams,
 } from '~/services/alerts/types';
 import { DistilleryMinimal } from '~/services/distilleries/types';
 import { User } from '~/services/users/types';
+import { parseQuery } from '~/utils/routerUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -110,55 +112,40 @@ type Props = ValueProps & FunctionProps;
  */
 export class AlertView extends React.Component<Props, {}> {
   /**
-   * Search fields found in the route parameters.
-   * @type {string[]}
+   * Default URL query.
+   * @type {AlertSearchParams}
    */
-  public static SEARCH_PARAM_FIELDS = [
-    'categories',
-    'level',
-    'status',
-    'assigned_user',
-    'collection',
-    'content',
-    'limit',
-    'offset',
-    'before',
-    'after',
-  ];
-
-  /**
-   * Get the alert view url parameters from a LocationDescriptor object.
-   * @param location LocationDescriptor object.
-   * @returns {AlertSearchParams}
-   */
-  public static getAlertViewParams(
-    location: Router.LocationDescriptor,
-  ): AlertSearchParams {
-    const params: AlertSearchParams = _.pick(
-      location.query as AlertSearchParams,
-      AlertView.SEARCH_PARAM_FIELDS,
-    );
-
-    return _.assign({}, { limit: 30, offset: 0 }, params);
+  public static DEFAULT_QUERY: AlertSearchParams = {
+    limit: 30,
+    offset: 0,
   };
 
   /**
-   * Gets the current page value from a LocationDescriptor object.
-   * @param location LocationDescriptor object.
-   * @returns {number} Current page number.
+   * Parses the current URL query.
+   * @param query Query object.
+   * @returns {AlertSearchParams} URL query.
    */
-  public static getCurrentPage(location: Router.LocationDescriptor): number {
-    const params = AlertView.getAlertViewParams(location);
+  public static parseQuery = (query: any): AlertSearchParams => {
+    const parsed = parseQuery(query, {
+      integers: [
+        'assigned_user',
+        'categories',
+        'collection',
+        'limit',
+        'offset',
+      ],
+      arrays: ['categories'],
+    });
 
-    return (params.offset / params.limit) + 1;
-  }
+    return { ...AlertView.DEFAULT_QUERY, ...parsed };
+  };
 
   /**
    * Retrieves the current user list, the current distillery list,
    * and searches for alerts based on the parameters in the url.
    */
   public componentWillMount(): void {
-    const query = AlertView.getAlertViewParams(this.props.location);
+    const query = this.getQuery();
 
     this.addWindowListeners();
     this.props.fetchViewResources();
@@ -175,8 +162,8 @@ export class AlertView extends React.Component<Props, {}> {
    * @param {Object} nextProps The next props being passed in.
    */
   public componentWillReceiveProps(nextProps: Props): void {
-    const currentParams = AlertView.getAlertViewParams(this.props.location);
-    const newQuery = AlertView.getAlertViewParams(nextProps.location);
+    const currentParams = this.getQuery();
+    const newQuery = AlertView.parseQuery(nextProps.location.query);
 
     if (!_.isEqual(currentParams, newQuery)) {
       this.props.searchAlerts(
@@ -194,6 +181,24 @@ export class AlertView extends React.Component<Props, {}> {
     this.removeWindowListeners();
     this.props.stopPolling();
   }
+
+  /**
+   * Returns the current page number.
+   * @returns {number} Current page number.
+   */
+  public getCurrentPage = (): number => {
+    const params = this.getQuery();
+
+    return (params.offset / params.limit) + 1;
+  };
+
+  /**
+   * Returns the current url query.
+   * @returns {AlertSearchParams}
+   */
+  public getQuery = (): AlertSearchParams => {
+    return AlertView.parseQuery(this.props.location.query);
+  };
 
   /**
    * Adds listeners to the window that handles blur and focus events.
@@ -235,7 +240,7 @@ export class AlertView extends React.Component<Props, {}> {
    */
   public updateQuery = (newParams: AlertSearchParams): void => {
     const { router, location } = this.props;
-    const currentParams = AlertView.getAlertViewParams(location);
+    const currentParams = this.getQuery();
     const query = _.assign({}, currentParams, newParams);
 
     router.push({ pathname: location.pathname, query });
@@ -264,8 +269,9 @@ export class AlertView extends React.Component<Props, {}> {
    * @param page Number to change the page parameter to.
    */
   public changePage = (page: number): void => {
-    const params = AlertView.getAlertViewParams(this.props.location);
+    const params = this.getQuery();
     const offset = params.limit * (page - 1);
+
     this.updateQuery({ offset });
   };
 
@@ -274,23 +280,21 @@ export class AlertView extends React.Component<Props, {}> {
    * @param params
    */
   public changeParams = (params: AlertSearchParams): void => {
-    const query = _.assign({}, params, { offset: 0 });
-    this.updateQuery(query);
+    this.updateQuery({ ...params, offset: 0 });
   };
 
   /**
    * Starts a poller for alert items matching the current search parameters.
    */
   public startPollingWithViewParams = (): void => {
-    const { startPolling, interval, location } = this.props;
-    const params = AlertView.getAlertViewParams(location);
+    const params = this.getQuery();
 
-    startPolling(params, interval);
+    this.props.startPolling(params, this.props.interval);
   };
 
   public render(): JSX.Element {
-    const currentPage = AlertView.getCurrentPage(this.props.location);
-    const params = AlertView.getAlertViewParams(this.props.location);
+    const currentPage = this.getCurrentPage();
+    const params = this.getQuery();
 
     return (
       <div className="flex-box">

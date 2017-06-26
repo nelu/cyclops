@@ -21,10 +21,7 @@ import * as _ from 'lodash';
 
 // Local
 import { Dictionary } from '~/types/object';
-import {
-  Distillery,
-  DistilleryMinimal
-} from '../types';
+import { DistilleryMinimal } from '../types';
 import { orderKeys } from '~/utils/objectUtils';
 
 /**

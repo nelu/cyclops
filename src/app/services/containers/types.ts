@@ -52,7 +52,7 @@ export interface Container {
   /** Identifier of the container. */
   id: number;
   /** Bottle and label fields combined together. */
-  fields: Field[];
+  fields: Field[] | string[];
   /** Label associated with the container. */
   label: number | null;
   /** Name of the container. */
@@ -65,12 +65,14 @@ export interface Container {
 
 /** Container object with nested objects. */
 export interface ContainerNested extends Container {
+  fields: Field[];
   /** Related taste object. */
   taste: Taste;
 }
 
 /** Container object with related objects represented by their ID's. */
 export interface ContainerFlat extends Container {
+  fields: string[];
   /** ID of the related taste object. */
   taste: number;
 }

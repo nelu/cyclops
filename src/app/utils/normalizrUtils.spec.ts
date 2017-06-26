@@ -20,14 +20,12 @@
 import * as chai from 'chai';
 
 // Local
-import { updateNormalizedList } from './normalizrUtils';
+import * as utils from './normalizrUtils';
 
-describe('updateNormalizedData()', () => {
+describe('normalizrUtils', () => {
   const user1 = { id: 1, name: 'George' };
   const user2 = { id: 2, name: 'Bob' };
   const user3 = { id: 3, name: 'Stacy' };
-  const userUpdate1 = { id: 1, name: 'Coffee' };
-  const userUpdate2 = { id: 2, name: 'Eagle' };
   const normalized1 = {
     result: [1, 2],
     entities: {
@@ -37,30 +35,54 @@ describe('updateNormalizedData()', () => {
       },
     },
   };
-  const normalized2 = {
-    result: [1, 2, 3],
-    entities: {
-      users: {
-        1: userUpdate1,
-        2: userUpdate2,
-        3: user3,
-      },
-    },
-  };
-  const correctUpdate = {
-    result: [1, 2, 3],
-    entities: {
-      users: {
-        1: userUpdate1,
-        2: userUpdate2,
-        3: user3,
-      },
-    },
-  };
 
-  it('should update a normalized list with another normalized list', () => {
-    const update = updateNormalizedList(normalized1, normalized2);
+  describe('updateNormalizedData()', () => {
+    const userUpdate1 = { id: 1, name: 'Coffee' };
+    const userUpdate2 = { id: 2, name: 'Eagle' };
+    const normalized2 = {
+      result: [1, 2, 3],
+      entities: {
+        users: {
+          1: userUpdate1,
+          2: userUpdate2,
+          3: user3,
+        },
+      },
+    };
+    const correctUpdate = {
+      result: [1, 2, 3],
+      entities: {
+        users: {
+          1: userUpdate1,
+          2: userUpdate2,
+          3: user3,
+        },
+      },
+    };
 
-    chai.expect(update).to.deep.equal(correctUpdate);
+    it('should update a normalized list with another normalized list', () => {
+      const update = utils.updateNormalizedList(normalized1, normalized2);
+
+      chai.expect(update).to.deep.equal(correctUpdate);
+    });
+  });
+
+  describe('getEntitiesByID()', () => {
+    it('should return an empty array if there are no entities with the ' +
+      'given name', () => {
+      const result = utils.getEntitiesByID(normalized1.entities, 'meh', [1, 2]);
+
+      expect(result).to.deep.equal([]);
+    });
+
+    it('should return the entities that match', () => {
+      const result = utils.getEntitiesByID(
+        normalized1.entities,
+        'users',
+        [user1.id, user2.id],
+      );
+
+      expect(result).to.deep.equal([user1, user2]);
+    });
   });
 });

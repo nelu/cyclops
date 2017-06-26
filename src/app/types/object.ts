@@ -16,9 +16,12 @@
  * are made]
  */
 
-/**
- * Plain object that contains key/value pairs.
- */
+/** Plain object that contains key/value pairs. */
 export interface Dictionary<Value> {
   [key: string]: Value;
+}
+
+/** Plain object that indexes values by number. */
+export interface Index<T> {
+  [key: number]: T;
 }

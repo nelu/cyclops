@@ -50,7 +50,7 @@ import {
   Result,
   ResultIPAdresses,
 } from '~/types/result';
-import { Container } from '~/services/containers/types';
+import { ContainerNested } from '~/services/containers/types';
 import { getFieldsOfType } from '~/services/containers/utils/containerUtils';
 import { CONTAINER_FIELDS } from '~/services/containers/constants';
 import { Dictionary } from '~/types/object';
@@ -355,7 +355,7 @@ export type OpenDataModalAction = ReduxAction<OpenDataModalPayload>;
  */
 export function openDataModal(
   data: Result,
-  container: Container,
+  container: ContainerNested,
 ): OpenDataModalAction {
   const ipAddresses = getFieldsOfType<string>(
     CONTAINER_FIELDS.IP_ADDRESS, container, data,

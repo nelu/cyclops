@@ -35,7 +35,7 @@ import { AlertParamsDistillerySelect } from './AlertParamsDistillerySelect';
 import { AlertParamsDateCalendars } from './AlertParamsDateCalendars';
 import { AlertParamsDateTimeSelect } from '~/routes/AlertList/components/AlertParamsDateTimeSelect';
 import { AlertParamsCategorySelect } from '~/routes/AlertList/components/AlertParamsCategorySelect';
-import { parseIntArray } from '~/utils/arrayUtils';
+import { toggleArrayValue } from '~/utils/arrayUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -106,8 +106,10 @@ export class AlertParams extends React.Component<Props, State> {
    * Selects the distillery to filter alerts by.
    * @param distillery
    */
-  public selectDistillery = (distillery: number | undefined): void => {
-    this.props.changeParams({ collection: distillery });
+  public toggleDistillery = (distillery: number): void => {
+    this.props.changeParams({
+      collection: toggleArrayValue(distillery, this.props.params.collection),
+    });
   };
 
   /**
@@ -119,11 +121,11 @@ export class AlertParams extends React.Component<Props, State> {
   };
 
   /**
-   * Selects the category to filter alerts by.
-   * @param category
+   * Selects the categorires to filter alerts with.
+   * @param categories
    */
-  public selectCategory = (category: number): void => {
-    this.props.changeParams({ categories: category || undefined });
+  public changeCategories = (categories?: number[]): void => {
+    this.props.changeParams({ categories });
   };
 
   /**
@@ -156,8 +158,8 @@ export class AlertParams extends React.Component<Props, State> {
         <div className="alert-list-params__container flex-item">
           <AlertParamsUserSelect
             users={this.props.users}
-            currentUser={this.props.params.assigned_user}
-            selectUser={this.selectUser}
+            selected={this.props.params.assigned_user}
+            select={this.selectUser}
           />
 
           <AlertParamsDateTimeSelect
@@ -180,15 +182,16 @@ export class AlertParams extends React.Component<Props, State> {
           />
 
           <AlertParamsCategorySelect
-            currentCategory={parseIntArray(this.props.params.categories as any)}
+            selected={this.props.params.categories}
             categories={this.props.categories}
-            selectCategory={this.selectCategory}
+            change={this.changeCategories}
           />
 
           <AlertParamsDistillerySelect
-            currentDistillery={this.props.params.collection}
+            selected={this.props.params.collection}
             distilleries={this.props.distilleries}
-            selectDistillery={this.selectDistillery}
+            onSelect={this.toggleDistillery}
+            onRemove={this.toggleDistillery}
           />
         </div>
         {timePanel}

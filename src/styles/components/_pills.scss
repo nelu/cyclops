@@ -16,15 +16,20 @@
  * are made]
  */
 
-.sidebar {
-  background-color: $color-dark;
-  width: 250px;
+.pill {
+  display: inline-block;
+  border-radius: $border-radius-large;
+  padding: $padding-small-vertical $padding-small-horizontal;
+  background-color: transparent;
+  color: $text-color;
+  margin-right: $padding-base-horizontal;
 }
 
-.sidebar--large {
-  width: 320px;
+.pill:hover {
+  background-color: $color-light;
 }
 
-.sidebar__spacing {
-  padding: 0 $padding-base-horizontal;
+.pill--active {
+  background-color: $color-primary;
+  color: #fff;
 }

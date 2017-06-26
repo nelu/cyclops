@@ -16,15 +16,27 @@
  * are made]
  */
 
-.sidebar {
-  background-color: $color-dark;
-  width: 250px;
-}
+// Local
+import * as test from './containerNormalizr';
+import { CONTAINER_ENTITY_KEY } from '~/services/containers/constants';
 
-.sidebar--large {
-  width: 320px;
-}
+describe('containerNormalizr', () => {
+  describe('getContainerEntities()', () => {
+    it('returns the container entities from a dictionary of entities', () => {
+      const value1 = 'meh';
+      const value2 = 'blah';
+      const result = test.getContainerEntities({
+        [CONTAINER_ENTITY_KEY]: {
+          1: value1,
+          2: value2,
+        },
+      });
 
-.sidebar__spacing {
-  padding: 0 $padding-base-horizontal;
-}
+      expect(result).to.deep.equal([value1, value2]);
+    });
+
+    it('should return an empty array if there are no container entities', () => {
+      expect(test.getContainerEntities({})).to.deep.equal([]);
+    });
+  });
+});

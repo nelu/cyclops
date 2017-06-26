@@ -30,8 +30,10 @@
 
 //== Components
 
-@import "components/flex";
 @import "components/alerts";
+@import "components/autocomplete";
+@import "components/banner";
+@import "components/flex";
 @import "components/borders";
 @import "components/buttons";
 @import "components/charts";
@@ -41,6 +43,8 @@
 @import "components/json-formatter";
 @import "components/loading";
 @import "components/mapbox";
+@import "components/pills";
+@import "components/removable-item";
 @import "components/scrollbar";
 @import "components/sidebar";
 @import "components/spacing";
