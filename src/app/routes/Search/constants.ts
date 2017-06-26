@@ -16,27 +16,20 @@
  * are made]
  */
 
-// Vendor
-import { ComponentClass } from 'react';
-import { combineReducers } from 'redux';
-
 // Local
-import {
-  searchRouteResourcesReducer,
-  SearchRouteResourcesState,
-} from './reducers/searchRouteResourcesReducer';
-import { SearchContainer } from '~/routes/Search/containers/SearchContainer';
+import { FilterOption } from '~/routes/Search/types';
 
-/**
- * Root component for the Search view.
- * @type {ComponentClass<any>}
- */
-export const SearchRoute: ComponentClass<any> = SearchContainer;
-
-export interface SearchRouteState {
-  resources: SearchRouteResourcesState;
-}
-
-export const SearchRouteReducer = combineReducers<SearchRouteState>({
-  resources: searchRouteResourcesReducer,
-});
+const CHOICES = {
+  'eq': 'equals',
+  'in': 'contains',
+  'gt': 'greater than',
+  'gte': 'greater than or equal to',
+  'lt': 'less than',
+  'lte': 'less than or equal to',
+  'regex': 'contains',
+  'not:eq': 'does not equal',
+  'not:in': 'does not contain',
+  'not:regex': 'does not contain',
+  'not:missing': 'is not null',
+  'within': 'within',
+};

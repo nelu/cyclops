@@ -18,12 +18,13 @@
 
 // Vendor
 import * as React from 'react';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
-import {
-  LocationDescriptor,
-  InjectedRouter,
-} from 'react-router';
+import { InjectedRouter, Link } from 'react-router';
+
+// Local
 import { NormalizedDistilleryList } from '~/services/distilleries/types';
+import { Route } from '~/components/Route';
+import { RouterLocation } from '~/types/router';
+import { Result } from '~/types/result';
 
 // Local
 
@@ -32,9 +33,7 @@ import { NormalizedDistilleryList } from '~/services/distilleries/types';
 // --------------------------------------------------------------------------
 
 export interface ValueProps {
-  distilleries: NormalizedDistilleryList;
-  location: LocationDescriptor;
-  router: InjectedRouter;
+  results: Result[];
 }
 export interface FunctionProps {
   /** Fetches all container objects for the page. */
@@ -57,12 +56,51 @@ export class Search extends React.Component<Props, {}> {
   }
 
   public render() {
+    const results = this.props.results.length
+      ? this.props.results.map((result) => (
+        <div>{result}</div>
+      ))
+      : <h3 className="text-center">No Results</h3>;
+
     return (
-      <div className="flex-box">
-        <div className="flex-box flex--shrink sidebar">
-          <div className="flex-item" />
+      <div className="flex-box flex-box--column">
+        <div className="flex-box flex--shrink">
+          <div className="flex-item banner banner--dark">
+            <Link
+              to="/search/collections/"
+              className="pill"
+              activeClassName="pill--active"
+            >
+              Collections
+            </Link>
+            <Link
+              to="/search/containers/"
+              className="pill"
+              activeClassName="pill--active"
+            >
+              Containers
+            </Link>
+            <Link
+              to="/search/fields/"
+              className="pill"
+              activeClassName="pill--active"
+            >
+              Fields
+            </Link>
+          </div>
         </div>
-        <div className="flex-box" />
+        <div className="flex-box">
+          <div className="flex-box flex--shrink sidebar sidebar--large">
+            <div className="flex-item">
+              {this.props.children}
+            </div>
+          </div>
+          <div className="flex-box">
+            <div className="flex-box flex--shrink">
+              {results}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

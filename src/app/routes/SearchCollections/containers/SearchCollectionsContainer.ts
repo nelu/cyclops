@@ -24,7 +24,6 @@ import {
 } from 'react-redux';
 import {
   InjectedRouter,
-  LocationDescriptor,
   withRouter,
 } from 'react-router';
 
@@ -36,16 +35,22 @@ import {
 import {
   ValueProps,
   FunctionProps,
-  Search,
-} from '../components/Search';
-import * as actions from '../actions/searchRouteResourcesActions';
+  URLQuery,
+  URLParams,
+  SearchCollections,
+} from '../components/SearchCollections';
+import { RouterLocation } from '~/types/router';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
 /** Container properties. */
-interface ContainerProps {}
+interface ContainerProps {
+  router: InjectedRouter;
+  location: RouterLocation<URLQuery>;
+  params: URLParams;
+}
 
 /** Function that maps the redux state to the wrapped component. */
 type Values = StateToProps<ValueProps, ContainerProps>;
@@ -66,25 +71,28 @@ type Container = ComponentClass<ContainerProps>;
  * @param props Container properties.
  */
 const values: Values = (state, props) => ({
-  results: (state as any).routes.Search.resources.results,
+  resources: (state as any).routes.Search.resources.normalized,
+  router: props.router,
+  location: props.location,
+  params: props.params,
+  distilleries: (state as any).routes.Search.resources.distilleries,
 });
 
 /**
  * Maps redux dispatch functions to wrapped component properties.
  * @param dispatch Dispatch function for the redux store.
  */
-const functions: Functions = (dispatch) => ({
-  fetchDistilleries: bind(actions.fetchDistilleries, dispatch),
-});
+const functions: Functions = (dispatch) => ({});
 
 // --------------------------------------------------------------------------
 // Container
 // --------------------------------------------------------------------------
 
 /**
- * Container for the Search component.
+ * Container for the SearchCollections component.
  * @type {Container}
  */
-export const SearchContainer: Container = withRouter(
-  connect(values, functions)(Search),
+export const SearchCollectionsContainer: Container = withRouter(
+  connect(values, functions)(SearchCollections),
 );
+

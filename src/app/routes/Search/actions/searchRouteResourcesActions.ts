@@ -31,10 +31,10 @@ import { fetchAllDistilleries } from '~/services/distilleries/utils/distilleryAP
 import { addError } from '~/routes/App/actions/ErroPopupActions';
 
 /**
- * Action type prefix for distilleryStore actions.
+ * Action type prefix for search route resources actions.
  * @type {string}
  */
-const ACTION_PREFIX = 'SEARCH_DISTILLERY_STORE';
+const ACTION_PREFIX = 'SEARCH_ROUTE_RESOURCES';
 
 // --------------------------------------------------------------------------
 // FETCH_DISTILLERIES_SUCCESS

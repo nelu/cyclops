@@ -16,27 +16,14 @@
  * are made]
  */
 
-// Vendor
-import { ComponentClass } from 'react';
-import { combineReducers } from 'redux';
-
-// Local
-import {
-  searchRouteResourcesReducer,
-  SearchRouteResourcesState,
-} from './reducers/searchRouteResourcesReducer';
-import { SearchContainer } from '~/routes/Search/containers/SearchContainer';
-
-/**
- * Root component for the Search view.
- * @type {ComponentClass<any>}
- */
-export const SearchRoute: ComponentClass<any> = SearchContainer;
-
-export interface SearchRouteState {
-  resources: SearchRouteResourcesState;
+export interface Filter {
+  field: string;
+  type: string;
+  operator: string;
+  value: string;
 }
 
-export const SearchRouteReducer = combineReducers<SearchRouteState>({
-  resources: searchRouteResourcesReducer,
-});
+export interface FilterOption {
+  value: string;
+  name: string;
+}

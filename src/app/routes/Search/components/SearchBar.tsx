@@ -17,26 +17,31 @@
  */
 
 // Vendor
-import { ComponentClass } from 'react';
-import { combineReducers } from 'redux';
+import * as React from 'react';
 
 // Local
-import {
-  searchRouteResourcesReducer,
-  SearchRouteResourcesState,
-} from './reducers/searchRouteResourcesReducer';
-import { SearchContainer } from '~/routes/Search/containers/SearchContainer';
+import { NormalizedDistilleryList } from '~/services/distilleries/types';
 
-/**
- * Root component for the Search view.
- * @type {ComponentClass<any>}
- */
-export const SearchRoute: ComponentClass<any> = SearchContainer;
+// --------------------------------------------------------------------------
+// Interfaces/Types
+// --------------------------------------------------------------------------
 
-export interface SearchRouteState {
-  resources: SearchRouteResourcesState;
+/** Properties of the SearchBar component. */
+interface Props {
+  normalized: NormalizedDistilleryList;
 }
 
-export const SearchRouteReducer = combineReducers<SearchRouteState>({
-  resources: searchRouteResourcesReducer,
-});
+// --------------------------------------------------------------------------
+// Component
+// --------------------------------------------------------------------------
+
+/**
+ *
+ */
+export class SearchBar extends React.Component<Props, {}> {
+  public render() {
+    return (
+      <div />
+    );
+  }
+}
