@@ -54,7 +54,7 @@ const DEVELOPMENT = ENV === 'development';
  * Current Cyclops version according to the git tags.
  * @type {String}
  */
-const VERSION = execSync('get describe --tags --abbrev=0').toString() || '';
+const VERSION = execSync('git describe --tags --abbrev=0').toString() || '';
 
 const BANNER =
 `The contents of this file are subject to the CYPHON Proprietary Non-
