@@ -44,6 +44,8 @@ interface AppConfig {
   NOTIFICATIONS_SERVICE_WORKER_URL: string;
   /** URL of the cyphon admin page. */
   ADMIN_URL: string;
+  /** Current version of Cyphon this instance of Cyclops is running on. */
+  CYPHON_VERSION: string | undefined;
 }
 
 /**
@@ -55,7 +57,7 @@ interface ExtendedWindow extends Window {
 }
 
 /**
- * Injected application configuration object from the express server.
+ * Injected application configuration object from the parent template.
  * @type {AppConfig}
  */
 const CONFIG = (window as ExtendedWindow).CONFIG || {};
