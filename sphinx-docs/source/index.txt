@@ -17,8 +17,7 @@ written in `Typescript <https://www.typescriptlang.org/>`_.
    :maxdepth: 2
    :caption: Contents:
 
-   migrating-0.3-0.4
-   getting-started/getting-started
+   version-0.3-deprecated
    contributing
    license
 

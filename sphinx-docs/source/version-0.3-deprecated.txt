@@ -1,0 +1,9 @@
+.. _version-0.3-deprecated
+
+**********************
+Version 0.3 Deprecated
+**********************
+
+Version 0.3 of Cyclops has been deprecated. Please upgrade to Cyphon 1.2 or
+later to use Cyclops. View setup information
+`here <http://cyphon.readthedocs.io/en/latest/getting-started/configure-project.html#cyclops>`_.
