@@ -19,11 +19,7 @@
 import { getConfig } from '~/config';
 import { Dictionary } from '~/types/object';
 
-export interface SemanticVersion {
-  major: number;
-  minor: number;
-  patch: number;
-}
+export type SemanticVersion = [number, number, number];
 
 export type SemanticVersionRange = [SemanticVersion, SemanticVersion];
 
@@ -58,13 +54,15 @@ function parseVersionNumber(versionNumberString: string | undefined): number {
  * @param {string} semanticVersionString
  * @returns {SemanticVersion}
  */
-export function parseSemanticVersion(semanticVersionString: string): SemanticVersion {
+export function parseVersion(
+  semanticVersionString: string,
+  ): SemanticVersion {
   const splitVersionNumbers = semanticVersionString.split('.');
   const major = parseVersionNumber(splitVersionNumbers[0]);
   const minor = parseVersionNumber(splitVersionNumbers[1]);
   const patch = parseVersionNumber(splitVersionNumbers[2]);
 
-  return { major, minor, patch };
+  return [major, minor, patch];
 }
 
 /**
@@ -73,13 +71,13 @@ export function parseSemanticVersion(semanticVersionString: string): SemanticVer
  * @param {string} semanticVersionRangeString
  * @returns {SemanticVersionRange}
  */
-function parseSemanticVersionRange(
+function parseVersionRange(
   semanticVersionRangeString: string,
 ): SemanticVersionRange {
   const parsedVersionRepresentation = semanticVersionRangeString
     .split(':');
-  const oldest = parseSemanticVersion(parsedVersionRepresentation[0]);
-  const newest = parseSemanticVersion(parsedVersionRepresentation[1]);
+  const oldest = parseVersion(parsedVersionRepresentation[0]);
+  const newest = parseVersion(parsedVersionRepresentation[1]);
 
   return [oldest, newest];
 }
@@ -87,25 +85,24 @@ function parseSemanticVersionRange(
 /**
  * Determines if a semantic version matches a version between two
  * semantic version ranges.
- * @param {SemanticVersion} semanticVersion
- * @param {SemanticVersionRange} semanticVersionRange
+ * @param {number[]} version
+ * @param {[number[], number[]]} range
  * @returns {boolean}
  */
-function semanticVersionMatchesSemanticVersionRange(
-  semanticVersion: SemanticVersion,
-  semanticVersionRange: SemanticVersionRange,
+function versionMatchesRange(
+  version: number[],
+  range: [number[], number[]],
 ): boolean {
-  const majorMatches =
-    semanticVersionRange[0].major <= semanticVersion.major &&
-    semanticVersion.major <= semanticVersionRange[1].major;
-  const minorMatches =
-    semanticVersionRange[0].minor <= semanticVersion.minor &&
-    semanticVersion.minor <= semanticVersionRange[1].minor;
-  const patchMatches =
-    semanticVersionRange[0].patch <= semanticVersion.patch &&
-    semanticVersion.patch <= semanticVersionRange[1].patch;
+  if (!version.length) { return true; }
 
-  return majorMatches && minorMatches && patchMatches;
+  if (version[0] === range[0][0] || version[0] === range[1][0]) {
+    return versionMatchesRange(
+      version.slice(1),
+      [range[0].slice(1), range[1].slice(1)],
+    );
+  }
+
+  return version[0] > range[0][0] && version[0] < range[1][0];
 }
 
 /**
@@ -114,21 +111,19 @@ function semanticVersionMatchesSemanticVersionRange(
  * @param {SemanticVersion} cyclopsSemanticVersion
  * @returns {SemanticVersionRange}
  */
-export function getMatchingCyphonSemanticVersionRange(
+export function getCyphonVersionRange(
   cyclopsSemanticVersion: SemanticVersion,
   ): SemanticVersionRange | undefined {
   const matchingVersion = Object
     .keys(VERSION_MATCHING)
-    .find((cyclopsSemanticVersionRangeString) => {
-      const cyclopsSemanticVersionRange = parseSemanticVersionRange(
-        cyclopsSemanticVersionRangeString);
+    .find((cyclopsVersionRangeString) => {
+      const cyclopsVersionRange = parseVersionRange(cyclopsVersionRangeString);
 
-      return semanticVersionMatchesSemanticVersionRange(
-        cyclopsSemanticVersion, cyclopsSemanticVersionRange);
+      return versionMatchesRange(cyclopsSemanticVersion, cyclopsVersionRange);
     });
 
   return matchingVersion
-    ? parseSemanticVersionRange(VERSION_MATCHING[matchingVersion])
+    ? parseVersionRange(VERSION_MATCHING[matchingVersion])
     : undefined;
 }
 
@@ -152,19 +147,34 @@ export function cyclopsVersionMatchesCyphonVersion(): boolean {
     throw TypeError('Missing Cyphon version from configuration object.');
   }
 
-  const cyclopsSemanticVersion = parseSemanticVersion(
-    configuration.CYCLOPS_VERSION);
-  const matchingCyphonSemanticVersionRange =
-    getMatchingCyphonSemanticVersionRange(cyclopsSemanticVersion);
+  const cyclopsVersion = parseVersion(configuration.CYCLOPS_VERSION);
+  const cyphonVersionRange = getCyphonVersionRange(cyclopsVersion);
 
-  if (!matchingCyphonSemanticVersionRange) {
-    throw new TypeError(`Could not find matching Cyphon version for Cyclops ' +
-      'version ${configuration.CYCLOPS_VERSION}.`);
+  if (!cyphonVersionRange) {
+    throw new TypeError(
+      `Could not find matching Cyphon version for Cyclops ` +
+      `version ${configuration.CYCLOPS_VERSION}.`,
+    );
   }
 
-  const cyphonSemanticVersion = parseSemanticVersion(
-    configuration.CYPHON_VERSION);
+  const cyphonVersion = parseVersion(configuration.CYPHON_VERSION);
 
-  return semanticVersionMatchesSemanticVersionRange(
-    cyphonSemanticVersion, matchingCyphonSemanticVersionRange);
+  return versionMatchesRange(cyphonVersion, cyphonVersionRange);
+}
+
+/**
+ * Convert a semantic version object to a string representation.
+ * @param {SemanticVersion} version
+ * @returns {string}
+ */
+export function versionToString(version: SemanticVersion): string {
+  if (version[0] === Infinity) { return VERSION_WILDCARD; }
+
+  if (version[1] === Infinity) { return `${version[0]}.${VERSION_WILDCARD}`; }
+
+  if (version[2] === Infinity) {
+    return `${version[0]}.${version[1]}.${VERSION_WILDCARD}`;
+  }
+
+  return `${version[0]}.${version[1]}.${version[2]}`;
 }

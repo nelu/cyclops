@@ -212,6 +212,9 @@ const RULES = TESTING ? BASE_RULES.concat(TEST_RULES) : BASE_RULES;
 const BASE_PLUGINS = [
   new ExtractTextPlugin('cyclops.css'),
   new webpack.BannerPlugin(BANNER),
+  new webpack.DefinePlugin({
+    'CYCLOPS_VERSION': JSON.stringify(VERSION),
+  })
 ];
 
 /**
@@ -234,7 +237,6 @@ const PRODUCTION_PLUGINS = [
     'process.env': {
       NODE_ENV: JSON.stringify(process.env.NODE_ENV),
     },
-    'CYCLOPS_VERSION': JSON.stringify(VERSION),
   }),
   new webpack.optimize.UglifyJsPlugin({ sourceMap: true }),
 ];
