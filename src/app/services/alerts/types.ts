@@ -97,6 +97,7 @@ export interface AlertDetail extends Alert {
   comments: CommentNested[];
   /** Previous actions performed on the alert. */
   dispatches: DispatchNested[];
+  doc_id: string;
 }
 
 /** Shape of the alert object returned from the alerts list view. */
