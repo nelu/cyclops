@@ -23,6 +23,7 @@ import { LocationDescriptor } from 'react-router';
 // Local
 import { Header } from './Header';
 import { ErrorPopupContainer } from '../containers/ErrorPopupContainer';
+import { VersionMatchError } from '~/routes/App/components/VersionMatchError';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -59,6 +60,7 @@ export class Layout extends React.Component<Props, {}> {
     return (
       <div className="flex-box flex-box--column">
         <div className="flex-item flex--shrink">
+          <VersionMatchError />
           <Header location={this.props.location.pathname || ''} />
         </div>
         {this.props.children}

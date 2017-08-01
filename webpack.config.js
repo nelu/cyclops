@@ -20,6 +20,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const execSync = require('child_process').execSync
 
 // --------------------------------------------------------------------------
 // Constants
@@ -48,6 +49,12 @@ const TESTING = ENV === 'test';
  * @type {boolean}
  */
 const DEVELOPMENT = ENV === 'development';
+
+/**
+ * Current Cyclops version according to the git tags.
+ * @type {String}
+ */
+const VERSION = execSync('git describe --tags --abbrev=0').toString() || '';
 
 const BANNER =
 `The contents of this file are subject to the CYPHON Proprietary Non-
@@ -205,6 +212,9 @@ const RULES = TESTING ? BASE_RULES.concat(TEST_RULES) : BASE_RULES;
 const BASE_PLUGINS = [
   new ExtractTextPlugin('cyclops.css'),
   new webpack.BannerPlugin(BANNER),
+  new webpack.DefinePlugin({
+    'CYCLOPS_VERSION': JSON.stringify(VERSION),
+  })
 ];
 
 /**

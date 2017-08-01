@@ -115,7 +115,7 @@ export class AlertDataModal extends React.Component<Props, {}> {
     const alertContextSearch = alert.distillery
       ? (
         <AlertDataContextSearchContainer
-          resultId={alert.data._id}
+          resultId={alert.doc_id}
           contexts={normalizeContexts(alert.distillery.contexts)}
         />
       ) : <h2>Alert missing distillery</h2>;
