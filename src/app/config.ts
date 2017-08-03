@@ -60,7 +60,15 @@ interface ExtendedWindow extends Window {
  * Current Cyclops version.
  * @type {string}
  */
-export const CYCLOPS_VERSION = '0.4.2';
+const CYCLOPS_VERSION = '0.4.2';
+
+/**
+ * Returns the current Cyclops version. Created for mocking purposes.
+ * @returns {string}
+ */
+export function getVersion(): string {
+  return CYCLOPS_VERSION;
+}
 
 /**
  * Injected application configuration object from the parent template.
