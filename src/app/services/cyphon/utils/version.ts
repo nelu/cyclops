@@ -30,7 +30,8 @@ const VERSION_WILDCARD = '*';
  * @type {Dictionary<string>}
  */
 export const VERSION_MATCHING: Dictionary<string> = {
-  '0.0.0:0.4.1': '0.0.0:1.3.0',
+  '0.1.0:0.3.0': '1.0.0:1.1.3',
+  '0.4.0:0.4.1': '0.0.0:1.3.0',
   '0.4.2:*': '1.4.0:*',
 };
 
