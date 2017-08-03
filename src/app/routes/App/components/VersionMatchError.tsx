@@ -47,13 +47,11 @@ interface Props {}
 export class VersionMatchError extends React.Component<Props, {}> {
   public versionsMatch: boolean;
   public cyphonVersionRange?: SemanticVersionRange;
-  public cyclopsVersion?: string;
   public cyphonVersion?: string;
 
   constructor(props: Props) {
     super(props);
 
-    this.cyclopsVersion = getConfig().CYCLOPS_VERSION;
     this.cyphonVersion = getConfig().CYPHON_VERSION;
     try {
       this.versionsMatch = cyclopsVersionMatchesCyphonVersion();
@@ -61,14 +59,14 @@ export class VersionMatchError extends React.Component<Props, {}> {
       this.versionsMatch = false;
     }
     this.cyphonVersionRange = getCyphonVersionRange(
-      parseVersion(this.cyclopsVersion || ''),
+      parseVersion(CYCLOPS_VERSION || ''),
     );
   }
 
   public render() {
     if (this.versionsMatch) { return null; }
 
-    if (!this.cyclopsVersion) {
+    if (!CYCLOPS_VERSION) {
       return (
         <div className="text-center text--emphasis alert-bg--high content">
           Could not find Cyclops version number.
@@ -99,7 +97,7 @@ export class VersionMatchError extends React.Component<Props, {}> {
 
     return (
       <div className="text-center text--emphasis alert-bg--high content">
-        You're running Cyclops version {this.cyclopsVersion} with Cyphon
+        You're running Cyclops version {CYCLOPS_VERSION} with Cyphon
         version {this.cyphonVersion}, which are not compatible. This version
         of Cyclops is compatible with Cyphon versions {oldestVersionNumber} to
         {' ' + newestVersionNumber}.
