@@ -20,6 +20,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const Visualizer = require('webpack-visualizer-plugin');
 
 // --------------------------------------------------------------------------
 // Constants
@@ -114,7 +115,6 @@ const TSLINT_RULE = {
   test: /\.tsx?$/,
   enforce: 'pre',
   loader: 'tslint-loader',
-  options: { emitErrors: true },
 };
 
 /**
@@ -123,10 +123,10 @@ const TSLINT_RULE = {
  */
 const CSS_RULE = {
   test: /\.css$/,
-  use: [
-    'style-loader',
-    'css-loader',
-  ],
+  use: ExtractTextPlugin.extract({
+    fallback: 'style-loader',
+    use: CSS_LOADER,
+  }),
 };
 
 /**
@@ -136,7 +136,7 @@ const CSS_RULE = {
 const TYPESCRIPT_RULE = {
   test: /\.tsx?$/,
   include: path.resolve(__dirname, 'src'),
-  use: ['awesome-typescript-loader'],
+  loader: 'awesome-typescript-loader',
 };
 
 /**
@@ -204,7 +204,6 @@ const RULES = TESTING ? BASE_RULES.concat(TEST_RULES) : BASE_RULES;
  */
 const BASE_PLUGINS = [
   new ExtractTextPlugin('cyclops.css'),
-  new webpack.BannerPlugin(BANNER),
 ];
 
 /**
@@ -219,6 +218,13 @@ const TEST_PLUGINS = [
 ];
 
 /**
+ * Plugins that are used in a development environment.
+ * @type {Plugin[]}
+ */
+const DEVELOPMENT_PLUGINS = [
+];
+
+/**
  * Plugins to add in a production environment.
  * @type {Plugin[]}
  */
@@ -229,6 +235,7 @@ const PRODUCTION_PLUGINS = [
     },
   }),
   new webpack.optimize.UglifyJsPlugin({ sourceMap: true }),
+  new webpack.BannerPlugin(BANNER),
 ];
 
 /**
@@ -236,10 +243,20 @@ const PRODUCTION_PLUGINS = [
  * @type {Plugin[]}
  */
 const PLUGINS = {
-  development: () => BASE_PLUGINS,
+  development: () => BASE_PLUGINS.concat(DEVELOPMENT_PLUGINS),
   production: () => BASE_PLUGINS.concat(PRODUCTION_PLUGINS),
   test: () => BASE_PLUGINS.concat(TEST_PLUGINS),
 }[ENV]();
+
+/**
+ * Devtool to use.
+ * @type {string}
+ */
+const DEVTOOL = {
+  development: 'inline-source-map',
+  production: 'source-map',
+  test: 'inline-source-map',
+}[ENV];
 
 // --------------------------------------------------------------------------
 // Configuration
@@ -252,17 +269,20 @@ const PLUGINS = {
 module.exports = {
   context: __dirname,
 
-  entry: './src/main.ts',
+  entry: [
+    require.resolve('core-js/shim'),
+    './src/main.ts'
+  ],
 
   output: TESTING ? undefined : {
     filename: 'cyclops.js',
     path: path.resolve(__dirname, DEVELOPMENT ? 'build' : 'dist'),
-    publicPath: '/static/',
   },
 
   resolve: {
     extensions: [
       '.js',
+      '.jsx',
       '.ts',
       '.tsx',
       '.json',
@@ -272,7 +292,7 @@ module.exports = {
     },
   },
 
-  devtool: TESTING || DEVELOPMENT ? 'inline-source-map' : 'source-map',
+  devtool: DEVTOOL,
 
   module: {
     rules: RULES,
@@ -283,7 +303,7 @@ module.exports = {
     'react/lib/ReactContext': 'window',
     'react/lib/ExecutionEnvironment': true,
     'react/addons': true,
-    mapboxgl: 'mapboxgl',
+    'mapboxgl': 'mapboxgl',
   },
 
   plugins: PLUGINS,

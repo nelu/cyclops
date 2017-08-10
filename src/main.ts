@@ -27,7 +27,4 @@ import { App } from './app';
 require('../node_modules/nvd3/build/nv.d3.css');
 require('./styles/app.scss');
 
-// Polyfills
-require('core-js/shim');
-
 render(App, document.getElementById(getConfig().APP_CONTAINER_ID));
