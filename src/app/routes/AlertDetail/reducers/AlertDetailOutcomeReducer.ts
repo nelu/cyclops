@@ -27,7 +27,7 @@ import {
 import * as actions from '../actions/AlertDetailOutcomeActions';
 import { AlertOutcomeChoices } from '../../../services/alerts/types';
 
-/** State shape of the alert detail outcome reducer. */
+/** SearchQueryState shape of the alert detail outcome reducer. */
 export interface AlertDetailOutcomeState {
   /** If the outcome form is shown. */
   active: boolean;

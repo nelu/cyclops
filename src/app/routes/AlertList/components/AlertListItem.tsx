@@ -37,12 +37,12 @@ interface Props {
   /** Alert to display. */
   alert: Alert;
   /** Currently selected alert's ID. */
-  selectedAlert: number | null;
+  selected?: number | null;
   /**
    * Selects an alerts to view in the alert detail.
    * @param alertId
    */
-  selectAlert(alertId: number): any;
+  selectAlert?(alertId: number): any;
 }
 
 // --------------------------------------------------------------------------
@@ -50,46 +50,46 @@ interface Props {
 // --------------------------------------------------------------------------
 
 /**
- * Displays a table row with an overview of the given alert.
+ * Table row with an overview of the given alert.
  */
 export class AlertListItem extends React.Component<Props, {}> {
   /**
    * Selects this alerts to be viewed in the alert detail view.
    */
-  public selectAlert = (): void => {
-    this.props.selectAlert(this.props.alert.id);
+  public onClick = (): void => {
+    if (this.props.selectAlert) { this.props.selectAlert(this.props.alert.id); }
   };
 
   public render(): JSX.Element {
-    const { alert } = this.props;
-    const distilleryName = alert.distillery
-      ? shortenDistilleryName(alert.distillery.name)
+    const distilleryName = this.props.alert.distillery
+      ? shortenDistilleryName(this.props.alert.distillery.name)
       : 'None';
-    const isActive = (this.props.selectedAlert === alert.id);
+    const isActive = this.props.selected === this.props.alert.id;
     const classes = classnames(
       'alert-list-item',
-      `alert-list-item--${alert.level.toLowerCase()}`,
+      `alert-list-item--${this.props.alert.level.toLowerCase()}`,
       { active: isActive },
     );
-    const user = alert.assigned_user
-      ? getUserFullName(alert.assigned_user)
+    const user = this.props.alert.assigned_user
+      ? getUserFullName(this.props.alert.assigned_user)
       : 'Unassigned';
+    const onClick = this.props.selectAlert ? this.onClick : undefined;
 
     return (
-      <tr className={classes} onClick={this.selectAlert}>
-        <td><AlertLevelIcon level={alert.level}/></td>
-        <td><AlertStatusIcon status={alert.status}/></td>
+      <tr className={classes} onClick={onClick}>
+        <td><AlertLevelIcon level={this.props.alert.level}/></td>
+        <td><AlertStatusIcon status={this.props.alert.status}/></td>
         <td className="text--muted">
-          {formatDate(alert.created_date)}
+          {formatDate(this.props.alert.created_date)}
         </td>
         <td className="text--emphasis">
           {distilleryName}
         </td>
-        <td><span className="badge">{alert.incidents}</span></td>
+        <td><span className="badge">{this.props.alert.incidents}</span></td>
         <td>
           <div className="flex-box">
             <div className="alert-list-item__title flex-item">
-              {alert.title}
+              {this.props.alert.title}
               <div className="alert-list-item__gradient"/>
             </div>
             <div className="alert-list-item__user flex-item flex--shrink">

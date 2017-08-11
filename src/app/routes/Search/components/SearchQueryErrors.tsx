@@ -19,20 +19,13 @@
 // Vendor
 import * as React from 'react';
 
-// Local
-import { NormalizedDistilleryList } from '~/services/distilleries/types';
-
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties of the SearchBar component. */
+/** Properties of the SearchQueryErrors component. */
 interface Props {
-  onSubmit(query: string): void;
-}
-
-interface State {
-  query: string;
+  errors: string[];
 }
 
 // --------------------------------------------------------------------------
@@ -40,43 +33,15 @@ interface State {
 // --------------------------------------------------------------------------
 
 /**
- *
+ * Displays a list of errors about a search query.
  */
-export class SearchBar extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-
-    this.state = { query: '' };
-  }
-
-  public onChange: React.FormEventHandler<HTMLInputElement> = (event) => {
-    this.setState({ query: event.currentTarget.value });
-  };
-
-  public submitQuery = () => {
-    this.props.onSubmit(this.state.query);
-  };
-
-  public onKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
-    if (event.key === 'Enter') { this.submitQuery(); }
-  };
-
-  public onSubmit = () => {
-    this.submitQuery();
-  };
-
+export class SearchQueryErrors extends React.Component<Props, {}> {
   public render() {
+    const errors = this.props.errors.map((error) => <p>{error}</p>);
+
     return (
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search"
-          onChange={this.onChange}
-          onKeyPress={this.onKeyPress}
-        />
-        <span>
-          <button onClick={this.onSubmit}>Submit</button>
-        </span>
+      <div className="alert-text--high">
+        {errors}
       </div>
     );
   }

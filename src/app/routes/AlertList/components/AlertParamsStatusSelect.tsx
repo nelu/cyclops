@@ -24,7 +24,7 @@ import { ListGroup } from 'react-bootstrap';
 import { STATUS_OPTIONS_LIST } from '../constants';
 import { AlertParamsStatusOption } from './AlertParamsStatusOption';
 import { AlertStatusParam } from '~/services/alerts/types';
-import { Collapsible } from '~/components/Collapsible';
+import { CollapsibleHeader } from '~/components/CollapsibleHeader';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -64,7 +64,7 @@ export class AlertParamsStatusSelect extends React.Component<Props, {}> {
     ));
 
     return (
-      <Collapsible
+      <CollapsibleHeader
         title="Status"
         action={this.clearStatus}
         actionName="Clear"
@@ -73,7 +73,7 @@ export class AlertParamsStatusSelect extends React.Component<Props, {}> {
         <ListGroup>
           {statusOptions}
         </ListGroup>
-      </Collapsible>
+      </CollapsibleHeader>
     );
   }
 }

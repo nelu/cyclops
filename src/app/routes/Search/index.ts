@@ -25,6 +25,10 @@ import {
   searchRouteResourcesReducer,
   SearchRouteResourcesState,
 } from './reducers/searchRouteResourcesReducer';
+import {
+  SearchQueryReducer,
+  SearchQueryState,
+} from './reducers/searchQueryReducer';
 import { SearchContainer } from '~/routes/Search/containers/SearchContainer';
 
 /**
@@ -34,9 +38,11 @@ import { SearchContainer } from '~/routes/Search/containers/SearchContainer';
 export const SearchRoute: ComponentClass<any> = SearchContainer;
 
 export interface SearchRouteState {
+  search: SearchQueryState;
   resources: SearchRouteResourcesState;
 }
 
 export const SearchRouteReducer = combineReducers<SearchRouteState>({
+  search: SearchQueryReducer,
   resources: searchRouteResourcesReducer,
 });

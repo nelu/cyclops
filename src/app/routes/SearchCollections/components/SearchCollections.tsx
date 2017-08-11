@@ -28,7 +28,7 @@ import {
 } from '~/services/distilleries/types';
 import { Route } from '~/components/Route';
 import { RouterLocation } from '~/types/router';
-import { Collapsible } from '~/components/Collapsible';
+import { CollapsibleHeader } from '~/components/CollapsibleHeader';
 import { DistilleryMultiAutocomplete } from '~/services/distilleries/components/DistilleryMultiAutocomplete';
 import { toggleArrayValue } from '~/utils/arrayUtils';
 import { getSharedDistilleryFields } from '~/services/distilleries/utils/distilleryNormalizr';
@@ -126,7 +126,7 @@ export class SearchCollections extends Route<Props, {}, URLParams, URLQuery> {
     const fields = this.getSharedFields(query);
     return fields.length
       ? fields.map((field) => (
-        <SearchField field={field} onClick={this.addField} />
+        <SearchField field={field} />
       ))
       : <div>No Shared Fields</div>;
   };
@@ -138,17 +138,17 @@ export class SearchCollections extends Route<Props, {}, URLParams, URLQuery> {
 
     return (
       <div className="sidebar__spacing">
-        <Collapsible title="Collections">
+        <CollapsibleHeader title="Collections">
           <DistilleryMultiAutocomplete
             distilleries={this.props.distilleries}
             selected={query.distilleries}
             onSelect={this.selectDistillery}
             onRemove={this.selectDistillery}
           />
-        </Collapsible>
-        <Collapsible title="Fields">
+        </CollapsibleHeader>
+        <CollapsibleHeader title="Fields">
           {fields}
-        </Collapsible>
+        </CollapsibleHeader>
         {filters}
       </div>
     );

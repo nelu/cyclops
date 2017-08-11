@@ -74,10 +74,10 @@ describe('<AlertParamsCategorySelect />', () => {
     });
   });
 
-  it('should display a Collapsible', () => {
+  it('should display a CollapsibleHeader', () => {
     const component = render();
     const instance: any = component.instance();
-    const collapsible = component.find('Collapsible');
+    const collapsible = component.find('CollapsibleHeader');
 
     chai.expect(collapsible).to.have.length(1);
     chai.expect(collapsible.prop('title')).to.equal('Category');

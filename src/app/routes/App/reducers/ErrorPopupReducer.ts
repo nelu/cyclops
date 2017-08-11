@@ -23,7 +23,7 @@ import { ReducerMap, handleActions } from 'redux-actions';
 import * as actions from '../actions/ErroPopupActions';
 import { StoredError } from '../types';
 
-/** State shape of the ErrorPopup reducer. */
+/** SearchQueryState shape of the ErrorPopup reducer. */
 export interface ErrorPopupState {
   /** Current errors to make the user aware of. */
   errors: StoredError[];
@@ -98,7 +98,7 @@ reducers[actions.CLEAR_ERRORS] = (
 
 /**
  * ErrorPopup reducer.
- * @type {@type {Reducer<State, any>}
+ * @type {@type {Reducer<SearchQueryState, any>}
  */
 export const ErrorPopupReducer = handleActions<ErrorPopupState, any>(
   reducers,

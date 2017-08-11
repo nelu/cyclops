@@ -69,7 +69,7 @@ export interface DistilleryMinimal {
 }
 
 /** Entities in a normalized distillery or list of distilleries. */
-interface DistilleryEntities {
+export interface DistilleryEntities {
   containers?: NormalizedEntity<ContainerFlat>;
   contextFilters?: NormalizedEntity<ContextFilter>;
   contexts?: NormalizedEntity<ContextFlat>;

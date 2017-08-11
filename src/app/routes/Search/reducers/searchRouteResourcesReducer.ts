@@ -34,7 +34,7 @@ import { Result } from '~/types/result';
 import { ContainerFlat } from '~/services/containers/types';
 import { Field } from '~/services/cyphon/types';
 
-/** State shape of the search route resources reducer. */
+/** SearchQueryState shape of the search route resources reducer. */
 export type SearchRouteResourcesState = {
   normalized: NormalizedDistilleryList;
   distilleries: DistilleryFlat[];
@@ -96,7 +96,7 @@ reducers[actions.FETCH_DISTILLERIES_SUCCESS] = (
 
 /**
  * Search route resources reducer.
- * @type {@type {Reducer<State, any>}
+ * @type {@type {Reducer<SearchQueryState, any>}
  */
 export const searchRouteResourcesReducer = handleActions<
   SearchRouteResourcesState,

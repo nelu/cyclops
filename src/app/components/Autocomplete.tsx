@@ -49,7 +49,7 @@ interface State {
 /**
  * Shows an input element that allows for text autocomplete.
  */
-export class Autocomplete extends React.Component<Props, State> {
+export class Autocomplete extends React.Component<Props, Partial<State>> {
   /**
    * Default input props given to the input element of the
    * react-autocomplete component.
@@ -92,7 +92,7 @@ export class Autocomplete extends React.Component<Props, State> {
   }
 
   public componentWillReceiveProps(nextProps: Props): void {
-    const filtered = this.filterItems(nextProps.items, this.state.value);
+    const filtered = this.filterItems(nextProps.items, this.state.value || '');
     const selected = nextProps.value;
     const value = selected !== this.state.selected
       ? selected
@@ -178,7 +178,7 @@ export class Autocomplete extends React.Component<Props, State> {
   public render() {
     return (
       <Complete
-        items={this.state.filtered}
+        items={this.state.filtered || []}
         getItemValue={this.props.getValue}
         renderItem={this.renderItem}
         wrapperStyle={Autocomplete.WRAPPER_STYLE}

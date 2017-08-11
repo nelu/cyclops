@@ -97,7 +97,7 @@ export class AlertListSearchBar extends React.Component<Props, State> {
 
   public render(): JSX.Element {
     return (
-      <div className="alert-list__search-bar">
+      <div className="search-bar">
         <input
           type="text"
           placeholder="Search"

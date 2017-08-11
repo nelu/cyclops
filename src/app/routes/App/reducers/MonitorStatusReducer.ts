@@ -29,7 +29,7 @@ import * as actions from '../actions/MonitorStatusActions';
 import { NormalizedMonitorList } from '~/services/monitors/types';
 
 /**
- * State shape for the MonitorStatus container.
+ * SearchQueryState shape for the MonitorStatus container.
  */
 export interface MonitorStatusState {
   /** If the modal list is loading. */
@@ -51,7 +51,7 @@ export interface MonitorStatusState {
 type PartialState = Partial<MonitorStatusState>;
 
 /**
- * Initial State of the MonitorStatus container.
+ * Initial SearchQueryState of the MonitorStatus container.
  * @type {State}
  */
 export const INITIAL_STATE: MonitorStatusState = {

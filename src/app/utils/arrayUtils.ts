@@ -76,7 +76,7 @@ export function toggleArrayValue(value: any, array?: any[]): any[] | undefined {
  */
 export function findByID(id: number, values?: Array<{ id: number }>): any {
   return values
-    ? _.find(values, ['id', id])
+    ? _.find<any>(values, ['id', id])
     : undefined;
 }
 

@@ -58,7 +58,7 @@ export class DistilleryMultiAutocomplete extends React.Component<Props, {}> {
    */
   public getSelectedDistillery = (): DistilleryMinimal | undefined => {
     return this.props.selected
-      ? _.find(this.props.distilleries, ['id', this.props.selected])
+      ? _.find<any>(this.props.distilleries, ['id', this.props.selected])
       : undefined;
   };
 

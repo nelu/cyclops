@@ -24,6 +24,7 @@ import * as AlertDetail from './AlertDetail';
 import * as AlertList from './AlertList';
 import * as Dashboard from './Dashboard';
 import * as App from './App';
+import * as Search from './Search';
 
 /** Redux state shape for the routes. */
 export interface RoutesState {
@@ -31,6 +32,7 @@ export interface RoutesState {
   AlertList: AlertList.AlertListRouteState;
   App: App.AppRouteState;
   Dashboard: Dashboard.DashboardRouteState;
+  Search: Search.SearchRouteState;
 }
 
 /** Redux reducer for the routes. */
@@ -39,6 +41,7 @@ export const RoutesReducer = combineReducers<RoutesState>({
   AlertList: AlertList.AlertListRouteReducer,
   App: App.AppRouteReducer,
   Dashboard: Dashboard.DashboardRouteReducer,
+  Search: Search.SearchRouteReducer,
 });
 
 /** All the root route components for the react-router routes. */
@@ -47,4 +50,5 @@ export const Routes = {
   AlertList: AlertList.AlertListRoute,
   App: App.AppRoute,
   Dashboard: Dashboard.DashboardRoute,
+  Search: Search.SearchRoute,
 };

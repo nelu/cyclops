@@ -16,11 +16,29 @@
  * are made]
  */
 
-.banner {
-  padding: $padding-base-vertical $padding-base-horizontal;
-  background-color: $color-dark;
+// Vendor
+import * as React from 'react';
 
-  &--dark {
-    background-color: $color-darker;
+// --------------------------------------------------------------------------
+// Interfaces/Types
+// --------------------------------------------------------------------------
+
+/** Properties of the SearchDistilleryResults component. */
+interface Props {}
+
+// --------------------------------------------------------------------------
+// Component
+// --------------------------------------------------------------------------
+
+/**
+ * List of results from distillery stores that match the current query.
+ */
+export class SearchDistilleryResults extends React.Component<Props, {}> {
+  public render() {
+    return (
+      <div>
+        OHWWWAAAH
+      </div>
+    );
   }
 }

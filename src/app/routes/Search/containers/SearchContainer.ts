@@ -38,14 +38,18 @@ import {
   FunctionProps,
   Search,
 } from '../components/Search';
-import * as actions from '../actions/searchRouteResourcesActions';
+import * as resourceActions from '../actions/searchRouteResourcesActions';
+import { search } from '../actions/searchQueryActions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
 /** Container properties. */
-interface ContainerProps {}
+interface ContainerProps {
+  location: LocationDescriptor;
+  router: InjectedRouter;
+}
 
 /** Function that maps the redux state to the wrapped component. */
 type Values = StateToProps<ValueProps, ContainerProps>;
@@ -66,7 +70,18 @@ type Container = ComponentClass<ContainerProps>;
  * @param props Container properties.
  */
 const values: Values = (state, props) => ({
-  results: (state as any).routes.Search.resources.results,
+  containers: state.routes.Search.resources.containers,
+  distilleries: state.routes.Search.resources.distilleries,
+  fields: state.routes.Search.resources.fields,
+  normalized: state.routes.Search.resources.normalized,
+  query: state.routes.Search.search.query,
+  valid: state.routes.Search.search.valid,
+  loading: state.routes.Search.search.loading,
+  total: state.routes.Search.search.total,
+  alertResults: state.routes.Search.search.alerts,
+  distilleryResults: state.routes.Search.search.distilleries,
+  location: props.location,
+  router: props.router,
 });
 
 /**
@@ -74,7 +89,8 @@ const values: Values = (state, props) => ({
  * @param dispatch Dispatch function for the redux store.
  */
 const functions: Functions = (dispatch) => ({
-  fetchDistilleries: bind(actions.fetchDistilleries, dispatch),
+  fetchDistilleries: bind(resourceActions.fetchDistilleries, dispatch),
+  search: bind(search, dispatch),
 });
 
 // --------------------------------------------------------------------------

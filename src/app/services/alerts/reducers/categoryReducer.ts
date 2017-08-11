@@ -27,7 +27,7 @@ import {
 import * as actions from '../actions/categoryActions';
 import { NormalizedCategoryList } from '~/services/alerts/types';
 
-/** State shape of the reducer. */
+/** SearchQueryState shape of the reducer. */
 export type CategoryStoreReducerState = NormalizedCategoryList;
 
 /**

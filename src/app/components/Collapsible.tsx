@@ -24,17 +24,13 @@ import * as classnames from 'classnames';
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties of the CollapsibleListGroup component. */
+/** Properties of the Collapsible component. */
 interface Props {
-  title: string;
-  actionName?: string;
-  spaced?: boolean;
-  action?(): any;
+  descriptor: JSX.Element | string;
+  open: boolean;
 }
 
-/** Internal state of the CollapsibleListGroup component */
 interface State {
-  /** If the content should be viewable. */
   open: boolean;
 }
 
@@ -43,66 +39,47 @@ interface State {
 // --------------------------------------------------------------------------
 
 /**
- *
+ * Creates a block of text with a descriptor that can be collapsed to
+ * save screen real estate.
  */
 export class Collapsible extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = { open: true };
+    this.state = { open: this.props.open };
   }
 
-  /** Closes the collapsible content. */
-  public close = (): void => {
+  public close = () => {
     this.setState({ open: false });
   };
 
-  /** Opens the collapsible content */
-  public open = (): void => {
+  public open = () => {
     this.setState({ open: true });
   };
 
-  /** Toggles the collapsible content. */
-  public toggle = (): void => {
-    (this.state.open ? this.close : this.open)();
+  public toggle = () => {
+    if (this.state.open) { this.close(); }
+    else { this.open(); }
   };
 
   public render() {
-    const caret = this.state.open
-      ? <i className="fa fa-caret-down collapsible__caret" />
-      : <i className="fa fa-caret-right collapsible__caret" />;
-    const content = this.state.open
-      ? this.props.children
+    const content = this.state.open ? this.props.children : null;
+    const caretClasses = classnames('fa', 'btn__caret', {
+      'fa-caret-down': this.state.open,
+      'fa-caret-right': !this.state.open,
+    });
+    const ellipsis = !this.state.open
+      ? <i className="fa fa-ellipsis-h text--muted" />
       : null;
-    const ellipsis = this.state.open
-      ? null
-      : <i className="fa fa-ellipsis-h collapsible__ellipsis" />;
-    const action = this.props.action
-      ? (
-        <button
-          className="btn-basic collapsible__action"
-          onClick={this.props.action}
-        >
-          {this.props.actionName}
-        </button>
-      ) : null;
-    const classes = classnames(
-      'collapsible__title--spaced flex-box flex-box--align-center',
-      { collapsible__spacer: this.props.spaced },
-    );
 
     return (
       <div>
-        <div className={classes}>
-          <h3 className="collapsible__title flex-item flex--shrink">
-            <button className="btn--plain" onClick={this.toggle}>
-              {this.props.title}{caret}{ellipsis}
-            </button>
-          </h3>
-          <div className="sub-title flex-item" />
-          <div className="flex-item flex--shrink">
-            {action}
-          </div>
+        <div>
+          <button className="btn--plain" onClick={this.toggle}>
+            {this.props.descriptor}
+            <i className={caretClasses} />
+            {ellipsis}
+          </button>
         </div>
         {content}
       </div>

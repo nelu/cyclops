@@ -34,7 +34,7 @@ import {
 import * as requests from '~/services/cyphon/utils/requests';
 
 /**
- * State shape of the ContextSearch reducer.
+ * SearchQueryState shape of the ContextSearch reducer.
  */
 export interface AlertDataContextSearchState {
   /** If the results for a search are currently loading. */

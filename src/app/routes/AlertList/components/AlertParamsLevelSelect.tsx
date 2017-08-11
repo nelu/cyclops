@@ -24,7 +24,7 @@ import { ListGroup } from 'react-bootstrap';
 import { LEVEL_OPTIONS_LIST } from '../constants';
 import { AlertLevelParam } from '~/services/alerts/types';
 import { AlertParamsLevelOption } from './AlertParamsLevelOption';
-import { Collapsible } from '~/components/Collapsible';
+import { CollapsibleHeader } from '~/components/CollapsibleHeader';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -65,7 +65,7 @@ export class AlertParamsLevelSelect extends React.Component<Props, {}> {
     ));
 
     return (
-      <Collapsible
+      <CollapsibleHeader
         title="Level"
         action={this.clearLevels}
         actionName="Clear"
@@ -74,7 +74,7 @@ export class AlertParamsLevelSelect extends React.Component<Props, {}> {
         <ListGroup>
           {levelOptions}
         </ListGroup>
-      </Collapsible>
+      </CollapsibleHeader>
     );
   }
 }

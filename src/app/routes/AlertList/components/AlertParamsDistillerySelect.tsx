@@ -22,7 +22,7 @@ import * as _ from 'lodash';
 
 // Local
 import { DistilleryMinimal } from '~/services/distilleries/types';
-import { Collapsible } from '~/components/Collapsible';
+import { CollapsibleHeader } from '~/components/CollapsibleHeader';
 import { DistilleryMultiAutocomplete } from '~/services/distilleries/components/DistilleryMultiAutocomplete';
 
 // --------------------------------------------------------------------------
@@ -66,14 +66,14 @@ export class AlertParamsDistillerySelect extends React.Component<Props, {}> {
   public render(): JSX.Element {
     return (
       <div className="alert-list-params__spacer alert-list-params__group">
-        <Collapsible title="Source">
+        <CollapsibleHeader title="Source">
           <DistilleryMultiAutocomplete
             distilleries={this.props.distilleries}
             selected={this.props.selected}
             onSelect={this.onSelect}
             onRemove={this.onRemove}
           />
-        </Collapsible>
+        </CollapsibleHeader>
       </div>
     );
   }

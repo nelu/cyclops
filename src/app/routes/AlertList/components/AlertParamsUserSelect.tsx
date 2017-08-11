@@ -22,7 +22,7 @@ import * as React from 'react';
 // Local
 import { User } from '~/services/users/types';
 import { getConfig } from '~/config';
-import { Collapsible } from '~/components/Collapsible';
+import { CollapsibleHeader } from '~/components/CollapsibleHeader';
 import { UserAutocomplete } from '~/services/users/components/UserAutocomplete';
 
 // --------------------------------------------------------------------------
@@ -75,7 +75,7 @@ export class AlertParamsUserSelect extends React.Component<Props, {}> {
   public render(): JSX.Element {
     return (
       <div className="alert-list-params__spacer ">
-        <Collapsible
+        <CollapsibleHeader
           title="Assigned"
           action={this.clearSelection}
           actionName="Clear"
@@ -93,7 +93,7 @@ export class AlertParamsUserSelect extends React.Component<Props, {}> {
               Assigned to me
             </button>
           </div>
-        </Collapsible>
+        </CollapsibleHeader>
       </div>
     );
   }

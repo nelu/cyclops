@@ -23,7 +23,7 @@ import * as _ from 'lodash';
 // Local
 import * as actions from '../actions/notificationActions';
 
-/** State shape of the Notifications reducer. */
+/** SearchQueryState shape of the Notifications reducer. */
 export interface NotificationsState {
   /** If notifications are enabled. */
   enabled: boolean;
@@ -62,7 +62,7 @@ reducers[actions.NOTIFICATIONS_ENABLED] = (
 
 /**
  * Combined reducer functions.
- * @type {@type {Reducer<State, any>}
+ * @type {@type {Reducer<SearchQueryState, any>}
  */
 export const NotificationsReducer = handleActions<NotificationsState, any>(
   reducers,

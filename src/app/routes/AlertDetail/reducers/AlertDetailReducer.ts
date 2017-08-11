@@ -34,7 +34,7 @@ import { ResultIPAdresses } from '~/types/result';
 import { RequestCanceler } from '~/utils/RequestCanceler';
 import * as requests from '~/services/cyphon/utils/requests';
 
-/** State shape of the AlertDetail reducer. */
+/** SearchQueryState shape of the AlertDetail reducer. */
 export interface AlertDetailState {
   /** ID of the currently selected alerts. */
   alertId: number | null;

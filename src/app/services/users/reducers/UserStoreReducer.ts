@@ -28,7 +28,7 @@ import * as actions from '../actions/UserStoreActions';
 import { NormalizedUserList } from '~/services/users/types';
 import { updateNormalizedList } from '~/utils/normalizrUtils';
 
-/** State shape of the UserStoreReducer. */
+/** SearchQueryState shape of the UserStoreReducer. */
 export type UserStoreState = NormalizedUserList;
 
 /** Partial state of the UserStore. Used to type check updates to the store. */

@@ -157,50 +157,52 @@ export class AlertDataContextSearch extends React.Component<Props, State> {
   };
 
   public render(): JSX.Element {
-    const {
-      contexts,
-      selectedContext,
-      selectContext,
-      page,
-      pageSize,
-      results,
-      resultCount,
-      loading,
-    } = this.props;
-    const { performInitialSearch, handlePageChange, handleKeywordChange } = this;
-    const paginationRange = page && resultCount ?
-      getResultPaginationRange(page, pageSize, resultCount) : null;
-    const resultList = results && results.length && paginationRange ?
-      results.map((result, index) => (
-        <div key={result._id} className="result-context-search__result flex-box">
-          <div className="result-context-search__result-index flex-item flex--shrink">
-            {paginationRange.start + index}
-          </div>
-          <div className="result-context-search__result-data flex-item">
-            <JSONFormatter json={result} open={10} />
-          </div>
+    const paginationRange = this.props.page && this.props.resultCount
+      ? getResultPaginationRange(
+        this.props.page,
+        this.props.pageSize,
+        this.props.resultCount,
+      ) : null;
+    const resultList = (
+      this.props.results &&
+      this.props.results.length &&
+      paginationRange
+    ) ? this.props.results.map((result, index) => (
+      <div key={result._id} className="result-context-search__result flex-box">
+        <div className="result-context-search__result-index flex-item flex--shrink">
+          {paginationRange.start + index}
         </div>
-      )) : (
-        <h4 className="text-center">No Results</h4>
-      );
-    const contextObject = selectedContext ?
-      denormalizeContext(selectedContext, contexts) : null;
-    const contextDetail = contextObject ?
-      <AlertDataContextDetail context={contextObject}/> : null;
-    const keywordChange = selectedContext ? (
+        <div className="result-context-search__result-data flex-item">
+          <JSONFormatter json={result} open={10} />
+        </div>
+      </div>
+    )) : (
+      <h4 className="text-center">No Results</h4>
+    );
+    const contextObject = this.props.selectedContext
+      ? denormalizeContext(this.props.selectedContext, this.props.contexts)
+      : null;
+    const contextDetail = contextObject
+      ? <AlertDataContextDetail context={contextObject}/>
+      : null;
+    const keywordChange = this.props.selectedContext
+      ? (
         <div>
           <TextInput
-            updateText={handleKeywordChange}
+            updateText={this.handleKeywordChange}
             placeholder="Keyword"
           />
         </div>
       ) : null;
-    const paginationElement = (resultCount > pageSize) && page ? (
+    const paginationElement =
+      this.props.resultCount as number > this.props.pageSize &&
+      this.props.page
+        ? (
         <div className="result-context-search__pagination">
           <Pagination
-            items={Math.ceil(resultCount / pageSize)}
-            activePage={page}
-            onSelect={handlePageChange}
+            items={Math.ceil(this.props.resultCount as number / this.props.pageSize)}
+            activePage={this.props.page}
+            onSelect={this.handlePageChange}
             maxButtons={6}
             next="Next"
             prev="Prev"
@@ -212,10 +214,10 @@ export class AlertDataContextSearch extends React.Component<Props, State> {
     const paginationRangeElement = paginationRange
       ? (
         <span>
-          Showing {paginationRange.start} - {paginationRange.end} of {resultCount}
+          Showing {paginationRange.start} - {paginationRange.end} of {this.props.resultCount}
         </span>
       ) : null;
-    const searchButtonText = loading
+    const searchButtonText = this.props.loading
       ?  <i className="fa fa-spinner fa-spin" />
       : 'Search';
 
@@ -225,8 +227,8 @@ export class AlertDataContextSearch extends React.Component<Props, State> {
           <SpacedSection>
             <SubTitle>Context</SubTitle>
             <AlertDataContextSelect
-              contexts={contexts}
-              selectedContext={selectedContext}
+              contexts={this.props.contexts}
+              selectedContext={this.props.selectedContext}
               selectContext={selectContext}
             />
 
@@ -235,9 +237,9 @@ export class AlertDataContextSearch extends React.Component<Props, State> {
             <Button
               block={true}
               bsStyle="default"
-              onClick={performInitialSearch}
+              onClick={this.performInitialSearch}
               className="result-context-search__button"
-              disabled={!selectedContext || loading}
+              disabled={!this.props.selectedContext || this.props.loading}
             >
               {searchButtonText}
             </Button>

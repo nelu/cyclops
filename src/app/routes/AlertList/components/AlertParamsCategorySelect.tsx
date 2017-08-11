@@ -25,7 +25,7 @@ import {
   NormalizedCategoryList,
 } from '~/services/alerts/types';
 import { denormalizeCategories } from '~/services/alerts/utils/categoryUtils';
-import { Collapsible } from '~/components/Collapsible';
+import { CollapsibleHeader } from '~/components/CollapsibleHeader';
 import { CategoryAutocomplete } from '~/services/alerts/components/CategoryAutocomplete';
 import { toggleArrayValue } from '~/utils/arrayUtils';
 
@@ -70,7 +70,7 @@ export class AlertParamsCategorySelect extends React.Component<Props, {}> {
 
     return (
       <div className="sidebar__spacing">
-        <Collapsible
+        <CollapsibleHeader
           title="Category"
           action={this.clearSelections}
           actionName="Clear"
@@ -81,7 +81,7 @@ export class AlertParamsCategorySelect extends React.Component<Props, {}> {
             onSelect={this.toggleCategory}
             onRemove={this.toggleCategory}
           />
-        </Collapsible>
+        </CollapsibleHeader>
       </div>
     );
   }

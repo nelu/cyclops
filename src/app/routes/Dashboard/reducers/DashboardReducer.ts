@@ -30,7 +30,7 @@ import {
 import { AlertLocationResponse } from '../../../services/alerts/types';
 
 /**
- * State shape of the Dashboard reducer.
+ * SearchQueryState shape of the Dashboard reducer.
  */
 export interface DashboardState {
   days: number;

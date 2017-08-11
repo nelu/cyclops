@@ -18,21 +18,17 @@
 
 // Vendor
 import * as React from 'react';
-
-// Local
-import { NormalizedDistilleryList } from '~/services/distilleries/types';
+import { AlertSearchResults } from '~/services/search/types';
+import { JSONFormatter } from '~/components/JSONFormatter';
+import { SearchAlertResult } from '~/routes/Search/components/SearchAlertResult';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties of the SearchBar component. */
+/** Properties of the SearchAlertResults component. */
 interface Props {
-  onSubmit(query: string): void;
-}
-
-interface State {
-  query: string;
+  results: AlertSearchResults | null;
 }
 
 // --------------------------------------------------------------------------
@@ -40,44 +36,17 @@ interface State {
 // --------------------------------------------------------------------------
 
 /**
- *
+ * Displays the alert results returned from a search query.
  */
-export class SearchBar extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-
-    this.state = { query: '' };
-  }
-
-  public onChange: React.FormEventHandler<HTMLInputElement> = (event) => {
-    this.setState({ query: event.currentTarget.value });
-  };
-
-  public submitQuery = () => {
-    this.props.onSubmit(this.state.query);
-  };
-
-  public onKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
-    if (event.key === 'Enter') { this.submitQuery(); }
-  };
-
-  public onSubmit = () => {
-    this.submitQuery();
-  };
-
+export class SearchAlertResults extends React.Component<Props, {}> {
   public render() {
+    const results: JSX.Element[] | null = this.props.results
+      ? this.props.results.results.map((result) => (
+        <SearchAlertResult alert={result}/>
+      )) : null;
+
     return (
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search"
-          onChange={this.onChange}
-          onKeyPress={this.onKeyPress}
-        />
-        <span>
-          <button onClick={this.onSubmit}>Submit</button>
-        </span>
-      </div>
+      <div>{results}</div>
     );
   }
 }

@@ -188,8 +188,9 @@ export class AlertView extends React.Component<Props, {}> {
    */
   public getCurrentPage = (): number => {
     const params = this.getQuery();
+    const limit = params.limit || 20;
 
-    return (params.offset / params.limit) + 1;
+    return (params.offset as number / limit) + 1;
   };
 
   /**
@@ -270,7 +271,7 @@ export class AlertView extends React.Component<Props, {}> {
    */
   public changePage = (page: number): void => {
     const params = this.getQuery();
-    const offset = params.limit * (page - 1);
+    const offset = params.limit as any * (page - 1);
 
     this.updateQuery({ offset });
   };

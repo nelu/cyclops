@@ -27,7 +27,7 @@ import {
 import { AlertParamsDateSelect } from './AlertParamsDateSelect';
 import { formatDate } from '~/utils/dateUtils';
 import { AlertTimeSearchParams } from '~/services/alerts/types';
-import { Collapsible } from '~/components/Collapsible';
+import { CollapsibleHeader } from '~/components/CollapsibleHeader';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -95,7 +95,7 @@ export class AlertParamsDateTimeSelect extends React.Component<Props, {}> {
 
     return (
       <div className="alert-list-params__spacer">
-        <Collapsible title="Time" action={this.clearTime} actionName="Clear">
+        <CollapsibleHeader title="Time" action={this.clearTime} actionName="Clear">
           <div className="alert-list-params__group">
             <div className="flex-box form-group">
               <div className="flex-item">
@@ -122,7 +122,7 @@ export class AlertParamsDateTimeSelect extends React.Component<Props, {}> {
             </div>
             {timeDisplay}
           </div>
-        </Collapsible>
+        </CollapsibleHeader>
       </div>
     );
   }

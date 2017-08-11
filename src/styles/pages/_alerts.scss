@@ -162,53 +162,6 @@ $alert-search-bar-border-color: lighten($color-base, 23%);
 $alert-search-bar-border-width: 2px;
 $alert-search-bar-height: 35px;
 
-.alert-list__search-bar {
-  @extend .input-group;
-
-  margin-bottom: 15px;
-
-  input {
-    @extend .form-control;
-
-    background-color: $alert-search-bar-bg;
-    border-color: $alert-search-bar-border-color;
-    border-width: $alert-search-bar-border-width;
-    height: $alert-search-bar-height;
-    border-right: none;
-    color: #fff;
-
-    &:focus {
-      border-color: lighten($alert-search-bar-border-color, 15%);
-      box-shadow: none;
-
-      & + span > button {
-        border-color: lighten($alert-search-bar-border-color, 15%);
-      }
-    }
-  }
-
-  span {
-    @extend .input-group-btn;
-  }
-
-  button {
-    @extend .btn;
-
-    background-color: $alert-search-bar-bg;
-    border-color: $alert-search-bar-border-color;
-    border-width: $alert-search-bar-border-width;
-    border-left: none;
-    height: $alert-search-bar-height;
-    color: $text-color;
-    transition: border-color .3s color .3s;
-
-    &:hover {
-      background-color: lighten($alert-search-bar-bg, 3%);
-      color: #fff;
-    }
-  }
-}
-
 //== List Item
 
 .alert-list-item {

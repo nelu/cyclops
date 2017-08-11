@@ -53,6 +53,7 @@ export const App = (
         <Route path="alerts" component={Routes.AlertList}>
           <Route path=":alertId" component={Routes.AlertDetail}/>
         </Route>
+        <Route path="search" component={Routes.Search} />
       </Route>
     </Router>
   </Provider>

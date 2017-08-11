@@ -18,21 +18,22 @@
 
 // Vendor
 import * as React from 'react';
-
-// Local
 import { NormalizedDistilleryList } from '~/services/distilleries/types';
+import { NormalizedEntity } from '~/types/normalizr';
+import { Field } from '~/services/cyphon/types';
+import { ContainerFlat } from '~/services/containers/types';
+import { SearchField } from './SearchField';
+import { Collapsible } from '~/components/Collapsible';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties of the SearchBar component. */
+/** Properties of the SearchContainer component. */
 interface Props {
-  onSubmit(query: string): void;
-}
-
-interface State {
-  query: string;
+  fields: Field[];
+  container: ContainerFlat;
+  open: boolean;
 }
 
 // --------------------------------------------------------------------------
@@ -40,43 +41,23 @@ interface State {
 // --------------------------------------------------------------------------
 
 /**
- *
+ * Displays information about a Container object that helps aid in
+ * creating search queries.
  */
-export class SearchBar extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-
-    this.state = { query: '' };
-  }
-
-  public onChange: React.FormEventHandler<HTMLInputElement> = (event) => {
-    this.setState({ query: event.currentTarget.value });
-  };
-
-  public submitQuery = () => {
-    this.props.onSubmit(this.state.query);
-  };
-
-  public onKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
-    if (event.key === 'Enter') { this.submitQuery(); }
-  };
-
-  public onSubmit = () => {
-    this.submitQuery();
-  };
-
+export class SearchContainer extends React.Component<Props, {}> {
   public render() {
+    const fields = this.props.fields.map((field) => (
+      <SearchField field={field} />
+    ));
+
     return (
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search"
-          onChange={this.onChange}
-          onKeyPress={this.onKeyPress}
-        />
-        <span>
-          <button onClick={this.onSubmit}>Submit</button>
-        </span>
+      <div>
+        <Collapsible descriptor={this.props.container.name} open={this.props.open}>
+          <div className="tabbed tabbed--border">
+            <div className="tabbed__title text--muted">Fields</div>
+            {fields}
+          </div>
+        </Collapsible>
       </div>
     );
   }

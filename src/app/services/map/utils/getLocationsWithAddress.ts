@@ -67,7 +67,9 @@ export function getLocationsWithAddress(
 
   // Lookup the address for each location.
   locationFieldArray.forEach((locationField: LocationField) => {
-    reverseLookupPromises.push(reverseLookup(locationField.coordinates, cancelToken));
+    reverseLookupPromises.push(
+      reverseLookup(locationField.coordinates, cancelToken) as Promise<string>,
+      );
   });
 
   return Promise.all(reverseLookupPromises)

@@ -23,9 +23,9 @@ import * as chai from 'chai';
 import * as enzyme from 'enzyme';
 
 // Local
-import { Collapsible } from './Collapsible';
+import { CollapsibleHeader } from './CollapsibleHeader';
 
-describe('<Collapsible />', () => {
+describe('<CollapsibleHeader />', () => {
   const title = 'title';
   let component: (props?: any) => enzyme.ShallowWrapper<any, any>;
   let action: sinon.SinonSpy;
@@ -36,7 +36,7 @@ describe('<Collapsible />', () => {
       const defaults = { title };
       const passed = Object.assign({}, defaults, props);
 
-      return enzyme.shallow(<Collapsible {...passed} />);
+      return enzyme.shallow(<CollapsibleHeader {...passed} />);
     };
   });
 

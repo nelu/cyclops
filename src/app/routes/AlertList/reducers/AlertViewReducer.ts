@@ -35,7 +35,7 @@ import { User } from '~/services/users/types';
 import { DistilleryMinimal } from '~/services/distilleries/types';
 import { Action } from '~/services/actions/types';
 
-/** State shape of the AlertList reducer. */
+/** SearchQueryState shape of the AlertList reducer. */
 export interface AlertViewState {
   /** Total number of alerts matching the search parameters. */
   count: number;

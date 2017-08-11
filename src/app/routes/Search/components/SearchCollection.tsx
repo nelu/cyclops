@@ -18,17 +18,23 @@
 
 // Vendor
 import * as React from 'react';
-
-// Local
+import { DistilleryFlat } from '~/services/distilleries/types';
+import { ContainerFlat } from '~/services/containers/types';
 import { Field } from '~/services/cyphon/types';
+import { Collapsible } from '~/components/Collapsible';
+import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
+import { SearchContainer } from '~/routes/Search/components/SearchContainer';
+import { SearchField } from '~/routes/Search/components/SearchField';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties of the SearchField component. */
+/** Properties of the SearchDistillery component. */
 interface Props {
-  field: Field;
+  distillery: DistilleryFlat;
+  container: ContainerFlat;
+  fields: Field[];
 }
 
 // --------------------------------------------------------------------------
@@ -36,17 +42,26 @@ interface Props {
 // --------------------------------------------------------------------------
 
 /**
- * Displays the name of a search field to create a search filter from.
+ * Displays field and container information about a distillery.
  */
-export class SearchField extends React.Component<Props, {}> {
-  /** Passes the field props to the onClick prop. */
-
+export class SearchDistillery extends React.Component<Props, {}> {
   public render() {
+    const shortenedDistilleryName = shortenDistilleryName(
+      this.props.distillery.name,
+    );
+    const fields = this.props.fields.map((field) => (
+      <SearchField field={field} />
+    ));
     return (
       <div>
-        {this.props.field.field_name}
-        {' '}
-        <i className="text--muted">{this.props.field.field_type}</i>
+        <Collapsible descriptor={shortenedDistilleryName} open={false}>
+          <div className="tabbed tabbed--border">
+            <div className="tabbed__title text--muted">Container</div>
+            <div>{this.props.container.name}</div>
+            <div className="tabbed__title text--muted">Fields</div>
+            {fields}
+          </div>
+        </Collapsible>
       </div>
     );
   }

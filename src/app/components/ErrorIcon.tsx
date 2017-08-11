@@ -16,11 +16,27 @@
  * are made]
  */
 
-.banner {
-  padding: $padding-base-vertical $padding-base-horizontal;
-  background-color: $color-dark;
+// Vendor
+import * as React from 'react';
 
-  &--dark {
-    background-color: $color-darker;
+// --------------------------------------------------------------------------
+// Interfaces/Types
+// --------------------------------------------------------------------------
+
+/** Properties of the ErrorIcon component. */
+interface Props {}
+
+// --------------------------------------------------------------------------
+// Component
+// --------------------------------------------------------------------------
+
+/**
+ * Display an icon informing the user that an error occurred.
+ */
+export class ErrorIcon extends React.Component<Props, {}> {
+  public render() {
+    return (
+      <i className="fa fa-exclamation-triangle alert-text--high" />
+    );
   }
 }

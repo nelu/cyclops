@@ -18,21 +18,20 @@
 
 // Vendor
 import * as React from 'react';
+import * as classnames from 'classnames';
 
 // Local
-import { NormalizedDistilleryList } from '~/services/distilleries/types';
+import { KeywordParameter } from '~/services/search/types';
+import { Collapsible } from '~/components/Collapsible';
+import { ErrorIcon } from '~/components/ErrorIcon';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties of the SearchBar component. */
+/** Properties of the SearchQueryKeywords component. */
 interface Props {
-  onSubmit(query: string): void;
-}
-
-interface State {
-  query: string;
+  keywords: KeywordParameter[];
 }
 
 // --------------------------------------------------------------------------
@@ -40,44 +39,33 @@ interface State {
 // --------------------------------------------------------------------------
 
 /**
- *
+ * Displays information on a search query's keyword parameters.
  */
-export class SearchBar extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-
-    this.state = { query: '' };
-  }
-
-  public onChange: React.FormEventHandler<HTMLInputElement> = (event) => {
-    this.setState({ query: event.currentTarget.value });
-  };
-
-  public submitQuery = () => {
-    this.props.onSubmit(this.state.query);
-  };
-
-  public onKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
-    if (event.key === 'Enter') { this.submitQuery(); }
-  };
-
-  public onSubmit = () => {
-    this.submitQuery();
-  };
-
+export class SearchQueryKeywords extends React.Component<Props, {}> {
   public render() {
+    let containsError = false;
+    const keywords = this.props.keywords.map((parameter) => {
+      const classes = classnames({
+        'alert-text--high': !!parameter.errors.length,
+      });
+
+      if (parameter.errors.length) { containsError = true; }
+
+      return <div className={classes}>"{parameter.keyword}"</div>;
+    });
+    const errorIcon = containsError ? <ErrorIcon /> : null;
+    const header = (
+      <span>
+        {errorIcon} Keywords {this.props.keywords.length}
+      </span>
+    );
+
     return (
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search"
-          onChange={this.onChange}
-          onKeyPress={this.onKeyPress}
-        />
-        <span>
-          <button onClick={this.onSubmit}>Submit</button>
-        </span>
-      </div>
+      <Collapsible descriptor={header} open={false}>
+        <div className="tabbed">
+          {keywords}
+        </div>
+      </Collapsible>
     );
   }
 }

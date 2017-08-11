@@ -1,2 +1,2 @@
-declare let Notification: any;
-declare let ServiceWorkerRegistration: any;
+// declare let Notification: any;
+// declare let ServiceWorkerRegistration: any;
