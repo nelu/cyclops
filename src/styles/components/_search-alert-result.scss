@@ -16,10 +16,38 @@
  * are made]
  */
 
-// Vendor
-import { ComponentClass } from 'react';
+@import "../base/variables";
 
-// Local
-import { SearchCollectionsContainer } from '~/routes/SearchCollections/containers/SearchCollectionsContainer';
+.search-alert-result {
+  &__container {
+    margin-bottom: 20px;
+  }
 
-export const SearchCollectionsRoute: ComponentClass<any> = SearchCollectionsContainer;
+  &__content {
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__data {
+    margin-left: 68px;
+    overflow: hidden;
+  }
+
+  &__details {
+    width: 350px;
+  }
+
+  &__gradient {
+    height: 40px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba($color-base, 0),
+      rgba($color-base, 1)
+    );
+    text-align: center;
+  }
+}

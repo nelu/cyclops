@@ -83,6 +83,13 @@ const CSS_LOADER = {
   },
 };
 
+const SCSS_LOADER = {
+  loader: 'sass-loader',
+  options: {
+    includePaths: [path.resolve(__dirname, 'node_modules')],
+  },
+};
+
 // --------------------------------------------------------------------------
 // Rules
 // --------------------------------------------------------------------------
@@ -150,7 +157,7 @@ const SCSS_RULE = {
     fallback: 'style-loader',
     use: [
       CSS_LOADER,
-      'sass-loader',
+      SCSS_LOADER,
     ],
   }),
 };

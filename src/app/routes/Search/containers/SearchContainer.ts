@@ -39,7 +39,7 @@ import {
   Search,
 } from '../components/Search';
 import * as resourceActions from '../actions/searchRouteResourcesActions';
-import { search } from '../actions/searchQueryActions';
+import * as searchActions from '../actions/searchQueryActions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -90,7 +90,9 @@ const values: Values = (state, props) => ({
  */
 const functions: Functions = (dispatch) => ({
   fetchDistilleries: bind(resourceActions.fetchDistilleries, dispatch),
-  search: bind(search, dispatch),
+  search: bind(searchActions.search, dispatch),
+  searchAlerts: bind(searchActions.searchAlerts, dispatch),
+  searchDistillery: bind(searchActions.searchDistillery, dispatch),
 });
 
 // --------------------------------------------------------------------------

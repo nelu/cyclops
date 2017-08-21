@@ -19,6 +19,7 @@
 // Vendor
 import * as React from 'react';
 import * as classnames from 'classnames';
+import * as _ from 'lodash';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -29,6 +30,7 @@ interface Props {
   title: string;
   actionName?: string;
   spaced?: boolean;
+  open?: boolean;
   action?(): any;
 }
 
@@ -49,7 +51,7 @@ export class CollapsibleHeader extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = { open: true };
+    this.state = { open: _.defaultTo<boolean>(this.props.open, true) };
   }
 
   /** Closes the collapsible content. */

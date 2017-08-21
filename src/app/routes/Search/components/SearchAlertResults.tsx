@@ -19,7 +19,7 @@
 // Vendor
 import * as React from 'react';
 import { AlertSearchResults } from '~/services/search/types';
-import { JSONFormatter } from '~/components/JSONFormatter';
+import { Pagination } from 'react-bootstrap';
 import { SearchAlertResult } from '~/routes/Search/components/SearchAlertResult';
 
 // --------------------------------------------------------------------------
@@ -28,7 +28,10 @@ import { SearchAlertResult } from '~/routes/Search/components/SearchAlertResult'
 
 /** Properties of the SearchAlertResults component. */
 interface Props {
+  currentPage: number;
   results: AlertSearchResults | null;
+  openAlert(id: number): void;
+  paginateAlerts(page: number): void;
 }
 
 // --------------------------------------------------------------------------
@@ -39,14 +42,49 @@ interface Props {
  * Displays the alert results returned from a search query.
  */
 export class SearchAlertResults extends React.Component<Props, {}> {
-  public render() {
-    const results: JSX.Element[] | null = this.props.results
-      ? this.props.results.results.map((result) => (
-        <SearchAlertResult alert={result}/>
-      )) : null;
+  public onSelect = (eventKey: any) => {
+    this.props.paginateAlerts(eventKey);
+  };
 
-    return (
-      <div>{results}</div>
-    );
+  public render() {
+    const results = this.props.results
+      ? this.props.results.results.map((result) => (
+        <SearchAlertResult
+          openAlert={this.props.openAlert}
+          alert={result}
+          key={result.id}
+        />
+      )) : null;
+    const paginationItems = this.props.results
+      ? Math.ceil(this.props.results.count / 10)
+      : 1;
+
+    return results && results.length
+      ? (
+        <div className="flex-box flex-box--column">
+          <div className="flex-item">
+            {results}
+          </div>
+          <div
+            className="flex-item flex--shrink text-center content"
+            style={{ 'border-top': 'solid 1px #3b3c41' }}
+          >
+            <Pagination
+              items={paginationItems}
+              activePage={this.props.currentPage}
+              onSelect={this.onSelect}
+              maxButtons={5}
+              next="Next"
+              prev="Prev"
+              first="First"
+              last="Last"
+            />
+          </div>
+        </div>
+      ) : (
+        <div className="flex-item content">
+          <h2 className="text-center">No Results</h2>
+        </div>
+      );
   }
 }

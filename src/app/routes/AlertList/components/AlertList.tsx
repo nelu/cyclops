@@ -108,27 +108,15 @@ export class AlertList extends React.Component<Props, {}> {
   };
 
   public render() {
-    const {
-      alerts,
-      count,
-      content,
-      limit,
-      loading,
-      page,
-      pollingEnabled,
-      searchContent,
-      selectedAlert,
-      startPoller,
-      stopPoller,
-    } = this.props;
-
-    const baseNumber = ((page * limit) - limit) + 1;
-    const topNumber = count <= (page * limit) ? count : (page * limit);
+    const baseNumber = ((this.props.page * this.props.limit) - this.props.limit) + 1;
+    const topNumber = this.props.count <= (this.props.page * this.props.limit)
+      ? this.props.count
+      : (this.props.page * this.props.limit);
     const paginationElement =  (
       <div className="alert-list__pagination flex-item flex--shrink">
         <Pagination
-          items={Math.ceil(count / limit)}
-          activePage={page}
+          items={Math.ceil(this.props.count / this.props.limit)}
+          activePage={this.props.page}
           onSelect={this.changePage}
           maxButtons={6}
           next="Next"
@@ -138,15 +126,15 @@ export class AlertList extends React.Component<Props, {}> {
         />
       </div>
     );
-    const alertListItems = alerts.map((alert) => (
+    const alertListItems = this.props.alerts.map((alert) => (
       <AlertListItem
         key={alert.id}
         alert={alert}
         selectAlert={this.selectAlert}
-        selected={selectedAlert}
+        selected={this.props.selectedAlert}
       />
     ));
-    const alertListTable = alerts.length ? (
+    const alertListTable = this.props.alerts.length ? (
       <table className="alert-list__table">
         <tbody>
         {alertListItems}
@@ -155,14 +143,14 @@ export class AlertList extends React.Component<Props, {}> {
     ) : (
       <h2 className="text-center">No Results</h2>
     );
-    const loadingElement = loading ? <Loading /> : null;
+    const loadingElement = this.props.loading ? <Loading /> : null;
     const refreshPopover = AlertList.refreshPopover;
     const refreshButtonClasses = classNames(
       'alert-list__refresh',
-      { 'alert-list__refresh--active': pollingEnabled },
+      { 'alert-list__refresh--active': this.props.pollingEnabled },
     );
     const refreshIconClasses = classNames(
-      { 'fa-spin': pollingEnabled },
+      { 'fa-spin': this.props.pollingEnabled },
       'fa-lg',
       'fa',
       'fa-refresh',
@@ -172,14 +160,14 @@ export class AlertList extends React.Component<Props, {}> {
       <div className="flex-box flex-box--column">
         <div className="alert-list__header flex-item flex--shrink">
           <AlertListSearchBar
-            content={content}
-            searchContent={searchContent}
+            content={this.props.content}
+            searchContent={this.props.searchContent}
           />
           <div className="clearfix">
             <span className="text--base">Showing </span>
             {baseNumber} - {topNumber}
             <span className="text--base"> of </span>
-            {count}
+            {this.props.count}
             <OverlayTrigger
               overlay={refreshPopover}
               placement="left"
@@ -187,7 +175,7 @@ export class AlertList extends React.Component<Props, {}> {
             >
               <button
                 className={refreshButtonClasses}
-                onClick={pollingEnabled ? stopPoller : startPoller}
+                onClick={this.props.pollingEnabled ? this.props.stopPoller : this.props.startPoller}
               >
                 <i className={refreshIconClasses} />
               </button>

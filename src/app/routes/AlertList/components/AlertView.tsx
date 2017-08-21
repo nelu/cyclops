@@ -31,11 +31,10 @@ import {
   AlertSearchParams,
   AlertListItem,
   NormalizedCategoryList,
-  AlertViewParams,
 } from '~/services/alerts/types';
 import { DistilleryMinimal } from '~/services/distilleries/types';
 import { User } from '~/services/users/types';
-import { parseQuery } from '~/utils/routerUtils';
+import { parseQuery as parseURLQuery } from '~/utils/routerUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -126,7 +125,7 @@ export class AlertView extends React.Component<Props, {}> {
    * @returns {AlertSearchParams} URL query.
    */
   public static parseQuery = (query: any): AlertSearchParams => {
-    const parsed = parseQuery(query, {
+    const parsed = parseURLQuery(query, {
       integers: [
         'assigned_user',
         'categories',

@@ -25,7 +25,9 @@ import {
 } from '~/types/redux';
 import * as searchAPI from '~/services/search/api';
 import {
+  AlertSearchResults,
   CombinedSearchResults,
+  DistillerySearchResults,
   SearchEndpoint,
   SearchQuery,
 } from '~/services/search/types';
@@ -125,6 +127,65 @@ export function generalQueryFailed(
 }
 
 // --------------------------------------------------------------------------
+// ALERT_QUERY_SUCCESS
+// --------------------------------------------------------------------------
+
+/**
+ * Redux Action Type: When a search query for alerts returns successfully.
+ * @type {string}
+ */
+export const ALERT_QUERY_SUCCESS = `${ACTION_PREFIX}/ALERT_QUERY_SUCCESS`;
+
+/** ALERT_QUERY_SUCCESS payload type. */
+export type AlertQuerySuccessPayload = SearchEndpoint<AlertSearchResults>;
+
+/** ALERT_QUERY_SUCCESS action type. */
+export type AlertQuerySuccessAction = ReduxAction<AlertQuerySuccessPayload>;
+
+/**
+ * Creates a(n) ALERT_QUERY_SUCCESS action.
+ * @returns {AlertQuerySuccessAction}
+ */
+export function alertQuerySuccess(
+  response: SearchEndpoint<AlertSearchResults>,
+): AlertQuerySuccessAction {
+  return {
+    type: ALERT_QUERY_SUCCESS,
+    payload: response,
+  };
+}
+
+// --------------------------------------------------------------------------
+// DISTILLERY_QUERY_SUCCESS
+// --------------------------------------------------------------------------
+
+/**
+ * Redux Action Type: When a serach query through distillery results returns
+ * successfully.
+ * @type {string}
+ */
+export const DISTILLERY_QUERY_SUCCESS = `${ACTION_PREFIX}/DISTILLERY_QUERY_SUCCESS`;
+
+/** DISTILLERY_QUERY_SUCCESS payload type. */
+export type DistilleryQuerySuccessPayload = SearchEndpoint<DistillerySearchResults>;
+
+/** DISTILLERY_QUERY_SUCCESS action type. */
+export type DistilleryQuerySuccessAction = ReduxAction<DistilleryQuerySuccessPayload>;
+
+/**
+ * Creates a(n) DISTILLERY_QUERY_SUCCESS action.
+ * @returns {DistilleryQuerySuccessAction}
+ */
+export function distilleryQuerySuccess(
+  response: SearchEndpoint<DistillerySearchResults>,
+): DistilleryQuerySuccessAction {
+  return {
+    type: DISTILLERY_QUERY_SUCCESS,
+    payload: response,
+  };
+}
+
+// --------------------------------------------------------------------------
 // Thunk Actions
 // --------------------------------------------------------------------------
 
@@ -135,11 +196,59 @@ export function generalQueryFailed(
 export function search(query: string): ThunkActionPromise {
   return (dispatch) => {
     dispatch(generalQueryPending());
-    return searchAPI.search(query).then((response) => {
 
+    return searchAPI.search(query).then((response) => {
       dispatch(generalQuerySuccess(response));
     }).catch((response) => {
-      console.log(response);
+      if (response.response.status === 400) {
+        dispatch(generalQueryFailed(response.response.data));
+      } else {
+        dispatch(addError(response));
+      }
+    });
+  };
+}
+
+/**
+ * Searches for alerts based on a search query.
+ * @param {string} query
+ * @param {number} page Page number to return.
+ * @returns {ThunkActionPromise}
+ */
+export function searchAlerts(query: string, page?: number): ThunkActionPromise {
+  return (dispatch) => {
+    dispatch(generalQueryPending());
+
+    return searchAPI.searchAlerts(query, page).then((response) => {
+      dispatch(alertQuerySuccess(response));
+    }).catch((response) => {
+      if (response.response.status === 400) {
+        dispatch(generalQueryFailed(response.response.data));
+      } else {
+        dispatch(addError(response));
+      }
+    });
+  };
+}
+
+/**
+ * Searches a single distillery for data matching a search query.
+ * @param {number} id ID of the distillery to search.
+ * @param {string} query
+ * @param {number} page Page number to return.
+ * @returns {ThunkActionPromise}
+ */
+export function searchDistillery(
+  id: number,
+  query: string,
+  page?: number,
+): ThunkActionPromise {
+  return (dispatch) => {
+    dispatch(generalQueryPending());
+
+    return searchAPI.searchDistillery(id, query, page).then((response) => {
+      dispatch(distilleryQuerySuccess(response));
+    }).catch((response) => {
       if (response.response.status === 400) {
         dispatch(generalQueryFailed(response.response.data));
       } else {

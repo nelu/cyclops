@@ -119,6 +119,24 @@ reducers[actions.GENERAL_QUERY_FAILED] = (
 };
 
 /**
+ * Updates the SearchQueryReducer based on a(n) ALERT_QUERY_SUCCESS action.
+ * @param state Current SearchQueryReducer state.
+ * @param action ALERT_QUERY_SUCCESS action.
+ * @returns {State} Updated SearchQueryReducer state.
+ */
+reducers[actions.ALERT_QUERY_SUCCESS] = (
+  state: SearchQueryState,
+  action: actions.AlertQuerySuccessAction,
+): SearchQueryState => {
+  const update: Partial<SearchQueryState> = {
+    alerts: action.payload.results,
+    loading: false,
+  };
+
+  return Object.assign({}, state, update);
+};
+
+/**
  * SearchQuery reducer.
  * @type {@type {Reducer<SearchQueryState, any>}
  */
