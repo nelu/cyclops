@@ -58,7 +58,7 @@ interface Props {
  */
 export class AlertParamsDateTimeSelect extends React.Component<Props, {}> {
   /**
-   * Popover element that displays a tooltip for analyzing alerts data.
+   * Popover element that displays a tooltip for analyzing alerts stores.
    * @type {JSX.Element}
    */
   public static clearTimePopover: JSX.Element = (

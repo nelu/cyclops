@@ -41,7 +41,7 @@ interface Props {
   alerts: Alert[];
   /** Total number of alerts that match the current search parameters. */
   count: number;
-  /** Search bar content. */
+  /** SearchQueryStore bar content. */
   content: string | undefined;
   /** Pagination size of the current alerts list. */
   limit: number;

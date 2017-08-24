@@ -100,7 +100,7 @@ const VALUE_PARSERS: Dictionary<ValueParser> = {
 
 /**
  * Parses a search query into a list of SearchQueryField objects.
- * @param query Search query.
+ * @param query SearchQueryStore query.
  * @returns {SearchQueryField[]}
  */
 export function getSearchQueryFields(query: string): RawSearchQueryField[] {

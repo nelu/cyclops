@@ -44,7 +44,7 @@ describe('AlertDatatContextSearchReducer', () => {
   });
 
   describe('SELECT_CONTEXT', () => {
-    it('should update the state with the given payload data', () => {
+    it('should update the state with the given payload stores', () => {
       const context = 1;
       const action = actions.selectContext(context);
       const state = AlertDataContextSearchReducer({} as any, action);
@@ -56,7 +56,7 @@ describe('AlertDatatContextSearchReducer', () => {
   });
 
   describe('SEARCH_CONTEXT_PENDING', () => {
-    it('should update the state with the given payload data', () => {
+    it('should update the state with the given payload stores', () => {
       const action = actions.searchContextPending({} as any);
       const state = AlertDataContextSearchReducer({} as any, action);
 
@@ -85,7 +85,7 @@ describe('AlertDatatContextSearchReducer', () => {
   });
 
   describe('SEARCH_CONTEXT_SUCCESS', () => {
-    it('should update the state with the given payload data', () => {
+    it('should update the state with the given payload stores', () => {
       const page = 1;
       const pageSize = 25;
       const resultCount = 100;

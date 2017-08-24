@@ -21,7 +21,7 @@ import * as sinon from 'sinon';
 
 // Local
 import * as actions from './UserStoreActions';
-import * as userAPI from '../api';
+import * as userAPI from '../utils/userAPI';
 
 describe('UserStoreActions', () => {
   const user1: any = { id: 1 };

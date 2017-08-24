@@ -18,15 +18,15 @@
 
 /** Data used to create pie charts. */
 export interface PieChartData {
-  /** Display name for the data. */
+  /** Display name for the stores. */
   label: string;
-  /** Numerical value of the data. */
+  /** Numerical value of the stores. */
   value: number;
   /** Hex color of the pie chart piece. */
   color?: string;
 }
 
-/** Pie chart data that has a color property. */
+/** Pie chart stores that has a color property. */
 export interface PieChartDataWithColor extends PieChartData {
   /** Hex color of the pie chart piece. */
   color: string;
@@ -41,25 +41,25 @@ export interface ColorProperty {
 
 /** Data used to create a stacked area chart. */
 export interface StackedAreaChartData {
-  /** Description of the data set. */
+  /** Description of the stores set. */
   key: string;
   /** Values used create the area chart. */
   values: StackedAreaChartValues[];
-  /** Hex color of the data. */
+  /** Hex color of the stores. */
   color?: string;
 }
 
-/** Value/Date pair of a related set of stacked area chart data. */
+/** Value/Date pair of a related set of stacked area chart stores. */
 export type StackedAreaChartValues = {
   /** Date of the value. */
   date: number;
-  /** Numerical value of the data. */
+  /** Numerical value of the stores. */
   value: number;
 };
 
-/** Stacked area chart data with a color property. */
+/** Stacked area chart stores with a color property. */
 export interface StackedAreaChartDataWithColor extends StackedAreaChartData {
-  /** Hex color of the data. */
+  /** Hex color of the stores. */
   color: string;
 }
 
@@ -72,15 +72,15 @@ export interface PieChartOptions {
   growOnHover?: boolean;
   /** Height of the pie chart. */
   height?: number;
-  /** If the labels for each piece of pie chart data should be shown. */
+  /** If the labels for each piece of pie chart stores should be shown. */
   showLabels?: boolean;
   /** If the pie chart legend should be shown. */
   showLegend?: boolean;
   /** Width of the pie chart. */
   width?: number;
   /**
-   * Function that takes a piece of data and creates a pie chart label from it.
-   * @param data Pie chart data to create a label for.
+   * Function that takes a piece of stores and creates a pie chart label from it.
+   * @param data Pie chart stores to create a label for.
    */
   labelFormat?(data: PieChartData): string;
   /**
@@ -90,5 +90,5 @@ export interface PieChartOptions {
   valueFormat?(data: number): string;
 }
 
-/** Function used to create a color property from a piece of data.  */
+/** Function used to create a color property from a piece of stores.  */
 export type ColorPropertyGenerator<T> = (value: T, index: number) => string;

@@ -10,7 +10,7 @@
     "typedoc": "typedoc --out api-docs --target ES6 --tsconfig typedoc.json --readme DOCUMENTATION.md --includeDeclarations --ignoreCompilerErrors src/",
     "sphinx": "cd sphinx-docs && make html",
     "build": "rimraf dist && cross-env NODE_ENV=production webpack",
-    "start": "cross-env NODE_ENV=development webpack-dev-server"
+    "start": "cross-env NODE_ENV=development webpack-dev-server --progress"
   },
   "author": "Chase Brewer <chase.brewer@dunbarsecured.com>",
   "license": "ISC",
@@ -24,10 +24,13 @@
     "cross-env": "4.0.0",
     "d3": "3.5.17",
     "geojson": "0.4.0",
+    "immutable": "3.8.1",
     "js-cookie": "2.1.4",
     "json-formatter-js": "1.2.0",
     "lodash": "4.17.4",
     "memory-cache": "0.1.6",
+    "mobx": "3.2.2",
+    "mobx-react": "4.2.2",
     "moment": "2.15.1",
     "normalizr": "3.2.1",
     "nvd3": "1.8.5",
@@ -46,6 +49,7 @@
     "redux-actions": "0.12.0",
     "redux-logger": "2.6.1",
     "redux-thunk": "2.1.0",
+    "styled-components": "2.1.2",
     "ts-helpers": "1.1.2"
   },
   "devDependencies": {

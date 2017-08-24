@@ -52,7 +52,7 @@ export interface Context {
   id: number;
   /** Name of the context. */
   name: string;
-  /** Amount of time after the current time the context searches for data. */
+  /** Amount of time after the current time the context searches for stores. */
   after_time_interval: number;
   /** Time unit used on the after_time_interval. */
   after_time_unit: string;
@@ -60,7 +60,7 @@ export interface Context {
   before_time_interval: number;
   /** Time unit used on the before_time_interval. */
   before_time_unit: string;
-  /** Logic it uses to tie the context filter search data together. */
+  /** Logic it uses to tie the context filter search stores together. */
   filter_logic: string;
   /** Context filter objects related to the context. */
   filters: ContextFilter[] | number[];
@@ -109,7 +109,7 @@ export type NormalizedContextList = NormalizedList<
 >;
 
 /**
- * Search parameters used to search a context object.
+ * SearchQueryStore parameters used to search a context object.
  */
 export interface ContextSearchParams {
   /** ID of the result to search against. */

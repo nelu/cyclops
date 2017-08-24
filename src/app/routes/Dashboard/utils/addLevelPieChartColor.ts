@@ -28,9 +28,9 @@ import {
 import { getRandomColor } from '~/services/chart/utils/getRandomColor';
 
 /**
- * Add the color property to pie chart data that will be used to display
- * alerts level statistic data.
- * @param data List of pie chart data containing level numbers.
+ * Add the color property to pie chart stores that will be used to display
+ * alerts level statistic stores.
+ * @param data List of pie chart stores containing level numbers.
  * @returns {Array<PieChartData&ColorProperty>}
  */
 export function addLevelPieChartColor(

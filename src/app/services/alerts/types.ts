@@ -59,7 +59,7 @@ export type AlertOutcomeChoices = (
 export interface Alert {
   /** Unique identifier of the alert. */
   id: number;
-  /** Created date of the data that created the alert. */
+  /** Created date of the stores that created the alert. */
   content_date: string | null;
   /** Date the alert was saved to the database. */
   created_date: string;
@@ -152,7 +152,7 @@ export interface AlertSearchParams extends AlertTimeSearchParams {
   assigned_user?: number;
   /** Distillery the alert came from. */
   collection?: number[];
-  /** String content the alert data contains. */
+  /** String content the alert stores contains. */
   content?: string;
   /** Limit of alerts to return. */
   limit?: number;

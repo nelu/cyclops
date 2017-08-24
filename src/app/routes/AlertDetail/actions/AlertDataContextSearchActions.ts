@@ -42,7 +42,7 @@ const ACTION_PREFIX = 'ALERT_DATA_CONTEXT_SEARCH';
 // --------------------------------------------------------------------------
 
 /**
- * Action Type: When a context related to alert data is selected to
+ * Action Type: When a context related to alert stores is selected to
  * view more info on and to potentially be searched through.
  * @type {string}
  */
@@ -149,7 +149,7 @@ export function searchContextFailure(): SearchContextFailureAction {
 
 /**
  * Searches a context and dispatches the results, or logs the error.
- * @param searchParams Search parameters of the search.
+ * @param searchParams SearchQueryStore parameters of the search.
  * @param contextId ID of the context to search.
  * @returns {ThunkActionPromise}
  */

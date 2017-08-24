@@ -29,7 +29,7 @@ import { Map } from '~/services/map/components/Map';
 
 /** Properties for the AlertDataLocationMap component. */
 export interface Props {
-  /** GeoJSON markers that represent places related to the alert data. */
+  /** GeoJSON markers that represent places related to the alert stores. */
   markers: Markers;
 }
 
@@ -38,7 +38,7 @@ export interface Props {
 // --------------------------------------------------------------------------
 
 /**
- * Displays a map showing locations related to an alerts data.
+ * Displays a map showing locations related to an alerts stores.
  */
 export class AlertDataLocationMap extends React.Component<Props, {}> {
   /**

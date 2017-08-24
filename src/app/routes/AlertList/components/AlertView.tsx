@@ -72,7 +72,7 @@ export interface ValueProps {
 export interface FunctionProps {
   /**
    * Starts polling for alerts that match a set of search parameters.
-   * @param params Search parameters to use.
+   * @param params SearchQueryStore parameters to use.
    * @param interval Interval in ms to poll.
    */
   startPolling(
@@ -85,7 +85,7 @@ export interface FunctionProps {
   disablePolling(): any;
   /**
    * Searchs for alerts that match a set of search parameters.
-   * @param params Search parameters to use.
+   * @param params SearchQueryStore parameters to use.
    * @param poll If the search should be polled after it's completed.
    * @param interval Interval to poll alerts for.
    */

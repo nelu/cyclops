@@ -334,7 +334,7 @@ export function requestFailed(): RequestFailedAction {
 // --------------------------------------------------------------------------
 
 /**
- * Action Type: When a modal is opened to analyze the alert detail data.
+ * Action Type: When a modal is opened to analyze the alert detail stores.
  * @type {string}
  */
 export const OPEN_DATA_MODAL = `${ACTION_PREFIX}/OPEN_DATA_MODAL`;
@@ -379,7 +379,7 @@ export function openDataModal(
 // --------------------------------------------------------------------------
 
 /**
- * Action Type: When a modal display the alert data is closed.
+ * Action Type: When a modal display the alert stores is closed.
  * @type {string}
  */
 export const CLOSE_DATA_MODAL = `${ACTION_PREFIX}/CLOSE_DATA_MODAL`;

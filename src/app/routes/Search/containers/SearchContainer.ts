@@ -100,7 +100,7 @@ const functions: Functions = (dispatch) => ({
 // --------------------------------------------------------------------------
 
 /**
- * Container for the Search component.
+ * Container for the SearchQueryStore component.
  * @type {Container}
  */
 export const SearchContainer: Container = withRouter(

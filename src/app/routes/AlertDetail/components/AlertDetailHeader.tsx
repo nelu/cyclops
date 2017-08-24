@@ -42,14 +42,14 @@ interface Props {
   alertLevel: string;
   /** The selected alerts ID. */
   alertId: number;
-  /** The selected alerts data. */
+  /** The selected alerts stores. */
   alertData: Result;
   /** Container associated with the alert. */
   alertContainer?: Container;
   /**
-   * Opens a modal to analyze the alert data.
+   * Opens a modal to analyze the alert stores.
    * @param data Data of the alert to analyze.
-   * @param container Container related to the alert data.
+   * @param container Container related to the alert stores.
    */
   openDataModal(data: Result, container: Container): any;
   /** Closes the alert detail. */
@@ -66,7 +66,7 @@ interface Props {
  */
 export class AlertDetailHeader extends React.Component<Props, {}> {
   /**
-   * Popover element that displays a tooltip for analyzing alerts data.
+   * Popover element that displays a tooltip for analyzing alerts stores.
    * @type {JSX.Element}
    */
   public static analyzePopover: JSX.Element = (
@@ -82,7 +82,7 @@ export class AlertDetailHeader extends React.Component<Props, {}> {
   );
 
   /**
-   * Analyzes the current alerts data.
+   * Analyzes the current alerts stores.
    */
   public analyzeAlert = (): void => {
     if (this.props.alertContainer) {

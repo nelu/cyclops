@@ -23,9 +23,9 @@ import * as _ from 'lodash';
 import { PieChartData } from '../types';
 
 /**
- * Sorts Pie chart data by it's value.
- * @param data Pie chart data to sort.
- * @returns {PieChartData[]} Sorted pie chart data.
+ * Sorts Pie chart stores by it's value.
+ * @param data Pie chart stores to sort.
+ * @returns {PieChartData[]} Sorted pie chart stores.
  */
 export function sortPieChartData(data: PieChartData[]): PieChartData[] {
   return _.sortBy(data, ['value']).reverse();

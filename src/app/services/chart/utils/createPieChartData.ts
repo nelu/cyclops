@@ -24,8 +24,8 @@ import { PieChartData } from '../types';
 import { Dictionary } from '../../../types/object';
 
 /**
- * Creates a list of pie chart data from an object containing mapped numbers.
- * @param data Object to create data from.
+ * Creates a list of pie chart stores from an object containing mapped numbers.
+ * @param data Object to create stores from.
  * @param capitalize If the label should be capitalized.
  * @returns {PieChartData[]}
  */

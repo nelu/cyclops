@@ -7,7 +7,7 @@ declare namespace JSONFormatter {
    */
   interface Configuration {
     /**
-     * Display previews of data on mouse hover.
+     * Display previews of stores on mouse hover.
      */
     hoverPreviewEnabled?: boolean;
     /**
@@ -34,7 +34,7 @@ declare namespace JSONFormatter {
 }
 
 /**
- * Displays json data in a collapsible object view.
+ * Displays json stores in a collapsible object view.
  */
 declare class JSONFormatter {
   constructor(json: any, open?: number, config?: JSONFormatter.Configuration);

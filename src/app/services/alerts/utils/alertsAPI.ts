@@ -49,7 +49,7 @@ export function fetchAlert(
 
 /**
  * Gets an array of alerts that match the given parameters.
- * @param params Search parameters to filter alerts with.
+ * @param params SearchQueryStore parameters to filter alerts with.
  * @param cancelToken Cancel token to use to cancel the request.
  * @return {Promise<APIList<AlertDetail>>}
  */

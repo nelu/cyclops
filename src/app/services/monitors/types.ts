@@ -24,7 +24,7 @@ import {
 } from '../../types/normalizr';
 
 /**
- * Monitor object returned from the cyphon API. Displays data
+ * Monitor object returned from the cyphon API. Displays stores
  * associated with a running process or server that must be
  * monitored.
  */

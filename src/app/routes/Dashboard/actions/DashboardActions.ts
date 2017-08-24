@@ -81,7 +81,7 @@ const COLLECTION_DISTRIBUTION_COLOR_SEED = createRandomId();
 // --------------------------------------------------------------------------
 
 /**
- * Action Type: When alert statistics data is being fetched.
+ * Action Type: When alert statistics stores is being fetched.
  * @type {string}
  */
 export const FETCH_DATA_PENDING = `${ACTION_PREFIX}/FETCH_DATA_PENDING`;
@@ -111,7 +111,7 @@ export function fetchDataPending(
 // --------------------------------------------------------------------------
 
 /**
- * Action Type: When a request for distribution data is successful.
+ * Action Type: When a request for distribution stores is successful.
  * @type {string}
  */
 export const FETCH_DISTRIBUTION_DATA_SUCCESS =
@@ -146,7 +146,7 @@ export function fetchDistributionDataSuccess(
 // --------------------------------------------------------------------------
 
 /**
- * Action Type: When a request for timeseries data is successful.
+ * Action Type: When a request for timeseries stores is successful.
  * @type {string}
  */
 export const FETCH_TIMSERIES_DATA_SUCCESS =
@@ -175,7 +175,7 @@ export function fetchTimeseriesDataSuccess(
 // --------------------------------------------------------------------------
 
 /**
- * Action Type: When a requst for geojson data is successful.
+ * Action Type: When a requst for geojson stores is successful.
  * @type {string}
  */
 export const FETCH_LOCATION_DATA_SUCCESS =
@@ -206,7 +206,7 @@ export function fetchLocationDataSuccess(
 // --------------------------------------------------------------------------
 
 /**
- * Action Type: When there is an error fetching dashboard data.
+ * Action Type: When there is an error fetching dashboard stores.
  * @type {string}
  */
 export const FETCH_DATA_FAILURE = `${ACTION_PREFIX}/FETCH_DATA_FAILURE`;
@@ -374,10 +374,10 @@ export function fetchLevelTimeseries(
 // --------------------------------------------------------------------------
 
 /**
- * Broadcasts a dashboard data fetch error and adds the error to the
+ * Broadcasts a dashboard stores fetch error and adds the error to the
  * error popup. Ignores canceled requests.
  * @param dispatch Redux dispatch function.
- * @param type Type of data that failed.
+ * @param type Type of stores that failed.
  * @returns {(error:any)=>void}
  */
 function broadcastError(dispatch: ReduxDispatch, type: DashboardDataTypes) {

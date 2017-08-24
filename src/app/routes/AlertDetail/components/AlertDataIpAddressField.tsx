@@ -30,7 +30,7 @@ import { createRandomId } from '../../../utils/stringUtils';
 
 /** Properties of the AlertDataIpAddressField component. */
 interface Props {
-  /** Field in the alert data that contains the ip address. */
+  /** Field in the alert stores that contains the ip address. */
   field: string;
   /** The IP address value. */
   ipAddress: string;

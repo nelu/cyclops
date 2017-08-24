@@ -31,7 +31,7 @@ import { createStackedAreaChart } from '../utils/createStackedAreaChart';
 
 /** Properties of the StackedAreaChart component. */
 interface StackedAreaChartProps {
-  /** Stacked area chart data for the chart. */
+  /** Stacked area chart stores for the chart. */
   data: StackedAreaChartData[];
 }
 

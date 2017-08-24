@@ -81,7 +81,7 @@ export function createStackedAreaChart(
 /**
  * Creates the x axis tick values for a stacked area chart with date
  * values on the x axis.
- * @param data StackedAreaChart data to display.
+ * @param data StackedAreaChart stores to display.
  * @returns {number[]} Date tick marks in unix timestamp format.
  */
 function createXAxisTickValues(data: StackedAreaChartData): number[] {

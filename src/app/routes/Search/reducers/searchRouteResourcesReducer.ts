@@ -95,7 +95,7 @@ reducers[actions.FETCH_DISTILLERIES_SUCCESS] = (
 };
 
 /**
- * Search route resources reducer.
+ * SearchQueryStore route resources reducer.
  * @type {@type {Reducer<SearchQueryState, any>}
  */
 export const searchRouteResourcesReducer = handleActions<

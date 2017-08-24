@@ -86,7 +86,7 @@ describe('AlertDetailReducer', () => {
   });
 
   describe('FETCH_ALERT_SUCCESS', () => {
-    it('should update the state with the given payload data', () => {
+    it('should update the state with the given payload stores', () => {
       const alert: any = { id: 4 };
       const locations: any = { data: 'data' };
       const markers: any = { markers: 'markers' };
@@ -133,7 +133,7 @@ describe('AlertDetailReducer', () => {
   });
 
   describe('REQUEST_FAILED', () => {
-    it('should update the state with the given payload data', () => {
+    it('should update the state with the given payload stores', () => {
       const action = actions.requestFailed();
       const state = AlertDetailReducer({} as any, action);
 
@@ -142,7 +142,7 @@ describe('AlertDetailReducer', () => {
   });
 
   describe('UPDATE_ALERT_SUCCESS', () => {
-    it('should update the state with the given payload data', () => {
+    it('should update the state with the given payload stores', () => {
       const alert: any = { id: 1 };
       const action = actions.updateAlertSuccess(alert);
       const state = AlertDetailReducer({} as any, action);
@@ -165,7 +165,7 @@ describe('AlertDetailReducer', () => {
   });
 
   describe('OPEN_DATA_MODAL', () => {
-    it('should update the state with the given payload data', () => {
+    it('should update the state with the given payload stores', () => {
       const result: any = {
         ip: '124.567.323.432',
       };
@@ -195,7 +195,7 @@ describe('AlertDetailReducer', () => {
   });
 
   describe('CLOSE_DATA_MODAL', () => {
-    it('should update the state with the given payload data', () => {
+    it('should update the state with the given payload stores', () => {
       const action = actions.closeDataModal();
       const state = AlertDetailReducer({} as any, action);
 

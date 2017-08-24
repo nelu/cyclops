@@ -24,7 +24,7 @@ import {
   ThunkActionVoid,
 } from '~/types/redux';
 import { NormalizedUserList } from '~/services/users/types';
-import { fetchAllUsers as getAllUsers } from '~/services/users/api';
+import { fetchAllUsers as getAllUsers } from '~/services/users/utils/userAPI';
 import { normalizeUsers } from '~/services/users/utils/normalizeUsers';
 import { addError } from '~/routes/App/actions/ErroPopupActions';
 

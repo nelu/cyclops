@@ -46,15 +46,15 @@ import { normalizeContexts } from '../../../services/contexts/utils';
 
 /** Properties of the AlertDataModal component. */
 interface Props {
-  /** Alert with data to view. */
+  /** Alert with stores to view. */
   alert: AlertDetail;
   /** If the modal is active. */
   active: boolean;
   /** Locations associated with the alert. */
   locations: LocationFieldAddress[] | null;
-  /** IP address fields from the alert data. */
+  /** IP address fields from the alert stores. */
   ipAddresses: ResultIPAdresses | null;
-  /** GeoJSON markers generated from the alert data. */
+  /** GeoJSON markers generated from the alert stores. */
   markers: Markers | null;
   /** Close the AlertDataModal. */
   closeModal: CloseModal;
@@ -67,12 +67,12 @@ export type CloseModal = () => any;
 // --------------------------------------------------------------------------
 
 /**
- * Displays options to analyze alerts data.
+ * Displays options to analyze alerts stores.
  */
 export class AlertDataModal extends React.Component<Props, {}> {
   /**
    * Event keys for the tabs in the result modal.
-   * @type {{data: string, context: string, locations: string, ipaddresses: string}}
+   * @type {{stores: string, context: string, locations: string, ipaddresses: string}}
    */
   public static EVENT_KEYS = {
     data: 'data',

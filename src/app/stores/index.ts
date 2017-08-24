@@ -15,21 +15,13 @@
  * Contributor/Change Made By: ________________. [Only apply if changes
  * are made]
  */
+import { AlertListStore } from '~/stores/AlertListStore';
+import { ErrorStore } from '~/stores/ErrorStore';
+import { UserStore } from '~/stores/UserStore';
 
-// Local
-import { FilterOption } from '~/routes/Search/types';
-
-const CHOICES = {
-  'eq': 'equals',
-  'in': 'contains',
-  'gt': 'greater than',
-  'gte': 'greater than or equal to',
-  'lt': 'less than',
-  'lte': 'less than or equal to',
-  'regex': 'contains',
-  'not:eq': 'does not equal',
-  'not:in': 'does not contain',
-  'not:regex': 'does not contain',
-  'not:missing': 'is not null',
-  'within': 'within',
-};
+/**  */
+export class RootStore {
+  public alertListStore: AlertListStore = new AlertListStore(this);
+  public errorStore: ErrorStore = new ErrorStore(this);
+  public userStore: UserStore = new UserStore(this);
+}

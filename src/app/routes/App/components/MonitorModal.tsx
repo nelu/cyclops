@@ -57,7 +57,7 @@ export interface FunctionProps {
 type Props = ValueProps & FunctionProps;
 
 /**
- * Displays a popup that contains data of the current list of monitors.
+ * Displays a popup that contains stores of the current list of monitors.
  */
 export class MonitorModal extends React.Component<Props, {}> {
   public render(): JSX.Element {

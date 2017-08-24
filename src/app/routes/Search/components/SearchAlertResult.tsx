@@ -28,6 +28,8 @@ import { AlertListItem } from '~/routes/AlertList/components/AlertListItem';
 import { CollapsibleHeader } from '~/components/CollapsibleHeader';
 import { getOutcomeDisplayName } from '~/services/alerts/utils/getOutcomeDisplayName';
 import { createRandomId } from '~/utils/stringUtils';
+import { orderKeys } from '~/utils/objectUtils';
+import { FlexBox } from '~/components/FlexBox';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -139,6 +141,7 @@ export class SearchAlertResult extends React.Component<Props, State> {
         <table>
           <AlertListItem alert={this.props.alert} selectAlert={this.props.openAlert} />
         </table>
+        <FlexBox id={this.id} style={{contentStyle}} shrink={true} />
         <div
           id={this.id}
           className="flex-box search-alert-result__content"

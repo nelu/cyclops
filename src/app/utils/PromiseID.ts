@@ -16,25 +16,28 @@
  * are made]
  */
 
-// Vendor
-import * as sinon from 'sinon';
-import * as chai from 'chai';
+/** Privates helper methods for classes that need to cancel promises. */
+export class PromiseID {
+  protected promiseID: symbol = Symbol();
 
-// Local
-import * as api from '../cyphon/utils/cyphonAPI';
-import * as userAPI from './api';
+  /**
+   * Resets the current promise ID.
+   * @returns {symbol} New promise ID.
+   */
+  protected resetPromiseID = (): symbol => {
+    const promiseID = Symbol();
 
-describe('usersAPI', () => {
-  describe('fetchAllUsers()', () => {
-    it('should call the correct url', () => {
-      const getAll = sinon.stub(api, 'getAll');
+    this.promiseID = promiseID;
 
-      userAPI.fetchAllUsers();
+    return promiseID;
+  };
 
-      chai.expect(getAll.called).to.be.true;
-      chai.expect(getAll.args[0][0]).to.equal('/users/');
-
-      getAll.restore();
-    });
-  });
-});
+  /**
+   * Determines if the given promise ID matches the latest promise ID.
+   * @param {symbol} promiseID
+   * @returns {boolean}
+   */
+  protected isValidPromiseID = (promiseID: symbol): boolean => {
+    return this.promiseID === promiseID;
+  };
+}

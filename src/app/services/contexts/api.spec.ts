@@ -40,7 +40,7 @@ describe('api.contexts.api', () => {
       contextAPI.searchContext(4, {} as any);
 
       chai.expect(get.called).to.be.true;
-      chai.expect(get.args[0][0]).to.equal('/contexts/4/related-data-by-id/');
+      chai.expect(get.args[0][0]).to.equal('/contexts/4/related-stores-by-id/');
     });
 
     it('should pass the params to the get options', () => {

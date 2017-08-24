@@ -43,7 +43,7 @@ export interface AlertViewState {
   alerts: AlertListItem[];
   /** If the list of alerts is being fetched. */
   loading: boolean;
-  /** Search parameters used to search for alerts. */
+  /** SearchQueryStore parameters used to search for alerts. */
   params: AlertSearchParams;
   /** String value in the search bar. */
   search: string;
@@ -107,18 +107,17 @@ reducers[actions.SEARCH_ALERTS_PENDING] = (
   state: AlertViewState,
   action: ReduxAction<actions.SearchAlertsPendingPayload>,
 ): AlertViewState => {
-  const update: Partial<AlertViewState> = {
+  // Cancel the timeout for polling alerts.
+  if (state.timeout) { window.clearTimeout(state.timeout); }
+
+  return {
+    ...state,
     loading: true,
     params: action.payload.params,
     polling: false,
     pollingEnabled: action.payload.poll,
     promiseId: action.payload.promiseId,
   };
-
-  // Cancel the timeout for polling alerts.
-  if (state.timeout) { window.clearTimeout(state.timeout); }
-
-  return Object.assign({}, state, update);
 };
 
 /**
@@ -131,14 +130,13 @@ reducers[actions.SEARCH_ALERTS_SUCCESS] = (
   state: AlertViewState,
   action: ReduxAction<actions.SearchAlertsSuccessPayload>,
 ): AlertViewState => {
-  const update: Partial<AlertViewState> = {
+  return {
+    ...state,
     alerts: action.payload.alerts,
     count: action.payload.count,
     loading: false,
     polling: action.payload.polling,
   };
-
-  return Object.assign({}, state, update);
 };
 
 /**

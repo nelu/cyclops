@@ -28,7 +28,7 @@ import * as actions from '../actions/AlertDetailOutcomeActions';
 
 describe('AlertDetailOutcomeReducer', () => {
   describe('OPEN', () => {
-    it('should update the state with the given payload data', () => {
+    it('should update the state with the given payload stores', () => {
       const outcome = 'completed';
       const notes = 'notes';
       const action = actions.open(outcome, notes);
@@ -52,7 +52,7 @@ describe('AlertDetailOutcomeReducer', () => {
   });
 
   describe('CHANGE_OUTCOME', () => {
-    it('should update the state with the given payload data', () => {
+    it('should update the state with the given payload stores', () => {
       const outcome = 'completed';
       const action = actions.changeOutcome(outcome);
       const state = AlertDetailOutcomeReducer({} as any, action);
@@ -64,7 +64,7 @@ describe('AlertDetailOutcomeReducer', () => {
   });
 
   describe('CHANGE_NOTES', () => {
-    it('should update the state with the given payload data', () => {
+    it('should update the state with the given payload stores', () => {
       const notes = 'notes';
       const action = actions.changeNotes(notes);
       const state = AlertDetailOutcomeReducer({} as any, action);
@@ -76,7 +76,7 @@ describe('AlertDetailOutcomeReducer', () => {
   });
 
   describe('OPEN_REMOVE_PANEL', () => {
-    it('should update the state with the given payload data', () => {
+    it('should update the state with the given payload stores', () => {
       const action = actions.openRemovePanel();
       const state = AlertDetailOutcomeReducer({} as any, action);
 
@@ -87,7 +87,7 @@ describe('AlertDetailOutcomeReducer', () => {
   });
 
   describe('CLOSE_REMOVE_PANEL', () => {
-    it('should update the state with the given payload data', () => {
+    it('should update the state with the given payload stores', () => {
       const action = actions.closeRemovePanel();
       const state = AlertDetailOutcomeReducer({} as any, action);
 

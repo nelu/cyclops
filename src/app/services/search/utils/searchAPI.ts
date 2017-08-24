@@ -29,7 +29,7 @@ import {
 /**
  * Searches a given search endpoint and returns the results.
  * @param url URL of a search endpoint.
- * @param query Search query used to look for results.
+ * @param query SearchQueryStore query used to look for results.
  * @param page Page number of results to return.
  * @param pageSize Number of results to return per page.
  * @returns {Promise<SearchEndpoint<any>>}
@@ -48,7 +48,7 @@ function getSearchResults(
 /**
  * Searches alerts and distilleries from Cyphon to see if it has any records
  * matching the search query.
- * @param query Search query used to look for results.
+ * @param query SearchQueryStore query used to look for results.
  * @param page Page number of results to return.
  * @param pageSize Number of results to return per page.
  * @returns {Promise<SearchEndpoint<CombinedSearchResults>>}
@@ -63,7 +63,7 @@ export function search(
 
 /**
  * Searches alerts from Cyphon to see if any of them match the search query.
- * @param query Search query used to look for results.
+ * @param query SearchQueryStore query used to look for results.
  * @param page Page number of results to return.
  * @param pageSize Number of results to return per page.
  * @returns {Promise<SearchEndpoint<AlertSearchResults>>}
@@ -78,7 +78,7 @@ export function searchAlerts(
 
 /**
  * Searches alerts from Cyphon to see if any of them match the search query.
- * @param query Search query used to look for results.
+ * @param query SearchQueryStore query used to look for results.
  * @param page Page number of results to return.
  * @param pageSize Number of results to return per page.
  * @returns {Promise<SearchEndpoint<AlertSearchResults>>}
@@ -94,7 +94,7 @@ export function searchDistilleries(
 /**
  * Searches alerts from Cyphon to see if any of them match the search query.
  * @param id ID of the distillery to search.
- * @param query Search query used to look for results.
+ * @param query SearchQueryStore query used to look for results.
  * @param page Page number of results to return.
  * @param pageSize Number of results to return per page.
  * @returns {Promise<SearchEndpoint<any>>}

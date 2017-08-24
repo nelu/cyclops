@@ -35,7 +35,7 @@ import { getPieChartDataTotal } from '../utils/getPieChartDataTotal';
 
 /** Properties of the PieChart component. */
 interface Props {
-  /** Pie chart data to display. */
+  /** Pie chart stores to display. */
   data: PieChartData[];
   /** Options for the NVD3 pie chart. */
   options?: PieChartOptions;
@@ -50,10 +50,10 @@ interface Props {
  */
 export class PieChart extends React.Component<Props, {}> {
   /**
-   * Determines if the data is empty. If it is, then it returns a pie chart
-   * data that uses a black background. Otherwise it returns the given
-   * pie chart data.
-   * @param data Pie chart data to check.
+   * Determines if the stores is empty. If it is, then it returns a pie chart
+   * stores that uses a black background. Otherwise it returns the given
+   * pie chart stores.
+   * @param data Pie chart stores to check.
    * @returns {PieChartData[]}
    */
   public static emptyData(data: PieChartData[]): PieChartData[] {
@@ -80,8 +80,8 @@ export class PieChart extends React.Component<Props, {}> {
   }
 
   /**
-   * Update the chart with new data if the new data is different from the
-   * previous data.
+   * Update the chart with new stores if the new stores is different from the
+   * previous stores.
    */
   public componentDidUpdate(prevProps: Props): void {
     if (!_.isEqual(prevProps.data, this.props.data)) {

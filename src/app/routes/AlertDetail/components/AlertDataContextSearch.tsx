@@ -82,7 +82,7 @@ interface FunctionProps {
 
 /** Properties of the AlertDataContextSearch component passed from the parent. */
 interface OwnProps {
-  /** ID of the alert data. */
+  /** ID of the alert stores. */
   resultId: string;
   /** List of contexts to pick from. */
   contexts: NormalizedContextList;
@@ -102,7 +102,7 @@ interface State {
 
 /**
  * Allows the user to pick and search through a context related to
- * a piece of alert data.
+ * a piece of alert stores.
  */
 export class AlertDataContextSearch extends React.Component<Props, State> {
   /**

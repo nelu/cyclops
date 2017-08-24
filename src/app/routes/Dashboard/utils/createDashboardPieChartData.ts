@@ -24,9 +24,9 @@ import { sortPieChartData } from '../../../services/chart/utils/sortPieChartData
 import { addColorProperty } from '../../../services/chart/utils/addColorProperty';
 
 /**
- * Creates pie chart data for the dashboard view.
- * @param data Data to turn into pie chart data.
- * @param seed Seed used to create colors for the pie chart data.
+ * Creates pie chart stores for the dashboard view.
+ * @param data Data to turn into pie chart stores.
+ * @param seed Seed used to create colors for the pie chart stores.
  * @returns {PieChartDataWithColor[]}
  */
 export function createDashboardPieChartData(

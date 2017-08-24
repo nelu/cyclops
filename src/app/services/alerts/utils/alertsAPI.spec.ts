@@ -110,7 +110,7 @@ describe('alertsAPI', () => {
       });
     });
 
-    it('should post the alertId as the post data', () => {
+    it('should post the alertId as the post stores', () => {
       return alertsAPI.performAction(actionId, alertId).then(() => {
         chai.expect(post.called).to.be.true;
         chai.expect(post.args[0][1]).to.deep.equal({ alert: alertId });

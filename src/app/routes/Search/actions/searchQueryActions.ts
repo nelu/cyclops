@@ -23,7 +23,7 @@ import {
   ThunkActionPromise,
   ThunkActionVoid,
 } from '~/types/redux';
-import * as searchAPI from '~/services/search/api';
+import * as searchAPI from '~/services/search/utils/searchAPI';
 import {
   AlertSearchResults,
   CombinedSearchResults,
@@ -232,7 +232,7 @@ export function searchAlerts(query: string, page?: number): ThunkActionPromise {
 }
 
 /**
- * Searches a single distillery for data matching a search query.
+ * Searches a single distillery for stores matching a search query.
  * @param {number} id ID of the distillery to search.
  * @param {string} query
  * @param {number} page Page number to return.

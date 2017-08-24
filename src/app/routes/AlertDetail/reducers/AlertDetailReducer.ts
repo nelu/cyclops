@@ -38,7 +38,7 @@ import * as requests from '~/services/cyphon/utils/requests';
 export interface AlertDetailState {
   /** ID of the currently selected alerts. */
   alertId: number | null;
-  /** Locations from the alerts data with their addresses. */
+  /** Locations from the alerts stores with their addresses. */
   locations: LocationFieldAddress[] | null;
   /** GeoJSON markers of the currently selected alerts. */
   markers: Markers | null;
@@ -48,7 +48,7 @@ export interface AlertDetailState {
   loading: boolean;
   /** IP address fields related to the alert. */
   ipAddresses: ResultIPAdresses | null;
-  /** If the data modal is active. */
+  /** If the stores modal is active. */
   modalActive: boolean;
   /** Error message that doesn't require the error popup. */
   error: string[];

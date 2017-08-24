@@ -35,7 +35,7 @@ import { PieChart } from './PieChart';
 interface Props {
   /** Data to fill the pie chart with. */
   data: PieChartData[];
-  /** Short description of the data. */
+  /** Short description of the stores. */
   title: string;
 }
 

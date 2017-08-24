@@ -29,7 +29,7 @@ import { SpacedList } from '../../../components/SpacedList';
 
 /** Properties of the AlertDataContextFilters component. */
 interface Props {
-  /** List of context filters related to the alert data. */
+  /** List of context filters related to the alert stores. */
   filters: ContextFilter[];
   /** Logic used when search the context the filters are related to. */
   filterLogic: string;
@@ -40,7 +40,7 @@ interface Props {
 // --------------------------------------------------------------------------
 
 /**
- * Display a list of context filters related to the alert data.
+ * Display a list of context filters related to the alert stores.
  */
 export class AlertDataContextFilters extends React.Component<Props, {}> {
   public render() {

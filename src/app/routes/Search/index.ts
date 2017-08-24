@@ -32,7 +32,7 @@ import {
 import { SearchContainer } from '~/routes/Search/containers/SearchContainer';
 
 /**
- * Root component for the Search view.
+ * Root component for the SearchQueryStore view.
  * @type {ComponentClass<any>}
  */
 export const SearchRoute: ComponentClass<any> = SearchContainer;

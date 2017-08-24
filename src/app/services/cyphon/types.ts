@@ -19,9 +19,9 @@
 // Vendor
 import { AxiosResponse, AxiosRequestConfig } from 'axios';
 
-/** Response data returned by an API call. */
+/** Response stores returned by an API call. */
 export interface APIResponse<T> extends AxiosResponse {
-  /** Body data of the response. */
+  /** Body stores of the response. */
   data: T;
 }
 
@@ -48,10 +48,10 @@ export interface APIConfig extends AxiosRequestConfig {
 
 /** Bottle and label field shared properties. */
 export interface Field {
-  /** Type of data present on the field. */
+  /** Type of stores present on the field. */
   field_type: string;
-  /** Generic type of data on the field. */
+  /** Generic type of stores on the field. */
   target_type: string | null;
-  /** Name of the field on the raw data object. */
+  /** Name of the field on the raw stores object. */
   field_name: string;
 }

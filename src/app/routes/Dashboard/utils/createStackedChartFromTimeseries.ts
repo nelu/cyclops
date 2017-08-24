@@ -30,7 +30,7 @@ import { LEVEL_OPTIONS } from '../../AlertList/constants';
 import { Dictionary } from '~/types/object';
 
 /**
- * Creates a list of stacked area chart data from the data of an
+ * Creates a list of stacked area chart stores from the stores of an
  * alerts level timeseries.
  * @param data Alert level timeseries.
  * @param capitalize If the title for the values should be capitalized.

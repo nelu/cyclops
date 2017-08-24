@@ -17,7 +17,7 @@
  */
 
 /**
- * Information related to where the result data is stored on the
+ * Information related to where the result stores is stored on the
  * backend.
  */
 export interface ResultRawData {
@@ -41,7 +41,7 @@ export interface Result {
   _id: string;
   /** Date the result was stored. */
   _saved_date: string;
-  /** Location information of the raw data that created the result. */
+  /** Location information of the raw stores that created the result. */
   _raw_data: ResultRawData;
 }
 

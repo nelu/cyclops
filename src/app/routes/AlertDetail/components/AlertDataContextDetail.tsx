@@ -43,7 +43,7 @@ interface Props {
 
 /**
  * Displays information about a selected context related to a piece of
- * alert data.
+ * alert stores.
  */
 export class AlertDataContextDetail extends React.Component<Props, {}> {
   public render() {

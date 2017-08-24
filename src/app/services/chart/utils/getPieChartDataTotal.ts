@@ -23,8 +23,8 @@ import * as _ from 'lodash';
 import { PieChartData } from '../types';
 
 /**
- * Gets the summed values of a list of pie chart data.
- * @param data Pie chart data values.
+ * Gets the summed values of a list of pie chart stores.
+ * @param data Pie chart stores values.
  * @returns {number} Total summed value.
  */
 export function getPieChartDataTotal(data: PieChartData[]) {

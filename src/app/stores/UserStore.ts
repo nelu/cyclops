@@ -1,4 +1,4 @@
-/*!
+/**
  * The contents of this file are subject to the CYPHON Proprietary Non-
  * Commercial Registered User Use License Agreement (the "Agreement”). You
  * may not use this file except in compliance with the Agreement, a copy
@@ -16,27 +16,31 @@
  * are made]
  */
 
+// Vendor
+import { observable, action } from 'mobx';
+
 // Local
-import {
-  ReduxAction,
-  ReduxActionCreator,
-} from '~/types/redux';
+import { User } from '~/services/users/types';
+import * as userAPI from '~/services/users/utils/userAPI';
+import { RootStore } from '~/stores';
 
-/**
- * Creates a flux standard action with the given payload type.
- * @param type Action type.
- * @param payload Data to attach to the action.
- * @param error If the action is an error.
- * @returns {ReduxAction<Payload>}
- */
-export function createAction<Payload>(
-  type: string,
-  payload: Payload,
-  error?: boolean,
-): ReduxAction<Payload> {
-  return { type, payload, error };
-}
+/** Store containing users of Cyphon. */
+export class UserStore {
+  @observable public users: User[] = [];
+  private stores: RootStore;
 
-export function createActionCreator<P>(type: string): ReduxActionCreator<P> {
-  return (payload: P) => ({ type, payload });
+  constructor(stores: RootStore) {
+    this.stores = stores;
+  }
+
+  /**
+   * Fetches all the current Cyphon users and stores them.
+   * @returns {Promise<void>}
+   */
+  @action
+  public fetchAllUsers = (): Promise<void> => {
+    return userAPI.fetchAllUsers()
+      .then((users) => { this.users = users; })
+      .catch((error) => { this.stores.errorStore.addError(error); });
+  };
 }

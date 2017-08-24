@@ -17,8 +17,8 @@
  */
 
 // Local
-import * as cyphon from '../cyphon/utils/cyphonAPI';
-import { User } from './types';
+import * as cyphon from '../../cyphon/utils/cyphonAPI';
+import { User } from '../types';
 
 /**
  * Returns all the users.

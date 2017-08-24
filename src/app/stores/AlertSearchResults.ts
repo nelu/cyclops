@@ -1,4 +1,4 @@
-/*!
+/**
  * The contents of this file are subject to the CYPHON Proprietary Non-
  * Commercial Registered User Use License Agreement (the "Agreement”). You
  * may not use this file except in compliance with the Agreement, a copy
@@ -16,27 +16,19 @@
  * are made]
  */
 
-// Local
-import {
-  ReduxAction,
-  ReduxActionCreator,
-} from '~/types/redux';
+// Vendor
+import { observable, action } from 'mobx';
+import { AlertDetail } from '~/services/alerts/types';
 
-/**
- * Creates a flux standard action with the given payload type.
- * @param type Action type.
- * @param payload Data to attach to the action.
- * @param error If the action is an error.
- * @returns {ReduxAction<Payload>}
- */
-export function createAction<Payload>(
-  type: string,
-  payload: Payload,
-  error?: boolean,
-): ReduxAction<Payload> {
-  return { type, payload, error };
+class SearchQueryAlertResultsStore {
+  @observable public results: AlertDetail[] = [];
+  @observable public count: number = 0;
+
+  @action
+  public setResults(results: AlertDetail[], count: number): void {
+    this.results = results;
+    this.count = count;
+  }
 }
 
-export function createActionCreator<P>(type: string): ReduxActionCreator<P> {
-  return (payload: P) => ({ type, payload });
-}
+export const searchQueryAlertResultsStore = new SearchQueryAlertResultsStore();

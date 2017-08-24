@@ -71,7 +71,7 @@ export interface ValueProps {
   loading: boolean;
   /** List and metadata of the current alerts that match the query. */
   alertResults: AlertSearchResults | null;
-  /** List and metadata of the raw data that matches the query. */
+  /** List and metadata of the raw stores that matches the query. */
   distilleryResults: DistilleryListSearchResults | null;
   /** If the current search query string is valid. */
   valid: boolean;
@@ -98,7 +98,7 @@ interface SearchQueryParams {
   query?: string;
 }
 
-/** Properties of the Search component. */
+/** Properties of the SearchQueryStore component. */
 type Props = ValueProps & FunctionProps;
 
 /** Possible results views. */
@@ -112,7 +112,7 @@ enum View {
 // --------------------------------------------------------------------------
 
 /**
- * Root component of the Search page.
+ * Root component of the SearchQueryStore page.
  */
 export class Search extends React.Component<Props, State> {
   constructor(props: Props) {

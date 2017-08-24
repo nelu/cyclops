@@ -33,8 +33,8 @@ import { Field } from '~/services/cyphon/types';
 type SearchQueryParamType = 'collection' | 'container' | 'field' | '';
 
 /**
- * Function that parses a query parameter data string into it's
- * represented data.
+ * Function that parses a query parameter stores string into it's
+ * represented stores.
  */
 type SearchQueryParamDataParser = (
   param: SearchQueryParam,
@@ -49,7 +49,7 @@ interface SearchQueryParam {
   error?: string;
 }
 
-/** Search operation to perform on a given field. */
+/** SearchQueryStore operation to perform on a given field. */
 interface SearchQueryField {
   /** field_name of the field to perform the operation on. */
   field: string;
@@ -59,7 +59,7 @@ interface SearchQueryField {
   value: any;
 }
 
-/** Parsed data from a search query string. */
+/** Parsed stores from a search query string. */
 interface ParsedSearchQuery {
   /** ID's of the currently selected distilleries. */
   distilleries: number[];
@@ -71,7 +71,7 @@ interface ParsedSearchQuery {
   errors: string[];
 }
 
-/** Object containing resources necessary for parsing SearchQueryParam data. */
+/** Object containing resources necessary for parsing SearchQueryParam stores. */
 interface SearchQueryResources {
   /** Object of distilleries indexed by their shortened name. */
   distilleries: Dictionary<DistilleryMinimal>;
@@ -81,9 +81,9 @@ interface SearchQueryResources {
   fields: Dictionary<Field>;
 }
 
-/** Object created when a SearchQueryParam object is parsed for it's data. */
+/** Object created when a SearchQueryParam object is parsed for it's stores. */
 interface ParsedSearchQueryParamData<T> {
-  /** Index of the param this data comes from. */
+  /** Index of the param this stores comes from. */
   param: number;
   /** Data parsed from the param. */
   value?: T;
@@ -143,7 +143,7 @@ const PARAM_DATA_PARSERS: Dictionary<SearchQueryParamDataParser> = {
  * @param index Index of the parameter in the search query.
  * @param source String this object was created from.
  * @param type Type of parameter.
- * @param data Parsed data of parameter.
+ * @param data Parsed stores of parameter.
  * @param error An error that occurred during parsing.
  * @returns {SearchQueryParam}
  */
@@ -191,11 +191,11 @@ function createSearchQueryData(
 }
 
 /**
- * Parses the parameter data from the data string for a collection parameter.
+ * Parses the parameter stores from the stores string for a collection parameter.
  * This will be the selected distillery ID. Returns 0 if it can't find the
  * distillery.
- * @param data Query data string.
- * @param resources Query data resources.
+ * @param data Query stores string.
+ * @param resources Query stores resources.
  * @returns {number} Selected distillery ID.
  */
 function parseCollectionParamData(
@@ -217,11 +217,11 @@ function parseCollectionParamData(
 }
 
 /**
- * Parses the parameter data from the data string of a container parameter.
+ * Parses the parameter stores from the stores string of a container parameter.
  * This will be the selected container ID. Returns 0 if it can't find
  * the container.
- * @param data Query parameter data string.
- * @param resources Query data resources.
+ * @param data Query parameter stores string.
+ * @param resources Query stores resources.
  */
 function parseContainerParamData(
   param: SearchQueryParam,
@@ -307,8 +307,8 @@ function parseParamData(
 
 /**
  * Returns ParsedSearchQuery from a list of SearchQueryParams.
- * @param params List of SearchQueryParams to parse data from.
- * @param resources Object of resources needed to parse data.
+ * @param params List of SearchQueryParams to parse stores from.
+ * @param resources Object of resources needed to parse stores.
  * @returns {ParsedSearchQuery}
  */
 function getSearchQueryData(
@@ -345,7 +345,7 @@ function getSearchQueryData(
 
 /**
  * Parses search query string parameter into SearchQueryParam object.
- * @param param Search query string parameter.
+ * @param param SearchQueryStore query string parameter.
  * @returns {SearchQueryParam}
  */
 function parseQueryParam(
@@ -408,8 +408,8 @@ function parseQueryParams(query: string): SearchQueryParam[] {
 
 /**
  * Parses a search query string into a ParsedSearchQuery object.
- * @param query Search query string to parse.
- * @param resources Objects needed to parse the SearchQueryParam data.
+ * @param query SearchQueryStore query string to parse.
+ * @param resources Objects needed to parse the SearchQueryParam stores.
  * @returns {ParsedSearchQuery}
  */
 export function parseSearchQuery(

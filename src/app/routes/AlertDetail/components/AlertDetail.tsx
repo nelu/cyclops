@@ -87,9 +87,9 @@ export interface ValueProps {
   markers: Markers | null;
   /** Alert location, field the location was found on, and the address. */
   locations: LocationFieldAddress[] | null;
-  /** IP addresses of the alert data. */
+  /** IP addresses of the alert stores. */
   ipAddresses: ResultIPAdresses | null;
-  /** If the alert data modal is active. */
+  /** If the alert stores modal is active. */
   modalActive: boolean;
   /** Error message related to the alert detail. */
   error: string[];
@@ -111,14 +111,14 @@ export interface FunctionProps {
   addComment(alertId: number, comment: string): any;
   /** Closes the alert detail. */
   closeAlert(): any;
-  /** Closes the modal used to analyze the alert data. */
+  /** Closes the modal used to analyze the alert stores. */
   closeDataModal(): any;
   /** Closes any alert update error messages. */
   closeErrorMessage(): any;
   /**
-   * Opens a modal used to analyze the alert data.
+   * Opens a modal used to analyze the alert stores.
    * @param data Data to analyze.
-   * @param container Related container to the data.
+   * @param container Related container to the stores.
    */
   openDataModal(data: Result, container: Container): any;
   /**
@@ -184,7 +184,7 @@ export class AlertDetail extends React.Component<Props, {}> {
   );
 
   /**
-   * Retrieves the alerts data of the currently selected alerts.
+   * Retrieves the alerts stores of the currently selected alerts.
    */
   public componentWillMount(): void {
     this.props.viewAlert(this.getAlertId());

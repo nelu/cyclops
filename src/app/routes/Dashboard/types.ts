@@ -17,7 +17,7 @@
  */
 
 /**
- * Dashboard data types that contain pie chart data.
+ * Dashboard stores types that contain pie chart stores.
  */
 export type DistributionDataTypes = 'level' | 'status' | 'collection';
 

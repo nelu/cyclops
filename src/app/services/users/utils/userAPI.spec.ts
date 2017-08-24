@@ -1,4 +1,4 @@
-/*!
+/**
  * The contents of this file are subject to the CYPHON Proprietary Non-
  * Commercial Registered User Use License Agreement (the "Agreement”). You
  * may not use this file except in compliance with the Agreement, a copy
@@ -16,27 +16,25 @@
  * are made]
  */
 
+// Vendor
+import * as sinon from 'sinon';
+import * as chai from 'chai';
+
 // Local
-import {
-  ReduxAction,
-  ReduxActionCreator,
-} from '~/types/redux';
+import * as api from '../../cyphon/utils/cyphonAPI';
+import * as userAPI from './userAPI';
 
-/**
- * Creates a flux standard action with the given payload type.
- * @param type Action type.
- * @param payload Data to attach to the action.
- * @param error If the action is an error.
- * @returns {ReduxAction<Payload>}
- */
-export function createAction<Payload>(
-  type: string,
-  payload: Payload,
-  error?: boolean,
-): ReduxAction<Payload> {
-  return { type, payload, error };
-}
+describe('usersAPI', () => {
+  describe('fetchAllUsers()', () => {
+    it('should call the correct url', () => {
+      const getAll = sinon.stub(api, 'getAll');
 
-export function createActionCreator<P>(type: string): ReduxActionCreator<P> {
-  return (payload: P) => ({ type, payload });
-}
+      userAPI.fetchAllUsers();
+
+      chai.expect(getAll.called).to.be.true;
+      chai.expect(getAll.args[0][0]).to.equal('/users/');
+
+      getAll.restore();
+    });
+  });
+});

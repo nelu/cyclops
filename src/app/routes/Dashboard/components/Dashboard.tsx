@@ -64,11 +64,11 @@ export interface ValueProps {
   collectionDistribution: PieChartDataWithColor[];
   /** If the collection distribution is being fetched. */
   collectionDistributionLoading: boolean;
-  /** Location markers alerts with location data. */
+  /** Location markers alerts with location stores. */
   locations: AlertLocationResponse | null;
-  /** How many alerts have location data. */
+  /** How many alerts have location stores. */
   locationFeatureCount: number;
-  /** If the location data is currently being fetched. */
+  /** If the location stores is currently being fetched. */
   locationsLoading: boolean;
   /** Level distribution of alerts per day over a given time period. */
   levelTimeseries: StackedAreaChartDataWithColor[];

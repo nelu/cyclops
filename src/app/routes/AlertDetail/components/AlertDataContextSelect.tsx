@@ -33,7 +33,7 @@ import { denormalizeContexts } from '../../../services/contexts/utils';
 
 /** Properties for the AlertDataContextSelect component. */
 interface Props {
-  /** Normalized list of context associated with the alert data. */
+  /** Normalized list of context associated with the alert stores. */
   contexts: NormalizedContextList;
   /** ID of the currently selected context. */
   selectedContext: number | null;

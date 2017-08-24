@@ -24,7 +24,7 @@ import { User } from '~/services/users/types';
 export interface Dispatch {
   /** Unique identifier of the dispatch object. */
   id: number;
-  /** JSON data associated with the dispatch response. */
+  /** JSON stores associated with the dispatch response. */
   data: any;
   /** Message of the dispatch response. */
   response_msg: string;

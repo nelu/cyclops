@@ -53,6 +53,8 @@ export interface ReduxAction<Payload> extends Action {
   error?: boolean;
 }
 
+export type ReduxActionCreator<P> = (payload: P) => ReduxAction<P>;
+
 /** Thunk action that returns a promise that returns undefined. */
 export type ThunkActionPromise = ThunkAction<
   Promise<void>,

@@ -37,7 +37,7 @@ import { StoreState } from '~/store';
 import { DistilleryMinimal } from '~/services/distilleries/types';
 import { Action } from '~/services/actions/types';
 import { User } from '~/services/users/types';
-import { fetchAllUsers } from '~/services/users/api';
+import { fetchAllUsers } from '~/services/users/utils/userAPI';
 import { fetchAllActions } from '~/services/actions/api';
 import { fetchAllAlertDistilleries } from '~/services/distilleries/utils/distilleryAPI';
 
@@ -347,7 +347,7 @@ export function fetchViewResourcesSuccess(
 /**
  * Searchs alerts with the given search parameters and kicks off a polling
  * interval if poll and interval are set.
- * @param params Search parameters to search alerts with.
+ * @param params SearchQueryStore parameters to search alerts with.
  * @param poll If the results should be polled after a successful search.
  * @param interval Interval to poll alerts with.
  * @returns {ThunkActionPromise}
@@ -381,7 +381,7 @@ export function searchAlerts(
 
 /**
  * Polls for alerts using the given search parameters and interval time.
- * @param params Search parameters to search alerts with.
+ * @param params SearchQueryStore parameters to search alerts with.
  * @param interval Interval time to poll alerts with.
  * @returns {(dispatch:any, getState:any)=>Promise<R>}
  */
@@ -412,7 +412,7 @@ export function pollAlerts(
 
 /**
  * Sets the timeout function to poll for alerts.
- * @param params Search parameters for searching alerts.
+ * @param params SearchQueryStore parameters for searching alerts.
  * @param interval Interval in milliseconds to poll for alerts.
  * @param promiseId
  * @return {ThunkActionPromise}

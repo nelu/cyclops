@@ -44,7 +44,7 @@ interface Props {
 // --------------------------------------------------------------------------
 
 /**
- * Displays a results data and shows a brief explanation of the fields
+ * Displays a results stores and shows a brief explanation of the fields
  * present in the results container.
  */
 export class AlertData extends React.Component<Props, {}> {

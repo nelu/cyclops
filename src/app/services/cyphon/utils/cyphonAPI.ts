@@ -56,7 +56,7 @@ export function request<T>(config: APIConfig): Promise<T> {
   }
 
   const promise: Promise<T> = cyphonAPI.request(config)
-    // Extract that data from the successful response.
+    // Extract that stores from the successful response.
     .then<T>((response) => response.data);
 
   if (cacheRequest) {
