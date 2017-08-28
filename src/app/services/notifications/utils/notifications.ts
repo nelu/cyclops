@@ -136,3 +136,23 @@ export function setWorkerVariables(subscription: any): void {
       `?registration_id=${registrationId}`,
   });
 }
+
+export function setupNotifications(): Promise<void> {
+  if (!serviceWorkersAreSupported()) { return Promise.resolve(); }
+
+  return registerServiceWorker().then(() => {
+    if (
+      !notificationsAreSupported() ||
+      !notificationsAreDenied() ||
+      !pushMessagingIsSupported()
+    ) { return Promise.resolve(); }
+
+    return getServiceWorkerRegistration()
+      .then(subscribeToPushManager)
+      .then((subscription) => {
+        if (!subscription) { return Promise.resolve(); }
+
+        sendSubscriptionToServer(subscription).then()
+      });
+  });
+}

@@ -18,18 +18,16 @@
 
 /** Privates helper methods for classes that need to cancel promises. */
 export class PromiseID {
-  protected promiseID: symbol = Symbol();
+  public id: symbol = Symbol();
 
   /**
    * Resets the current promise ID.
    * @returns {symbol} New promise ID.
    */
-  protected resetPromiseID = (): symbol => {
-    const promiseID = Symbol();
+  public reset = (): PromiseID => {
+    this.id = Symbol();
 
-    this.promiseID = promiseID;
-
-    return promiseID;
+    return this;
   };
 
   /**
@@ -37,7 +35,7 @@ export class PromiseID {
    * @param {symbol} promiseID
    * @returns {boolean}
    */
-  protected isValidPromiseID = (promiseID: symbol): boolean => {
-    return this.promiseID === promiseID;
+  public matches = (promiseID: PromiseID): boolean => {
+    return this.id === promiseID.id;
   };
 }

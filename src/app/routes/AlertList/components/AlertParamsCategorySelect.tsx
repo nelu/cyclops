@@ -20,11 +20,7 @@
 import * as React from 'react';
 
 // Local
-import {
-  Category,
-  NormalizedCategoryList,
-} from '~/services/alerts/types';
-import { denormalizeCategories } from '~/services/alerts/utils/categoryUtils';
+import { Category } from '~/services/alerts/types';
 import { CollapsibleHeader } from '~/components/CollapsibleHeader';
 import { CategoryAutocomplete } from '~/services/alerts/components/CategoryAutocomplete';
 import { toggleArrayValue } from '~/utils/arrayUtils';
@@ -36,7 +32,7 @@ import { toggleArrayValue } from '~/utils/arrayUtils';
 /** Properties of the AlertParamsCategorySelect component. */
 interface Props {
   /** List of all the current categories. */
-  categories: NormalizedCategoryList;
+  categories: Category[];
   /** Currently selected category. */
   selected?: number[];
   /**
@@ -66,8 +62,6 @@ export class AlertParamsCategorySelect extends React.Component<Props, {}> {
   };
 
   public render() {
-    const categories = denormalizeCategories(this.props.categories);
-
     return (
       <div className="sidebar__spacing">
         <CollapsibleHeader
@@ -76,7 +70,7 @@ export class AlertParamsCategorySelect extends React.Component<Props, {}> {
           actionName="Clear"
         >
           <CategoryAutocomplete
-            categories={categories}
+            categories={this.props.categories}
             selected={this.props.selected}
             onSelect={this.toggleCategory}
             onRemove={this.toggleCategory}

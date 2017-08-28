@@ -49,7 +49,7 @@ const ACTION_PREFIX = 'ALERT';
 export const FETCH_CATEGORIES_SUCCESS = `${ACTION_PREFIX}/FETCH_CATEGORIES_SUCCESS`;
 
 /** FETCH_CATEGORIES_SUCCESS payload type. */
-export type FetchCategoriesSuccessPayload = NormalizedCategoryList;
+export type FetchCategoriesSuccessPayload = Category[];
 
 /** FETCH_CATEGORIES_SUCCESS action type. */
 export type FetchCategoriesSuccessAction = ReduxAction<FetchCategoriesSuccessPayload>;
@@ -63,7 +63,7 @@ export function fetchCategoriesSuccess(
 ): FetchCategoriesSuccessAction {
   return createAction(
     FETCH_CATEGORIES_SUCCESS,
-    normalizeCategories(categories),
+    categories,
   );
 }
 

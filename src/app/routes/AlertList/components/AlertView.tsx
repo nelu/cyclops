@@ -31,6 +31,7 @@ import {
   AlertSearchParams,
   AlertListItem,
   NormalizedCategoryList,
+  Category,
 } from '~/services/alerts/types';
 import { DistilleryMinimal } from '~/services/distilleries/types';
 import { User } from '~/services/users/types';
@@ -45,19 +46,15 @@ export interface ValueProps {
   /** Alert list to display. */
   alerts: AlertListItem[];
   /** Categories to filter alerts with. */
-  categories: NormalizedCategoryList;
-  /** Distilleries that have alerts associated with them. */
-  distilleries: DistilleryMinimal[];
-  /** List of all the current users. */
-  users: User[];
+  categories: Category[];
   /** Total number of alerts matching the search parameters. */
   count: number;
+  /** Distilleries that have alerts associated with them. */
+  distilleries: DistilleryMinimal[];
   /** If alerts are loading. */
   loading: boolean;
   /** If the alerts are currently being polled. */
   polling: boolean;
-  /** Polling interval. */
-  interval: number;
   /** ID of the currently selected alert. */
   selectedAlert: number | null;
   /** If polling is currently enabled for the view. */
@@ -66,6 +63,8 @@ export interface ValueProps {
   location: Router.LocationDescriptor;
   /** React Router injected router object. */
   router: Router.InjectedRouter;
+  /** List of all the current users. */
+  users: User[];
 }
 
 /** Properties of the AlertView component that are functions. */
@@ -75,32 +74,21 @@ export interface FunctionProps {
    * @param params SearchQueryStore parameters to use.
    * @param interval Interval in ms to poll.
    */
-  startPolling(
-    params: AlertSearchParams,
-    interval: number,
-  ): any;
+  startPolling(params: AlertSearchParams, interval: number): any;
   /** Stops polling for alerts. */
   stopPolling(): any;
-  /** Disables polling for alerts. */
-  disablePolling(): any;
   /**
    * Searchs for alerts that match a set of search parameters.
    * @param params SearchQueryStore parameters to use.
    * @param poll If the search should be polled after it's completed.
    * @param interval Interval to poll alerts for.
    */
-  searchAlerts(
-    params: AlertSearchParams,
-    poll?: boolean,
-    interval?: number,
-  ): any;
-  /** Fetches the resources needed for the alert view. */
+  searchAlerts(params: AlertSearchParams, poll: boolean, interval: number): any;
   fetchViewResources(): any;
-  fetchAllCategories(): any;
 }
 
 /** Combined prop interfaces for AlertView component. */
-type Props = ValueProps & FunctionProps;
+export type Props = ValueProps & FunctionProps;
 
 // --------------------------------------------------------------------------
 // Component
@@ -146,14 +134,8 @@ export class AlertView extends React.Component<Props, {}> {
   public componentWillMount(): void {
     const query = this.getQuery();
 
-    this.addWindowListeners();
     this.props.fetchViewResources();
-    this.props.fetchAllCategories();
-    this.props.searchAlerts(
-      query,
-      this.props.pollingEnabled,
-      this.props.interval,
-    );
+    this.props.searchAlerts(query, this.props.pollingEnabled, 5000);
   }
 
   /**
@@ -162,14 +144,10 @@ export class AlertView extends React.Component<Props, {}> {
    */
   public componentWillReceiveProps(nextProps: Props): void {
     const currentParams = this.getQuery();
-    const newQuery = AlertView.parseQuery(nextProps.location.query);
+    const query = AlertView.parseQuery(nextProps.location.query);
 
-    if (!_.isEqual(currentParams, newQuery)) {
-      this.props.searchAlerts(
-        newQuery,
-        this.props.pollingEnabled,
-        this.props.interval,
-      );
+    if (!_.isEqual(currentParams, query)) {
+      this.props.searchAlerts(query, this.props.pollingEnabled, 5000);
     }
   }
 
@@ -177,7 +155,6 @@ export class AlertView extends React.Component<Props, {}> {
    * Removes window listeners and stops aler list polling.
    */
   public componentWillUnmount(): void {
-    this.removeWindowListeners();
     this.props.stopPolling();
   }
 
@@ -198,40 +175,6 @@ export class AlertView extends React.Component<Props, {}> {
    */
   public getQuery = (): AlertSearchParams => {
     return AlertView.parseQuery(this.props.location.query);
-  };
-
-  /**
-   * Adds listeners to the window that handles blur and focus events.
-   */
-  public addWindowListeners = (): void => {
-    window.addEventListener('blur', this.handleBlur);
-    window.addEventListener('focus', this.handleFocus);
-  };
-
-  /**
-   * Removes listeners on the window that handles blur and focus events.
-   */
-  public removeWindowListeners = (): void => {
-    window.removeEventListener('blur', this.handleBlur);
-    window.removeEventListener('focus', this.handleFocus);
-  };
-
-  /**
-   * Handles when the window loses focus on this view.
-   */
-  public handleBlur = (): void => {
-    const { pollingEnabled } = this.props;
-
-    if (pollingEnabled) { this.props.stopPolling(); }
-  };
-
-  /**
-   * Handles when the user focuses on this window.
-   */
-  public handleFocus = (): void => {
-    const { pollingEnabled } = this.props;
-
-    if (pollingEnabled) { this.startPollingWithViewParams(); }
   };
 
   /**
@@ -283,13 +226,8 @@ export class AlertView extends React.Component<Props, {}> {
     this.updateQuery({ ...params, offset: 0 });
   };
 
-  /**
-   * Starts a poller for alert items matching the current search parameters.
-   */
-  public startPollingWithViewParams = (): void => {
-    const params = this.getQuery();
-
-    this.props.startPolling(params, this.props.interval);
+  public startPoller = (): void => {
+    this.props.startPolling(this.getQuery(), 5000);
   };
 
   public render(): JSX.Element {
@@ -312,10 +250,10 @@ export class AlertView extends React.Component<Props, {}> {
           content={params.content}
           limit={params.limit || 30}
           loading={this.props.loading}
-          pollingEnabled={this.props.polling}
+          isPolling={this.props.polling}
           selectedAlert={this.props.selectedAlert}
-          startPoller={this.startPollingWithViewParams}
-          stopPoller={this.props.disablePolling}
+          startPoller={this.startPoller}
+          stopPoller={this.props.stopPolling}
           changePage={this.changePage}
           page={currentPage}
           searchContent={this.searchContent}

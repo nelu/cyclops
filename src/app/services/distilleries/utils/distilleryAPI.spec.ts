@@ -25,7 +25,7 @@ import * as api from '../../cyphon/utils/cyphonAPI';
 import * as distilleryAPI from './distilleryAPI';
 
 describe('distilleryAPI', () => {
-  describe('fetchAlertDistilleries', () => {
+  describe('fetchDistilleries', () => {
     it('should call out to the correct url', () => {
       const getAll = sinon.stub(api, 'getAll');
 

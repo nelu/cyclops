@@ -18,14 +18,13 @@
 
 // Vendor
 import * as React from 'react';
-import { Popover, OverlayTrigger } from 'react-bootstrap';
 
 // Local
 import { DistilleryMinimal } from '~/services/distilleries/types';
 import {
   AlertSearchParams,
   AlertTimeSearchParams,
-  NormalizedCategoryList,
+  Category,
 } from '~/services/alerts/types';
 import { User } from '~/services/users/types';
 import { AlertParamsLevelSelect } from './AlertParamsLevelSelect';
@@ -50,7 +49,7 @@ interface Props {
   /** Current list of all users. */
   users: User[];
   /** Current list of categories. */
-  categories: NormalizedCategoryList;
+  categories: Category[];
   /**
    * Changes the current alerts list search parameters.
    * @param params Parameters to change to.

@@ -38,15 +38,16 @@ import { checkAlertUpdate } from '~/services/alerts/utils/checkAlertUpdate';
 import { modifyAlertUpdate } from '~/services/alerts/utils/modifyAlertUpdate';
 import { createAlertUpdateComment } from '~/routes/AlertDetail/utils/createAlertUpdateComment';
 
-class AlertDetailStore {
+export class AlertDetailStore {
+  @observable public id: number = 0;
   @observable public alert?: AlertDetail;
+  @observable public errors: string[] = [];
   @observable public isLoading: boolean = false;
   @observable public locations: LocationFieldAddress[] = [];
   @observable public markers?: Markers;
-  @observable public errors: string[] = [];
 
-  private stores: RootStore;
   private promiseID: symbol = Symbol();
+  private stores: RootStore;
 
   constructor(stores: RootStore) {
     this.stores = stores;
@@ -62,6 +63,7 @@ class AlertDetailStore {
     const promiseID = this.resetPromiseID();
 
     this.isLoading = true;
+    this.id = id;
 
     return alertAPI.fetchAlert(id)
       .then((alert) => {
@@ -73,7 +75,7 @@ class AlertDetailStore {
       })
       .catch((error) => {
         if (this.isValidPromiseID(promiseID)) {
-          this.stores.errorStore.addError(error);
+          this.stores.errorStore.add(error);
           this.isLoading = false;
         }
       });
@@ -118,7 +120,7 @@ class AlertDetailStore {
         }
       })
       .catch((error) => {
-        this.stores.errorStore.addError(error);
+        this.stores.errorStore.add(error);
         this.isLoading = false;
       });
   };
@@ -177,7 +179,7 @@ class AlertDetailStore {
         }
       })
       .catch((error) => {
-        this.stores.errorStore.addError(error);
+        this.stores.errorStore.add(error);
       });
   };
 
@@ -206,7 +208,7 @@ class AlertDetailStore {
         this.locations = locations;
       })
       .catch((error) => {
-        this.stores.errorStore.addError(error);
+        this.stores.errorStore.add(error);
       });
   };
 

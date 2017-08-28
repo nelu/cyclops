@@ -50,7 +50,7 @@ interface Props {
   /** Current page number of alerts. */
   page: number;
   /** If polling is currently enabled. */
-  pollingEnabled: boolean;
+  isPolling: boolean;
   /** The ID of the currently selected alerts. */
   selectedAlert: number | null;
   /** Change the alerts list content search parameter. */
@@ -147,10 +147,10 @@ export class AlertList extends React.Component<Props, {}> {
     const refreshPopover = AlertList.refreshPopover;
     const refreshButtonClasses = classNames(
       'alert-list__refresh',
-      { 'alert-list__refresh--active': this.props.pollingEnabled },
+      { 'alert-list__refresh--active': this.props.isPolling },
     );
     const refreshIconClasses = classNames(
-      { 'fa-spin': this.props.pollingEnabled },
+      { 'fa-spin': this.props.isPolling },
       'fa-lg',
       'fa',
       'fa-refresh',
@@ -175,7 +175,7 @@ export class AlertList extends React.Component<Props, {}> {
             >
               <button
                 className={refreshButtonClasses}
-                onClick={this.props.pollingEnabled ? this.props.stopPoller : this.props.startPoller}
+                onClick={this.props.isPolling ? this.props.stopPoller : this.props.startPoller}
               >
                 <i className={refreshIconClasses} />
               </button>

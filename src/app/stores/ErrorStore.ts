@@ -34,17 +34,17 @@ export class ErrorStore {
   }
 
   @action
-  public addError = (error: StoredError): void => {
+  public add = (error: StoredError): void => {
     this.errors.push(error);
   };
 
   @action
-  public viewError = (index: number): void => {
+  public view = (index: number): void => {
     this.viewed = index;
   };
 
   @action
-  public clearErrors(): void {
+  public clear(): void {
     this.errors = [];
   }
 }

@@ -25,21 +25,19 @@ import {
 
 // Local
 import * as actions from '../actions/categoryActions';
-import { NormalizedCategoryList } from '~/services/alerts/types';
+import {
+  Category,
+  NormalizedCategoryList
+} from '~/services/alerts/types';
 
 /** SearchQueryState shape of the reducer. */
-export type CategoryStoreReducerState = NormalizedCategoryList;
+export type CategoryStoreReducerState = Category[];
 
 /**
  * Initial state of the reducer.
  * @type {State}
  */
-export const INITIAL_STATE: CategoryStoreReducerState = {
-  result: [],
-  entities: {
-    categories: {},
-  },
-};
+export const INITIAL_STATE: CategoryStoreReducerState = [];
 
 /**
  * Reducer map for the category reducer.
@@ -57,7 +55,7 @@ reducers[actions.FETCH_CATEGORIES_SUCCESS] = (
   state: CategoryStoreReducerState,
   action: actions.FetchCategoriesSuccessAction,
 ): CategoryStoreReducerState => {
-  return { ...action.payload };
+  return action.payload;
 };
 
 /**

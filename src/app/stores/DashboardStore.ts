@@ -18,15 +18,14 @@
 
 // Vendor
 import { observable, action } from 'mobx';
+import * as _ from 'lodash';
 
 // Local
-import { User } from '~/services/users/types';
-import * as userAPI from '~/services/users/utils/userAPI';
 import { RootStore } from '~/stores';
 
-/** Store containing users of Cyphon. */
-export class UserStore {
-  @observable public users: User[] = [];
+export class DashboardStore {
+  @observable public days: number;
+  @observable public total: number;
 
   private stores: RootStore;
 
@@ -34,14 +33,20 @@ export class UserStore {
     this.stores = stores;
   }
 
-  /**
-   * Fetches all the current Cyphon users and stores them.
-   * @returns {Promise<void>}
-   */
   @action
-  public fetchUsers = (): Promise<void> => {
-    return userAPI.fetchAllUsers()
-      .then((users) => { this.users = users; })
-      .catch((error) => { this.stores.errorStore.add(error); });
+  public changeDays = (days: number): Promise<void> => {
+    return Promise.all([
+      this.stores.alertCollectionDistributionStore.fetchData(days),
+      this.stores.alertLevelDistributionStore.fetchData(days),
+      this.stores.alertLevelTimeseriesStore.fetchData(days),
+      this.stores.alertLocationStore.fetchData(days),
+      this.stores.alertStatusDistributionStore.fetchData(days),
+    ]).then(() => {
+      this.total = _.reduce(
+        this.stores.alertLevelDistributionStore.data,
+        (sum, data) => sum + data.value,
+        0,
+      );
+    });
   };
 }

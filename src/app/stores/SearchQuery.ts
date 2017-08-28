@@ -25,28 +25,28 @@ import {
 import * as searchAPI from '~/services/search/utils/searchAPI';
 import { RootStore } from '~/stores';
 
-class SearchQuery {
-  @observable public query?: SearchQuery;
-  @observable public queryString: string = '';
-  @observable public total: number = 0;
-  @observable public isLoading: boolean = false;
-  private root: RootStore;
-
-  constructor(root: RootStore) {
-    this.root = root;
-  }
-
-  @action public search = (query: string): Promise<void> => {
-    this.isLoading = true;
-
-    return searchAPI.search(query).then((response) => {
-
-    });
-  };
-
-  @action public paginateAlerts = (page: number): Promise<void> => {
-
-  };
-}
-
-export const searchQueryStore = new SearchQuery();
+// class SearchQuery {
+//   @observable public query?: SearchQuery;
+//   @observable public queryString: string = '';
+//   @observable public total: number = 0;
+//   @observable public isLoading: boolean = false;
+//   private root: RootStore;
+//
+//   constructor(root: RootStore) {
+//     this.root = root;
+//   }
+//
+//   @action public search = (query: string): Promise<void> => {
+//     this.isLoading = true;
+//
+//     return searchAPI.search(query).then((response) => {
+//
+//     });
+//   };
+//
+//   @action public paginateAlerts = (page: number): Promise<void> => {
+//
+//   };
+// }
+//
+// export const searchQueryStore = new SearchQuery();

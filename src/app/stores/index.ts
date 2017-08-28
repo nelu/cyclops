@@ -18,10 +18,36 @@
 import { AlertListStore } from '~/stores/AlertListStore';
 import { ErrorStore } from '~/stores/ErrorStore';
 import { UserStore } from '~/stores/UserStore';
+import { AlertDetailStore } from '~/stores/AlertDetailStore';
+import { MonitorStore } from '~/stores/MonitorStore';
+import { AlertCollectionDistributionStore } from '~/stores/AlertCollectionDistributionStore';
+import { AlertLevelDistributionStore } from '~/stores/AlertLevelDistributionStore';
+import { AlertLevelTimeseriesStore } from '~/stores/AlertLevelTimeseriesStore';
+import { AlertLocationStore } from '~/stores/AlertLocationStore';
+import { AlertStatusDistributionStore } from '~/stores/AlertStatusDistributionStore';
+import { DashboardStore } from '~/stores/DashboardStore';
+import { PushNotificationStore } from '~/stores/PushNotificationStore';
 
 /**  */
 export class RootStore {
+  public alertDetailStore: AlertDetailStore = new AlertDetailStore(this);
   public alertListStore: AlertListStore = new AlertListStore(this);
+  public alertCollectionDistributionStore: AlertCollectionDistributionStore = (
+    new AlertCollectionDistributionStore(this)
+  );
+  public alertLevelDistributionStore: AlertLevelDistributionStore = (
+    new AlertLevelDistributionStore(this)
+  );
+  public alertLevelTimeseriesStore: AlertLevelTimeseriesStore = (
+    new AlertLevelTimeseriesStore(this)
+  );
+  public alertLocationStore: AlertLocationStore = new AlertLocationStore(this);
+  public alertStatusDistributionStore: AlertStatusDistributionStore = (
+    new AlertStatusDistributionStore(this)
+  );
+  public dashboardStore: DashboardStore = new DashboardStore(this);
   public errorStore: ErrorStore = new ErrorStore(this);
+  public monitorStore: MonitorStore = new MonitorStore(this);
+  public pushNotificationsStore: PushNotificationStore = new PushNotificationStore(this);
   public userStore: UserStore = new UserStore(this);
 }

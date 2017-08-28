@@ -26,11 +26,19 @@ import {
 } from 'react-router';
 import { createHistory } from 'history';
 import { Provider } from 'react-redux';
+import { useStrict } from 'mobx';
+// import { Provider } from 'mobx-react';
 
 // Local
 import { getConfig } from './config';
-import { store } from './store';
 import { Routes } from './routes';
+// import { AlertViewTest } from '~/routes/AlertList/containers/AlertViewTest';
+import { RootStore } from '~/stores';
+import { store } from '~/store';
+
+// const stores = new RootStore();
+
+// useStrict(true);
 
 /** React router history that uses the base url given by the parent template. */
 const browserHistory = useRouterHistory(createHistory)({

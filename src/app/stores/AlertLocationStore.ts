@@ -20,28 +20,36 @@
 import { observable, action } from 'mobx';
 
 // Local
-import { User } from '~/services/users/types';
-import * as userAPI from '~/services/users/utils/userAPI';
 import { RootStore } from '~/stores';
+import { PromiseID } from '~/utils/PromiseID';
+import { AlertLocationResponse } from '~/services/alerts/types';
+import { fetchAlertLocations } from '~/services/alerts/utils/alertsAPI';
 
-/** Store containing users of Cyphon. */
-export class UserStore {
-  @observable public users: User[] = [];
+export class AlertLocationStore {
+  @observable public isLoading: boolean = false;
+  @observable public data?: AlertLocationResponse;
+  @observable public total: number = 0;
 
   private stores: RootStore;
+  private promiseID: PromiseID = new PromiseID();
 
   constructor(stores: RootStore) {
     this.stores = stores;
   }
 
-  /**
-   * Fetches all the current Cyphon users and stores them.
-   * @returns {Promise<void>}
-   */
   @action
-  public fetchUsers = (): Promise<void> => {
-    return userAPI.fetchAllUsers()
-      .then((users) => { this.users = users; })
-      .catch((error) => { this.stores.errorStore.add(error); });
+  public fetchData = (days: number): Promise<void> => {
+    const promiseID = this.promiseID.reset();
+
+    return fetchAlertLocations(days)
+      .then((features) => {
+        if (!this.promiseID.matches(promiseID)) { return; }
+
+        this.data = features;
+        this.total = features.features.length;
+      })
+      .catch((error) => {
+        this.stores.errorStore.add(error);
+      });
   };
 }

@@ -23,11 +23,17 @@ import { observable, action } from 'mobx';
 import {
   AlertListItem,
   AlertSearchParams,
+  Category,
 } from '~/services/alerts/types';
-import { fetchAlertList } from '~/services/alerts/utils/alertsAPI';
+import {
+  fetchAlertList,
+  fetchAllCategories
+} from '~/services/alerts/utils/alertsAPI';
 import { DistilleryMinimal } from '~/services/distilleries/types';
 import { fetchAllAlertDistilleries } from '~/services/distilleries/utils/distilleryAPI';
 import { RootStore } from '~/stores';
+import { PromiseID } from '~/utils/PromiseID';
+import { Timeout } from '~/utils/Timeout';
 
 /**
  * Interval to poll for alerts.
@@ -37,6 +43,7 @@ const POLLING_INTERVAL = 5000;
 
 export class AlertListStore {
   @observable public alerts: AlertListItem[] = [];
+  @observable public categories: Category[] = [];
   @observable public count: number = 0;
   @observable public distilleries: DistilleryMinimal[] = [];
   @observable public isLoading: boolean = false;
@@ -44,9 +51,9 @@ export class AlertListStore {
 
   private isPollingEnabled: boolean = true;
   private params: AlertSearchParams = {};
-  private promiseID?: symbol;
+  private promiseID: PromiseID = new PromiseID();
   private stores: RootStore;
-  private timeoutID?: number;
+  private timeout: Timeout = new Timeout(POLLING_INTERVAL);
 
   constructor(root: RootStore) {
     this.stores = root;
@@ -60,24 +67,25 @@ export class AlertListStore {
    */
   @action
   public search = (params: AlertSearchParams): Promise<void> => {
-    const promiseID = this.resetPromiseID();
+    const promiseID = this.promiseID.reset();
 
-    this.clearPollingTimeout();
+    this.timeout.clear();
+    this.isPolling = false;
     this.isLoading = true;
     this.params = params;
 
     return fetchAlertList(params)
       .then((response) => {
-        if (this.isValidPromiseID(promiseID)) {
+        if (this.promiseID.matches(promiseID)) {
           this.alerts = response.results;
           this.count = response.count;
           this.isLoading = false;
 
-          if (this.isPollingEnabled) { this.setPollingTimeout(promiseID); }
+          if (this.isPollingEnabled) { this.startTimeout(promiseID); }
         }
       })
       .catch((error) => {
-        this.stores.errorStore.addError(error);
+        this.stores.errorStore.add(error);
         this.isLoading = false;
       });
   };
@@ -87,25 +95,42 @@ export class AlertListStore {
    * @returns {Promise<void>}
    */
   @action
-  public fetchAlertDistilleries = (): Promise<void> => {
-    return fetchAllAlertDistilleries().then((distilleries) => {
-      this.distilleries = distilleries;
-    });
+  public fetchDistilleries = (): Promise<void> => {
+    return fetchAllAlertDistilleries()
+      .then((distilleries) => {
+        this.distilleries = distilleries;
+      })
+      .catch((error) => {
+        this.stores.errorStore.add(error);
+      });
   };
 
-  /**
-   * Toggles polling of the alert list.
-   */
   @action
-  public togglePolling = (): void => {
-    if (this.isPollingEnabled) {
-      this.resetPromiseID();
-      this.clearPollingTimeout();
-    } else {
-      this.poll();
-    }
+  public fetchCategories = (): Promise<void> => {
+    return fetchAllCategories()
+      .then((categories) => {
+        this.categories = categories;
+      })
+      .catch((error) => {
+        this.stores.errorStore.add(error);
+      });
+  };
 
-    this.isPollingEnabled = !this.isPollingEnabled;
+  @action
+  public startPolling = (): void => {
+    this.isPollingEnabled = true;
+    this.poll();
+  };
+
+  @action
+  public stopPolling = (): void => {
+    this.isPollingEnabled = false;
+    this.promiseID.reset();
+    this.timeout.clear();
+  };
+
+  private raisePollingNotEnabled = (): Promise<void> => {
+    return Promise.reject('Polling is not enabled.');
   };
 
   /**
@@ -115,45 +140,23 @@ export class AlertListStore {
    */
   @action
   private poll = (): Promise<void> => {
-    const promiseID = this.resetPromiseID();
+    if (!this.isPollingEnabled) { return this.raisePollingNotEnabled(); }
 
-    this.clearPollingTimeout();
+    const promiseID = this.promiseID.reset();
+
+    this.timeout.clear();
 
     return fetchAlertList(this.params)
       .then((response) => {
-        if (this.isValidPromiseID(promiseID)) {
+        if (this.promiseID.matches(promiseID)) {
           this.alerts = response.results;
           this.count = response.count;
-
-          this.setPollingTimeout(promiseID);
+          this.startTimeout(promiseID);
         }
       })
       .catch((error) => {
-        this.stores.errorStore.addError(error);
+        this.stores.errorStore.add(error);
       });
-  };
-
-  /**
-   * Determines if the given promise ID is equal to the most recent
-   * promise ID.
-   * @param {symbol} promiseID
-   * @returns {boolean}
-   */
-  private isValidPromiseID = (promiseID: symbol): boolean => {
-    return this.promiseID === promiseID;
-  };
-
-  /**
-   * Resets the current promise ID to a new symbol.
-   * @returns {symbol} The new promise ID.
-   */
-  @action
-  private resetPromiseID = (): symbol => {
-    const promiseID = Symbol();
-
-    this.promiseID = promiseID;
-
-    return promiseID;
   };
 
   /**
@@ -161,27 +164,11 @@ export class AlertListStore {
    * @param {symbol} promiseID ID of the promise that made the initial search.
    */
   @action
-  private setPollingTimeout = (promiseID: symbol): void => {
-    if (!this.isValidPromiseID(promiseID)) { return; }
-
+  private startTimeout = (promiseID: PromiseID): void => {
     this.isPolling = true;
 
-    this.timeoutID = window.setTimeout(() => {
-      if (this.isValidPromiseID(promiseID)) { this.poll(); }
-    }, POLLING_INTERVAL);
-  };
-
-  /**
-   * Clears the current alert polling timeout function and it's saved ID.
-   */
-  @action
-  private clearPollingTimeout = (): void => {
-    if (this.timeoutID) {
-      window.clearTimeout(this.timeoutID);
-
-      delete this.timeoutID;
-
-      this.isPolling = false;
-    }
+    this.timeout.start(() => {
+      if (this.promiseID.matches(promiseID)) { return this.poll(); }
+    });
   };
 }
