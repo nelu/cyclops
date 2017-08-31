@@ -139,7 +139,7 @@ export class SearchAlertResult extends React.Component<Props, State> {
     return (
       <div className="search-alert-result__container">
         <table>
-          <AlertListItem alert={this.props.alert} selectAlert={this.props.openAlert} />
+          <AlertListItem alert={this.props.alert} onClick={this.props.openAlert} />
         </table>
         <FlexBox id={this.id} style={{contentStyle}} shrink={true} />
         <div
