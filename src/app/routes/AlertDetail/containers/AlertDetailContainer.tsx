@@ -119,3 +119,42 @@ export const AlertDetailContainer: Container = withRouter(
     functions,
   )(AlertDetail),
 );
+
+// Vendor
+import * as React from 'react';
+import { inject, observer } from 'mobx-react';
+
+// Local
+import { RootStore } from '~/stores';
+import { AlertDetail } from '../components/AlertDetail';
+import { AlertDetailStore } from '~/stores/AlertDetailStore';
+import { AlertListStore } from '~/stores/AlertListStore';
+
+// --------------------------------------------------------------------------
+// Interfaces/Types
+// --------------------------------------------------------------------------
+
+/** Properties for the AlertDetail. */
+interface Props {
+  alertDetailStore?: AlertDetailStore;
+  alertListStore?: AlertListStore;
+}
+
+// --------------------------------------------------------------------------
+// Container
+// --------------------------------------------------------------------------
+
+/** Wrapped container component for the AlertDetail component. */
+export const AlertDetailContainer = inject(
+  (stores: RootStore): Partial<Props> => ({
+    alertDetailStore: stores.alertDetailStore,
+  }),
+)(
+  observer((props: Props) => (
+    <AlertDetail
+      alert={props.alertDetailStore.alert}
+      actions={props.alertListStore!.}
+    />
+  )),
+);
+

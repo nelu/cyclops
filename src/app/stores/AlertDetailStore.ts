@@ -40,6 +40,7 @@ import { createAlertUpdateComment } from '~/routes/AlertDetail/utils/createAlert
 
 export class AlertDetailStore {
   @observable public id: number = 0;
+  @observable public actions: Actio;
   @observable public alert?: AlertDetail;
   @observable public errors: string[] = [];
   @observable public isLoading: boolean = false;
