@@ -30,9 +30,9 @@ import { Monitor } from '~/services/monitors/types';
 /** Properties of the MonitorModalListItem component. */
 interface Props {
   /** Monitor to view as a list item. */
-  monitor: Monitor;
+  monitorName: string;
   /** Name of the currently selected monitor. */
-  selectedMonitor: string | null;
+  selectedMonitorName?: string;
   /**
    * Selects a monitor to view detailed information on.
    * @param monitor
@@ -54,7 +54,7 @@ export class MonitorModalListItem extends React.Component<Props, {}> {
    * Selects this monitor to be viewed.
    */
   public selectMonitor = (): void => {
-    this.props.selectMonitor(this.props.monitor.name);
+    this.props.selectMonitor(this.props.monitorName);
   };
 
   /**
@@ -62,16 +62,14 @@ export class MonitorModalListItem extends React.Component<Props, {}> {
    * @returns {JSX.Element}
    */
   public render(): JSX.Element {
-    const { monitor, selectedMonitor } = this.props;
-    const { selectMonitor } = this;
 
     return (
       <ListGroupItem
-        active={selectedMonitor === monitor.name}
-        key={monitor.name}
-        onClick={selectMonitor}
+        active={this.props.selectedMonitorName === this.props.monitorName}
+        key={this.props.monitorName}
+        onClick={this.selectMonitor}
       >
-        {monitor.name}
+        {this.props.monitorName}
       </ListGroupItem>
     );
   }

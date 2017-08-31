@@ -22,29 +22,29 @@ import { Modal } from 'react-bootstrap';
 
 // Local
 import { MonitorModalList } from './MonitorModalList';
-import { NormalizedMonitorList } from '../../../services/monitors/types';
+import {
+  MonitorNested,
+  MonitorsByName,
+  NormalizedMonitorList
+} from '../../../services/monitors/types';
 import { Loading } from '../../../components/Loading';
+import { observer } from 'mobx-react';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-export interface ValueProps {
+export interface Props {
   /** If the monitor list is currently loading. */
-  loading: boolean;
-  /** List of the current monitors. */
-  monitors: NormalizedMonitorList | null;
+  isLoading: boolean;
   /** List of monitors that are currently up. */
   monitorsUp: string[];
   /** List of monitors that are currently down. */
   monitorsDown: string[];
   /** If the modal is currently active. */
-  modalActive: boolean;
+  isModalActive: boolean;
   /** Monitor to view detailed information on. */
-  selectedMonitor: string | null;
-}
-
-export interface FunctionProps {
+  selectedMonitor?: MonitorNested;
   /**
    * Selects a monitor to view detailed information on.
    * @param monitor ID of the monitor to view.
@@ -54,34 +54,32 @@ export interface FunctionProps {
   closeModal(): any;
 }
 
-type Props = ValueProps & FunctionProps;
+// --------------------------------------------------------------------------
+// Component
+// --------------------------------------------------------------------------
 
 /**
  * Displays a popup that contains stores of the current list of monitors.
  */
+@observer
 export class MonitorModal extends React.Component<Props, {}> {
   public render(): JSX.Element {
-    const modalList = this.props.monitors
-      ? (
-        <MonitorModalList
-          monitors={this.props.monitors}
-          monitorsUp={this.props.monitorsUp}
-          monitorsDown={this.props.monitorsDown}
-          selectMonitor={this.props.selectMonitor}
-          selectedMonitor={this.props.selectedMonitor}
-        />
-      ) : null;
-    const loadingIcon = this.props.loading ? <Loading /> : null;
+    const loadingIcon = this.props.isLoading ? <Loading /> : null;
 
     return (
-      <Modal show={this.props.modalActive} onHide={this.props.closeModal}>
+      <Modal show={this.props.isModalActive} onHide={this.props.closeModal}>
         <Modal.Header closeButton={true}>
           <Modal.Title className="text-white">
             Monitors
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="monitor-modal__body">
-          {modalList}
+          <MonitorModalList
+            monitorsUp={this.props.monitorsUp}
+            monitorsDown={this.props.monitorsDown}
+            selectMonitor={this.props.selectMonitor}
+            selectedMonitor={this.props.selectedMonitor}
+          />
           {loadingIcon}
         </Modal.Body>
       </Modal>

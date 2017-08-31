@@ -27,6 +27,8 @@ import {
 import { getConfig } from '~/config';
 import { MonitorStatusContainer } from '../containers/MonitorStatusContainer';
 import { LogoutModal } from './LogoutModal';
+import { FlexBox } from '~/components/FlexBox';
+import { FlexItem } from '~/components/FlexItem';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -50,7 +52,7 @@ export class Header extends React.Component<HeaderProps, {}> {
   public render(): JSX.Element {
     const adminLink = getConfig().ADMIN_URL
       ? (
-        <div className="flex-item flex--shrink">
+        <FlexItem shrink={true}>
           <a
             id="admin-link"
             className="header__link"
@@ -59,7 +61,7 @@ export class Header extends React.Component<HeaderProps, {}> {
           >
             Admin
           </a>
-        </div>
+        </FlexItem>
       ) : null;
 
     return (
@@ -68,8 +70,8 @@ export class Header extends React.Component<HeaderProps, {}> {
           <img className="header__logo" src={getConfig().CYPHON_LOGO_URL} alt="Cyphon"/>
         </div>
 
-        <div className="flex-box">
-          <div className="flex-item flex--shrink">
+        <FlexBox>
+          <FlexItem shrink={true}>
             <IndexLink
               className="header__link"
               to="/"
@@ -77,8 +79,8 @@ export class Header extends React.Component<HeaderProps, {}> {
             >
               Dashboard
             </IndexLink>
-          </div>
-          <div className="flex-item flex--shrink">
+          </FlexItem>
+          <FlexItem shrink={true}>
             <Link
               className="header__link"
               to="/alerts/"
@@ -86,8 +88,8 @@ export class Header extends React.Component<HeaderProps, {}> {
             >
               Alerts
             </Link>
-          </div>
-          <div className="flex-item flex--shrink">
+          </FlexItem>
+          <FlexItem shrink={true}>
             <Link
               className="header__link"
               to="/search/"
@@ -95,13 +97,13 @@ export class Header extends React.Component<HeaderProps, {}> {
             >
               Search
             </Link>
-          </div>
-        </div>
-        <div className="flex-box flex--shrink">
+          </FlexItem>
+        </FlexBox>
+        <FlexBox shrink={true}>
           {adminLink}
           <MonitorStatusContainer />
           <LogoutModal />
-        </div>
+        </FlexBox>
       </nav>
     );
   }

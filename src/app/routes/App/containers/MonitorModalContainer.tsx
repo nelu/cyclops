@@ -18,43 +18,41 @@
 
 // Vendor
 import * as React from 'react';
-import { LocationDescriptor } from 'react-router';
+import { inject, observer } from 'mobx-react';
 
 // Local
-import { Header } from './Header';
-import { ErrorPopupContainer } from '../containers/ErrorPopupContainer';
-import { FlexBox } from '~/components/FlexBox';
-import { FlexItem } from '~/components/FlexItem';
+import { RootStore } from '~/stores';
+import { MonitorModal } from '../components/MonitorModal';
+import { MonitorStore } from '~/stores/MonitorStore';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties passed in from the parent component. */
+/** Properties for the MonitorModal. */
 interface Props {
-  /** react-router location descriptor. */
-  location: LocationDescriptor;
+  monitorStore?: MonitorStore;
 }
 
 // --------------------------------------------------------------------------
-// Component
+// Container
 // --------------------------------------------------------------------------
 
-/**
- * Main page layout for the application.
- */
-export class Layout extends React.Component<Props, {}> {
-  public render(): JSX.Element {
-    return (
-      <FlexBox column={true}>
-        <FlexItem shrink={true}>
-          <Header location={this.props.location.pathname || ''} />
-        </FlexItem>
-
-        {this.props.children}
-
-        <ErrorPopupContainer />
-      </FlexBox>
-    );
-  }
-}
+/** Wrapped container component for the MonitorModal component. */
+export const MonitorModalContainer = inject(
+  (stores: RootStore): Partial<Props> => ({
+    monitorStore: stores.monitorStore,
+  }),
+)(
+  observer((props: Props) => (
+    <MonitorModal
+      isLoading={props.monitorStore!.isLoading}
+      isModalActive={props.monitorStore!.isModalActive}
+      monitorsUp={props.monitorStore!.monitorsUp}
+      monitorsDown={props.monitorStore!.monitorsDown}
+      selectedMonitor={props.monitorStore!.selectedMonitor}
+      selectMonitor={props.monitorStore!.selectMonitor}
+      closeModal={props.monitorStore!.closeModal}
+    />
+  )),
+);

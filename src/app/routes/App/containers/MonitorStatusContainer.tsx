@@ -18,43 +18,37 @@
 
 // Vendor
 import * as React from 'react';
-import { LocationDescriptor } from 'react-router';
+import { inject, observer } from 'mobx-react';
 
 // Local
-import { Header } from './Header';
-import { ErrorPopupContainer } from '../containers/ErrorPopupContainer';
-import { FlexBox } from '~/components/FlexBox';
-import { FlexItem } from '~/components/FlexItem';
+import { RootStore } from '~/stores';
+import { MonitorStatus } from '../components/MonitorStatus';
+import { MonitorStore } from '~/stores/MonitorStore';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties passed in from the parent component. */
+/** Properties for the MonitorStatus. */
 interface Props {
-  /** react-router location descriptor. */
-  location: LocationDescriptor;
+  monitorStore?: MonitorStore;
 }
 
 // --------------------------------------------------------------------------
-// Component
+// Container
 // --------------------------------------------------------------------------
 
-/**
- * Main page layout for the application.
- */
-export class Layout extends React.Component<Props, {}> {
-  public render(): JSX.Element {
-    return (
-      <FlexBox column={true}>
-        <FlexItem shrink={true}>
-          <Header location={this.props.location.pathname || ''} />
-        </FlexItem>
-
-        {this.props.children}
-
-        <ErrorPopupContainer />
-      </FlexBox>
-    );
-  }
-}
+/** Wrapped container component for the MonitorStatus component. */
+export const MonitorStatusContainer = inject(
+  (stores: RootStore): Partial<Props> => ({
+    monitorStore: stores.monitorStore,
+  }),
+)(
+  observer((props: Props) => (
+    <MonitorStatus
+      monitorsUp={props.monitorStore!.monitorsUpCount}
+      monitorsDown={props.monitorStore!.monitorsDownCount}
+      openModal={props.monitorStore!.openModal}
+    />
+  )),
+);

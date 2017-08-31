@@ -18,6 +18,7 @@
 
 // Vendor
 import * as React from 'react';
+import { observer } from 'mobx-react';
 
 // Local
 import { MonitorModalContainer } from '../containers/MonitorModalContainer';
@@ -27,32 +28,14 @@ import { MonitorModalContainer } from '../containers/MonitorModalContainer';
 // --------------------------------------------------------------------------
 
 /** Value properties of the MonitorStatus component. */
-export interface ValueProps {
+interface Props {
   /** Monitors that are currently running. */
-  monitorsUp: string[];
+  monitorsUp: number;
   /** Monitors that are currently down. */
-  monitorsDown: string[];
-  /** Timeout ID of the monitor polling. */
-  pollTimeoutID: number | null;
-}
-
-/** Function properties of the MonitorStatus component. */
-export interface FunctionProps {
-  /**
-   * Selects a monitor from the list.
-   * @param monitor ID of the monitor to select.
-   */
-  selectMonitor(monitor: string): any;
-  /** Closes the monitor modal. */
-  closeModal(): any;
+  monitorsDown: number;
   /** Opens the monitor modal. */
   openModal(): any;
-  /** Gets the current list of monitors. */
-  fetchMonitors(loading: boolean, delay: number, timeoutID?: number): any;
 }
-
-/** Combined property interfaces for the MonitorStatus component. */
-type Props = ValueProps & FunctionProps;
 
 // --------------------------------------------------------------------------
 // Component
@@ -62,40 +45,15 @@ type Props = ValueProps & FunctionProps;
  * Displays two icons that show how many monitors are up and down, and once
  * clicked displays a modal with the information of all the monitors.
  */
+@observer
 export class MonitorStatus extends React.Component<Props, {}> {
-  /** Time to wait before polling for new monitors in milliseconds. */
-  public static POLLING_DELAY = 60000;
-
-  public componentWillMount(): void {
-    this.fetchMonitors(false);
-  }
-
-  /**
-   * Fetches the current list of monitors and starts the monitor poll.
-   * @param loading If a loading icon should be shown on the monitor modal.
-   * @param timeoutID ID of the polling timeout.
-   */
-  public fetchMonitors = (loading: boolean, timeoutID?: number): void => {
-    this.props.fetchMonitors(
-      loading,
-      MonitorStatus.POLLING_DELAY,
-      timeoutID,
-    );
-  };
-
-  /** Fetches the monitors and opens the modal. */
-  public openModal = (): void => {
-    this.fetchMonitors(true, this.props.pollTimeoutID || undefined);
-    this.props.openModal();
-  };
-
   public render(): JSX.Element {
     return (
       <div className="flex-item flex--shrink">
-        <a className="header__link" onClick={this.openModal}>
-          {this.props.monitorsUp.length + ' '} <i className="fa fa-arrow-up" />
+        <a className="header__link" onClick={this.props.openModal}>
+          {this.props.monitorsUp + ' '} <i className="fa fa-arrow-up" />
           {' '}
-          {this.props.monitorsDown.length + ' '} <i className="fa fa-arrow-down" />
+          {this.props.monitorsDown + ' '} <i className="fa fa-arrow-down" />
 
           <MonitorModalContainer />
         </a>

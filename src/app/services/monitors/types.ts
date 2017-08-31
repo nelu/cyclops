@@ -91,6 +91,10 @@ export interface MonitorNested extends Monitor {
   last_active_distillery: DistilleryMinimal;
 }
 
+export interface MonitorsByName {
+  [name: string]: MonitorNested;
+}
+
 /**
  * Monitor with it's associated objects represented with their ID's.
  */

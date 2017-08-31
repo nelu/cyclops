@@ -22,44 +22,29 @@ import {
   Modal,
   Pagination,
 } from 'react-bootstrap';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { observer } from 'mobx-react';
 
 // Local
 import { ErrorPopupContent } from './ErrorPopupContent';
 import { StoredError } from '../types';
-import { Close } from '../../../components/Close';
-import {
-  StateToProps,
-  DispatchToProps,
-} from '../../../types/redux';
-import {
-  clearErrors,
-  viewError,
-} from '../actions/ErroPopupActions';
+import { Close } from '~/components/Close';
+
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
 /** Properties of the ErrorPopup component that are values. */
-export interface ValueProps {
+interface Props {
   /** Array index of the currently viewed error. */
-  currentError: number;
+  viewed: number;
   /** List of all the current errors. */
   errors: StoredError[];
-}
-
-/** Properties of the ErrorPopup component that are functions. */
-export interface FunctionProps {
   /** Clears the current errors and dismisses the popup. */
-  clearErrors(): any;
+  clear(): any;
   /** Views a new error in the current list of errors. */
-  viewError(errorIndex: number): any;
+  view(index: number): any;
 }
-
-/** Combined property interfaces for the ErrorPopup component. */
-type Props = ValueProps & FunctionProps;
 
 // --------------------------------------------------------------------------
 // Component
@@ -68,12 +53,13 @@ type Props = ValueProps & FunctionProps;
 /**
  * Modal popup that displays all the current API errors when there are any.
  */
+@observer
 export class ErrorPopup extends React.Component<Props, {}> {
   /**
    * Clears all errors in the errors modal.
    */
   public clearErrors = (): void => {
-    this.props.clearErrors();
+    this.props.clear();
   };
 
   /**
@@ -81,17 +67,17 @@ export class ErrorPopup extends React.Component<Props, {}> {
    * @param page The page of the new error to view.
    */
   public viewError = (page: any): void => {
-    this.props.viewError(page - 1);
+    this.props.view(page - 1);
   };
 
   public render(): JSX.Element {
-    const selectedError = this.props.errors[this.props.currentError] || undefined;
+    const selectedError = this.props.errors[this.props.viewed] || undefined;
     const showModal = Boolean(this.props.errors.length);
     const paginationElement = this.props.errors.length > 1
       ? (
         <Pagination
           items={this.props.errors.length}
-          activePage={this.props.currentError + 1}
+          activePage={this.props.viewed + 1}
           className="error-modal__pagination"
           onSelect={this.viewError}
           maxButtons={3}
@@ -129,33 +115,3 @@ export class ErrorPopup extends React.Component<Props, {}> {
     );
   }
 }
-
-// --------------------------------------------------------------------------
-// Container
-// --------------------------------------------------------------------------
-
-/**
- * Maps redux state variables to the ErrorPopup component.
- * @param state Redux state.
- */
-const values: StateToProps<ValueProps, undefined> = (state) => ({
-  currentError: state.routes.App.ErrorPopup.current,
-  errors: state.routes.App.ErrorPopup.errors,
-});
-
-/**
- * Maps redux dispatch functions to the ErrorPopup component.
- * @param dispatch Redux state dispatch function.
- */
-const functions: DispatchToProps<FunctionProps, undefined> = (dispatch) => ({
-  clearErrors: bindActionCreators(clearErrors, dispatch),
-  viewError: bindActionCreators(viewError, dispatch),
-});
-
-/**
- * Container wrapper for the ErrorPopup component.
- */
-export const ErrorPopupContainer = connect(
-  values,
-  functions,
-)(ErrorPopup);

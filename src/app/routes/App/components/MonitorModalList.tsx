@@ -22,7 +22,10 @@ import { ListGroup } from 'react-bootstrap';
 
 // Local
 import { MonitorDetail } from './MonitorModalDetail';
-import { NormalizedMonitorList } from '../../../services/monitors/types';
+import {
+  MonitorNested,
+  NormalizedMonitorList
+} from '../../../services/monitors/types';
 import {
   denormalizeMonitors,
   denormalizeMonitor,
@@ -35,14 +38,12 @@ import { MonitorModalListItem } from './MonitorModalListItem';
 
 /** Properties of the MonitorModalList component. */
 interface Props {
-  /** List of current monitors. */
-  monitors: NormalizedMonitorList;
   /** Monitor names that are currently up. */
   monitorsUp: string[];
   /** Monitor names that are currently down. */
   monitorsDown: string[];
   /** Name of the currently selected monitor. */
-  selectedMonitor: string | null;
+  selectedMonitor?: MonitorNested;
   /**
    * Selects a monitor to view more detailed information on.
    * @param monitor
@@ -59,33 +60,25 @@ interface Props {
  */
 export class MonitorModalList extends React.Component<Props, {}> {
   public render(): JSX.Element {
-    const monitorsUpList = denormalizeMonitors(
-      this.props.monitors,
-      this.props.monitorsUp,
-    );
-    const monitorsDownList = denormalizeMonitors(
-      this.props.monitors,
-      this.props.monitorsDown,
-    );
-    const selectedMonitorObject = this.props.selectedMonitor
-      ? denormalizeMonitor(this.props.selectedMonitor, this.props.monitors)
-      : null;
-    const monitorsDownElements = monitorsDownList.map((monitor) => (
+    const selectedMonitorName = this.props.selectedMonitor
+      ? this.props.selectedMonitor.name
+      : undefined;
+    const monitorsDown = this.props.monitorsDown.map((name) => (
       <MonitorModalListItem
-        monitor={monitor}
-        selectedMonitor={this.props.selectedMonitor}
+        monitorName={name}
+        selectedMonitorName={selectedMonitorName}
         selectMonitor={this.props.selectMonitor}
       />
     ));
-    const monitorsUpElements = monitorsUpList.map((monitor) => (
+    const monitorsUp = this.props.monitorsUp.map((name) => (
       <MonitorModalListItem
-        monitor={monitor}
-        selectedMonitor={this.props.selectedMonitor}
+        monitorName={name}
+        selectedMonitorName={selectedMonitorName}
         selectMonitor={this.props.selectMonitor}
       />
     ));
-    const monitorDetail = selectedMonitorObject ? (
-      <MonitorDetail monitor={selectedMonitorObject}/>
+    const monitorDetail = this.props.selectedMonitor ? (
+      <MonitorDetail monitor={this.props.selectedMonitor}/>
     ) : (
       <h4 className="text-center">No Monitor Selected</h4>
     );
@@ -98,7 +91,7 @@ export class MonitorModalList extends React.Component<Props, {}> {
             {' ' + this.props.monitorsDown.length} Down
           </div>
           <ListGroup>
-            {monitorsDownElements}
+            {monitorsDown}
           </ListGroup>
 
           <div className="monitor-sidebar__heading">
@@ -106,7 +99,7 @@ export class MonitorModalList extends React.Component<Props, {}> {
             {' ' + this.props.monitorsUp.length} Up
           </div>
           <ListGroup>
-            {monitorsUpElements}
+            {monitorsUp}
           </ListGroup>
         </div>
         <div className="flex-item">

@@ -18,10 +18,14 @@
 
 // Vendor
 import { observable, action, computed } from 'mobx';
+import * as _ from 'lodash';
 
 // Local
 import { RootStore } from './';
-import { MonitorNested } from '~/services/monitors/types';
+import {
+  MonitorNested,
+  MonitorsByName
+} from '~/services/monitors/types';
 import { fetchAllMonitors } from '~/services/monitors/utils/monitorAPI';
 import { PromiseID } from '~/utils/PromiseID';
 import { Timeout } from '~/utils/Timeout';
@@ -33,8 +37,8 @@ export class MonitorStore {
   @observable public isLoading: boolean = false;
   @observable public isModalActive: boolean = false;
   @observable public monitors: MonitorNested[] = [];
-  @observable public selected?: string;
 
+  private selectedMonitorName?: string;
   private stores: RootStore;
   private promiseID: PromiseID = new PromiseID();
   private timeout: Timeout = new Timeout(POLLING_INTERVAL);
@@ -44,14 +48,47 @@ export class MonitorStore {
   }
 
   @computed
-  public get down(): MonitorNested[] {
-    return this.monitors.filter((monitor) => monitor.status !== ACTIVE_STATUS);
+  public get selectedMonitor(): MonitorNested | undefined {
+    return this.selectedMonitorName
+      ? this.monitorsByName[this.selectedMonitorName]
+      : undefined;
   }
 
   @computed
-  public get up(): MonitorNested[] {
-    return this.monitors.filter((monitor) => monitor.status === ACTIVE_STATUS);
+  public get monitorsByName(): MonitorsByName {
+    return _.keyBy(this.monitors, 'name');
   }
+
+  @computed
+  public get monitorsDown(): string[] {
+    return this
+      .monitors
+      .filter((monitor) => monitor.status !== ACTIVE_STATUS)
+      .map((monitor) => monitor.name);
+  }
+
+  @computed
+  public get monitorsUp(): string[] {
+    return this
+      .monitors
+      .filter((monitor) => monitor.status === ACTIVE_STATUS)
+      .map((monitor) => monitor.name);
+  }
+
+  @computed
+  public get monitorsDownCount(): number {
+    return this.monitorsDown.length;
+  }
+
+  @computed
+  public get monitorsUpCount(): number {
+    return this.monitorsUp.length;
+  }
+
+  @action
+  public selectMonitor = (name: string): void => {
+    this.selectedMonitorName = name;
+  };
 
   @action
   public fetchMonitors = (): Promise<void> => {

@@ -18,43 +18,38 @@
 
 // Vendor
 import * as React from 'react';
-import { LocationDescriptor } from 'react-router';
+import { inject, observer } from 'mobx-react';
 
 // Local
-import { Header } from './Header';
-import { ErrorPopupContainer } from '../containers/ErrorPopupContainer';
-import { FlexBox } from '~/components/FlexBox';
-import { FlexItem } from '~/components/FlexItem';
+import { RootStore } from '~/stores';
+import { ErrorPopup } from '../components/ErrorPopup';
+import { ErrorStore } from '~/stores/ErrorStore';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties passed in from the parent component. */
+/** Properties for the ErrorPopup. */
 interface Props {
-  /** react-router location descriptor. */
-  location: LocationDescriptor;
+  errorStore?: ErrorStore;
 }
 
 // --------------------------------------------------------------------------
-// Component
+// Container
 // --------------------------------------------------------------------------
 
-/**
- * Main page layout for the application.
- */
-export class Layout extends React.Component<Props, {}> {
-  public render(): JSX.Element {
-    return (
-      <FlexBox column={true}>
-        <FlexItem shrink={true}>
-          <Header location={this.props.location.pathname || ''} />
-        </FlexItem>
-
-        {this.props.children}
-
-        <ErrorPopupContainer />
-      </FlexBox>
-    );
-  }
-}
+/** Wrapped container component for the ErrorPopup component. */
+export const ErrorPopupContainer = inject(
+  (stores: RootStore): Partial<Props> => ({
+    errorStore: stores.errorStore,
+  }),
+)(
+  observer((props: Props) => (
+    <ErrorPopup
+      viewed={props.errorStore!.viewed}
+      errors={props.errorStore!.errors}
+      clear={props.errorStore!.clear}
+      view={props.errorStore!.view}
+    />
+  )),
+);
