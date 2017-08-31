@@ -26,10 +26,18 @@ import {
 import * as classNames from 'classnames';
 
 // Local
-import { AlertListItem } from './AlertListItem';
-import { Loading } from '../../../components/Loading';
-import { AlertListItem as Alert } from '../../../services/alerts/types';
+import { Loading } from '~/components/Loading';
+import { AlertListItem } from '~/services/alerts/types';
 import { AlertListSearchBar } from './AlertListSearchBar';
+import {
+  inject,
+  observer
+} from 'mobx-react';
+import { AlertListTable } from '~/routes/AlertList/components/AlertListTable';
+import { FlexBox } from '~/components/FlexBox';
+import { getResultPaginationRange } from '~/utils/getResultPaginationRange';
+import { PaginationRange } from '~/components/PaginationRange';
+import { RefreshSpinner } from '~/components/RefreshSpinner';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -37,22 +45,17 @@ import { AlertListSearchBar } from './AlertListSearchBar';
 
 /** Properties of the AlertList component. */
 interface Props {
-  /** Alerts that match the current alerts list search parameters. */
-  alerts: Alert[];
-  /** Total number of alerts that match the current search parameters. */
-  count: number;
+  alerts: AlertListItem[];
   /** SearchQueryStore bar content. */
-  content: string | undefined;
+  content?: string;
   /** Pagination size of the current alerts list. */
   limit: number;
-  /** If new alerts list results are being fetched. */
-  loading: boolean;
   /** Current page number of alerts. */
   page: number;
-  /** If polling is currently enabled. */
+  count: number;
   isPolling: boolean;
-  /** The ID of the currently selected alerts. */
-  selectedAlert: number | null;
+  isLoading: boolean;
+  activeAlertID?: number;
   /** Change the alerts list content search parameter. */
   searchContent(content?: string): any;
   /**
@@ -60,15 +63,9 @@ interface Props {
    * @param page Page to change to.
    */
   changePage(page: number): any;
-  /**
-   * Selects an alert to be viewed in the detail view.
-   * @param alertId ID of the alert to view.
-   */
-  viewAlert(alertId: number): any;
-  /** Starts a poller to update the current alert list. */
-  startPoller(): any;
-  /** Stop the alert list poller. */
-  stopPoller(): any;
+  viewAlert(id: number): any;
+  togglePolling(): any;
+  onClick?(id: number): any;
 }
 
 // --------------------------------------------------------------------------
@@ -76,11 +73,12 @@ interface Props {
 // --------------------------------------------------------------------------
 
 /**
- * Displays current list of alerts that match the current search parameters
- * and allows the user to select an alerts to view. Also contains a
+ * Current list of alerts that match the current search parameters.
+ * Allows the user to select an alerts to view. Contains a
  * search bar that allows the user to search through alerts content.
  */
-export class AlertList extends React.Component<Props, {}> {
+@observer
+export class AlertListX extends React.Component<Props, {}> {
   /**
    * Popover to display when a user hovers over the refresh button.
    * @type {JSX.Element}
@@ -103,15 +101,11 @@ export class AlertList extends React.Component<Props, {}> {
    * Selects the alerts to view in the alerts detail panel.
    * @param id ID of the alert to view.
    */
-  public selectAlert = (id: number) => {
-    this.props.viewAlert(id);
+  public selectAlert = (alert: AlertListItem) => {
+    this.props.viewAlert(alert.id);
   };
 
   public render() {
-    const baseNumber = ((this.props.page * this.props.limit) - this.props.limit) + 1;
-    const topNumber = this.props.count <= (this.props.page * this.props.limit)
-      ? this.props.count
-      : (this.props.page * this.props.limit);
     const paginationElement =  (
       <div className="alert-list__pagination flex-item flex--shrink">
         <Pagination
@@ -126,69 +120,43 @@ export class AlertList extends React.Component<Props, {}> {
         />
       </div>
     );
-    const alertListItems = this.props.alerts.map((alert) => (
-      <AlertListItem
-        key={alert.id}
-        alert={alert}
-        onClick={this.selectAlert}
-        activeAlertID={this.props.selectedAlert}
-      />
-    ));
     const alertListTable = this.props.alerts.length ? (
-      <table className="alert-list__table">
-        <tbody>
-        {alertListItems}
-        </tbody>
-      </table>
+      <AlertListTable
+        alerts={this.props.alerts}
+        activeAlertID={this.props.activeAlertID}
+        onClick={this.selectAlert}
+      />
     ) : (
       <h2 className="text-center">No Results</h2>
     );
-    const loadingElement = this.props.loading ? <Loading /> : null;
-    const refreshPopover = AlertList.refreshPopover;
-    const refreshButtonClasses = classNames(
-      'alert-list__refresh',
-      { 'alert-list__refresh--active': this.props.isPolling },
-    );
-    const refreshIconClasses = classNames(
-      { 'fa-spin': this.props.isPolling },
-      'fa-lg',
-      'fa',
-      'fa-refresh',
-    );
 
     return (
-      <div className="flex-box flex-box--column">
+      <FlexBox column={true}>
         <div className="alert-list__header flex-item flex--shrink">
           <AlertListSearchBar
             content={this.props.content}
             searchContent={this.props.searchContent}
           />
           <div className="clearfix">
-            <span className="text--base">Showing </span>
-            {baseNumber} - {topNumber}
-            <span className="text--base"> of </span>
-            {this.props.count}
-            <OverlayTrigger
-              overlay={refreshPopover}
-              placement="left"
-              animation={false}
-            >
-              <button
-                className={refreshButtonClasses}
-                onClick={this.props.isPolling ? this.props.stopPoller : this.props.startPoller}
-              >
-                <i className={refreshIconClasses} />
-              </button>
-            </OverlayTrigger>
+            <PaginationRange
+              page={this.props.page}
+              size={this.props.limit}
+              count={this.props.count}
+            />
+            <RefreshSpinner
+              isActive={this.props.isPolling}
+              text={'Enable/disable refreshing of the current alert list.'}
+              onClick={this.props.togglePolling}
+            />
           </div>
         </div>
 
         <div className="alert-list flex-item">
           {alertListTable}
-          {loadingElement}
+          {this.props.isLoading ? <Loading /> : null}
         </div>
         {paginationElement}
-      </div>
+      </FlexBox>
     );
   }
 }

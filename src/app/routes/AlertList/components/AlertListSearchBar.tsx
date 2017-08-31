@@ -26,7 +26,7 @@ import * as React from 'react';
 /** Properties of the AlertListSearchBar component. */
 interface Props {
   /** Current content of the search bar. */
-  content: string | undefined;
+  content?: string;
   /**
    * Performs a search on the current alert list with the content in the
    * search bar.
@@ -38,7 +38,7 @@ interface Props {
 /** Internal state of the AlertListSearchBar component. */
 interface State {
   /** Current content in the search bar. */
-  content: string | undefined;
+  content: string;
 }
 
 // --------------------------------------------------------------------------
@@ -53,7 +53,7 @@ export class AlertListSearchBar extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.state = { content: undefined };
+    this.state = { content: '' };
   }
 
   /**
@@ -61,7 +61,7 @@ export class AlertListSearchBar extends React.Component<Props, State> {
    * element is first loaded.
    */
   public componentWillMount(): void {
-    if (this.state.content !== this.props.content) {
+    if (this.props.content && this.state.content !== this.props.content) {
       this.setState({ content: this.props.content });
     }
   }
@@ -73,7 +73,7 @@ export class AlertListSearchBar extends React.Component<Props, State> {
   public handleChange = (event: React.FormEvent<HTMLInputElement>): void => {
     const value = event.currentTarget.value;
 
-    if (!value) { this.setState({ content: undefined }); }
+    if (!value) { this.setState({ content: value }); }
     else { this.setState({ content: value }); }
   };
 

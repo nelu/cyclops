@@ -37,12 +37,12 @@ interface Props {
   /** Alert to display. */
   alert: Alert;
   /** Currently selected alert's ID. */
-  selected?: number | null;
+  activeAlertID?: number;
   /**
    * Selects an alerts to view in the alert detail.
-   * @param alertId
+   * @param alert
    */
-  selectAlert?(alertId: number): any;
+  onClick?(alert: Alert): any;
 }
 
 // --------------------------------------------------------------------------
@@ -57,14 +57,14 @@ export class AlertListItem extends React.Component<Props, {}> {
    * Selects this alerts to be viewed in the alert detail view.
    */
   public onClick = (): void => {
-    if (this.props.selectAlert) { this.props.selectAlert(this.props.alert.id); }
+    if (this.props.onClick) { this.props.onClick(this.props.alert); }
   };
 
   public render(): JSX.Element {
     const distilleryName = this.props.alert.distillery
       ? shortenDistilleryName(this.props.alert.distillery.name)
       : 'None';
-    const isActive = this.props.selected === this.props.alert.id;
+    const isActive = this.props.activeAlertID === this.props.alert.id;
     const classes = classnames(
       'alert-list-item',
       `alert-list-item--${this.props.alert.level.toLowerCase()}`,
@@ -73,7 +73,7 @@ export class AlertListItem extends React.Component<Props, {}> {
     const user = this.props.alert.assigned_user
       ? getUserFullName(this.props.alert.assigned_user)
       : 'Unassigned';
-    const onClick = this.props.selectAlert ? this.onClick : undefined;
+    const onClick = this.props.onClick ? this.onClick : undefined;
 
     return (
       <tr className={classes} onClick={onClick}>
