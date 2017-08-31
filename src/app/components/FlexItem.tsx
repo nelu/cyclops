@@ -24,11 +24,10 @@ import * as classnames from 'classnames';
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties of the  component. */
+/** Properties of the FlexItem component. */
 interface Props {
   className?: string;
   shrink?: boolean;
-  column?: boolean;
 }
 
 // --------------------------------------------------------------------------
@@ -36,13 +35,12 @@ interface Props {
 // --------------------------------------------------------------------------
 
 /**
- *
+ * Item aligned inside of a FlexBox element.
  */
-export class FlexBox extends React.Component<Props, {}> {
+export class FlexItem extends React.Component<Props, {}> {
   public render() {
-    const classes = classnames(this.props.className, 'flex-box', {
-      'flex-box--column': this.props.column,
-      'flex-shrink': this.props.shrink,
+    const classes = classnames('flex-item', {
+      'flex--shrink': this.props.shrink,
     });
 
     return (
