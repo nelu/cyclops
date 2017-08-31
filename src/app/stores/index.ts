@@ -15,6 +15,8 @@
  * Contributor/Change Made By: ________________. [Only apply if changes
  * are made]
  */
+
+// Local
 import { AlertListStore } from '~/stores/AlertListStore';
 import { ErrorStore } from '~/stores/ErrorStore';
 import { UserStore } from '~/stores/UserStore';
@@ -26,9 +28,9 @@ import { AlertLevelTimeseriesStore } from '~/stores/AlertLevelTimeseriesStore';
 import { AlertLocationStore } from '~/stores/AlertLocationStore';
 import { AlertStatusDistributionStore } from '~/stores/AlertStatusDistributionStore';
 import { DashboardStore } from '~/stores/DashboardStore';
-import { PushNotificationStore } from '~/stores/PushNotificationStore';
+import { PushNotificationStore } from '~/stores/PushNotifications';
 
-/**  */
+/** Root data store for the application. */
 export class RootStore {
   public alertDetailStore: AlertDetailStore = new AlertDetailStore(this);
   public alertListStore: AlertListStore = new AlertListStore(this);
@@ -48,6 +50,8 @@ export class RootStore {
   public dashboardStore: DashboardStore = new DashboardStore(this);
   public errorStore: ErrorStore = new ErrorStore(this);
   public monitorStore: MonitorStore = new MonitorStore(this);
-  public pushNotificationsStore: PushNotificationStore = new PushNotificationStore(this);
+  public pushNotificationStore: PushNotificationStore = (
+    new PushNotificationStore(this)
+  );
   public userStore: UserStore = new UserStore(this);
 }

@@ -152,7 +152,9 @@ export function setupNotifications(): Promise<void> {
       .then((subscription) => {
         if (!subscription) { return Promise.resolve(); }
 
-        sendSubscriptionToServer(subscription).then()
+        return sendSubscriptionToServer(subscription).then(() => {
+          setWorkerVariables(subscription);
+        });
       });
   });
 }
