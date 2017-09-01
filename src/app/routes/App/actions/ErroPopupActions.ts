@@ -19,7 +19,7 @@
 // Local
 import { createAction } from '~/utils/reduxUtils';
 import { ReduxAction } from '~/types/redux';
-import { StoredError } from '../types';
+import { StoredError } from '../../../services/errors/types';
 
 /**
  * Action type prefix for ErrorPopup actions.

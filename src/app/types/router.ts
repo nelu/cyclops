@@ -17,34 +17,11 @@
  */
 
 // Vendor
-import { InjectedRouter } from 'react-router';
+import { match } from 'react-router';
+import { LocationDescriptorObject, History } from 'history';
 
-/** Options to parse query object from strings to different types. */
-export interface QueryParseOptions {
-  /** Query parameters to parse into integers. */
-  integers?: string[];
-  /** Query parameyers to parse into arrays. */
-  arrays?: string[];
-}
-
-/** Location property injected into a component from react-router. */
-export interface RouterLocation<Q> {
-  /** Current url path. */
-  pathname: string;
-  /** URL query parameters. */
-  query: Q;
-  /** Full URL. */
-  href: string;
-  /** Extra state passed with the url. */
-  state: any;
-}
-
-/** Properties injected into a component from react-router. */
-export interface RouterInjectedProps<P, Q> {
-  /** location passed in from react-router. */
-  location: RouterLocation<Q>;
-  /** URL parameters. */
-  params: P;
-  /** Injected router */
-  router: InjectedRouter;
+export interface RouteProps<P> {
+  location: LocationDescriptorObject;
+  history: History;
+  match: match<P>;
 }

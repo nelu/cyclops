@@ -18,35 +18,29 @@
 
 // Vendor
 import * as React from 'react';
-import { InjectedRouter, LocationDescriptor } from 'react-router';
 import * as _ from 'lodash';
 import * as classnames from 'classnames';
 
 // Local
-import {
-  DistilleryFlat,
-  NormalizedDistilleryList,
-} from '~/services/distilleries/types';
+import { DistilleryNested } from '~/services/distilleries/types';
 import { CollapsibleHeader } from '~/components/CollapsibleHeader';
-import {
-  ContainerFlat,
-} from '~/services/containers/types';
+import { ContainerNested } from '~/services/containers/types';
 import { Field } from '~/services/cyphon/types';
 import { SearchBar } from './SearchBar';
 import { SearchContainer } from './SearchContainer';
 import { SearchField } from '~/routes/Search/components/SearchField';
 import { SearchDistillery } from '~/routes/Search/components/SearchCollection';
-import { NormalizedEntity } from '~/types/normalizr';
 import { SearchQuery } from '~/routes/Search/components/SearchQuery';
-import {
-  AlertSearchResults,
-  DistilleryListSearchResults,
-  SearchQuery as SearchQueryInterface,
-} from '~/services/search/types';
+import { SearchQuery as SearchQueryInterface } from '~/services/search/types';
 import { Loading } from '~/components/Loading';
-import { parseQuery, updateQuery } from '~/utils/routerUtils';
-import { SearchAlertResults } from '~/routes/Search/components/SearchAlertResults';
-import { SearchDistilleryResults } from '~/routes/Search/components/SearchDistilleryResults';
+import { parseQuery } from '~/utils/routerUtils';
+import { RouteProps } from '~/types/router';
+import { FlexBox } from '~/components/FlexBox';
+import { FlexItem } from '~/components/FlexItem';
+import { SearchQueryView } from '~/stores/SearchQueryStore';
+import { AlertDetail } from '~/services/alerts/types';
+import { AlertSearchResultsContainer } from '../containers/AlertSearchResultsContainer';
+import { SearchResultsContainer } from '../containers/SearchResultsContainer';
 
 // Local
 
@@ -54,57 +48,29 @@ import { SearchDistilleryResults } from '~/routes/Search/components/SearchDistil
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-export interface ValueProps {
+interface Props extends RouteProps<Params> {
   /** List of all the current containers in Cyphon. */
-  containers: ContainerFlat[];
+  containers: ContainerNested[];
   /** List of all the current fields in Cyphon. */
   fields: Field[];
   /** List of all the current distilleries in Cyphon. */
-  distilleries: DistilleryFlat[];
-  /** Normalized list of the current distilleries. */
-  normalized: NormalizedDistilleryList;
+  distilleries: DistilleryNested[];
   /** Object representation of the current string query. */
-  query: SearchQueryInterface | null;
+  query?: SearchQueryInterface;
   /** Total number of current results. */
   total: number;
   /** If more results are currently being loaded. */
-  loading: boolean;
-  /** List and metadata of the current alerts that match the query. */
-  alertResults: AlertSearchResults | null;
-  /** List and metadata of the raw stores that matches the query. */
-  distilleryResults: DistilleryListSearchResults | null;
-  /** If the current search query string is valid. */
-  valid: boolean;
-  /** URL location object. */
-  location: LocationDescriptor;
-  /** URL router object. */
-  router: InjectedRouter;
-}
-export interface FunctionProps {
+  isLoading: boolean;
+  isValid: boolean;
+  view: SearchQueryView;
   /** Fetches all container objects for the page. */
   fetchDistilleries(): any;
   search(query: string): any;
-  searchAlerts(query: string, page?: number): any;
-  searchDistillery(id: number, query: string, page?: number): any;
+  changeView(view: SearchQueryView): any;
 }
 
-interface State {
-  view: View;
-  distillery: number;
-  page: number;
-}
-
-interface SearchQueryParams {
+interface Params {
   query?: string;
-}
-
-/** Properties of the SearchQueryStore component. */
-type Props = ValueProps & FunctionProps;
-
-/** Possible results views. */
-enum View {
-  Alert,
-  Distillery,
 }
 
 // --------------------------------------------------------------------------
@@ -114,62 +80,14 @@ enum View {
 /**
  * Root component of the SearchQueryStore page.
  */
-export class Search extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      view: View.Alert,
-      distillery: 0,
-      page: 1,
-    };
-  }
-  /**
-   * Returns the container object for a distillery from a normalized list
-   * of containers.
-   * @param {DistilleryFlat} distillery
-   * @param {NormalizedEntity<ContainerFlat>} containers
-   * @returns {ContainerFlat}
-   */
-  public static getDistilleryContainer(
-    distillery: DistilleryFlat,
-    containers?: NormalizedEntity<ContainerFlat>,
-  ): ContainerFlat | undefined {
-    if (containers) { return containers[distillery.container]; }
-
-    return undefined;
-  }
-
-  /**
-   * Returns the field objects related to a container object by mapping
-   * Field ID's.
-   * @param {ContainerFlat} container
-   * @param {NormalizedEntity<Field>} fields
-   * @returns {Field[]}
-   */
-  public static getContainerFields(
-    container: ContainerFlat,
-    fields?: NormalizedEntity<Field>,
-  ): Field[] {
-    if (!fields) { return []; }
-
-    const fieldObjects: Field[] = [];
-
-    container.fields.forEach((field) => {
-      const fieldObject = fields[field];
-
-      if (fieldObject) { fieldObjects.push(fieldObject); }
-    });
-
-    return fieldObjects;
-  }
+export class Search extends React.Component<Props, {}> {
 
   /**
    * Parses the URL query params for this route.
    * @param query Object of current query parameters.
-   * @returns {SearchQueryParams}
+   * @returns {Params}
    */
-  public static parseQuery(query: any): SearchQueryParams {
+  public static parseQuery(query: any): Params {
     return parseQuery(query, {});
   }
 
@@ -183,7 +101,7 @@ export class Search extends React.Component<Props, State> {
 
   public componentWillReceiveProps(nextProps: Props): void {
     const currentQuery = this.getQuery();
-    const nextQuery: SearchQueryParams = Search.parseQuery(
+    const nextQuery: Params = Search.parseQuery(
       nextProps.location.query,
     );
 
@@ -196,30 +114,30 @@ export class Search extends React.Component<Props, State> {
    * Changes the view to the alert result list.
    */
   public changeToAlertView = () => {
-    this.setState({ view: View.Alert });
+    this.props.changeView(SearchQueryView.Alert);
   };
 
   /**
    * Changes the view to the distillery result list.
    */
   public changeToDistilleryView = () => {
-    this.setState({ view: View.Distillery });
+    this.props.changeView(SearchQueryView.Distillery);
   };
 
   /**
    * Gets the current URL query parameters.
-   * @returns {SearchQueryParams}
+   * @returns {Params}
    */
-  public getQuery = (): SearchQueryParams => {
+  public getQuery = (): Params => {
     return Search.parseQuery(this.props.location.query);
   };
 
   /**
    * Changes the URL to the alert detail view of the given alert ID.
-   * @param {number} id
+   * @param alert
    */
-  public openAlert = (id: number) => {
-    this.props.router.push(`/alerts/${id}/`);
+  public openAlert = (alert: AlertDetail) => {
+    this.props.history.push(`/alerts/${alert.id}/`);
   };
 
   /**
@@ -227,23 +145,15 @@ export class Search extends React.Component<Props, State> {
    * @param {string} query
    */
   public updateQuery = (query: string) => {
-    updateQuery(this.props.router, this.props.location, { query });
-  };
-
-  public paginateAlerts = (page: number) => {
-    const params = this.getQuery();
-
-    if (params.query) {
-      this.setState({ page });
-      this.props.searchAlerts(params.query, page);
-    }
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      query: { query },
+    });
   };
 
   public render() {
-    const normalizedFields = this.props.normalized.entities.fields;
     const containers = this.props.containers.map((container) => (
       <SearchContainer
-        fields={Search.getContainerFields(container, normalizedFields)}
         container={container}
         open={false}
       />
@@ -251,63 +161,33 @@ export class Search extends React.Component<Props, State> {
     const fields = this.props.fields.map((field) => (
       <SearchField field={field} />
     ));
-    const distilleries = this.props.distilleries.map((distillery) => {
-      const container = Search.getDistilleryContainer(
-        distillery,
-        this.props.normalized.entities.containers,
-      );
-
-      if (!container) { return null; }
-
-      const fieldList = Search.getContainerFields(
-        container,
-        this.props.normalized.entities.fields,
-      );
-
-      return (
-        <SearchDistillery
-          distillery={distillery}
-          container={container}
-          fields={fieldList}
-        />
-      );
-    });
+    const distilleries = this.props.distilleries.map((distillery) => (
+      <SearchDistillery key={distillery.id} distillery={distillery} />
+    ));
     const query = this.props.query
-      ? <SearchQuery query={this.props.query} valid={this.props.valid} />
+      ? <SearchQuery query={this.props.query} isValid={this.props.isValid} />
       : null;
-    const loading = this.props.loading ? <Loading /> : null;
-    const view = ({
-        [View.Alert]: (
-          <SearchAlertResults
-            openAlert={this.openAlert}
-            results={this.props.alertResults}
-            currentPage={this.state.page || 1}
-            paginateAlerts={this.paginateAlerts}
-          />
+    const view = {
+        [SearchQueryView.Alert]: (
+          <AlertSearchResultsContainer viewAlert={this.openAlert} />
         ),
-        [View.Distillery]: <SearchDistilleryResults />,
-      } as any)[this.state.view];
-    const alertResultCount = this.props.alertResults
-      ? this.props.alertResults.count
-      : 0;
-    const dataResultCount = this.props.distilleryResults
-      ? this.props.distilleryResults.count
-      : 0;
+        [SearchQueryView.Distillery]: <SearchResultsContainer />,
+      }[this.props.view];
     const alertViewButtonClasses = classnames('btn-basic', 'pill', {
-      'pill--active': this.state.view === View.Alert,
+      'pill--active': this.props.view === SearchQueryView.Alert,
     });
     const distilleryViewButtonClasses = classnames('btn-basic', 'pill', {
-      'pill--active': this.state.view === View.Distillery,
+      'pill--active': this.props.view === SearchQueryView.Distillery,
     });
 
     return (
-      <div className="flex-box flex-box--column">
-        <div className="flex-box flex--shrink content banner">
+      <FlexBox column={true}>
+        <FlexBox shrink={true} className="content banner">
           <SearchBar onSubmit={this.updateQuery} />
-        </div>
-        <div className="flex-box">
-          <div className="flex-box flex--shrink sidebar sidebar--large">
-            <div className="flex-item content">
+        </FlexBox>
+        <FlexBox>
+          <FlexBox shrink={true} className="sidebar sidebar--large">
+            <FlexItem className="flex-item content">
               {query}
               <CollapsibleHeader title="Collections">
                 {distilleries}
@@ -318,8 +198,8 @@ export class Search extends React.Component<Props, State> {
               <CollapsibleHeader title="Containers">
                 {containers}
               </CollapsibleHeader>
-            </div>
-          </div>
+            </FlexItem>
+          </FlexBox>
           <div className="flex-box flex-box--column">
             <div className="flex-box flex--shrink">
               <div className="flex-item content" style={{ 'border-bottom': 'solid 1px #2a2b2e' }}>
@@ -333,13 +213,13 @@ export class Search extends React.Component<Props, State> {
                   className={alertViewButtonClasses}
                   style={{ marginLeft: '2rem' }}
                 >
-                  {alertResultCount} Alerts
+                  {0} Alerts
                 </button>
                 <button
                   onClick={this.changeToDistilleryView}
                   className={distilleryViewButtonClasses}
                 >
-                  {dataResultCount} Data
+                  {0} Data
                 </button>
 
               </div>
@@ -349,12 +229,13 @@ export class Search extends React.Component<Props, State> {
               style={{ 'border-top': 'solid 1px #3b3c41', 'border-bottom': 'solid 1px #2a2b2e'}}
             >
               {view}
-
             </div>
-            {loading}
+
+            {this.props.isLoading ? <Loading /> : null}
+
           </div>
-        </div>
-      </div>
+        </FlexBox>
+      </FlexBox>
     );
   }
 }

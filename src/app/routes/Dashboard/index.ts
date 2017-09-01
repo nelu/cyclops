@@ -28,7 +28,7 @@ import { DashboardState, DashboardReducer } from './reducers/DashboardReducer';
  * Root component for the  view.
  * @type {ComponentClass<any>}
  */
-export const DashboardRoute: ComponentClass<any> = DashboardContainer;
+export const DashboardRouteComponent: ComponentClass<any> = DashboardContainer;
 
 /** Redux state shape for the Dashboard view. */
 export interface DashboardRouteState {

@@ -34,6 +34,9 @@ import { fetchAllAlertDistilleries } from '~/services/distilleries/utils/distill
 import { RootStore } from '~/stores';
 import { PromiseID } from '~/utils/PromiseID';
 import { Timeout } from '~/utils/Timeout';
+import { APIList } from '~/services/cyphon/types';
+import { StoredError } from '~/services/errors/types';
+import { cat } from 'shelljs';
 
 /**
  * Interval to poll for alerts.
@@ -76,18 +79,29 @@ export class AlertListStore {
 
     return fetchAlertList(params)
       .then((response) => {
-        if (this.promiseID.matches(promiseID)) {
-          this.alerts = response.results;
-          this.count = response.count;
-          this.isLoading = false;
-
-          if (this.isPollingEnabled) { this.startTimeout(promiseID); }
-        }
+        this.searchSuccess(response, promiseID);
       })
-      .catch((error) => {
-        this.stores.errorStore.add(error);
-        this.isLoading = false;
-      });
+      .catch(this.searchError);
+  };
+
+  @action
+  private searchSuccess = (
+    response: APIList<AlertListItem>,
+    promiseID: PromiseID,
+  ) => {
+    if (this.promiseID.matches(promiseID)) {
+      this.alerts = response.results;
+      this.count = response.count;
+      this.isLoading = false;
+
+      if (this.isPollingEnabled) { this.startTimeout(promiseID); }
+    }
+  };
+
+  @action
+  private searchError = (error: StoredError) => {
+    this.stores.errorStore.add(error);
+    this.isLoading = false;
   };
 
   /**
@@ -97,23 +111,28 @@ export class AlertListStore {
   @action
   public fetchDistilleries = (): Promise<void> => {
     return fetchAllAlertDistilleries()
-      .then((distilleries) => {
-        this.distilleries = distilleries;
-      })
-      .catch((error) => {
-        this.stores.errorStore.add(error);
-      });
+      .then(this.fetchDistilleriesSuccess)
+      .catch(this.storeError);
+  };
+
+  @action
+  private fetchDistilleriesSuccess = (distilleries: DistilleryMinimal[]) => {
+    this.distilleries = distilleries;
+  };
+
+  private storeError = (error: StoredError) => {
+    this.stores.errorStore.add(error);
   };
 
   @action
   public fetchCategories = (): Promise<void> => {
     return fetchAllCategories()
-      .then((categories) => {
-        this.categories = categories;
-      })
-      .catch((error) => {
-        this.stores.errorStore.add(error);
-      });
+      .then(this.fetchCategoriesSuccess)
+      .catch(this.storeError);
+  };
+
+  @action private fetchCategoriesSuccess = (categories: Category[]) => {
+    this.categories = categories;
   };
 
   @action
@@ -148,15 +167,21 @@ export class AlertListStore {
 
     return fetchAlertList(this.params)
       .then((response) => {
-        if (this.promiseID.matches(promiseID)) {
-          this.alerts = response.results;
-          this.count = response.count;
-          this.startTimeout(promiseID);
-        }
+        this.pollSuccess(response, promiseID);
       })
-      .catch((error) => {
-        this.stores.errorStore.add(error);
-      });
+      .catch(this.storeError);
+  };
+
+  @action
+  private pollSuccess = (
+    response: APIList<AlertListItem>,
+    promiseID: PromiseID,
+  ) => {
+    if (this.promiseID.matches(promiseID)) {
+      this.alerts = response.results;
+      this.count = response.count;
+      this.startTimeout(promiseID);
+    }
   };
 
   /**

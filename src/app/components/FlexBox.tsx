@@ -42,7 +42,7 @@ export class FlexBox extends React.Component<Props, {}> {
   public render() {
     const classes = classnames(this.props.className, 'flex-box', {
       'flex-box--column': this.props.column,
-      'flex-shrink': this.props.shrink,
+      'flex--shrink': this.props.shrink,
     });
 
     return (

@@ -306,8 +306,8 @@ function parseParamData(
 }
 
 /**
- * Returns ParsedSearchQuery from a list of SearchQueryParams.
- * @param params List of SearchQueryParams to parse stores from.
+ * Returns ParsedSearchQuery from a list of Params.
+ * @param params List of Params to parse stores from.
  * @param resources Object of resources needed to parse stores.
  * @returns {ParsedSearchQuery}
  */

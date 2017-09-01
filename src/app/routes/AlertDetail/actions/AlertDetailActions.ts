@@ -56,7 +56,7 @@ import { CONTAINER_FIELDS } from '~/services/containers/constants';
 import { Dictionary } from '~/types/object';
 import { checkAlertUpdate } from '~/services/alerts/utils/checkAlertUpdate';
 import { modifyAlertUpdate } from '~/services/alerts/utils/modifyAlertUpdate';
-import { createAlertUpdateComment } from '~/routes/AlertDetail/utils/createAlertUpdateComment';
+import { createAlertUpdateComment } from '~/services/alerts/utils/createAlertUpdateComment';
 
 // --------------------------------------------------------------------------
 // Helper Functions/Variables

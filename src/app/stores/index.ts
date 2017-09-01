@@ -28,7 +28,11 @@ import { AlertLevelTimeseriesStore } from '~/stores/AlertLevelTimeseriesStore';
 import { AlertLocationStore } from '~/stores/AlertLocationStore';
 import { AlertStatusDistributionStore } from '~/stores/AlertStatusDistributionStore';
 import { DashboardStore } from '~/stores/DashboardStore';
-import { PushNotificationStore } from '~/stores/PushNotifications';
+import { PushNotificationStore } from '~/stores/PushNotificationStore';
+import { SearchQueryStore } from '~/stores/SearchQueryStore';
+import { AlertSearchResultStore } from '~/stores/AlertSearchResultStore';
+import { SearchResultStore } from '~/stores/SearchResultStore';
+import { DistilleryStore } from '~/stores/DistilleryStore';
 
 /** Root data store for the application. */
 export class RootStore {
@@ -53,5 +57,9 @@ export class RootStore {
   public pushNotificationStore: PushNotificationStore = (
     new PushNotificationStore(this)
   );
+  public searchQueryStore = new SearchQueryStore(this);
+  public alertSearchResultStore = new AlertSearchResultStore(this);
+  public searchResultStore = new SearchResultStore(this);
   public userStore: UserStore = new UserStore(this);
+  public distilleryStore: DistilleryStore = new DistilleryStore(this);
 }

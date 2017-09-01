@@ -23,31 +23,27 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 // Local
-import { Loading } from '../../../components/Loading';
-import { Map } from '../../../services/map/components/Map';
+import { Loading } from '~/components/Loading';
+import { Map } from '~/services/map/components/Map';
 import {
   StackedAreaChartDataWithColor,
   PieChartDataWithColor,
-} from '../../../services/chart/types';
+} from '~/services/chart/types';
 import {
   AlertLocationResponse,
   AlertLocationPoint,
-} from '../../../services/alerts/types';
-import { PopupGenerator } from '../../../services/map/types';
-import { PieChartTable } from '../../../services/chart/components/PieChartTable';
-import { StackedAreaChart } from '../../../services/chart/components/StackedAreaChart';
-import {
-  DispatchToProps,
-  StateToProps,
-} from '../../../types/redux';
-import { fetchAlertStatistics } from '../actions/DashboardActions';
+} from '~/services/alerts/types';
+import { PopupGenerator } from '~/services/map/types';
+import { PieChartTable } from '~/services/chart/components/PieChartTable';
+import { StackedAreaChart } from '~/services/chart/components/StackedAreaChart';
+import { observer } from 'mobx-react';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
 /** Properties of the Dashboard component that are values. */
-export interface ValueProps {
+interface Props {
   /** Number of days to search over. */
   days: number;
   /** The number of alerts created in the given time period. */
@@ -65,7 +61,7 @@ export interface ValueProps {
   /** If the collection distribution is being fetched. */
   collectionDistributionLoading: boolean;
   /** Location markers alerts with location stores. */
-  locations: AlertLocationResponse | null;
+  locations?: AlertLocationResponse;
   /** How many alerts have location stores. */
   locationFeatureCount: number;
   /** If the location stores is currently being fetched. */
@@ -74,19 +70,12 @@ export interface ValueProps {
   levelTimeseries: StackedAreaChartDataWithColor[];
   /** If the level timeseries information is being fetched. */
   levelTimeseriesLoading: boolean;
-}
-
-/** Properties of the dashboard component that are functions. */
-export interface FunctionProps {
   /**
    * Retrieves alert statistics over a specified number of days.
    * @param days Days to search for statistics.
    */
   getAlertStatistics(days: number): any;
 }
-
-/** Combined property interfaces of the Dashboard component. */
-type Props = ValueProps & FunctionProps;
 
 // --------------------------------------------------------------------------
 // Component
@@ -95,6 +84,7 @@ type Props = ValueProps & FunctionProps;
 /**
  * Dashboard displaying alert metrics.
  */
+@observer
 export class Dashboard extends React.Component<Props, {}> {
   /**
    * Options for the dashboard map.
@@ -243,50 +233,3 @@ export class Dashboard extends React.Component<Props, {}> {
     );
   }
 }
-
-// --------------------------------------------------------------------------
-// Container
-// --------------------------------------------------------------------------
-
-/**
- * Maps the redux state to AlertDetail component properties.
- * @param state Redux state.
- * @param ownProps Properties passed AlertDetailContainer.
- */
-const values: StateToProps<ValueProps, undefined> = (
-  state,
-  ownProps,
-) => ({
-  days: state.routes.Dashboard.Dashboard.days,
-  totalAlerts: state.routes.Dashboard.Dashboard.total,
-  levelDistribution: state.routes.Dashboard.Dashboard.levelDistributionData,
-  levelDistributionLoading: state.routes.Dashboard.Dashboard.levelDistributionLoading,
-  statusDistribution: state.routes.Dashboard.Dashboard.statusDistributionData,
-  statusDistributionLoading: state.routes.Dashboard.Dashboard.statusDistributionLoading,
-  collectionDistribution: state.routes.Dashboard.Dashboard.collectionDistributionData,
-  collectionDistributionLoading: state.routes.Dashboard.Dashboard.collectionDistributionLoading,
-  levelTimeseries: state.routes.Dashboard.Dashboard.levelTimeseriesData,
-  levelTimeseriesLoading: state.routes.Dashboard.Dashboard.levelTimeseriesLoading,
-  locations: state.routes.Dashboard.Dashboard.locations,
-  locationFeatureCount: state.routes.Dashboard.Dashboard.locationFeatureCount,
-  locationsLoading: state.routes.Dashboard.Dashboard.locationsLoading,
-});
-
-/**
- * Maps redux dispatch functions to AlertDetail component properties.
- * @param dispatch Dispatch function from the redux store.
- */
-const mapDispatchToProps: DispatchToProps<FunctionProps, undefined> = (
-  dispatch,
-) => ({
-  getAlertStatistics: bindActionCreators(fetchAlertStatistics, dispatch),
-});
-
-/**
- * Container component created from the Alert Detail component.
- * @type {Container}
- */
-export const DashboardContainer = connect(
-  values,
-  mapDispatchToProps,
-)(Dashboard);

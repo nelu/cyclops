@@ -34,7 +34,7 @@ import { SearchQueryFields } from '~/routes/Search/components/SearchQueryFields'
 /** Properties of the SearchQuery component. */
 interface Props {
   query: SearchQueryInterface;
-  valid: boolean;
+  isValid: boolean;
 }
 
 // --------------------------------------------------------------------------
@@ -49,12 +49,7 @@ export class SearchQuery extends React.Component<Props, {}> {
     const errors = this.props.query.errors.map((error) => (
       <p className="alert-text--high">{error}</p>
     ));
-    const keywords = this.props.query.keywords
-      ? this.props.query.keywords.map((parameter) => (
-        <div>"{parameter.keyword}"</div>
-      ))
-      : 'None';
-    const errorIcon = !this.props.valid
+    const errorIcon = !this.props.isValid
       ? <i className="fa fa-exclamation-triangle alert-text--high icon-spacing" />
       : null;
 

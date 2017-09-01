@@ -26,7 +26,7 @@ import {
   StackedAreaChartValues,
   StackedAreaChartDataWithColor,
 } from '~/services/chart/types';
-import { LEVEL_OPTIONS } from '../../AlertList/constants';
+import { LEVEL_OPTIONS } from '../../Alerts/constants';
 import { Dictionary } from '~/types/object';
 
 /**

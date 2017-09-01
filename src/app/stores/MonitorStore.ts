@@ -29,6 +29,7 @@ import {
 import { fetchAllMonitors } from '~/services/monitors/utils/monitorAPI';
 import { PromiseID } from '~/utils/PromiseID';
 import { Timeout } from '~/utils/Timeout';
+import { StoredError } from '~/services/errors/types';
 
 const ACTIVE_STATUS = 'GREEN';
 const POLLING_INTERVAL = 60000;
@@ -97,18 +98,30 @@ export class MonitorStore {
     this.isLoading = true;
 
     return fetchAllMonitors()
-      .then((monitors) => {
-        if (this.promiseID.matches(promiseID)) {
-          this.monitors = monitors;
-          this.isLoading = false;
-          this.startTimeout(promiseID);
-        }
-      })
-      .catch((error) => {
-        this.stores.errorStore.add(error);
+      .then((monitors) => { this.fetchMonitorsSuccess(monitors, promiseID); })
+      .catch((error) => { this.fetchMonitorsError(error, promiseID); });
+  };
 
-        if (this.promiseID.matches(promiseID)) { this.isLoading = false; }
-      });
+  @action
+  private fetchMonitorsSuccess = (
+    monitors: MonitorNested[],
+    promiseID: PromiseID,
+  ): void => {
+    if (this.promiseID.matches(promiseID)) {
+      this.monitors = monitors;
+      this.isLoading = false;
+      this.startTimeout(promiseID);
+    }
+  };
+
+  @action
+  private fetchMonitorsError = (
+    error: StoredError,
+    promiseID: PromiseID,
+  ): void => {
+    this.stores.errorStore.add(error);
+
+    if (this.promiseID.matches(promiseID)) { this.isLoading = false; }
   };
 
   @action
@@ -131,14 +144,24 @@ export class MonitorStore {
 
     return fetchAllMonitors()
       .then((monitors) => {
-        if (this.promiseID.matches(promiseID)) {
-          this.monitors = monitors;
-          this.startTimeout(promiseID);
-        }
+        this.pollSuccess(monitors, promiseID);
       })
-      .catch((error) => {
-        this.stores.errorStore.add(error);
-      });
+      .catch(this.storeError);
+  };
+
+  @action
+  private pollSuccess = (
+    monitors: MonitorNested[],
+    promiseID: PromiseID,
+  ): void => {
+    if (this.promiseID.matches(promiseID)) {
+      this.monitors = monitors;
+      this.startTimeout(promiseID);
+    }
+  };
+
+  private storeError = (error: StoredError): void => {
+    this.stores.errorStore.add(error);
   };
 
   private startTimeout = (promiseID: PromiseID): void => {

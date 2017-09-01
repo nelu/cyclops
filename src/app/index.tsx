@@ -18,51 +18,26 @@
 
 // Vendor
 import * as React from 'react';
-import {
-  Router,
-  Route,
-  IndexRoute,
-  useRouterHistory,
-} from 'react-router';
-import { createHistory } from 'history';
-import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { useStrict } from 'mobx';
-// import { Provider } from 'mobx-react';
+import { Provider } from 'mobx-react';
 
 // Local
 import { getConfig } from './config';
-import { Routes } from './routes';
-// import { AlertViewTest } from '~/routes/AlertList/containers/AlertViewTest';
 import { RootStore } from '~/stores';
-import { store } from '~/store';
+import { ApplicationLayout } from '~/layout';
 
-// const stores = new RootStore();
-
-// useStrict(true);
-
-/** React router history that uses the base url given by the parent template. */
-const browserHistory = useRouterHistory(createHistory)({
-  basename: getConfig().APP_BASE_URL,
-});
-
-// --------------------------------------------------------------------------
-// Main Application
-// --------------------------------------------------------------------------
+// Use MobX strict mode.
+useStrict(true);
 
 /**
  * Root component of the application.
  * @type {JSX.Element}
  */
 export const App = (
-  <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path="/" component={Routes.App}>
-        <IndexRoute component={Routes.Dashboard}/>
-        <Route path="alerts" component={Routes.AlertList}>
-          <Route path=":alertId" component={Routes.AlertDetail}/>
-        </Route>
-        <Route path="search" component={Routes.Search} />
-      </Route>
-    </Router>
+  <Provider {...new RootStore()}>
+    <BrowserRouter basename={getConfig().APP_BASE_URL}>
+      <ApplicationLayout />
+    </BrowserRouter>
   </Provider>
 );

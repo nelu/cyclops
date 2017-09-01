@@ -21,7 +21,7 @@ import {
   PieChartData,
   PieChartDataWithColor,
 } from '~/services/chart/types';
-import { LEVEL_OPTIONS } from '../../AlertList/constants';
+import { LEVEL_OPTIONS } from '../../Alerts/constants';
 import {
   addColorPropertyProgrammatically,
 } from '~/services/chart/utils/addColorProperty';

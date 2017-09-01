@@ -22,17 +22,17 @@ import { Component } from 'react';
 import { ComponentClass } from 'react-redux';
 
 // Local
-import { StoreState } from '../store';
+// import { StoreState } from '../store';
 import { Reducer } from 'redux-actions';
 
 /** Redux dispatch function configured with this redux store state. */
-export type ReduxDispatch = Dispatch<StoreState>;
+export type ReduxDispatch = Dispatch<any>;
 
 /**
  * Local interface of react-redux functions that map the redux state to
  * a react component properties.
  */
-export type StateToProps<R, P> = (state: StoreState, ownProps: P) => R;
+export type StateToProps<R, P> = (state: any, ownProps: P) => R;
 
 /**
  * Local interface of react-redux function that maps redux dispatch actions
@@ -58,12 +58,12 @@ export type ReduxActionCreator<P> = (payload: P) => ReduxAction<P>;
 /** Thunk action that returns a promise that returns undefined. */
 export type ThunkActionPromise = ThunkAction<
   Promise<void>,
-  StoreState,
+  any,
   undefined
 >;
 
 /** Thunk action that returns undefined. */
-export type ThunkActionVoid = ThunkAction<void, StoreState, undefined>;
+export type ThunkActionVoid = ThunkAction<void, any, undefined>;
 
 /** Root component of a route specified in react-router. */
 export type ViewComponent = ComponentClass<any>;

@@ -23,6 +23,7 @@ import { observable, action } from 'mobx';
 import { User } from '~/services/users/types';
 import * as userAPI from '~/services/users/utils/userAPI';
 import { RootStore } from '~/stores';
+import { StoredError } from '~/services/errors/types';
 
 /** Store containing users of Cyphon. */
 export class UserStore {
@@ -41,7 +42,14 @@ export class UserStore {
   @action
   public fetchUsers = (): Promise<void> => {
     return userAPI.fetchAllUsers()
-      .then((users) => { this.users = users; })
-      .catch((error) => { this.stores.errorStore.add(error); });
+      .then(this.setUsers)
+      .catch(this.storeError);
   };
+
+  @action
+  private setUsers = (users: User[]) => { this.users = users; };
+
+  private storeError = (error: StoredError) => {
+    this.stores.errorStore.add(error);
+  }
 }

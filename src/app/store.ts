@@ -29,39 +29,35 @@ import thunkMiddleware from 'redux-thunk';
 
 // Local
 import {
-  RoutesState,
-  RoutesReducer,
-} from './routes';
-import {
   ServicesReducerState,
   servicesReducer,
 } from './services/reducer';
 
 /** Shape of the redux store state. */
-export interface StoreState {
-  routes: RoutesState;
-  services: ServicesReducerState;
-}
+// export interface StoreState {
+//   routes: RoutesState;
+//   services: ServicesReducerState;
+// }
 
 /**
  * Main redux reducer,
  * @type {Reducer<StoreState>}
  */
-const reducers = combineReducers<StoreState>({
-  routes: RoutesReducer,
-  services: servicesReducer,
-});
+// const reducers = combineReducers<StoreState>({
+//   routes: RoutesReducer,
+//   services: servicesReducer,
+// });
 
 /**
  * Middlewares to add to the redux store.
  * @type {GenericStoreEnhancer}
  */
-const middlewares = process.env.NODE_ENV === 'production'
-  ? applyMiddleware(thunkMiddleware)
-  : applyMiddleware(thunkMiddleware, Logger({ collapsed: true }));
+// const middlewares = process.env.NODE_ENV === 'production'
+//   ? applyMiddleware(thunkMiddleware)
+//   : applyMiddleware(thunkMiddleware, Logger({ collapsed: true }));
 
 /**
  * Central redux store for the application
  * @type {Store<StoreState>}
  */
-export const store = createStore<StoreState>(reducers, middlewares);
+// export const store = createStore<StoreState>(reducers, middlewares);

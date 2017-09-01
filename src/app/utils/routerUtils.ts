@@ -17,10 +17,6 @@
  */
 
 // Vendor
-import {
-  InjectedRouter,
-  LocationDescriptor,
-} from 'react-router';
 import * as _ from 'lodash';
 
 // Local
@@ -38,16 +34,16 @@ interface QueryParseOptions {
  * @param location Current router location.
  * @param newQuery Query object to update current with.
  */
-export function updateQuery(
-  router: InjectedRouter,
-  location: LocationDescriptor,
-  newQuery: Dictionary<any>,
-): void {
-  router.push({
-    pathname: location.pathname,
-    query: Object.assign({}, location.query, newQuery),
-  });
-}
+// export function updateQuery(
+//   router: InjectedRouter,
+//   location: LocationDescriptor,
+//   newQuery: Dictionary<any>,
+// ): void {
+//   router.push({
+//     pathname: location.pathname,
+//     query: Object.assign({}, location.query, newQuery),
+//   });
+// }
 
 /**
  * Parses the url parameters that are integers.

@@ -18,7 +18,10 @@
 
 // Vendor
 import * as React from 'react';
-import { DistilleryFlat } from '~/services/distilleries/types';
+import {
+  DistilleryFlat,
+  DistilleryNested
+} from '~/services/distilleries/types';
 import { ContainerFlat } from '~/services/containers/types';
 import { Field } from '~/services/cyphon/types';
 import { Collapsible } from '~/components/Collapsible';
@@ -32,9 +35,7 @@ import { SearchField } from '~/routes/Search/components/SearchField';
 
 /** Properties of the SearchDistillery component. */
 interface Props {
-  distillery: DistilleryFlat;
-  container: ContainerFlat;
-  fields: Field[];
+  distillery: DistilleryNested;
 }
 
 // --------------------------------------------------------------------------
@@ -49,15 +50,16 @@ export class SearchDistillery extends React.Component<Props, {}> {
     const shortenedDistilleryName = shortenDistilleryName(
       this.props.distillery.name,
     );
-    const fields = this.props.fields.map((field) => (
+    const fields = this.props.distillery.container.fields.map((field) => (
       <SearchField field={field} />
     ));
+
     return (
       <div>
         <Collapsible descriptor={shortenedDistilleryName} open={false}>
           <div className="tabbed tabbed--border">
             <div className="tabbed__title text--muted">Container</div>
-            <div>{this.props.container.name}</div>
+            <div>{this.props.distillery.container.name}</div>
             <div className="tabbed__title text--muted">Fields</div>
             {fields}
           </div>

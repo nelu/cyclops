@@ -21,7 +21,7 @@ import { ReducerMap, handleActions } from 'redux-actions';
 
 // Local
 import * as actions from '../actions/ErroPopupActions';
-import { StoredError } from '../types';
+import { StoredError } from '../../../services/errors/types';
 
 /** SearchQueryState shape of the ErrorPopup reducer. */
 export interface ErrorPopupState {

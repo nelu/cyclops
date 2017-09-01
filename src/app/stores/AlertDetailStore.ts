@@ -18,6 +18,7 @@
 
 // Vendor
 import { observable, action } from 'mobx';
+import * as _ from 'lodash';
 
 // Local
 import { RootStore } from '~/stores';
@@ -32,20 +33,30 @@ import {
 import * as alertAPI from '~/services/alerts/utils/alertsAPI';
 import { getLocationsWithAddress } from '~/services/map/utils/getLocationsWithAddress';
 import { ContainerNested } from '~/services/containers/types';
-import { Result } from '~/types/result';
+import {
+  Result,
+  ResultIPAdresses
+} from '~/types/result';
 import { createLocationGeoJSON } from '~/services/map/utils/createLocationGeoJSON';
 import { checkAlertUpdate } from '~/services/alerts/utils/checkAlertUpdate';
 import { modifyAlertUpdate } from '~/services/alerts/utils/modifyAlertUpdate';
-import { createAlertUpdateComment } from '~/routes/AlertDetail/utils/createAlertUpdateComment';
+import { createAlertUpdateComment } from '~/services/alerts/utils/createAlertUpdateComment';
+import { Action } from '~/services/actions/types';
+import { fetchAllActions } from '~/services/actions/api';
+import { getFieldsOfType } from '~/services/containers/utils/containerUtils';
+import { CONTAINER_FIELDS } from '~/services/containers/constants';
+import { isNull } from 'util';
 
 export class AlertDetailStore {
   @observable public id: number = 0;
-  @observable public actions: Actio;
+  @observable public actions: Action[];
   @observable public alert?: AlertDetail;
   @observable public errors: string[] = [];
   @observable public isLoading: boolean = false;
+  @observable public IPAddresses?: ResultIPAdresses;
   @observable public locations: LocationFieldAddress[] = [];
   @observable public markers?: Markers;
+  @observable public isModalActive: boolean = false;
 
   private promiseID: symbol = Symbol();
   private stores: RootStore;
@@ -100,6 +111,11 @@ export class AlertDetailStore {
     return Promise.reject('Alert update invalid.');
   };
 
+  @action
+  public clearErrors = (): void => {
+    this.errors = [];
+  };
+
   /**
    * Performs an action on the current alert.
    * @param {number} actionID ID of the action to perform.
@@ -124,6 +140,60 @@ export class AlertDetailStore {
         this.stores.errorStore.add(error);
         this.isLoading = false;
       });
+  };
+
+  @action
+  public fetchActions = (): Promise<void> => {
+    return fetchAllActions()
+      .then((actions) => { this.actions = actions; })
+      .catch((error) => { this.stores.errorStore.add(error); });
+  };
+
+  @action
+  public openModal = () => {
+    this.isModalActive = true;
+    this.getIPAddresses();
+  };
+
+  @action
+  public closeModal = () => {
+    this.isModalActive = false;
+  };
+
+  @action
+  public addComment = (comment: string) => {
+    if (!this.alert) { return this.raiseMissingAlertError(); }
+
+    const promiseID = this.resetPromiseID();
+
+    this.isLoading = true;
+
+    return alertAPI.addComment(this.alert.id, comment)
+      .then((alert) => {
+        if (!this.isValidPromiseID(promiseID)) { return; }
+        this.alert = alert;
+        this.isLoading = false;
+      })
+      .catch((error) => {
+        this.stores.errorStore.add(error);
+      });
+  };
+
+  @action
+  private getIPAddresses = () => {
+    if (!this.alert || !this.alert.distillery) { return; }
+
+    const IPAddresses = getFieldsOfType<string>(
+      CONTAINER_FIELDS.IP_ADDRESS,
+      this.alert.distillery.container,
+      this.alert.data,
+    );
+
+    if (!IPAddresses) { return; }
+
+    const nonNullIPAddresses = _.pickBy(IPAddresses, (value) => value !== null);
+
+    if (!_.isEmpty(nonNullIPAddresses)) { this.IPAddresses = IPAddresses; }
   };
 
   /**

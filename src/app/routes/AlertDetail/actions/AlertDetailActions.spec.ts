@@ -65,7 +65,7 @@ describe('AlertDetailActions', () => {
     });
   });
 
-  describe('closeErrorMessage()', () => {
+  describe('closeErrors()', () => {
     let action: actions.CloseErrorMessageAction;
 
     beforeEach(() => {

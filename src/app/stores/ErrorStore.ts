@@ -21,7 +21,7 @@ import {
   action,
   observable,
 } from 'mobx';
-import { StoredError } from '~/routes/App/types';
+import { StoredError } from '~/services/errors/types';
 import { RootStore } from '~/stores';
 
 export class ErrorStore {
@@ -44,7 +44,7 @@ export class ErrorStore {
   };
 
   @action
-  public clear(): void {
+  public clear = (): void => {
     this.errors = [];
   }
 }

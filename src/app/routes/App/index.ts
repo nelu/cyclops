@@ -29,7 +29,7 @@ import {
   MonitorStatusState,
   MonitorStatusReducer,
 } from './reducers/MonitorStatusReducer';
-import { Layout } from '~/routes/App/components/Layout';
+import { Layout } from '~/layout/components/Layout';
 
 /** Redux state shape for the App view. */
 export interface AppRouteState {

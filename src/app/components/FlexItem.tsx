@@ -39,7 +39,7 @@ interface Props {
  */
 export class FlexItem extends React.Component<Props, {}> {
   public render() {
-    const classes = classnames('flex-item', {
+    const classes = classnames(this.props.className, 'flex-item', {
       'flex--shrink': this.props.shrink,
     });
 

@@ -21,7 +21,10 @@ import * as React from 'react';
 import { NormalizedDistilleryList } from '~/services/distilleries/types';
 import { NormalizedEntity } from '~/types/normalizr';
 import { Field } from '~/services/cyphon/types';
-import { ContainerFlat } from '~/services/containers/types';
+import {
+  ContainerFlat,
+  ContainerNested
+} from '~/services/containers/types';
 import { SearchField } from './SearchField';
 import { Collapsible } from '~/components/Collapsible';
 
@@ -31,8 +34,7 @@ import { Collapsible } from '~/components/Collapsible';
 
 /** Properties of the SearchContainer component. */
 interface Props {
-  fields: Field[];
-  container: ContainerFlat;
+  container: ContainerNested;
   open: boolean;
 }
 
@@ -46,7 +48,7 @@ interface Props {
  */
 export class SearchContainer extends React.Component<Props, {}> {
   public render() {
-    const fields = this.props.fields.map((field) => (
+    const fields = this.props.container.fields.map((field) => (
       <SearchField field={field} />
     ));
 
