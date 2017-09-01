@@ -22,18 +22,18 @@ import * as _ from 'lodash';
 import { ListGroup } from 'react-bootstrap';
 
 // Local
-import { ResultIPAdresses } from '../../../types/result';
+import { ResultIPAdresses } from '~/types/result';
 import { AlertDataIpAddressField } from './AlertDataIpAddressField';
-import { IP_ADDRESS_LOOKUPS } from '../../AlertList/constants';
+import { IP_ADDRESS_LOOKUPS } from '~/routes/Alerts/constants';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties of the AlertDataIpAddresses component. */
+/** Properties of the AlertDataIPAddresses component. */
 interface Props {
   /** IP Address fields to display. */
-  ipAddresses: ResultIPAdresses;
+  IPAddresses: ResultIPAdresses;
 }
 
 // --------------------------------------------------------------------------
@@ -44,13 +44,13 @@ interface Props {
  * Displays a list of IpAddressFields and a list of IP address lookup
  * websites.
  */
-export class AlertDataIpAddresses extends React.Component<Props, {}> {
+export class AlertDataIPAddresses extends React.Component<Props, {}> {
   public render(): JSX.Element {
-    const ipAddressElements: JSX.Element[] = [];
+    const IPAddressElements: JSX.Element[] = [];
     const ipAddressLookups: JSX.Element[] = [];
 
-    _.forEach(this.props.ipAddresses, (ipAddress: string, field: string) => {
-      ipAddressElements.push((
+    _.forEach(this.props.IPAddresses, (ipAddress: string, field: string) => {
+      IPAddressElements.push((
         <AlertDataIpAddressField field={field} ipAddress={ipAddress}/>
       ));
     });
@@ -82,7 +82,7 @@ export class AlertDataIpAddresses extends React.Component<Props, {}> {
                 <th>Field</th>
                 <th>IP Address</th>
               </tr>
-              {ipAddressElements}
+              {IPAddressElements}
             </tbody>
           </table>
         </div>
