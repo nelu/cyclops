@@ -183,7 +183,7 @@ export class AlertParams extends React.Component<Props, State> {
           <AlertParamsCategorySelect
             selected={this.props.params.categories}
             categories={this.props.categories}
-            change={this.changeCategories}
+            onChange={this.changeCategories}
           />
 
           <AlertParamsDistillerySelect

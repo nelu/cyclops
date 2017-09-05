@@ -39,7 +39,7 @@ interface Props {
    * Selects a category to filter alerts with.
    * @param category Category to filter alerts with.
    */
-  change(categories?: number[]): void;
+  onChange(categories?: number[]): void;
 }
 
 // --------------------------------------------------------------------------
@@ -52,13 +52,13 @@ interface Props {
 export class AlertParamsCategorySelect extends React.Component<Props, {}> {
   /** Clears the current category selections. */
   public clearSelections = (): void => {
-    this.props.change(undefined);
+    this.props.onChange(undefined);
   };
 
   public toggleCategory = (category: Category) => {
     const categories = toggleArrayValue(category.id, this.props.selected);
 
-    this.props.change(categories);
+    this.props.onChange(categories);
   };
 
   public render() {

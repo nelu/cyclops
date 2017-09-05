@@ -44,7 +44,7 @@ describe('categoryStoreReducer', () => {
       const action = actions.fetchCategoriesSuccess(list);
       const state = categoryStoreReducer(INITIAL_STATE, action);
 
-      chai.expect(state).to.deep.equal(normalized);
+      chai.expect(state).to.deep.equal(list);
     });
   });
 });

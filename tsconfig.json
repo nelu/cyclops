@@ -6,7 +6,6 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "noEmitHelpers": false,
-    "experimentalDecorators": true,
     "target": "es5",
     "module": "commonjs",
     "jsx": "react",

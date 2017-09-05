@@ -45,7 +45,7 @@ describe('<AlertParamsCategorySelect />', () => {
     },
   };
   const defaultProps = {
-    categories: normalized,
+    categories,
   };
   let selectCategory: sinon.SinonSpy;
   let render: (props?: any) => enzyme.ShallowWrapper<any, any>;
@@ -62,16 +62,11 @@ describe('<AlertParamsCategorySelect />', () => {
     };
   });
 
-  it('should display the options of a normalized category list', () => {
-    const listGroupItems = render().find('ListGroupItemToggle');
+  it('should display an Autocomplete option', () => {
+    const autocomplete = render().find('CategoryAutocomplete');
 
-    chai.expect(listGroupItems).to.have.length(2);
-
-    listGroupItems.forEach((item, index) => {
-      chai.expect(item.prop('value')).to.equal(categories[index].id);
-      chai.expect(item.prop('currentValue')).to.be.undefined;
-      chai.expect(item.prop('onClick')).to.equal(selectCategory);
-    });
+    chai.expect(autocomplete).to.have.length(1);
+    chai.expect(autocomplete.prop('categories')).to.equal(categories);
   });
 
   it('should display a CollapsibleHeader', () => {
@@ -83,29 +78,5 @@ describe('<AlertParamsCategorySelect />', () => {
     chai.expect(collapsible.prop('title')).to.equal('Category');
     chai.expect(collapsible.prop('action')).to.equal(instance.clearSelections);
     chai.expect(collapsible.prop('actionName')).to.equal('Clear');
-    chai.expect(collapsible.prop('spaced')).to.equal(true);
-  });
-
-  describe('onSelectChange', () => {
-    it('should parse an integer value from a string and pass that ' +
-      'to select', () => {
-      const component: any = render().instance();
-
-      component.onSelectChange('4');
-
-      chai.expect(selectCategory.called).to.be.true;
-      chai.expect(selectCategory.args[0][0]).to.equal(4);
-    });
-  });
-
-  describe('clearSelections()', () => {
-    it('should pass undefined to the select prop', () => {
-      const component: any = render().instance();
-
-      component.clearSelections();
-
-      chai.expect(selectCategory.called).to.be.true;
-      chai.expect(selectCategory.args[0][0]).to.be.undefined;
-    });
   });
 });

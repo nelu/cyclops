@@ -232,13 +232,13 @@ describe('distilleryNormalizr', () => {
       expect(result).to.deep.equal([]);
     });
 
-    it('should return the field_names of shared fields', () => {
+    it('should return the shared fields', () => {
       const result = utils.getSharedDistilleryFields(
         normalized as any,
         [distillery1.id, distillery2.id],
       );
 
-      expect(result).to.deep.equal([field1.field_name]);
+      expect(result).to.deep.equal([field1]);
     });
   });
 });

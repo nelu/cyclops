@@ -29,15 +29,6 @@ describe('categoryActions', () => {
   const category1: any = { id: 1, name: 'category' };
   const category2: any = { id: 2, name: 'blah' };
   const list: any[] = [category1, category2];
-  const normalized: any = {
-    result: [category1.id, category2.id],
-    entities: {
-      categories: {
-        [category1.id]: category1,
-        [category2.id]: category2,
-      },
-    },
-  };
   let dispatch: sinon.SinonSpy;
 
   beforeEach(() => {
@@ -45,13 +36,13 @@ describe('categoryActions', () => {
   });
 
   describe('fetchCategoriesSuccess()', () => {
-    it('should make a FETCH_CATEGORIES_SUCCESS action with a normalized ' +
-      'category list as the payload', () => {
+    it('should make a FETCH_CATEGORIES_SUCCESS action with the list ' +
+      'of categories', () => {
       const action = actions.fetchCategoriesSuccess(list);
 
       chai.expect(action).to.deep.equal({
         type: actions.FETCH_CATEGORIES_SUCCESS,
-        payload: normalized,
+        payload: list,
         error: undefined,
       });
     });
@@ -85,7 +76,7 @@ describe('categoryActions', () => {
         chai.expect(dispatch.called).to.be.true;
         chai.expect(dispatch.args[0][0]).to.deep.equal({
           type: actions.FETCH_CATEGORIES_SUCCESS,
-          payload: normalized,
+          payload: list,
           error: undefined,
         });
       });
