@@ -18,7 +18,7 @@
 
 // Local
 import { createAction } from '~/utils/reduxUtils';
-import { ReduxAction } from '~/types/redux';
+import { ReduxAction } from '~/store/types';
 import { StoredError } from '../../routes/App/types';
 
 /**

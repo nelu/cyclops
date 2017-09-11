@@ -22,7 +22,7 @@ import {
   ReduxAction,
   ThunkActionPromise,
   ThunkActionVoid,
-} from '../../types/redux';
+} from '../types';
 import {
   Alert,
   AlertDetail,

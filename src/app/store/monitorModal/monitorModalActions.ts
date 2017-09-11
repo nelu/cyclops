@@ -20,7 +20,7 @@
 import {
   ReduxAction,
   ThunkActionPromise,
-} from '~/types/redux';
+} from '~/store/types';
 import {
   MonitorNested,
   NormalizedMonitorList,

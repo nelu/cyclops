@@ -39,7 +39,7 @@ import { StackedAreaChart } from '../../../services/chart/components/StackedArea
 import {
   DispatchToProps,
   StateToProps,
-} from '../../../types/redux';
+} from '../../../store/types';
 import { fetchAlertStatistics } from '../../../store/dashboard/dashboardActions';
 
 // --------------------------------------------------------------------------

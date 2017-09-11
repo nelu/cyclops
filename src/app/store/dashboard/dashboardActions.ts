@@ -29,7 +29,7 @@ import {
   ThunkActionPromise,
   ThunkActionVoid,
   ReduxDispatch,
-} from '~/types/redux';
+} from '~/store/types';
 import {
   DistributionDataTypes,
   DashboardDataTypes,

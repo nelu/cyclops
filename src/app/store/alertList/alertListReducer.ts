@@ -21,7 +21,7 @@ import { ReducerMap, handleActions } from 'redux-actions';
 import * as _ from 'lodash';
 
 // Local
-import { ReduxAction } from '../../types/redux';
+import { ReduxAction } from '../types';
 import * as actions from './alertListActions';
 import {
   UPDATE_ALERT_SUCCESS,

@@ -39,7 +39,7 @@ import { denormalizeContext } from '../../../services/contexts/utils';
 import {
   StateToProps,
   DispatchToProps,
-} from '../../../types/redux';
+} from '../../../store/types';
 import {
   searchAlertDataContext,
   selectContext,

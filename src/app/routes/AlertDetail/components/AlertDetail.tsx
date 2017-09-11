@@ -51,7 +51,7 @@ import { JSONFormatter } from '../../../components/JSONFormatter';
 import {
   StateToProps,
   DispatchToProps,
-} from '../../../types/redux';
+} from '../../../store/types';
 import { User } from '../../../services/users/types';
 import { AlertDataModal } from './AlertDataModal';
 import { ResultIPAdresses, Result } from '../../../types/result';

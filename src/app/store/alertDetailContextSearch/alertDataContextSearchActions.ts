@@ -24,7 +24,7 @@ import { createAction } from '../../utils/reduxUtils';
 import {
   ReduxAction,
   ThunkActionPromise,
-} from '../../types/redux';
+} from '../types';
 import { Result } from '../../types/result';
 import { ContextSearchParams } from '../../services/contexts/types';
 import { getCancelTokenSource } from '../../services/cyphon/utils/cancelTokens';

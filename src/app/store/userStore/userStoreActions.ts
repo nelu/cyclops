@@ -22,7 +22,7 @@ import {
   ReduxAction,
   ThunkActionPromise,
   ThunkActionVoid,
-} from '~/types/redux';
+} from '~/store/types';
 import { NormalizedUserList } from '~/services/users/types';
 import { fetchAllUsers as getAllUsers } from '~/services/users/api';
 import { normalizeUsers } from '~/services/users/utils/normalizeUsers';

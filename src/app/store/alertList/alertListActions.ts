@@ -25,7 +25,7 @@ import {
   ReduxAction,
   ThunkActionPromise,
   ThunkActionVoid,
-} from '~/types/redux';
+} from '~/store/types';
 import {
   AlertSearchParams,
   AlertListItem,

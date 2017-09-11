@@ -32,7 +32,7 @@ import { Close } from '../../../components/Close';
 import {
   StateToProps,
   DispatchToProps,
-} from '../../../types/redux';
+} from '../../../store/types';
 import {
   clearErrors,
   viewError,

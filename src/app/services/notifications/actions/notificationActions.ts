@@ -21,7 +21,7 @@ import { createAction } from '~/utils/reduxUtils';
 import {
   ReduxAction,
   ThunkActionPromise,
-} from '~/types/redux';
+} from '~/store/types';
 import * as notifications from '../utils/notifications';
 import { addError } from '~/store/errorModal/errorModalActions';
 

@@ -22,7 +22,7 @@ import { Component } from 'react';
 import { ComponentClass } from 'react-redux';
 
 // Local
-import { StoreState } from '../store/index';
+import { StoreState } from './index';
 import { Reducer } from 'redux-actions';
 
 /** Redux dispatch function configured with this redux store state. */
@@ -62,6 +62,3 @@ export type ThunkActionPromise = ThunkAction<
 
 /** Thunk action that returns undefined. */
 export type ThunkActionVoid = ThunkAction<void, StoreState, undefined>;
-
-/** Root component of a route specified in react-router. */
-export type ViewComponent = ComponentClass<any>;

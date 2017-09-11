@@ -25,7 +25,7 @@ import {
   ReduxAction,
   ThunkActionPromise,
   ReduxDispatch,
-} from '~/types/redux';
+} from '~/store/types';
 import { createAction } from '~/utils/reduxUtils';
 import {
   Alert,
