@@ -15,19 +15,10 @@
  * Contributor/Change Made By: ________________. [Only apply if changes
  * are made]
  */
+import { ErrorState } from './error/errorReducer';
+import { AlertDetailState } from './alertDetail/alertDetailReducer';
 
-// Vendor
-import * as chai from 'chai';
-
-// Local
-import { createAction } from './reduxUtils';
-
-describe('createAction', () => {
-  it('should create an action with a type and payload', () => {
-    const type = 'type';
-    const payload = 'payload';
-    const action = createAction(type, payload);
-
-    chai.expect(action).to.deep.equal({ type, payload, error: undefined });
-  });
-});
+export interface RootState {
+  alertDetail: AlertDetailState;
+  error: ErrorState;
+}

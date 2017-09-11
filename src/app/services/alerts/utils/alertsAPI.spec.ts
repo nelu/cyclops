@@ -39,7 +39,7 @@ describe('alertsAPI', () => {
     post.restore();
   });
 
-  describe('fetchAlert', () => {
+  describe('fetchAlertDetail', () => {
     it('should call get with the correct url', () => {
       const alertId = 1;
 

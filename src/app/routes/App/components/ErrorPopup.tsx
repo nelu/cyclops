@@ -70,7 +70,7 @@ type Props = ValueProps & FunctionProps;
  */
 export class ErrorPopup extends React.Component<Props, {}> {
   /**
-   * Clears all errors in the errors modal.
+   * Clears all errors in the error modal.
    */
   public clearErrors = (): void => {
     this.props.clearErrors();

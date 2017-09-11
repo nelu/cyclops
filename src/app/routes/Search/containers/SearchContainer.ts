@@ -40,6 +40,10 @@ import {
 } from '../components/Search';
 import * as resourceActions from '../actions/searchRouteResourcesActions';
 import * as searchActions from '../actions/searchQueryActions';
+import { fetchResults } from '../data/searchQuery/searchQueryActions';
+import { paginateResults } from '../data/searchResults/searchResultsActions';
+import { paginateAlertResults } from '../data/alertSearchResults/alertSearchResultsActions';
+import { StoreState } from '~/store';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -69,7 +73,7 @@ type Container = ComponentClass<ContainerProps>;
  * @param state Redux state.
  * @param props Container properties.
  */
-const values: Values = (state, props) => ({
+const values = (state: StoreState, props: ContainerProps) => ({
   containers: state.routes.Search.resources.containers,
   distilleries: state.routes.Search.resources.distilleries,
   fields: state.routes.Search.resources.fields,
@@ -80,7 +84,7 @@ const values: Values = (state, props) => ({
   total: state.routes.Search.search.total,
   alertResults: state.routes.Search.search.alerts,
   distilleryResults: state.routes.Search.search.distilleries,
-  location: props.location,
+  // location: props.location,
   router: props.router,
 });
 
@@ -90,9 +94,9 @@ const values: Values = (state, props) => ({
  */
 const functions: Functions = (dispatch) => ({
   fetchDistilleries: bind(resourceActions.fetchDistilleries, dispatch),
-  search: bind(searchActions.search, dispatch),
-  searchAlerts: bind(searchActions.searchAlerts, dispatch),
-  searchDistillery: bind(searchActions.searchDistillery, dispatch),
+  search: bind(fetchResults, dispatch),
+  searchAlerts: bind(paginateAlertResults, dispatch),
+  searchDistillery: bind(paginateResults, dispatch),
 });
 
 // --------------------------------------------------------------------------

@@ -30,6 +30,14 @@ import {
   SearchQueryState,
 } from './reducers/searchQueryReducer';
 import { SearchContainer } from '~/routes/Search/containers/SearchContainer';
+import {
+  SearchResultsState,
+  searchResults,
+} from './data/searchResults/searchResultsReducer';
+import {
+  AlertSearchResultsState,
+  alertSearchResults,
+} from './data/alertSearchResults/alertSearchResultsReducer';
 
 /**
  * Root component for the SearchQueryStore view.
@@ -40,9 +48,13 @@ export const SearchRoute: ComponentClass<any> = SearchContainer;
 export interface SearchRouteState {
   search: SearchQueryState;
   resources: SearchRouteResourcesState;
+  searchResults: SearchResultsState;
+  alertSearchResults: AlertSearchResultsState;
 }
 
 export const SearchRouteReducer = combineReducers<SearchRouteState>({
   search: SearchQueryReducer,
   resources: searchRouteResourcesReducer,
+  searchResults,
+  alertSearchResults,
 });

@@ -35,13 +35,13 @@ import { ContainerFlat } from '~/services/containers/types';
 import { Field } from '~/services/cyphon/types';
 
 /** SearchQueryState shape of the search route resources reducer. */
-export type SearchRouteResourcesState = {
+export interface SearchRouteResourcesState {
   normalized: NormalizedDistilleryList;
   distilleries: DistilleryFlat[];
   containers: ContainerFlat[];
   fields: Field[];
   results: Result[];
-};
+}
 
 /**
  * Initial state of the search route resources reducer.

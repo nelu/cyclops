@@ -23,7 +23,6 @@ import { ComponentClass } from 'react-redux';
 
 // Local
 import { StoreState } from '../store';
-import { Reducer } from 'redux-actions';
 
 /** Redux dispatch function configured with this redux store state. */
 export type ReduxDispatch = Dispatch<StoreState>;
@@ -44,13 +43,21 @@ export type DispatchToProps<R, P> = (
 ) => R;
 
 /** Flux standard action with specified paylaod type. */
-export interface ReduxAction<Payload> extends Action {
+export interface ReduxAction<Payload> {
   /** Type of action. */
   type: string;
   /** Data passed with the action. */
   payload: Payload;
-  /** If the action is an error type. */
-  error?: boolean;
+}
+
+export type Reducer<S> = (state: S, action: Action) => S;
+
+export interface ReducerMap<S> {
+  [type: string]: Reducer<S>;
+}
+
+export interface SimpleReduxAction {
+  type: string;
 }
 
 export type ReduxActionCreator<P> = (payload: P) => ReduxAction<P>;

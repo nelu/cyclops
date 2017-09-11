@@ -234,8 +234,15 @@ export class Search extends React.Component<Props, State> {
     const params = this.getQuery();
 
     if (params.query) {
-      this.setState({ page });
       this.props.searchAlerts(params.query, page);
+    }
+  };
+
+  public paginateDistilleries = (page: number, distillery: number) => {
+    const params = this.getQuery();
+
+    if (params.query) {
+      this.props.searchDistillery(distillery, params.query, page);
     }
   };
 
@@ -285,7 +292,12 @@ export class Search extends React.Component<Props, State> {
             paginateAlerts={this.paginateAlerts}
           />
         ),
-        [View.Distillery]: <SearchDistilleryResults />,
+        [View.Distillery]: (
+          <SearchDistilleryResults
+            results={[]}
+            changePage={this.paginateDistilleries}
+          />
+        ),
       } as any)[this.state.view];
     const alertResultCount = this.props.alertResults
       ? this.props.alertResults.count

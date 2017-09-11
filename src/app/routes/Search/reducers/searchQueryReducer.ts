@@ -18,10 +18,10 @@
 
 // Vendor
 import {
-  Reducer,
   ReducerMap,
   handleActions,
 } from 'redux-actions';
+import * as _ from 'lodash';
 
 // Local
 import * as actions from '../actions/searchQueryActions';
@@ -134,6 +134,34 @@ reducers[actions.ALERT_QUERY_SUCCESS] = (
   };
 
   return Object.assign({}, state, update);
+};
+
+/**
+ * Updates the SearchQueryReducer reducer based on a(n) DISTILLERY_QUERY_SUCCESS action.
+ * @param state Current SearchQueryReducer reducer state.
+ * @param action DISTILLERY_QUERY_SUCCESS action.
+ * @returns {State} Updated SearchQueryReducer reducer state.
+ */
+reducers[actions.DISTILLERY_QUERY_SUCCESS] = (
+  state: SearchQueryState,
+  action: actions.DistilleryQuerySuccessAction,
+): SearchQueryState => {
+  if (!state.distilleries) { return state; }
+  const results = state.distilleries.results.slice();
+  const index = _.findIndex(results, (result) => {
+    return result.distillery.id === action.payload.results.distillery.id;
+  });
+
+  if (index === -1) { return state; }
+
+  results[index] = action.payload.results;
+
+  const distilleries = { ...state.distilleries, results };
+
+  return {
+    ...state,
+    distilleries,
+  };
 };
 
 /**

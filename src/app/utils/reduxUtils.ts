@@ -18,9 +18,11 @@
 
 // Local
 import {
+  ReducerMap,
   ReduxAction,
   ReduxActionCreator,
 } from '~/types/redux';
+import { Reducer } from 'redux';
 
 /**
  * Creates a flux standard action with the given payload type.
@@ -32,11 +34,23 @@ import {
 export function createAction<Payload>(
   type: string,
   payload: Payload,
-  error?: boolean,
 ): ReduxAction<Payload> {
-  return { type, payload, error };
+  return { type, payload };
 }
 
-export function createActionCreator<P>(type: string): ReduxActionCreator<P> {
-  return (payload: P) => ({ type, payload });
+export function createReducer<S>(
+  initial: S,
+  reducers: ReducerMap<S>,
+): Reducer<S> {
+  return (state = initial, action) => {
+    const handler = reducers[action.type];
+
+    if (handler) { return handler(state, action); }
+
+    return state;
+  };
+}
+
+export function updateState<S>(state: S, update: Partial<S>) {
+  return Object.assign({}, state, update);
 }

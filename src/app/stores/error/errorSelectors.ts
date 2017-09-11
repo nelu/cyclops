@@ -17,17 +17,28 @@
  */
 
 // Vendor
-import * as chai from 'chai';
+import {
+  createSelector,
+  OutputSelector
+} from 'reselect';
+import { RootState } from '~/stores';
+import { StoredError } from '~/routes/App/types';
 
-// Local
-import { createAction } from './reduxUtils';
+/**
+ *
+ * @param {RootState} state
+ * @returns {StoredError[]}
+ */
+const getErrors = (state: RootState): StoredError[] => state.error.list;
+const getVisibleErrorIndex = (state: RootState): number => (
+  state.error.visibleErrorIndex
+);
 
-describe('createAction', () => {
-  it('should create an action with a type and payload', () => {
-    const type = 'type';
-    const payload = 'payload';
-    const action = createAction(type, payload);
-
-    chai.expect(action).to.deep.equal({ type, payload, error: undefined });
-  });
-});
+/**
+ * Returns the current visible stored error.
+ * @type {OutputSelector<any, any, (res: any) => any>}
+ */
+export const getVisibleError = createSelector(
+  [getErrors, getVisibleErrorIndex],
+  (errors, visibleErrorIndex) => errors[visibleErrorIndex],
+);

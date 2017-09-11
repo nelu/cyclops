@@ -33,7 +33,6 @@ import { useStrict } from 'mobx';
 import { getConfig } from './config';
 import { Routes } from './routes';
 // import { AlertViewTest } from '~/routes/AlertList/containers/AlertViewTest';
-import { RootStore } from '~/stores';
 import { store } from '~/store';
 
 // const stores = new RootStore();
