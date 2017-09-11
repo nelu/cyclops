@@ -22,7 +22,7 @@ import { Component } from 'react';
 import { ComponentClass } from 'react-redux';
 
 // Local
-import { StoreState } from '../store';
+import { StoreState } from '../store/index';
 import { Reducer } from 'redux-actions';
 
 /** Redux dispatch function configured with this redux store state. */

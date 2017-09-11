@@ -43,7 +43,7 @@ import {
 import {
   searchAlertDataContext,
   selectContext,
-} from '../actions/AlertDataContextSearchActions';
+} from '../../../store/alertDetailContextSearch/alertDataContextSearchActions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -273,12 +273,12 @@ const mapStateToProps: StateToProps<ValueProps, OwnProps> = (
   state,
   ownProps,
 ) => ({
-  selectedContext: state.routes.AlertDetail.AlertDataContextSearch.selectedContext,
-  page: state.routes.AlertDetail.AlertDataContextSearch.page,
-  pageSize: state.routes.AlertDetail.AlertDataContextSearch.pageSize,
-  loading: state.routes.AlertDetail.AlertDataContextSearch.loading,
-  results: state.routes.AlertDetail.AlertDataContextSearch.results,
-  resultCount: state.routes.AlertDetail.AlertDataContextSearch.resultCount,
+  selectedContext: state.alertDataContextSearch.selectedContext,
+  page: state.alertDataContextSearch.page,
+  pageSize: state.alertDataContextSearch.pageSize,
+  loading: state.alertDataContextSearch.loading,
+  results: state.alertDataContextSearch.results,
+  resultCount: state.alertDataContextSearch.resultCount,
   resultId: ownProps.resultId,
   contexts: ownProps.contexts,
 });

@@ -23,7 +23,7 @@ import * as chai from 'chai';
 // Local
 import * as actions from './notificationActions';
 import * as notifications from '../utils/notifications';
-import { addError } from '~/routes/App/actions/ErroPopupActions';
+import { addError } from '~/store/errorModal/errorModalActions';
 
 describe('notificationActions', () => {
   describe('notificationsEnabled()', () => {

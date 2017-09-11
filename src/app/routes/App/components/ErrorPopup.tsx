@@ -36,7 +36,7 @@ import {
 import {
   clearErrors,
   viewError,
-} from '../actions/ErroPopupActions';
+} from '../../../store/errorModal/errorModalActions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -129,33 +129,3 @@ export class ErrorPopup extends React.Component<Props, {}> {
     );
   }
 }
-
-// --------------------------------------------------------------------------
-// Container
-// --------------------------------------------------------------------------
-
-/**
- * Maps redux state variables to the ErrorPopup component.
- * @param state Redux state.
- */
-const values: StateToProps<ValueProps, undefined> = (state) => ({
-  currentError: state.routes.App.ErrorPopup.current,
-  errors: state.routes.App.ErrorPopup.errors,
-});
-
-/**
- * Maps redux dispatch functions to the ErrorPopup component.
- * @param dispatch Redux state dispatch function.
- */
-const functions: DispatchToProps<FunctionProps, undefined> = (dispatch) => ({
-  clearErrors: bindActionCreators(clearErrors, dispatch),
-  viewError: bindActionCreators(viewError, dispatch),
-});
-
-/**
- * Container wrapper for the ErrorPopup component.
- */
-export const ErrorPopupContainer = connect(
-  values,
-  functions,
-)(ErrorPopup);

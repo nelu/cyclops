@@ -18,35 +18,12 @@
 
 // Vendor
 import { ComponentClass } from 'react';
-import { combineReducers } from 'redux';
 
 // Local
 import { LayoutContainer } from './containers/LayoutContainer';
-import {
-  ErrorPopupState,
-  ErrorPopupReducer,
-} from './reducers/ErrorPopupReducer';
-import {
-  MonitorStatusState,
-  MonitorStatusReducer,
-} from './reducers/MonitorStatusReducer';
-
-/** Redux state shape for the App view. */
-export interface AppRouteState {
-  /** ErrorPopup container. */
-  ErrorPopup: ErrorPopupState;
-  /** MonitorStatus container. */
-  MonitorStatus: MonitorStatusState;
-}
 
 /**
  * Root component for the App view.
  * @type {ComponentClass<any>}
  */
-export const AppRoute: ComponentClass<any> = LayoutContainer;
-
-/** Redux reducer for the App view. */
-export const AppRouteReducer = combineReducers<AppRouteState>({
-  ErrorPopup: ErrorPopupReducer,
-  MonitorStatus: MonitorStatusReducer,
-});
+export const AppRouteComponent: ComponentClass<any> = LayoutContainer;

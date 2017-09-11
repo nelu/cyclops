@@ -38,7 +38,7 @@ import {
   FunctionProps,
   AlertDetail,
 } from '../components/AlertDetail';
-import * as actions from '../actions/AlertDetailActions';
+import * as actions from '../../../store/alertDetail/alertDetailActions';
 import { AlertDetailRouteParams } from '~/routes/AlertDetail/types';
 
 // --------------------------------------------------------------------------
@@ -74,18 +74,18 @@ type Container = ComponentClass<ContainerProps>;
  * @param props Container properties.
  */
 const values: Values = (state, props) => ({
-  actions: state.routes.AlertList.AlertView.actions,
-  alert: state.routes.AlertDetail.AlertDetail.alert,
-  error: state.routes.AlertDetail.AlertDetail.error,
-  ipAddresses: state.routes.AlertDetail.AlertDetail.ipAddresses,
-  loading: state.routes.AlertDetail.AlertDetail.loading,
+  actions: state.alertList.actions,
+  alert: state.alertDetail.alert,
+  error: state.alertDetail.error,
+  ipAddresses: state.alertDetail.ipAddresses,
+  loading: state.alertDetail.loading,
   location: props.location,
-  locations: state.routes.AlertDetail.AlertDetail.locations,
-  markers: state.routes.AlertDetail.AlertDetail.markers,
-  modalActive: state.routes.AlertDetail.AlertDetail.modalActive,
+  locations: state.alertDetail.locations,
+  markers: state.alertDetail.markers,
+  modalActive: state.alertDetail.modalActive,
   routeParams: props.routeParams,
   router: props.router,
-  users: state.routes.AlertList.AlertView.users,
+  users: state.alertList.users,
 });
 
 /**

@@ -21,16 +21,16 @@ import { combineReducers } from 'redux';
 
 // Local
 import {
-  CategoryStoreReducerState,
-  categoryStoreReducer,
-} from './reducers/categoryReducer';
+  CategoryStoreState,
+  categoryStore,
+} from '../../store/categoryStore/categoryStoreReducer';
 
 /** Redux state shape for the alerts service. */
 export interface AlertServiceReducerState {
-  categories: CategoryStoreReducerState;
+  categories: CategoryStoreState;
 }
 
 /** Redux reducer for the alerts service. */
 export const alertServiceReducer = combineReducers<AlertServiceReducerState>({
-  categories: categoryStoreReducer,
+  categories: categoryStore,
 });

@@ -33,7 +33,7 @@ import {
   FunctionProps,
   MonitorModal,
 } from '../components/MonitorModal';
-import * as actions from '../actions/MonitorStatusActions';
+import * as actions from '../../../store/monitorModal/monitorModalActions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -61,12 +61,12 @@ type Container = ComponentClass<ContainerProps>;
  * @param props Container properties.
  */
 const values: Values = (state, props) => ({
-  loading: state.routes.App.MonitorStatus.loading,
-  monitors: state.routes.App.MonitorStatus.monitors,
-  monitorsUp: state.routes.App.MonitorStatus.monitorsUp,
-  monitorsDown: state.routes.App.MonitorStatus.monitorsDown,
-  modalActive: state.routes.App.MonitorStatus.modalActive,
-  selectedMonitor: state.routes.App.MonitorStatus.selectedMonitor,
+  loading: state.monitorModal.loading,
+  monitors: state.monitorModal.monitors,
+  monitorsUp: state.monitorModal.monitorsUp,
+  monitorsDown: state.monitorModal.monitorsDown,
+  modalActive: state.monitorModal.modalActive,
+  selectedMonitor: state.monitorModal.selectedMonitor,
 });
 
 /**

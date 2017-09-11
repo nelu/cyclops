@@ -33,7 +33,7 @@ import {
   FunctionProps,
   AlertDetailOutcome,
 } from '../components/AlertDetailOutcome';
-import * as actions from '../actions/AlertDetailOutcomeActions';
+import * as actions from '../../../store/alertDetailOutcome/alertDetailOutcomeActions';
 import { AlertDetail } from '../../../services/alerts/types';
 
 // --------------------------------------------------------------------------
@@ -65,11 +65,11 @@ type Container = ComponentClass<ContainerProps>;
  * @param props Container properties.
  */
 const values: Values = (state, props) => ({
-  active: state.routes.AlertDetail.AlertDetailOutcome.active,
+  active: state.alertDetailOutcome.active,
   alert: props.alert,
-  notes: state.routes.AlertDetail.AlertDetailOutcome.notes,
-  outcome: state.routes.AlertDetail.AlertDetailOutcome.outcome,
-  showRemovePanel: state.routes.AlertDetail.AlertDetailOutcome.showRemovePanel,
+  notes: state.alertDetailOutcome.notes,
+  outcome: state.alertDetailOutcome.outcome,
+  showRemovePanel: state.alertDetailOutcome.showRemovePanel,
 });
 
 /**

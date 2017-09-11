@@ -23,7 +23,7 @@ import {
   ThunkActionPromise,
 } from '~/types/redux';
 import * as notifications from '../utils/notifications';
-import { addError } from '~/routes/App/actions/ErroPopupActions';
+import { addError } from '~/store/errorModal/errorModalActions';
 
 /**
  * Action type prefix for Notification actions.
