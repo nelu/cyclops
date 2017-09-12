@@ -1,6 +1,7 @@
 build/
 cache/
 coverage/
+dist/
 docs/
 api-docs/
 node_modules/
