@@ -33,6 +33,7 @@ import {
   Dispatch,
 } from '~/types/dispatches';
 import { NormalizedList, NormalizedEntity } from '~/types/normalizr';
+import { TagDetail } from '~/services/tags/types';
 
 /** Status choices for alerts. */
 export type AlertStatusChoices = 'NEW' | 'BUSY' | 'DONE';
@@ -98,6 +99,7 @@ export interface AlertDetail extends Alert {
   /** Previous actions performed on the alert. */
   dispatches: DispatchNested[];
   doc_id: string;
+  tags: TagDetail[];
 }
 
 /** Shape of the alert object returned from the alerts list view. */
