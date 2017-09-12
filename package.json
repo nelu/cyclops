@@ -4,18 +4,13 @@
   "description": "Cyphon frontend",
   "main": "server/index.js",
   "scripts": {
-    "webpack:dev": "cross-env NODE_ENV=development webpack --watch",
-    "webpack:prod": "cross-env NODE_ENV=production webpack --progress",
     "test:watch": "cross-env NODE_ENV=test karma start",
     "test": "cross-env NODE_ENV=test karma start --single-run true",
     "travis": "npm run test && cat ./coverage/lcov.info | coveralls",
-    "docs:api": "typedoc --out api-docs --target ES6 --tsconfig typedoc.json --readme DOCUMENTATION.md --includeDeclarations --ignoreCompilerErrors src/",
-    "docs:sphinx": "cd sphinx-docs && make html",
-    "livereload": "livereload \"build\"",
-    "clean:prod": "del dist",
-    "clean:dev": "del build",
-    "build": "npm run clean:prod && npm run webpack:prod",
-    "dev": "npm run clean:dev && concurrently -p name -c \"bgRed.bold,bgGreen.bold\" -n \"Webpack,Livereload\" \"npm run webpack:dev\" \"npm run livereload\""
+    "typedoc": "typedoc --out api-docs --target ES6 --tsconfig typedoc.json --readme DOCUMENTATION.md --includeDeclarations --ignoreCompilerErrors src/",
+    "sphinx": "cd sphinx-docs && make html",
+    "build": "rimraf dist && cross-env NODE_ENV=production webpack",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --progress"
   },
   "author": "Chase Brewer <chase.brewer@dunbarsecured.com>",
   "license": "ISC",
@@ -144,6 +139,7 @@
     "typedoc": "0.5.3",
     "typescript": "2.1.5",
     "url-loader": "0.5.7",
-    "webpack": "2.3.3"
+    "webpack": "2.3.3",
+    "webpack-dev-server": "2.7.1"
   }
 }
