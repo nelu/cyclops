@@ -40,7 +40,7 @@ interface Props {
 export class TagLabel extends React.Component<Props, {}> {
   public render() {
     return (
-      <div className="label label-primary">{this.props.tag.name}</div>
+      <div className="label label-default">{this.props.tag.name}</div>
     );
   }
 }
