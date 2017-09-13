@@ -34,7 +34,7 @@ export function createClusterLayers(sourceId: string): mapboxgl.Layer[] {
       type: 'circle',
       source: sourceId,
       paint: {
-        'circle-color': layer.color,
+        'circle-color': layer.color as any,
         'circle-radius': 18,
       },
       filter: index === 0

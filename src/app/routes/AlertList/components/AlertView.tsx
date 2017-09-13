@@ -150,7 +150,7 @@ export class AlertView extends React.Component<Props, {}> {
   public static getCurrentPage(location: Router.LocationDescriptor): number {
     const params = AlertView.getAlertViewParams(location);
 
-    return (params.offset / params.limit) + 1;
+    return ((params.offset as number) / (params.limit as number)) + 1;
   }
 
   /**
@@ -265,7 +265,7 @@ export class AlertView extends React.Component<Props, {}> {
    */
   public changePage = (page: number): void => {
     const params = AlertView.getAlertViewParams(this.props.location);
-    const offset = params.limit * (page - 1);
+    const offset = (params.limit as number) * (page - 1);
     this.updateQuery({ offset });
   };
 

@@ -65,7 +65,7 @@ export function getLocationsWithAddress(
   // If the location coordinates were blank, return an empty array
   if (!locationFields.length) { return Promise.resolve([]); }
 
-  const reverseLookupPromises: Array<Promise<string>> = [];
+  const reverseLookupPromises: Array<Promise<string | undefined>> = [];
 
   // Lookup the address for each location.
   locationFields.forEach((locationField: LocationField) => {

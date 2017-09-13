@@ -195,10 +195,10 @@ export class AlertDataContextSearch extends React.Component<Props, State> {
           />
         </div>
       ) : null;
-    const paginationElement = (resultCount > pageSize) && page ? (
+    const paginationElement = ((resultCount as number) > pageSize) && page ? (
         <div className="result-context-search__pagination">
           <Pagination
-            items={Math.ceil(resultCount / pageSize)}
+            items={Math.ceil((resultCount as number) / pageSize)}
             activePage={page}
             onSelect={handlePageChange}
             maxButtons={6}
