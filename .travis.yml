@@ -5,3 +5,26 @@ node_js:
 
 script:
   - npm run travis
+
+before_deploy: "npm run build"
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: $AWS_BUCKET
+    skip_cleanup: true
+    local_dir: dist
+    upload-dir: development
+    on:
+      branch: development
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY
+    bucket: $AWS_BUCKET
+    skip_cleanup: true
+    local_dir: dist
+    upload-dir: $TRAVIS_TAG
+    on:
+      branch: master
+      condition: "-z $TRAVIS_TAG"
