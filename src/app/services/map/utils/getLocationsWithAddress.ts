@@ -28,7 +28,7 @@ import { CONTAINER_FIELDS } from '../../containers/constants';
 import {
   LocationFieldAddress,
   LocationField,
-  Coordinates
+  Coordinates,
 } from '../types';
 import { reverseLookup } from './reverseLookup';
 
