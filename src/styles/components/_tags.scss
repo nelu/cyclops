@@ -16,28 +16,11 @@
  * are made]
  */
 
-export interface Article {
-  id: number;
-  title: string;
-  url: string;
-}
-
-export interface Topic {
-  id: number;
-  name: string;
-  url: string;
-}
-
-export interface Tag {
-  id: number;
-  name: string;
-}
-
-export interface TagWithTopic extends Tag {
-  topic: Topic;
-}
-
-export interface TagDetail extends Tag {
-  topic: Topic;
-  article: Article;
+.tag {
+  background-color: $color-lighter;
+  display: inline-block;
+  color: #fff;
+  border-radius: .25em;
+  padding: .2em .6em;
+  font-size: 80%;
 }

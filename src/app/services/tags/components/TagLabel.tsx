@@ -20,14 +20,14 @@
 import * as React from 'react';
 
 // Local
-import { Tag } from '~/services/tags/types';
+import { TagWithTopic } from '~/services/tags/types';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
 interface Props {
-  tag: Tag;
+  tag: TagWithTopic;
 }
 
 // --------------------------------------------------------------------------
@@ -40,7 +40,11 @@ interface Props {
 export class TagLabel extends React.Component<Props, {}> {
   public render() {
     return (
-      <div className="label label-default">{this.props.tag.name}</div>
+      <div className="tag">
+        <b>{this.props.tag.topic.name}:</b>
+        {' '}
+        {this.props.tag.name}
+      </div>
     );
   }
 }
