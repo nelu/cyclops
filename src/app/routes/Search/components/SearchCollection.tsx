@@ -18,15 +18,9 @@
 
 // Vendor
 import * as React from 'react';
-import {
-  DistilleryFlat,
-  DistilleryNested
-} from '~/services/distilleries/types';
-import { ContainerFlat } from '~/services/containers/types';
-import { Field } from '~/services/cyphon/types';
+import { DistilleryNested } from '~/services/distilleries/types';
 import { Collapsible } from '~/components/Collapsible';
 import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
-import { SearchContainer } from '~/routes/Search/components/SearchContainer';
 import { SearchField } from '~/routes/Search/components/SearchField';
 
 // --------------------------------------------------------------------------

@@ -18,10 +18,7 @@
 
 // Local
 import { getAll } from '../../cyphon/utils/cyphonAPI';
-import {
-  DistilleryFlat,
-  DistilleryNested
-} from '../types';
+import { DistilleryFlat, DistilleryNested } from '../types';
 
 /**
  * Returns a list of all distilleries objects that have alerts

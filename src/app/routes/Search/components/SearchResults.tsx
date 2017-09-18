@@ -36,20 +36,6 @@ interface Props {
   onPaginate(page: number): any;
 }
 
-const DATA = {
-  "id": 1,
-  "first_name": "Stanfield",
-  "last_name": "Lambot",
-  "email": "slambot0@google.co.uk",
-  "gender": "Male",
-  "ip_address": "144.174.228.171",
-  "WOOOO": "Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti. In eleifend quam a odio. In hac habitasse platea dictumst. Maecenas ut massa quis augue luctus tincidunt.",
-  "something": "Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat. Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante.",
-  "neh": "Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis. Integer aliquet, massa id lobortis convallis, tortor risus dapibus augue, vel accumsan tellus nisi eu orci. Mauris lacinia sapien quis libero. Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus.",
-  "wahoo": "Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus. In sagittis dui vel nisl. Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus. Suspendisse potenti. In eleifend quam a odio.",
-  "stuff": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus. Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus. Mauris enim leo, rhoncus sed, vestibulum sit amet, cursus id, turpis."
-};
-
 const RESULTS: DistillerySearchResults[] = [{
   count: 5,
   distillery: {
@@ -59,7 +45,7 @@ const RESULTS: DistillerySearchResults[] = [{
   },
   next: '',
   previous: '',
-  results: [DATA, DATA, DATA, DATA, DATA],
+  results: [{}, {}, {}, {}, {}],
 }, {
   count: 2,
   distillery: {
@@ -69,7 +55,7 @@ const RESULTS: DistillerySearchResults[] = [{
   },
   next: '',
   previous: '',
-  results: [DATA, DATA],
+  results: [{}, {}],
 }];
 
 // --------------------------------------------------------------------------

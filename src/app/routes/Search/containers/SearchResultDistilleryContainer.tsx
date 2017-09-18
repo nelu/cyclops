@@ -82,7 +82,7 @@ const values: StateToProps<ValueProps, ContainerProps> = (state, props) => ({
 });
 
 const functions: DispatchToProps<FunctionProps, ContainerProps> = (dispatch) => ({
-  selectResultDistillery: bind(selectDistillery, dispatch)
+  selectResultDistillery: bind(selectDistillery, dispatch),
 });
 
 export const SearchResultDistilleryContainer: React.ComponentClass<ContainerProps> = (

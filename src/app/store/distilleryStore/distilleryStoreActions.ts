@@ -18,13 +18,9 @@
 
 // Local
 import { ReduxAction, ThunkActionPromise } from '../types';
-import {
-  DistilleryNested,
-  NormalizedDistilleryList
-} from '~/services/distilleries/types';
+import { DistilleryNested } from '~/services/distilleries/types';
 import { fetchAllDistilleries } from '~/services/distilleries/utils/distilleryAPI';
 import { addError } from '~/store/errorModal';
-import { normalizeDistilleries } from '~/services/distilleries/utils/distilleryNormalizr';
 
 const ACTION_PREFIX = 'DISTILLERY_STORE';
 
