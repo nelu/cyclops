@@ -38,7 +38,7 @@ import { AlertData } from './AlertData';
 import { Close } from '../../../components/Close';
 import { AlertDetail } from '../../../services/alerts/types';
 import { AlertDataContextSearchContainer } from './AlertDataContextSearch';
-import { normalizeContexts } from '../../../services/contexts/utils';
+import { normalizeContexts } from '../../../services/contexts/utils/contextNormalizr';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

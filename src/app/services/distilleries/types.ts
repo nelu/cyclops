@@ -17,8 +17,11 @@
  */
 
 // Local
-import { Container } from '../containers/types';
-import { ContextNested } from '../../services/contexts/types';
+import { ContainerNested, ContainerFlat } from '../containers/types';
+import { ContextNested } from '~/services/contexts/types';
+import { NormalizedList } from '~/types/normalizr';
+import { Dictionary } from '~/types/object';
+import { Field } from '~/services/cyphon/types';
 
 /** Distillery object returned from the Cyphon API. */
 export interface Distillery {
@@ -26,8 +29,9 @@ export interface Distillery {
   id: number;
   /** Name of the distillery. */
   name: string;
+  url: string;
   /** Container associated with the distillery. */
-  container: Container | number;
+  container: ContainerNested | number;
   /** Contexts associated with the distillery. */
   contexts: ContextNested[] | number[];
 }
@@ -35,7 +39,7 @@ export interface Distillery {
 /** Distillery object with associated objects nested on the object. */
 export interface DistilleryNested extends Distillery {
   /** Contaienr object associated with the distillery. */
-  container: Container;
+  container: ContainerNested;
   /** Context objects associated with the distillery. */
   contexts: ContextNested[];
 }
@@ -47,3 +51,18 @@ export interface DistilleryFlat extends Distillery {
   /** ID's of the context objects assocated with the distillery. */
   contexts: number[];
 }
+
+export interface DistilleryMinimal {
+  id: number;
+  name: string;
+  url: string;
+}
+
+export interface NormalizedDistilleryEntities {
+  distilleries: Dictionary<DistilleryFlat>;
+  containers: Dictionary<ContainerFlat>;
+  fields: Dictionary<Field>;
+  contexts: Dictionary<ContainerNested>;
+}
+
+export type NormalizedDistilleryList = NormalizedList<number, NormalizedDistilleryEntities>;

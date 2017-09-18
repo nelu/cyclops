@@ -17,28 +17,35 @@
  */
 
 // Vendor
-import { CancelToken } from 'axios';
+import * as React from 'react';
+import * as classnames from 'classnames';
 
 // Local
-import * as cyphonAPI from '../cyphon/utils/cyphonAPI';
-import { Context, ContextSearchParams, ContextFilter } from './types';
-import { Result } from '../../types/result';
-import { APIList } from '../cyphon/types';
+import { SearchQueryView } from '~/store/searchQuery';
+
+interface Props {
+  view: SearchQueryView;
+  activeView: SearchQueryView;
+  onClick(view: SearchQueryView): any;
+}
 
 /**
- * Searches a context for results that match the given result ID.
- * @param contextId ID of the context to search.
- * @param params Parameters to search with.
- * @param cancelToken Cancel token to cancel the request with.
- * @returns {Promise<APIList<Result>>}
+ * Button that changes the results view of the search page.
  */
-export function searchContext(
-  contextId: number,
-  params: ContextSearchParams,
-  cancelToken?: CancelToken,
-): Promise<APIList<Result>> {
-  return cyphonAPI.get(
-    `/contexts/${contextId}/related-data-by-id/`,
-    { params, cancelToken },
-  );
+export class SearchViewChangeButton extends React.Component<Props, {}> {
+  public onClick = () => {
+    this.props.onClick(this.props.view);
+  };
+
+  public render() {
+    const classes = classnames('btn-basic', 'pill', {
+      'pill--active': this.props.view === this.props.activeView,
+    });
+
+    return (
+      <button onClick={this.onClick} className={classes}>
+        {this.props.children}
+      </button>
+    );
+  }
 }

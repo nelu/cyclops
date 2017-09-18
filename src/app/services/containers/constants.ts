@@ -16,6 +16,8 @@
  * are made]
  */
 
+import { schema } from 'normalizr';
+
 /**
  * All the different container field types.
  * @type {Object<string, string>}
@@ -24,3 +26,19 @@ export const CONTAINER_FIELDS = {
   POINT_FIELD: 'PointField',
   IP_ADDRESS: 'GenericIPAddressField',
 };
+
+/**
+ * Normalizr schema for a field object.
+ * @type {schema.Entity}
+ */
+export const fieldSchema = new schema.Entity('fields', {}, {
+  idAttribute: 'field_name',
+});
+
+/**
+ * Normalizr schema for a container object.
+ * @type {schema.Entity}
+ */
+export const containerSchema = new schema.Entity('containers', {
+  fields: [fieldSchema],
+});

@@ -18,7 +18,10 @@
 
 // Local
 import { getAll } from '../../cyphon/utils/cyphonAPI';
-import { DistilleryFlat } from '../types';
+import {
+  DistilleryFlat,
+  DistilleryNested
+} from '../types';
 
 /**
  * Returns a list of all distilleries objects that have alerts
@@ -27,4 +30,8 @@ import { DistilleryFlat } from '../types';
  */
 export function fetchAllAlertDistilleries(): Promise<DistilleryFlat[]> {
   return getAll<DistilleryFlat>('/alerts/distilleries/');
+}
+
+export function fetchAllDistilleries(): Promise<DistilleryNested[]> {
+  return getAll<DistilleryNested>('/distilleries/');
 }

@@ -67,7 +67,7 @@ import {
   closeErrorMessage,
 } from '../../../store/alertDetail/alertDetailActions';
 import { Action } from '../../../services/actions/types';
-import { Container } from '../../../services/containers/types';
+import { ContainerNested } from '../../../services/containers/types';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -120,7 +120,7 @@ export interface FunctionProps {
    * @param data Data to analyze.
    * @param container Related container to the data.
    */
-  openDataModal(data: Result, container: Container): any;
+  openDataModal(data: Result, container: ContainerNested): any;
   /**
    * Performs an action on the alert.
    * @param alertId ID of the alert to perform the action on.

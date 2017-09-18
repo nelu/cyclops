@@ -26,11 +26,11 @@ import {
 import {
   ContextNested,
   NormalizedContextList,
-} from './types';
+} from '../types';
 import {
   CONTEXT_LIST_SCHEMA,
   CONTEXT_SCHEMA,
-} from './schemas';
+} from '../constants';
 
 /**
  * Normalize a list of nested context objects.
