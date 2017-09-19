@@ -25,6 +25,6 @@ import { User } from '../types';
  * @returns {string}
  */
 export function getUserFullName(user: User): string {
-  if (!user.first_name !! !user.last_name) { return user.email; }
+  if (!user.first_name || !user.last_name) { return user.email; }
   return `${user.first_name} ${user.last_name}`;
 }
