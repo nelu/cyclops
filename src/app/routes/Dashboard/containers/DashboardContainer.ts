@@ -27,13 +27,13 @@ import {
 import {
   DispatchToProps,
   StateToProps,
-} from '../../../types/redux';
+} from '../../../store/types';
 import {
   ValueProps,
   FunctionProps,
   Dashboard,
 } from '../components/Dashboard';
-import * as actions from '../actions/DashboardActions';
+import * as actions from '../../../store/dashboard/dashboardActions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -61,19 +61,19 @@ type Container = ComponentClass<ContainerProps>;
  * @param props Container properties.
  */
 const values: Values = (state, props) => ({
-  days: state.routes.Dashboard.Dashboard.days,
-  totalAlerts: state.routes.Dashboard.Dashboard.total,
-  levelDistribution: state.routes.Dashboard.Dashboard.levelDistributionData,
-  levelDistributionLoading: state.routes.Dashboard.Dashboard.levelDistributionLoading,
-  statusDistribution: state.routes.Dashboard.Dashboard.statusDistributionData,
-  statusDistributionLoading: state.routes.Dashboard.Dashboard.statusDistributionLoading,
-  collectionDistribution: state.routes.Dashboard.Dashboard.collectionDistributionData,
-  collectionDistributionLoading: state.routes.Dashboard.Dashboard.collectionDistributionLoading,
-  levelTimeseries: state.routes.Dashboard.Dashboard.levelTimeseriesData,
-  levelTimeseriesLoading: state.routes.Dashboard.Dashboard.levelTimeseriesLoading,
-  locations: state.routes.Dashboard.Dashboard.locations,
-  locationFeatureCount: state.routes.Dashboard.Dashboard.locationFeatureCount,
-  locationsLoading: state.routes.Dashboard.Dashboard.locationsLoading,
+  days: state.dashboard.days,
+  totalAlerts: state.dashboard.total,
+  levelDistribution: state.dashboard.levelDistributionData,
+  levelDistributionLoading: state.dashboard.levelDistributionLoading,
+  statusDistribution: state.dashboard.statusDistributionData,
+  statusDistributionLoading: state.dashboard.statusDistributionLoading,
+  collectionDistribution: state.dashboard.collectionDistributionData,
+  collectionDistributionLoading: state.dashboard.collectionDistributionLoading,
+  levelTimeseries: state.dashboard.levelTimeseriesData,
+  levelTimeseriesLoading: state.dashboard.levelTimeseriesLoading,
+  locations: state.dashboard.locations,
+  locationFeatureCount: state.dashboard.locationFeatureCount,
+  locationsLoading: state.dashboard.locationsLoading,
 });
 
 /**

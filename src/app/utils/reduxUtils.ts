@@ -17,7 +17,7 @@
  */
 
 // Local
-import { ReduxAction } from '~/types/redux';
+import { ReduxAction } from '~/store/types';
 
 /**
  * Creates a flux standard action with the given payload type.

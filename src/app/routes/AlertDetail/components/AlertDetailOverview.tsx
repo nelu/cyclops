@@ -36,6 +36,7 @@ import { AlertStatusIcon } from '~/services/alerts/components/AlertStatusIcon';
 import { STATUS_OPTIONS } from '../../AlertList/constants';
 import { AlertDetailUnassignButton } from './AlertDetailUnassignButton';
 import { AlertDetailSelfAssignButton } from './AlertDetailSelfAssignButton';
+import { TagLabel } from '~/services/tags/components/TagLabel';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -106,6 +107,9 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
     const distilleryName = this.props.alert.distillery
       ? shortenDistilleryName(this.props.alert.distillery.name)
       : 'None';
+    const tags = this.props.alert.tags.length
+      ? this.props.alert.tags.map((tag) => <TagLabel tag={tag}/>)
+      : 'None';
 
     return (
       <div className="spacing-section">
@@ -158,6 +162,9 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
 
           <dt>Incidents:</dt>
           <dd><span className="badge">{this.props.alert.incidents}</span></dd>
+
+          <dt>Tags:</dt>
+          <dd>{tags}</dd>
         </dl>
       </div>
     );

@@ -27,13 +27,13 @@ import {
 import {
   DispatchToProps,
   StateToProps,
-} from '~/types/redux';
+} from '~/store/types';
 import {
   ValueProps,
   FunctionProps,
   MonitorStatus,
 } from '../components/MonitorStatus';
-import * as actions from '../actions/MonitorStatusActions';
+import * as actions from '../../../store/monitorModal/monitorModalActions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -61,13 +61,13 @@ type Container = ComponentClass<ContainerProps>;
  * @param props Container properties.
  */
 const values: Values = (state, props) => ({
-  loading: state.routes.App.MonitorStatus.loading,
-  modalActive: state.routes.App.MonitorStatus.modalActive,
-  monitors: state.routes.App.MonitorStatus.monitors,
-  monitorsDown: state.routes.App.MonitorStatus.monitorsDown,
-  monitorsUp: state.routes.App.MonitorStatus.monitorsUp,
-  pollTimeoutID: state.routes.App.MonitorStatus.pollTimeoutID,
-  selectedMonitor: state.routes.App.MonitorStatus.selectedMonitor,
+  loading: state.monitorModal.loading,
+  modalActive: state.monitorModal.modalActive,
+  monitors: state.monitorModal.monitors,
+  monitorsDown: state.monitorModal.monitorsDown,
+  monitorsUp: state.monitorModal.monitorsUp,
+  pollTimeoutID: state.monitorModal.pollTimeoutID,
+  selectedMonitor: state.monitorModal.selectedMonitor,
 });
 
 /**

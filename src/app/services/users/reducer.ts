@@ -20,7 +20,7 @@
 import { combineReducers } from 'redux';
 
 // Local
-import { UserStoreState, UserStoreReducer } from './reducers/UserStoreReducer';
+import { UserStoreState, userStore } from '../../store/userStore/userStoreReducer';
 
 /** Redux state shape for the users service. */
 export interface UsersState {
@@ -29,5 +29,5 @@ export interface UsersState {
 
 /** Redux reducer for the users service. */
 export const UsersReducer = combineReducers<UsersState>({
-  store: UserStoreReducer,
+  store: userStore,
 });

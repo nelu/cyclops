@@ -88,7 +88,7 @@ export class AlertDetailUserSelect extends React.Component<Props, {}> {
       ? this.props.currentUser.id
       : 0;
     const userOptions = this.props.users.map((user) => ({
-      name: `${user.first_name} ${user.last_name}`,
+      name: getUserFullName(user),
       value: user.id,
     }));
     const options = [AlertDetailUserSelect.UNASSIGN_OPTION].concat(userOptions);

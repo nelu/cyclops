@@ -109,7 +109,7 @@ export function getServiceWorkerRegistration(): Promise<any> {
  * @returns {boolean}
  */
 export function notificationsAreDenied(): boolean {
-  return Notification.permission === 'denied';
+  return (Notification as any).permission === 'denied';
 }
 
 /**

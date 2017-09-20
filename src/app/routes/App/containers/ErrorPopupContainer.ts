@@ -27,13 +27,13 @@ import {
 import {
   DispatchToProps,
   StateToProps,
-} from '~/types/redux';
+} from '~/store/types';
 import {
   ValueProps,
   FunctionProps,
   ErrorPopup,
 } from '../components/ErrorPopup';
-import * as actions from '../actions/ErroPopupActions';
+import * as actions from '../../../store/errorModal/errorModalActions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -61,8 +61,8 @@ type Container = ComponentClass<ContainerProps>;
  * @param props Container properties.
  */
 const values: Values = (state, props) => ({
-  currentError: state.routes.App.ErrorPopup.current,
-  errors: state.routes.App.ErrorPopup.errors,
+  currentError: state.errorModal.current,
+  errors: state.errorModal.errors,
 });
 
 /**

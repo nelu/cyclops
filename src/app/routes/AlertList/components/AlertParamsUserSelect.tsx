@@ -21,6 +21,7 @@ import * as React from 'react';
 
 // Local
 import { User } from '../../../services/users/types';
+import { getUserFullName } from '~/services/users/utils/getUserFullName';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -67,7 +68,7 @@ export class AlertParamsUserSelect extends React.Component<Props, {}> {
     const { handleSelect } = this;
     const userOptions = users.map((user) => (
       <option value={user.id} key={user.id}>
-        {user.first_name} {user.last_name}
+        {getUserFullName(user)}
       </option>
     ));
 

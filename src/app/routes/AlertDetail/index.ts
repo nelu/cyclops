@@ -18,39 +18,12 @@
 
 // Vendor
 import { ComponentClass } from 'react';
-import { combineReducers } from 'redux';
 
 // Local
 import { AlertDetailContainer } from './containers/AlertDetailContainer';
-import {
-  AlertDataContextSearchState,
-  AlertDataContextSearchReducer,
-} from './reducers/AlertDataContextSearchReducer';
-import {
-  AlertDetailState,
-  AlertDetailReducer,
-} from './reducers/AlertDetailReducer';
-import {
-  AlertDetailOutcomeState,
-  AlertDetailOutcomeReducer,
-} from './reducers/AlertDetailOutcomeReducer';
-
-/** Redux state shape for the AlertDetail view. */
-export interface AlertDetailRouteState {
-  AlertDataContextSearch: AlertDataContextSearchState;
-  AlertDetail: AlertDetailState;
-  AlertDetailOutcome: AlertDetailOutcomeState;
-}
 
 /**
  * Root component for the AlertDetail view.
  * @type {Container}
  */
-export const AlertDetailRoute: ComponentClass<any> = AlertDetailContainer;
-
-/** Redux reducer for the AlertDetail view. */
-export const AlertDetailRouteReducer = combineReducers<AlertDetailRouteState>({
-  AlertDataContextSearch: AlertDataContextSearchReducer,
-  AlertDetail: AlertDetailReducer,
-  AlertDetailOutcome: AlertDetailOutcomeReducer,
-});
+export const AlertDetailRouteComponent: ComponentClass<any> = AlertDetailContainer;

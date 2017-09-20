@@ -21,9 +21,9 @@ import { createAction } from '~/utils/reduxUtils';
 import {
   ReduxAction,
   ThunkActionPromise,
-} from '~/types/redux';
+} from '~/store/types';
 import * as notifications from '../utils/notifications';
-import { addError } from '~/routes/App/actions/ErroPopupActions';
+import { addError } from '~/store/errorModal/errorModalActions';
 
 /**
  * Action type prefix for Notification actions.

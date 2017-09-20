@@ -39,11 +39,11 @@ import { denormalizeContext } from '../../../services/contexts/utils';
 import {
   StateToProps,
   DispatchToProps,
-} from '../../../types/redux';
+} from '../../../store/types';
 import {
   searchAlertDataContext,
   selectContext,
-} from '../actions/AlertDataContextSearchActions';
+} from '../../../store/alertDetailContextSearch/alertDataContextSearchActions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -195,10 +195,10 @@ export class AlertDataContextSearch extends React.Component<Props, State> {
           />
         </div>
       ) : null;
-    const paginationElement = (resultCount > pageSize) && page ? (
+    const paginationElement = ((resultCount as number) > pageSize) && page ? (
         <div className="result-context-search__pagination">
           <Pagination
-            items={Math.ceil(resultCount / pageSize)}
+            items={Math.ceil((resultCount as number) / pageSize)}
             activePage={page}
             onSelect={handlePageChange}
             maxButtons={6}
@@ -273,12 +273,12 @@ const mapStateToProps: StateToProps<ValueProps, OwnProps> = (
   state,
   ownProps,
 ) => ({
-  selectedContext: state.routes.AlertDetail.AlertDataContextSearch.selectedContext,
-  page: state.routes.AlertDetail.AlertDataContextSearch.page,
-  pageSize: state.routes.AlertDetail.AlertDataContextSearch.pageSize,
-  loading: state.routes.AlertDetail.AlertDataContextSearch.loading,
-  results: state.routes.AlertDetail.AlertDataContextSearch.results,
-  resultCount: state.routes.AlertDetail.AlertDataContextSearch.resultCount,
+  selectedContext: state.alertDataContextSearch.selectedContext,
+  page: state.alertDataContextSearch.page,
+  pageSize: state.alertDataContextSearch.pageSize,
+  loading: state.alertDataContextSearch.loading,
+  results: state.alertDataContextSearch.results,
+  resultCount: state.alertDataContextSearch.resultCount,
   resultId: ownProps.resultId,
   contexts: ownProps.contexts,
 });

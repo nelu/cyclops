@@ -28,7 +28,7 @@ import { LocationDescriptor } from 'react-router';
 import {
   DispatchToProps,
   StateToProps,
-} from '../../../types/redux';
+} from '../../../store/types';
 import {
   ValueProps,
   FunctionProps,

@@ -51,7 +51,7 @@ import { JSONFormatter } from '../../../components/JSONFormatter';
 import {
   StateToProps,
   DispatchToProps,
-} from '../../../types/redux';
+} from '../../../store/types';
 import { User } from '../../../services/users/types';
 import { AlertDataModal } from './AlertDataModal';
 import { ResultIPAdresses, Result } from '../../../types/result';
@@ -65,7 +65,7 @@ import {
   closeDataModal,
   addErrorMessage,
   closeErrorMessage,
-} from '../actions/AlertDetailActions';
+} from '../../../store/alertDetail/alertDetailActions';
 import { Action } from '../../../services/actions/types';
 import { Container } from '../../../services/containers/types';
 
@@ -384,57 +384,3 @@ export class AlertDetail extends React.Component<Props, {}> {
     );
   }
 }
-
-// --------------------------------------------------------------------------
-// Container
-// --------------------------------------------------------------------------
-
-/**
- * Maps the redux state to AlertDetail component properties.
- * @param state Redux state.
- * @param ownProps Properties passed AlertDetailContainer.
- */
-const mapStateToProps: StateToProps<ValueProps, OwnProps> = (
-  state,
-  ownProps,
-) => ({
-  actions: state.routes.AlertList.AlertView.actions,
-  alert: state.routes.AlertDetail.AlertDetail.alert,
-  error: state.routes.AlertDetail.AlertDetail.error,
-  ipAddresses: state.routes.AlertDetail.AlertDetail.ipAddresses,
-  loading: state.routes.AlertDetail.AlertDetail.loading,
-  location: ownProps.location,
-  locations: state.routes.AlertDetail.AlertDetail.locations,
-  markers: state.routes.AlertDetail.AlertDetail.markers,
-  modalActive: state.routes.AlertDetail.AlertDetail.modalActive,
-  routeParams: ownProps.routeParams,
-  router: ownProps.router,
-  users: state.routes.AlertList.AlertView.users,
-});
-
-/**
- * Maps redux dispatch functions to AlertDetail component properties.
- * @param dispatch Dispatch function from the redux store.
- */
-const mapDispatchToProps: DispatchToProps<FunctionProps, undefined> = (
-  dispatch,
-) => ({
-  addComment: bindActionCreators(addAlertDetailComment, dispatch),
-  addErrorMessage: bindActionCreators(addErrorMessage, dispatch),
-  closeAlert: bindActionCreators(closeAlert, dispatch),
-  closeDataModal: bindActionCreators(closeDataModal, dispatch),
-  openDataModal: bindActionCreators(openDataModal, dispatch),
-  openResultModal: bindActionCreators(openDataModal, dispatch),
-  performAction: bindActionCreators(performAlertDetailAction, dispatch),
-  updateAlert: bindActionCreators(updateAlertDetail, dispatch),
-  viewAlert: bindActionCreators(fetchAlertDetail, dispatch),
-  closeErrorMessage: bindActionCreators(closeErrorMessage, dispatch),
-});
-
-/**
- * Container component created from the Alert Detail component.
- * @type {Container}
- */
-export const AlertDetailContainer = withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AlertDetail),
-);

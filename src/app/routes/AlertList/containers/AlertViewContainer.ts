@@ -32,14 +32,14 @@ import {
 import {
   DispatchToProps,
   StateToProps,
-} from '~/types/redux';
+} from '~/store/types';
 import {
   ValueProps,
   FunctionProps,
   AlertView,
 } from '../components/AlertView';
-import * as actions from '../actions/AlertViewActions';
-import { fetchAllCategories } from '~/services/alerts/actions/categoryActions';
+import * as actions from '../../../store/alertList/alertListActions';
+import { fetchAllCategories } from '~/store/categoryStore/categoryStoreActions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -70,18 +70,18 @@ type Container = ComponentClass<ContainerProps>;
  * @param props Container properties.
  */
 const values: Values = (state, props) => ({
-  alerts: state.routes.AlertList.AlertView.alerts,
-  categories: state.services.alerts.categories,
-  count: state.routes.AlertList.AlertView.count,
-  distilleries: state.routes.AlertList.AlertView.distilleries,
-  interval: state.routes.AlertList.AlertView.interval,
-  loading: state.routes.AlertList.AlertView.loading,
+  alerts: state.alertList.alerts,
+  categories: state.categoryStore,
+  count: state.alertList.count,
+  distilleries: state.alertList.distilleries,
+  interval: state.alertList.interval,
+  loading: state.alertList.loading,
   location: props.location,
-  polling: state.routes.AlertList.AlertView.polling,
-  pollingEnabled: state.routes.AlertList.AlertView.pollingEnabled,
+  polling: state.alertList.polling,
+  pollingEnabled: state.alertList.pollingEnabled,
   router: props.router,
-  selectedAlert: state.routes.AlertDetail.AlertDetail.alertId,
-  users: state.routes.AlertList.AlertView.users,
+  selectedAlert: state.alertDetail.alertId,
+  users: state.alertList.users,
 });
 
 /**

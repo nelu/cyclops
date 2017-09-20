@@ -16,35 +16,7 @@
  * are made]
  */
 
-// Vendor
-import { combineReducers } from 'redux';
-
-// Local
-import * as AlertDetail from './AlertDetail';
-import * as AlertList from './AlertList';
-import * as Dashboard from './Dashboard';
-import * as App from './App';
-
-/** Redux state shape for the routes. */
-export interface RoutesState {
-  AlertDetail: AlertDetail.AlertDetailRouteState;
-  AlertList: AlertList.AlertListRouteState;
-  App: App.AppRouteState;
-  Dashboard: Dashboard.DashboardRouteState;
-}
-
-/** Redux reducer for the routes. */
-export const RoutesReducer = combineReducers<RoutesState>({
-  AlertDetail: AlertDetail.AlertDetailRouteReducer,
-  AlertList: AlertList.AlertListRouteReducer,
-  App: App.AppRouteReducer,
-  Dashboard: Dashboard.DashboardRouteReducer,
-});
-
-/** All the root route components for the react-router routes. */
-export const Routes = {
-  AlertDetail: AlertDetail.AlertDetailRoute,
-  AlertList: AlertList.AlertListRoute,
-  App: App.AppRoute,
-  Dashboard: Dashboard.DashboardRoute,
-};
+export { AlertListRouteComponent } from './AlertList';
+export { AlertDetailRouteComponent } from './AlertDetail'
+export { AppRouteComponent } from './App';
+export { DashboardRouteComponent } from './Dashboard';

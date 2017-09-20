@@ -18,23 +18,11 @@
 
 // Local
 import { ComponentClass } from 'react';
-import { combineReducers } from 'redux';
 
 import { DashboardContainer } from './containers/DashboardContainer';
-import { DashboardState, DashboardReducer } from './reducers/DashboardReducer';
 
 /**
  * Root component for the  view.
  * @type {ComponentClass<any>}
  */
-export const DashboardRoute: ComponentClass<any> = DashboardContainer;
-
-/** Redux state shape for the Dashboard view. */
-export interface DashboardRouteState {
-  Dashboard: DashboardState;
-}
-
-/** Redux reducer for the Dashboard view. */
-export const DashboardRouteReducer = combineReducers<DashboardRouteState>({
-  Dashboard: DashboardReducer,
-});
+export const DashboardRouteComponent: ComponentClass<any> = DashboardContainer;

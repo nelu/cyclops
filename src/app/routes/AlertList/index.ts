@@ -18,24 +18,9 @@
 
 // Vendor
 import { ComponentClass } from 'react';
-import { combineReducers } from 'redux';
 
 // Local
 import { AlertViewContainer } from './containers/AlertViewContainer';
-import {
-  AlertViewState,
-  AlertViewReducer,
-} from './reducers/AlertViewReducer';
-
-/** State shape of the AlertList view. */
-export interface AlertListRouteState {
-  AlertView: AlertViewState;
-}
 
 /** Root component for the AlertList view. */
-export const AlertListRoute: ComponentClass<any> = AlertViewContainer;
-
-/** Redux reducer for the AlertList view. */
-export const AlertListRouteReducer = combineReducers<AlertListRouteState>({
-  AlertView: AlertViewReducer,
-});
+export const AlertListRouteComponent: ComponentClass<any> = AlertViewContainer;
