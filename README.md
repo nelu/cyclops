@@ -17,3 +17,7 @@ See [Cyclops' documentation](http://cyphon-ui.readthedocs.io/) for more info.
 ## License
 
 Cyclops is subject to a non-commercial use license agreement. Please see the [LICENSE](https://github.com/dunbarcyber/cyclops/blob/master/LICENSE.txt) for details.
+
+## Distributed Files
+
+Pre-compiled distribution files can be found at [https://s3.amazonaws.com/cyclops-public/](https://s3.amazonaws.com/cyclops-public/){version number}/.
