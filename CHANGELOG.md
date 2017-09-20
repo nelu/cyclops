@@ -1,5 +1,60 @@
 # Change log
 
+<a name="0.4.4"></a>
+## [0.4.4](https://github.com/dunbarcyber/cyclops/compare/0.4.3...0.4.4) (2017-09-20)
+
+### Added
+
+- **src.app.services.tags.types**: Tag information data type. ([31409e2](https://github.com/dunbarcyber/cyclops/commit/31409e281019d588b3cff86b2409bac5d3fa12be))
+- **src.app.services.tags.components.TagLabel**: Component that displays tag information. ([138afe5](https://github.com/dunbarcyber/cyclops/commit/138afe55540d48b6108dd81b736fa1424d396976))
+- **.travis.yml**: Added automated compilation and distribution of files to S3 bucket. ([e3ab211](https://github.com/dunbarcyber/cyclops/commit/e3ab2117dcbb551379b339843cc7812702d43bca))
+
+### Fixed
+
+- Errors in tests that complained about incorrect type definitions. ([aee3faf](https://github.com/dunbarcyber/cyclops/commit/aee3faf81f1db1e3946b7234b02155ba0ac9ac7c))
+- Error popup that occurred when a geolocation address request returned empty. ([5062a3d](https://github.com/dunbarcyber/cyclops/commit/5062a3d62825f3a4c3fbeefe8cf9ff32c6360650))
+- Empty user name display when user didn't set a name for themselves. Now defaults to the user email display. ([f56956f](https://github.com/dunbarcyber/cyclops/commit/f56956ff530ca0a975796b19a0fb293c4f4f96d8))
+
+
+### Changed
+
+- **src.app.routes.AlertDetail.components.AlertDetailOverview**: Tag information added to alert detail overview. ([1285a94](https://github.com/dunbarcyber/cyclops/commit/1285a94a67892a1fb9a427dab0919f85dcecbba2))
+- **src.app.services.alert.types**: Tag information added to alert detail data type. ([1bc0a5e](https://github.com/dunbarcyber/cyclops/commit/1bc0a5e361fe06a6d7559f0c998623a71657cc9f))
+- **package.json**: Changed development scripts to use webpack dev server instead of custom webpack development setup. ([5980231](https://github.com/dunbarcyber/cyclops/commit/5980231be057bf9b32119ab09fcbb2490983b61e))
+- **.gitignore**: Added dist folder to ignored folders. Compiled assets for future versions and the development build will be stored at http://s3.amazonaws.com/cyclops-public/. ([2fbff5f](https://github.com/dunbarcyber/cyclops/commit/2fbff5f287416fa6dbbd5b3e63610617122ed478))
+
+### Moved
+- Data stores moved into folder named store and redux reducers have been limited to only be nested one level deep ([a46289e](https://github.com/dunbarcyber/cyclops/commit/a46289ed186266aaa554e777a580ef91eedf5195))
+- Custom redux data types into the store directory ([8ace8cd](https://github.com/dunbarcyber/cyclops/commit/8ace8cda4bbc4f88c3c583e48b260623dfd8b1dc))
+
+<a name="0.4.3"></a>
+## [0.4.3](https://github.com/dunbarcyber/cyclops/compare/0.4.2...0.4.3) (2017-08-03)
+
+### Changed
+
+- **src.app.services.cyphon.utils.version**: Update VERSION_MATCHING constant with correct Cyphon versions.
+
+<a name="0.4.2"></a>
+## [0.4.2](https://github.com/dunbarcyber/cyclops/compare/0.4.1...0.4.2) (2017-08-01)
+
+### WARNING
+
+This version only works with Cyphon version 1.4. The alert.doc_id change for context search causes context search to break in any version below 1.4.
+
+### Removed
+
+- 0.3 documentation. Defaults to Cyphon implementation of Cyclops. ([9ba9eaa](https://github.com/dunbarcyber/cyclops/commit/9ba9eaa8ea30dd1e1c7c679f9272beeab5ec8635))
+
+### Added
+
+- Added version matching to notify the user when a Cyclops and Cyphon version don't work together. ([56fa68d](https://github.com/dunbarcyber/cyclops/commit/56fa68d5fea44fe9175bc2f0ea7e761772c9a86c))
+
+### Changed
+
+- Used alert.doc_id for context searching instead of alert.data._id since the latter is deprecated in
+Cyphon 1.4. If the user is using 0.4.1 or below with Cyphon 1.4, or is using Cyclops 0.4.2 with Cyphon 1.3, the application will notify them. ([8209f29](https://github.com/dunbarcyber/cyclops/commit/8209f294da3c97ea7353004097742bf12c156f0a))
+
+
 <a name="0.4.1"></a>
 ## [0.4.1](https://github.com/dunbarcyber/cyclops/compare/0.4.1...0.4.0) (2017-06-08)
 
