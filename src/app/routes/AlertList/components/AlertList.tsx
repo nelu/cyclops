@@ -142,8 +142,8 @@ export class AlertList extends React.Component<Props, {}> {
       <AlertListItem
         key={alert.id}
         alert={alert}
-        selectAlert={this.selectAlert}
-        selectedAlert={selectedAlert}
+        onClick={this.selectAlert}
+        isActive={alert.id === selectedAlert}
       />
     ));
     const alertListTable = alerts.length ? (

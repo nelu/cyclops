@@ -17,28 +17,26 @@
  */
 
 // Vendor
-import { CancelToken } from 'axios';
+import * as React from 'react';
 
-// Local
-import * as cyphonAPI from '../cyphon/utils/cyphonAPI';
-import { Context, ContextSearchParams, ContextFilter } from './types';
-import { Result } from '../../types/result';
-import { APIList } from '../cyphon/types';
+// --------------------------------------------------------------------------
+// Interfaces/Types
+// --------------------------------------------------------------------------
+
+/** Properties of the ErrorIcon component. */
+interface Props {}
+
+// --------------------------------------------------------------------------
+// Component
+// --------------------------------------------------------------------------
 
 /**
- * Searches a context for results that match the given result ID.
- * @param contextId ID of the context to search.
- * @param params Parameters to search with.
- * @param cancelToken Cancel token to cancel the request with.
- * @returns {Promise<APIList<Result>>}
+ * Display an icon informing the user that an error occurred.
  */
-export function searchContext(
-  contextId: number,
-  params: ContextSearchParams,
-  cancelToken?: CancelToken,
-): Promise<APIList<Result>> {
-  return cyphonAPI.get(
-    `/contexts/${contextId}/related-data-by-id/`,
-    { params, cancelToken },
-  );
+export class ErrorIcon extends React.Component<Props, {}> {
+  public render() {
+    return (
+      <i className="fa fa-exclamation-triangle alert-text--high" />
+    );
+  }
 }

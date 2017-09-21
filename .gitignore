@@ -8,4 +8,5 @@ node_modules/
 sphinx-docs/_*
 sphinx-docs/build
 .idea/
+.vscode/
 npm-debug.log

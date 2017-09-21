@@ -21,12 +21,12 @@ import * as React from 'react';
 import * as classnames from 'classnames';
 
 // Local
-import { AlertLevelIcon } from '../../../services/alerts/components/AlertLevelIcon';
-import { AlertStatusIcon } from '../../../services/alerts/components/AlertStatusIcon';
-import { AlertListItem as Alert } from '../../../services/alerts/types';
-import { getUserFullName } from '../../../services/users/utils/getUserFullName';
-import { formatDate } from '../../../utils/dateUtils';
-import { shortenDistilleryName } from '../../../services/distilleries/utils/distilleryUtils';
+import { AlertLevelIcon } from '~/services/alerts/components/AlertLevelIcon';
+import { AlertStatusIcon } from '~/services/alerts/components/AlertStatusIcon';
+import { AlertListItem as Alert } from '~/services/alerts/types';
+import { getUserFullName } from '~/services/users/utils/getUserFullName';
+import { formatDate } from '~/utils/dateUtils';
+import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -36,13 +36,12 @@ import { shortenDistilleryName } from '../../../services/distilleries/utils/dist
 interface Props {
   /** Alert to display. */
   alert: Alert;
-  /** Currently selected alert's ID. */
-  selectedAlert: number | null;
+  isActive: boolean;
   /**
    * Selects an alerts to view in the alert detail.
-   * @param alertId
+   * @param alertID
    */
-  selectAlert(alertId: number): any;
+  onClick(alertID: number): any;
 }
 
 // --------------------------------------------------------------------------
@@ -57,39 +56,37 @@ export class AlertListItem extends React.Component<Props, {}> {
    * Selects this alerts to be viewed in the alert detail view.
    */
   public selectAlert = (): void => {
-    this.props.selectAlert(this.props.alert.id);
+    this.props.onClick(this.props.alert.id);
   };
 
   public render(): JSX.Element {
-    const { alert } = this.props;
-    const distilleryName = alert.distillery
-      ? shortenDistilleryName(alert.distillery.name)
+    const distilleryName = this.props.alert.distillery
+      ? shortenDistilleryName(this.props.alert.distillery.name)
       : 'None';
-    const isActive = (this.props.selectedAlert === alert.id);
     const classes = classnames(
       'alert-list-item',
-      `alert-list-item--${alert.level.toLowerCase()}`,
-      { active: isActive },
+      `alert-list-item--${this.props.alert.level.toLowerCase()}`,
+      { active: this.props.isActive },
     );
-    const user = alert.assigned_user
-      ? getUserFullName(alert.assigned_user)
+    const user = this.props.alert.assigned_user
+      ? getUserFullName(this.props.alert.assigned_user)
       : 'Unassigned';
 
     return (
       <tr className={classes} onClick={this.selectAlert}>
-        <td><AlertLevelIcon level={alert.level}/></td>
-        <td><AlertStatusIcon status={alert.status}/></td>
+        <td><AlertLevelIcon level={this.props.alert.level}/></td>
+        <td><AlertStatusIcon status={this.props.alert.status}/></td>
         <td className="text--muted">
-          {formatDate(alert.created_date)}
+          {formatDate(this.props.alert.created_date)}
         </td>
         <td className="text--emphasis">
           {distilleryName}
         </td>
-        <td><span className="badge">{alert.incidents}</span></td>
+        <td><span className="badge">{this.props.alert.incidents}</span></td>
         <td>
           <div className="flex-box">
             <div className="alert-list-item__title flex-item">
-              {alert.title}
+              {this.props.alert.title}
               <div className="alert-list-item__gradient"/>
             </div>
             <div className="alert-list-item__user flex-item flex--shrink">

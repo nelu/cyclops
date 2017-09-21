@@ -18,21 +18,30 @@
 
 // Local
 import { Field } from '../cyphon/types';
+import { NormalizedList } from '~/types/normalizr';
+import { Dictionary } from '~/types/object';
 
-/** Container object from the Cyphon API. */
 export interface Container {
-  /** Bottle associated with the container. */
-  bottle: number;
-  /** Identifier of the container. */
   id: number;
-  /** Bottle and label fields combined together. */
-  fields: Field[];
-  /** Label associated with the container. */
-  label: number;
-  /** Name of the container. */
   name: string;
-  /** URI of the container object. */
   url: string;
-  /** Taste assocated with the container. */
+  bottle: number;
+  label: number;
   taste: number;
+  fields: Field[] | string[];
 }
+
+export interface ContainerNested extends Container {
+  fields: Field[];
+}
+
+export interface ContainerFlat extends Container {
+  fields: string[];
+}
+
+export interface NormalizedContainerEntities {
+  containers: Dictionary<ContainerFlat>;
+  fields: Dictionary<Field>;
+}
+
+export type NormalizedContainerList = NormalizedList<number, NormalizedContainerEntities>;

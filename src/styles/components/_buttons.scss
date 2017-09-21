@@ -86,6 +86,38 @@ $btn-default-dark-border: darken($color-dark, 3%);
   }
 }
 
+.btn {
+  &--muted {
+    color: darken($text-muted, 10%);
+    background-color: transparent;
+    border: none;
+    padding: 0;
+
+    &:hover {
+      color: $text-color;
+    }
+  }
+
+  &--spaced-right {
+    margin-right: $padding-small-horizontal;
+  }
+
+  &--spaced-left {
+    margin-left: $padding-small-horizontal;
+  }
+}
+
+.btn__caret {
+  padding: 0 5px;
+}
+
+.btn--plain {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+}
+
 .btn-close {
   background-color: transparent;
   border-color: transparent;

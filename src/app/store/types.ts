@@ -18,12 +18,9 @@
 
 // Vendor
 import { Dispatch, Action, ThunkAction } from 'redux';
-import { Component } from 'react';
-import { ComponentClass } from 'react-redux';
 
 // Local
 import { StoreState } from './index';
-import { Reducer } from 'redux-actions';
 
 /** Redux dispatch function configured with this redux store state. */
 export type ReduxDispatch = Dispatch<StoreState>;
@@ -62,3 +59,9 @@ export type ThunkActionPromise = ThunkAction<
 
 /** Thunk action that returns undefined. */
 export type ThunkActionVoid = ThunkAction<void, StoreState, undefined>;
+
+export type Reducer<State> = (state: State, action: ReduxAction<any>) => State;
+
+export interface ReducerMap<State> {
+  [action: string]: Reducer<State>;
+}

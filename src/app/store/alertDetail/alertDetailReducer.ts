@@ -16,23 +16,14 @@
  * are made]
  */
 
-// Vendor
-import {
-  handleActions,
-  Reducer,
-  ReducerMap,
-} from 'redux-actions';
-
 // Local
-import {
-  LocationFieldAddress,
-  Markers,
-} from '~/services/map/types';
+import { LocationFieldAddress, Markers } from '~/services/map/types';
 import { AlertDetail } from '~/services/alerts/types';
 import * as actions from './alertDetailActions';
 import { ResultIPAdresses } from '~/types/result';
-import { RequestCanceler } from '~/utils/RequestCanceler';
 import * as requests from '~/services/cyphon/utils/requests';
+import { createReducer } from '~/store/utils';
+import { ReducerMap } from '~/store/types';
 
 /** State shape of the AlertDetail reducer. */
 export interface AlertDetailState {
@@ -69,7 +60,7 @@ export const INITIAL_STATE: AlertDetailState = {
   error: [],
 };
 
-const reducers: ReducerMap<AlertDetailState, any> = {};
+const reducers: ReducerMap<AlertDetailState> = {};
 
 /**
  * Unique identifier of the canceler function on the requests store.
@@ -261,7 +252,4 @@ reducers[actions.CLOSE_ERROR_MESSAGE] = (
  * Reducer for the alert detail view.
  * @type {Reducer<State, any>}
  */
-export const alertDetail = handleActions<AlertDetailState, any>(
-  reducers,
-  INITIAL_STATE,
-);
+export const alertDetail = createReducer<AlertDetailState>(INITIAL_STATE, reducers);
