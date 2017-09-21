@@ -18,20 +18,16 @@
 
 // Vendor
 import * as React from 'react';
-import * as classnames from 'classnames';
-
-// Local
-import { KeywordParameter } from '~/services/search/types';
 import { Collapsible } from '~/components/Collapsible';
-import { ErrorIcon } from '~/components/ErrorIcon';
+import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
+import { DistilleryFilterParameter } from '~/services/search/types';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties of the SearchQueryKeywords component. */
 interface Props {
-  keywords: KeywordParameter[];
+  distilleries: DistilleryFilterParameter | null;
 }
 
 // --------------------------------------------------------------------------
@@ -39,30 +35,25 @@ interface Props {
 // --------------------------------------------------------------------------
 
 /**
- * Displays information on a search query's keyword parameters.
+ *
  */
-export class SearchQueryKeywords extends React.Component<Props, {}> {
+export class SearchQueryDistilleries extends React.Component<Props, {}> {
   public render() {
-    let containsError = false;
-    const keywords = this.props.keywords.map((parameter) => {
-      const classes = classnames({
-        'alert-text--high': !!parameter.errors.length,
-      });
-
-      if (parameter.errors.length) { containsError = true; }
-
-      return <li key={parameter.index} className={classes}>"{parameter.keyword}"</li>;
-    });
-    const header = (
-      <span>
-        Keywords {this.props.keywords.length}{' '}
-        {containsError ? <ErrorIcon /> : null}
-      </span>
-    );
+    const distilleries = this.props.distilleries
+      ? this.props.distilleries.distilleries.map((distillery) => (
+        <li>{shortenDistilleryName(distillery)}</li>
+      ))
+      : <li>None</li>;
+    const count = this.props.distilleries
+      ? this.props.distilleries.distilleries.length
+      : 0;
 
     return (
-      <Collapsible descriptor={header} open={false}>
-        <ul className="list--unstyled">{keywords}</ul>
+      <Collapsible
+        descriptor={`Collections ${count}`}
+        open={false}
+      >
+        <ul className="list--unstyled">{distilleries}</ul>
       </Collapsible>
     );
   }

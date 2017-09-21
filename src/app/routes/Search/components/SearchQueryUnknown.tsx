@@ -18,10 +18,7 @@
 
 // Vendor
 import * as React from 'react';
-import * as classnames from 'classnames';
-
-// Local
-import { KeywordParameter } from '~/services/search/types';
+import { SearchParameter } from '~/services/search/types';
 import { Collapsible } from '~/components/Collapsible';
 import { ErrorIcon } from '~/components/ErrorIcon';
 
@@ -29,9 +26,9 @@ import { ErrorIcon } from '~/components/ErrorIcon';
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties of the SearchQueryKeywords component. */
+/** Properties of the SearchQueryUnknown component. */
 interface Props {
-  keywords: KeywordParameter[];
+  parameters: SearchParameter[];
 }
 
 // --------------------------------------------------------------------------
@@ -39,30 +36,19 @@ interface Props {
 // --------------------------------------------------------------------------
 
 /**
- * Displays information on a search query's keyword parameters.
+ *
  */
-export class SearchQueryKeywords extends React.Component<Props, {}> {
+export class SearchQueryUnknown extends React.Component<Props, {}> {
   public render() {
-    let containsError = false;
-    const keywords = this.props.keywords.map((parameter) => {
-      const classes = classnames({
-        'alert-text--high': !!parameter.errors.length,
-      });
-
-      if (parameter.errors.length) { containsError = true; }
-
-      return <li key={parameter.index} className={classes}>"{parameter.keyword}"</li>;
-    });
-    const header = (
-      <span>
-        Keywords {this.props.keywords.length}{' '}
-        {containsError ? <ErrorIcon /> : null}
-      </span>
-    );
+    const parameters = this.props.parameters.map((parameter) => (
+      <li className="alert-text--high">{parameter.parameter}</li>
+    ));
 
     return (
-      <Collapsible descriptor={header} open={false}>
-        <ul className="list--unstyled">{keywords}</ul>
+      <Collapsible descriptor={<span>Unknown <ErrorIcon/></span>} open={true}>
+        <ul className="list--unstyled">
+          {parameters}
+        </ul>
       </Collapsible>
     );
   }

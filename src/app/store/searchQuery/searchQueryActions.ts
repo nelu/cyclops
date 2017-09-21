@@ -37,7 +37,7 @@ import { addError } from '~/store/errorModal';
  * @returns {boolean}
  */
 function isValidPromise(promiseID: symbol, state: StoreState): boolean {
-  return true;
+  return state.searchQuery.promiseID === promiseID;
 }
 
 const ACTION_PREFIX = 'SEARCH_QUERY';

@@ -121,7 +121,6 @@ const TSLINT_RULE = {
   test: /\.tsx?$/,
   enforce: 'pre',
   loader: 'tslint-loader',
-  options: { emitErrors: true },
 };
 
 /**

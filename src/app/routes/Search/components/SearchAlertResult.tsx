@@ -68,31 +68,13 @@ export class SearchAlertResult extends React.Component<Props, State> {
     };
   }
 
-  public getContainerElement = (): HTMLElement | null => {
-    return document.getElementById(this.id);
-  };
-
-  public getContainerElementHeight = (): number => {
-    const element = this.getContainerElement();
-
-    if (element) { return element.clientHeight; }
-
-    return 0;
-  };
-
   public toggleVisibility = (): void => {
     this.setState({ isOpen: !this.state.isOpen });
   };
 
-  public componentDidMount() {
-    const height = this.getContainerElementHeight();
-
-    this.setState({ canOpen: height >= SearchAlertResult.MAX_HEIGHT });
-  }
-
   public render() {
     const comments = this.props.alert.comments.map((comment) => (
-      <AlertDetailComment comment={comment}/>
+      <AlertDetailComment key={comment.id} comment={comment}/>
     ));
     const outcome = (
       getOutcomeDisplayName(this.props.alert.outcome) ||
@@ -115,11 +97,6 @@ export class SearchAlertResult extends React.Component<Props, State> {
           <i className={openButtonIconClasses} />
         </button>
       ) : null;
-    const contentStyle = {
-      'max-height': this.state.isOpen
-        ? 'none'
-        : `${SearchAlertResult.MAX_HEIGHT}px`,
-    };
 
     return (
       <div className="search-alert-result__container">
@@ -133,7 +110,6 @@ export class SearchAlertResult extends React.Component<Props, State> {
         <div
           id={this.id}
           className="flex-box search-alert-result__content"
-          style={contentStyle}
         >
           <div className="flex-item content search-alert-result__data">
             <JSONFormatter json={this.props.alert.data} />
@@ -152,14 +128,7 @@ export class SearchAlertResult extends React.Component<Props, State> {
               {comments}
             </CollapsibleHeader>
           </div>
-          <div className="search-alert-result__gradient" />
         </div>
-        <button
-          onClick={this.toggleVisibility}
-          className="btn-basic btn-block text-center"
-        >
-          <i className={openButtonIconClasses} />
-        </button>
       </div>
     );
   }

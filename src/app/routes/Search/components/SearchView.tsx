@@ -113,21 +113,23 @@ export class SearchView extends React.Component<Props> {
                   {this.props.alertResultCount + this.props.resultCount}
                 </span>
                 {' '}
-                Results
+                <span style={{'margin-right': '6px'}}>
+                  Results
+                </span>
                 <SearchViewChangeButton
                   view={SearchQueryView.Alerts}
                   onClick={this.props.changeView}
                   activeView={this.props.view}
                 >
                   {this.props.alertResultCount} Alerts
-                </SearchViewChangeButton>>
+                </SearchViewChangeButton>
                 <SearchViewChangeButton
                   view={SearchQueryView.Data}
                   onClick={this.props.changeView}
                   activeView={this.props.view}
                 >
                   {this.props.resultCount} Data
-                </SearchViewChangeButton>>
+                </SearchViewChangeButton>
 
               </div>
             </div>

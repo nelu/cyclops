@@ -18,8 +18,8 @@
 
 // Vendor
 import { createStore, combineReducers, applyMiddleware, Store, Reducer } from 'redux';
-import * as Logger from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 // Local
 import { AlertDetailState, alertDetail } from './alertDetail';
@@ -77,9 +77,7 @@ const reducers = combineReducers<StoreState>({
  * Middleware to add to the redux store.
  * @type {GenericStoreEnhancer}
  */
-const middleware = process.env.NODE_ENV === 'production'
-  ? applyMiddleware(thunkMiddleware)
-  : applyMiddleware(thunkMiddleware, Logger({ collapsed: true }));
+const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware));
 
 /**
  * Central redux store for the application

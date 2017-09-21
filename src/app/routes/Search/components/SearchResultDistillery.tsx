@@ -20,6 +20,7 @@
 import * as React from 'react';
 import { ListGroupItem } from 'react-bootstrap';
 import { DistilleryMinimal } from '~/services/distilleries/types';
+import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -51,7 +52,7 @@ export class SearchResultDistillery extends React.Component<Props, {}> {
         onClick={this.onClick}
         key={this.props.distillery.id}
       >
-        {this.props.distillery.name}
+        {shortenDistilleryName(this.props.distillery.name)}
         {' '}
         <span className="text--muted">({this.props.resultCount})</span>
       </ListGroupItem>

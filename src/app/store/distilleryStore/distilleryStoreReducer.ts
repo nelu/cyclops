@@ -18,5 +18,7 @@ export const distilleryStore = createReducer<DistilleryStoreState>({
   [actions.FETCH_DISTILLERIES_SUCCESS]: (
     state: DistilleryStoreState,
     action: actions.FetchDistilleriesSuccessAction,
-  ) => updateState(state, normalizeDistilleries(action.payload)),
+  ) => action.payload.length
+    ? updateState(state, normalizeDistilleries(action.payload))
+    : state,
 });

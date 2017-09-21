@@ -33,6 +33,7 @@ export interface SearchQueryState {
   query: string;
   queryObject?: SearchQuery;
   isLoading: boolean;
+  isValid: boolean;
   promiseID: symbol;
   view: actions.SearchQueryView;
 }
@@ -40,6 +41,7 @@ export interface SearchQueryState {
 export const searchQuery = createReducer<SearchQueryState>({
   query: '',
   isLoading: false,
+  isValid: true,
   promiseID: Symbol(),
   view: actions.SearchQueryView.Alerts,
 }, {
@@ -57,6 +59,7 @@ export const searchQuery = createReducer<SearchQueryState>({
     action: actions.FetchResultsSuccessAction,
   ) => updateState(state, {
     isLoading: false,
+    isValid: true,
     queryObject: action.payload.query,
   }),
 
@@ -65,6 +68,7 @@ export const searchQuery = createReducer<SearchQueryState>({
     action: actions.FetchResultsFailedAction,
   ) => updateState(state, {
     isLoading: false,
+    isValid: false,
     queryObject: action.payload,
   }),
 

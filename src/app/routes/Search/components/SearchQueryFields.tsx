@@ -45,36 +45,34 @@ export class SearchQueryFields extends React.Component<Props, {}> {
   public render() {
     let containsErrors = false;
     const fields = this.props.fields.map((field) => {
-      const classes = classnames('text--muted', { 'alert-text--high': !!field.errors.length });
+      const classes = classnames('text--muted', {
+        'alert-text--high': !!field.errors.length,
+      });
       const errors = field.errors.map((error) => (
-        <div className="alert-text--high">{error}</div>
+        <li className="alert-text--high">{error}</li>
       ));
 
       if (field.errors.length) { containsErrors = true; }
 
       return (
-        <div>
-          <div className={classes}>
-            {field.field_name} {field.operator} {field.value}
-          </div>
-          <div className="tabbed">
-            {errors}
-          </div>
-        </div>
+        <li className={classes}>
+          {field.field_name} {field.operator} {field.value}
+          {errors.length ? <ul className="list--unstyled list--bordered">{errors}</ul> : null}
+        </li>
       );
     });
-    const errorIcon = containsErrors ? <ErrorIcon /> : null;
     const header = (
       <span>
-        {errorIcon} Fields {this.props.fields.length}
+        Fields {this.props.fields.length}{' '}
+        {containsErrors ? <ErrorIcon /> : null}
       </span>
     );
 
     return (
       <Collapsible descriptor={header} open={containsErrors}>
-        <div className="tabbed tabbed--border">
+        <ul className="list--unstyled">
           {fields}
-        </div>
+        </ul>
       </Collapsible>
     );
   }

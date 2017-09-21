@@ -48,5 +48,7 @@ export const getSelectedResultsPage = createSelector(
 
 export const getSearchResultDistilleries = createSelector(
   [getResultList],
-  (results) => results ? _.values(results).map((result) => result.distillery) : [],
+  (results) => results
+    ? _.values(results).map((result) => result.distillery)
+    : [],
 );

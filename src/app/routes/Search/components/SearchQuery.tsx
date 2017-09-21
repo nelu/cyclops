@@ -26,6 +26,8 @@ import { Collapsible } from '~/components/Collapsible';
 import { SearchQueryErrors } from '~/routes/Search/components/SearchQueryErrors';
 import { SearchQueryKeywords } from '~/routes/Search/components/SearchQueryKeywords';
 import { SearchQueryFields } from '~/routes/Search/components/SearchQueryFields';
+import { SearchQueryDistilleries } from '~/routes/Search/components/SearchQueryDistillery';
+import { SearchQueryUnknown } from '~/routes/Search/components/SearchQueryUnknown';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -49,13 +51,11 @@ export class SearchQuery extends React.Component<Props, {}> {
     const errors = this.props.query.errors.map((error) => (
       <p className="alert-text--high">{error}</p>
     ));
-    const keywords = this.props.query.keywords
-      ? this.props.query.keywords.map((parameter) => (
-        <div>"{parameter.keyword}"</div>
-      ))
-      : 'None';
     const errorIcon = !this.props.valid
       ? <i className="fa fa-exclamation-triangle alert-text--high icon-spacing" />
+      : null;
+    const unknownParameters = this.props.query.unknown.length
+      ? <SearchQueryUnknown parameters={this.props.query.unknown} />
       : null;
 
     return (
@@ -68,6 +68,8 @@ export class SearchQuery extends React.Component<Props, {}> {
           {errors}
           <SearchQueryKeywords keywords={this.props.query.keywords} />
           <SearchQueryFields fields={this.props.query.fields} />
+          <SearchQueryDistilleries distilleries={this.props.query.distilleries} />
+          {unknownParameters}
         </div>
       </div>
     );

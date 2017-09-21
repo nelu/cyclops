@@ -36,3 +36,23 @@
 .content {
   padding: $padding-large-vertical $padding-base-horizontal;
 }
+
+$tabbed-spacing: $padding-base-horizontal * 1.5;
+
+.tabbed {
+  padding-left: $tabbed-spacing;
+
+  &--border {
+    border-left: solid 1px $border-color-extra-light;
+  }
+
+  &__title {
+    display: inline-block;
+    margin-left: -$tabbed-spacing;
+    border-bottom: solid 1px $border-color-extra-light;
+    padding-bottom: $padding-small-vertical;
+    padding-top: $padding-base-vertical;
+    margin-bottom: $padding-small-vertical;
+    padding-left: $tabbed-spacing;
+  }
+}

@@ -87,6 +87,15 @@ export class Header extends React.Component<HeaderProps, {}> {
               Alerts
             </Link>
           </div>
+          <div className="flex-item flex--shrink">
+            <Link
+              className="header__link"
+              to="/search/"
+              activeClassName="header__link--active"
+            >
+              Search
+            </Link>
+          </div>
         </div>
         <div className="flex-box flex--shrink">
           {adminLink}

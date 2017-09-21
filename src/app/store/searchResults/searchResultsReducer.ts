@@ -48,6 +48,16 @@ export const searchResults = createReducer<SearchResultsState>({
     action: FetchResultsSuccessAction,
   ) => {
     const results = action.payload.results.distilleries.results;
+
+    if (!results.length) {
+      return updateState(state, {
+        results: {},
+        selectedDistilleryID: 0,
+        pages: {},
+        count: 0,
+      });
+    }
+
     const resultsByID = _.keyBy(results, 'distillery.id');
     const pages: Dictionary<number> = {};
 

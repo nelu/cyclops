@@ -45,8 +45,9 @@ export class SearchDistillery extends React.Component<Props, {}> {
       this.props.distillery.name,
     );
     const fields = this.props.distillery.container.fields.map((field) => (
-      <SearchField field={field} />
+      <SearchField key={field.field_name} field={field} />
     ));
+
     return (
       <div>
         <Collapsible descriptor={shortenedDistilleryName} open={false}>

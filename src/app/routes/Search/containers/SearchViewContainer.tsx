@@ -49,6 +49,7 @@ import { SearchQueryView } from '~/store/searchQuery';
 import { SearchAlertResultsContainer } from './SearchAlertResultsContainer';
 import { SearchRouteURLQuery } from '~/routes/Search/types';
 import { SearchResultsContainer } from './SearchResultsContainer';
+import { SearchQuery } from '~/services/search/types';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -63,6 +64,7 @@ interface ValueProps {
   containers: ContainerNested[];
   distilleries: DistilleryNested[];
   fields: Field[];
+  query?: SearchQuery;
   location: LocationDescriptor;
   alertResultCount: number;
   resultCount: number;
@@ -109,6 +111,7 @@ class Container extends React.Component<Props> {
 
   public changeSearchQuery = (query: string): void => {
     this.props.router.push({
+      pathname: this.props.location.pathname,
       query: { query },
     });
   };
@@ -120,9 +123,10 @@ class Container extends React.Component<Props> {
         distilleries={this.props.distilleries}
         fields={this.props.fields}
         alertResultCount={this.props.alertResultCount}
-        resultCount={this.props.alertResultCount}
+        resultCount={this.props.resultCount}
         view={this.props.view}
         isLoading={this.props.isLoading}
+        query={this.props.query}
         isQueryValid={this.props.isQueryValid}
         changeQuery={this.changeSearchQuery}
         changeView={this.props.changeView}
@@ -145,7 +149,7 @@ const values: StateToProps<ValueProps, ContainerProps> = (state, props) => ({
   alertResultCount: state.alertSearchResults.count,
   resultCount: state.searchResults.count,
   view: state.searchQuery.view,
-  isQueryValid: true,
+  isQueryValid: state.searchQuery.isValid,
   isLoading: state.searchQuery.isLoading,
   total: state.alertSearchResults.count + state.searchResults.count,
   location: props.location,

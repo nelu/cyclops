@@ -20,6 +20,7 @@
 import { createReducer, updateState } from '../utils';
 import { AlertDetail } from '~/services/alerts/types';
 import * as actions from './alertSearchResultsActions';
+import { FETCH_RESULTS_SUCCESS, FetchResultsSuccessAction } from '../searchQuery';
 
 export interface AlertSearchResultsState {
   results: AlertDetail[];
@@ -34,6 +35,15 @@ export const alertSearchResults = createReducer<AlertSearchResultsState>({
   page: 1,
   isLoading: false,
 }, {
+  [FETCH_RESULTS_SUCCESS]: (
+    state: AlertSearchResultsState,
+    action: FetchResultsSuccessAction,
+  ) => updateState(state, {
+    results: action.payload.results.alerts.results,
+    count: action.payload.results.alerts.count,
+    page: 1,
+  }),
+
   [actions.PAGINATE_ALERT_RESULTS_PENDING]: (
     state: AlertSearchResultsState,
     action: actions.PaginateAlertResultsPendingAction,

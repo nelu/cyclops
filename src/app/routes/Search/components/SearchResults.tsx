@@ -36,28 +36,6 @@ interface Props {
   onPaginate(page: number): any;
 }
 
-const RESULTS: DistillerySearchResults[] = [{
-  count: 5,
-  distillery: {
-    id: 1,
-    name: 'elasticsearch.something.something',
-    url: '',
-  },
-  next: '',
-  previous: '',
-  results: [{}, {}, {}, {}, {}],
-}, {
-  count: 2,
-  distillery: {
-    id: 2,
-    name: 'crumagin.super.lad',
-    url: '',
-  },
-  next: '',
-  previous: '',
-  results: [{}, {}],
-}];
-
 // --------------------------------------------------------------------------
 // Component
 // --------------------------------------------------------------------------
@@ -72,7 +50,7 @@ export class SearchResults extends React.Component<Props> {
   };
 
   public render() {
-    if (!RESULTS.length) {
+    if (!this.props.distilleries.length) {
       return (
         <div className="flex-box">
           <div className="flex-item content">
