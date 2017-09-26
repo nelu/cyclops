@@ -117,16 +117,21 @@ class Container extends React.Component<Props> {
   };
 
   public render() {
+    const initialQuery = (
+      (this.props.location.query as SearchRouteURLQuery).query || ''
+    );
+
     return (
       <SearchView
         containers={this.props.containers}
         distilleries={this.props.distilleries}
+        initialQuery={initialQuery}
         fields={this.props.fields}
         alertResultCount={this.props.alertResultCount}
         resultCount={this.props.resultCount}
         view={this.props.view}
         isLoading={this.props.isLoading}
-        query={this.props.query}
+        queryObject={this.props.query}
         isQueryValid={this.props.isQueryValid}
         changeQuery={this.changeSearchQuery}
         changeView={this.props.changeView}

@@ -28,10 +28,6 @@ function isValidPromise(promiseID: symbol, state: StoreState): boolean {
   return state.searchQuery.promiseID === promiseID;
 }
 
-function resultsExist(state: StoreState): boolean {
-  return !!state.alertSearchResults.results;
-}
-
 // -- PAGINATE_ALERT_RESULTS_PENDING --
 // Request for a new page of alert results has been sent.
 

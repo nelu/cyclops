@@ -18,67 +18,53 @@
 
 // Vendor
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { Link, LocationDescriptor } from 'react-router';
 
 // Local
-import { NormalizedDistilleryList } from '~/services/distilleries/types';
+import { StateToProps } from '~/store/types';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
 // --------------------------------------------------------------------------
 
-/** Properties of the SearchBar component. */
-interface Props {
-  initialValue?: string;
-  onSubmit(query: string): void;
-}
-
-interface State {
+interface ValueProps {
   query: string;
 }
+
+type Props = ValueProps & {};
 
 // --------------------------------------------------------------------------
 // Component
 // --------------------------------------------------------------------------
 
-/**
- *
- */
-export class SearchBar extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { query: this.props.initialValue || '' };
-  }
-
-  public onChange: React.FormEventHandler<HTMLInputElement> = (event) => {
-    this.setState({ query: event.currentTarget.value });
-  };
-
-  public submitQuery = () => {
-    this.props.onSubmit(this.state.query);
-  };
-
-  public onKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (event) => {
-    if (event.key === 'Enter') { this.submitQuery(); }
-  };
-
-  public onSubmit = () => {
-    this.submitQuery();
-  };
-
+class Container extends React.Component<Props> {
   public render() {
+    const location: LocationDescriptor = {
+      pathname: '/search/',
+      query: { query: this.props.query || undefined },
+    };
+
     return (
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search"
-          onChange={this.onChange}
-          onKeyPress={this.onKeyPress}
-          value={this.state.query}
-        />
-        <span>
-          <button onClick={this.onSubmit}>Submit</button>
-        </span>
-      </div>
+      <Link
+        className="header__link"
+        to={location}
+        activeClassName="header__link--active"
+      >
+        Search
+      </Link>
     );
   }
 }
+
+// --------------------------------------------------------------------------
+// Container
+// --------------------------------------------------------------------------
+
+const values: StateToProps<ValueProps, {}> = (state, props) => ({
+  query: state.searchQuery.query,
+});
+
+export const SearchLinkContainer: React.ComponentClass<{}> = (
+  connect(values, () => ({}))(Container)
+);
