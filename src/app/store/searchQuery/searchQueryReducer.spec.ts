@@ -54,15 +54,15 @@ describe('searchQueryReducer', () => {
 
   describe('SEARCH_QUERY/FETCH_RESULTS_SUCCESS', () => {
     it('should update state correctly', () => {
-      const query: any = { hello: 'hello' };
+      const results: any = { query: { hello: 'hello' } };
       const update = searchQuery(
         { ...initial, isLoading: true },
-        searchQueryActions.fetchResultsSuccess(query),
+        searchQueryActions.fetchResultsSuccess(results),
       );
 
       expect(update).to.deep.equal({
         ...initial,
-        queryObject: query,
+        queryObject: results.query,
         isLoading: false,
       });
     });
@@ -76,7 +76,12 @@ describe('searchQueryReducer', () => {
         searchQueryActions.fetchResultsFailed(query),
       );
 
-      expect(update).to.deep.equal({ ...initial, queryObject: query });
+      expect(update).to.deep.equal({
+        ...initial,
+        isLoading: false,
+        isValid: false,
+        queryObject: query,
+      });
     });
   });
 
