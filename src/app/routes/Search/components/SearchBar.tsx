@@ -19,14 +19,6 @@
 // Vendor
 import * as React from 'react';
 
-// Local
-import { NormalizedDistilleryList } from '~/services/distilleries/types';
-
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the SearchBar component. */
 interface Props {
   initialValue?: string;
   onSubmit(query: string): void;
@@ -36,18 +28,11 @@ interface State {
   query: string;
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
-/**
- *
- */
+// Wide text input with a submit button triggered by pressing enter.
 export class SearchBar extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { query: this.props.initialValue || '' };
-  }
+  public state = {
+    query: this.props.initialValue || '',
+  };
 
   public onChange: React.FormEventHandler<HTMLInputElement> = (event) => {
     this.setState({ query: event.currentTarget.value });
