@@ -17,7 +17,7 @@
  */
 
 // Vendor
-import { createStore, combineReducers, applyMiddleware, Store, Reducer } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -53,11 +53,8 @@ export interface StoreState {
   userStore: UserStoreState;
 }
 
-/**
- * Main redux reducer.
- * @type {Reducer<StoreState>}
- */
-const reducers = combineReducers<StoreState>({
+/** Main redux reducer. */
+const reducer = combineReducers<StoreState>({
   alertDetail,
   alertDataContextSearch,
   alertDetailOutcome,
@@ -73,14 +70,8 @@ const reducers = combineReducers<StoreState>({
   userStore,
 });
 
-/**
- * Middleware to add to the redux store.
- * @type {GenericStoreEnhancer}
- */
+/** Middleware to add to the redux store. */
 const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware));
 
-/**
- * Central redux store for the application
- * @type {Store<StoreState>}
- */
-export const store = createStore<StoreState>(reducers, middleware);
+/** Central redux store for the application */
+export const store = createStore<StoreState>(reducer, middleware);
