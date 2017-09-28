@@ -99,13 +99,13 @@ export class SearchView extends React.Component<Props> {
           <div className="flex-box flex--shrink sidebar sidebar--large">
             <div className="flex-item content">
               {query}
-              <CollapsibleHeader title="Collections">
+              <CollapsibleHeader title="Collections" open={false}>
                 {distilleries}
               </CollapsibleHeader>
-              <CollapsibleHeader title="Fields">
+              <CollapsibleHeader title="Fields" open={false}>
                 {fields}
               </CollapsibleHeader>
-              <CollapsibleHeader title="Containers">
+              <CollapsibleHeader title="Containers" open={false}>
                 {containers}
               </CollapsibleHeader>
             </div>
