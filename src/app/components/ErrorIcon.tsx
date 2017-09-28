@@ -19,21 +19,10 @@
 // Vendor
 import * as React from 'react';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the ErrorIcon component. */
-interface Props {}
-
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
 /**
- * Display an icon informing the user that an error occurred.
+ * Icon informing the user that an error occurred.
  */
-export class ErrorIcon extends React.Component<Props, {}> {
+export class ErrorIcon extends React.Component<{}, {}> {
   public render() {
     return (
       <i className="fa fa-exclamation-triangle alert-text--high" />

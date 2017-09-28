@@ -23,34 +23,20 @@ import * as _ from 'lodash';
 
 // Local
 import { orderKeys } from '~/utils/objectUtils';
-import { createRandomId } from '~/utils/stringUtils';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** JSONFormatter component properties. */
 interface Props {
   /** Data to display. */
   json?: any;
-  /** How many levels deep the object should open on initial display. */
+  /** How many levels deep the object should open. */
   open?: number;
   /** Formatter configuration object. */
   config?: Formatter.Configuration;
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
 /**
  * Creates a block of pretty printed and collapsible object content.
  */
 export class JSONFormatter extends React.Component<Props, {}> {
-  /**
-   * Default formatter getConfig for all formatter instances.
-   * @type {Formatter.Configuration}
-   */
   public static DEFAULT_FORMATTER_CONFIG: Formatter.Configuration = {
     animateClose: false,
     animateOpen: false,
@@ -61,100 +47,70 @@ export class JSONFormatter extends React.Component<Props, {}> {
   };
 
   /**
-   * Default open level for all formatter instances.
-   * @type {number}
+   * Default nested JSON open level for all JSONFormatter instances.
    */
   public static DEFAULT_OPEN: number = 1;
 
-  /**
-   * Adds target='_blank' to all the links in the json so that they open in
-   * a new tab.
-   * @param element HTML element to get links from.
-   */
-  public static addTargetBlankToLinks = (element: HTMLDivElement): void => {
-    const links = element.getElementsByTagName('a');
+  public static removeChildElements(element: HTMLElement): void {
+    while (element.firstChild) { element.removeChild(element.firstChild); }
+  }
 
-    _.forEach(links, (link) => {
+  public static addTargetBlankToLinks(element: HTMLElement): void {
+    _.forEach(element.getElementsByTagName('a'), (link) => {
       link.target = '_blank';
     });
-  };
-
-  /**
-   * ID of the created JSON formatter container.
-   */
-  public id: string;
-
-  constructor(props: Props) {
-    super(props);
-
-    this.id = createRandomId();
   }
 
-  /**
-   * Sets the rendered HTML to the element once the component mounts.
-   */
+  public static createJSONElement(
+    json: any,
+    config: Formatter.Configuration = {},
+    open?: number,
+  ): HTMLDivElement {
+    return new Formatter(
+      orderKeys(json),
+      open || JSONFormatter.DEFAULT_OPEN,
+      { ...JSONFormatter.DEFAULT_FORMATTER_CONFIG, ...config },
+    ).render();
+  }
+
+  public container?: HTMLDivElement;
+
   public componentDidMount(): void {
-    this.createHTML(this.props.json, this.props.open, this.props.config);
+    this.renderJSON(this.props.json, this.props.open, this.props.config);
   }
 
-  /**
-   * Re-renders and replaces the current HTML with new HTML if the
-   * new props don't match.
-   * @param {Props} nextProps The new props being passed in.
-   */
-  public componentWillReceiveProps(nextProps: Props): void {
-    if (!_.isEqual(nextProps, this.props)) {
-      this.createHTML(nextProps.json, nextProps.open, nextProps.config);
+  public componentWillReceiveProps(props: Props): void {
+    if (
+      this.props.json !== props.json ||
+      this.props.config !== props.config ||
+      this.props.open !== props.open
+    ) {
+      this.renderJSON(props.json, props.open, props.config);
     }
   }
 
-  /**
-   * Turns off component re-rendering. All the rendering is handled in
-   * componentWillReceiveProps.
-   * @return {boolean} If the component should re-render.
-   */
-  public shouldComponentUpdate(): boolean {
+  public shouldComponentUpdate() {
+    // Turn off component re-rendering.
     return false;
   }
 
-  /**
-   * Clears the div element, creates the JSON html, and then places the
-   * rendered html into the div element.
-   * @param json
-   * @param open
-   * @param config
-   */
-  public createHTML = (
+  public renderJSON = (
     json: any,
     open?: number,
     config?: Formatter.Configuration,
   ): void => {
-    const extendedConfig = config
-      ? _.assign({}, JSONFormatter.DEFAULT_FORMATTER_CONFIG, config)
-      : JSONFormatter.DEFAULT_FORMATTER_CONFIG;
-    const orderedJSON = orderKeys(json);
-    const formatter = new Formatter(
-      orderedJSON,
-      open || JSONFormatter.DEFAULT_OPEN,
-      extendedConfig,
-    );
-    const element = document.getElementById(this.id);
+    if (!this.container) { return; }
 
-    if (element) {
-      while (element.firstChild) { element.removeChild(element.firstChild); }
+    const renderedJSON = JSONFormatter.createJSONElement(json, config, open);
 
-      const renderedJSON = formatter.render();
-
-      JSONFormatter.addTargetBlankToLinks(renderedJSON);
-
-      element.appendChild(renderedJSON);
-    }
+    JSONFormatter.removeChildElements(this.container);
+    JSONFormatter.addTargetBlankToLinks(renderedJSON);
+    this.container.appendChild(renderedJSON);
   };
 
-  /**
-   * Renders the JSON container with the given document ID.
-   */
+  public bindContainerRef = (ref: HTMLDivElement) => this.container = ref;
+
   public render() {
-    return <div id={this.id} />;
+    return <div ref={this.bindContainerRef} />;
   }
 }
