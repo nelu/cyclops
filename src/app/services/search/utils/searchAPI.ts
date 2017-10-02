@@ -91,5 +91,5 @@ export function searchDistillery(
   page?: number,
   pageSize?: number,
 ): Promise<SearchEndpoint<DistillerySearchResults>> {
-  return getSearchResults(`/search/distilleries/{id}`, query, page, pageSize);
+  return getSearchResults(`/search/distilleries/${id}`, query, page, pageSize);
 }
