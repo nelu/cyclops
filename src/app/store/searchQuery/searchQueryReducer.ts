@@ -21,12 +21,20 @@ import { SearchQuery } from '~/services/search/types';
 import { createReducer, updateState } from '~/store/utils';
 import * as actions from './searchQueryActions';
 import {
+  PAGINATE_RESULTS_FAILED,
   PAGINATE_RESULTS_PENDING,
+  PAGINATE_RESULTS_SUCCESS,
+  PaginateResultsFailedAction,
   PaginateResultsPendingAction,
+  PaginateResultsSuccessAction,
 } from '../searchResults';
 import {
+  PAGINATE_ALERT_RESULTS_FAILED,
   PAGINATE_ALERT_RESULTS_PENDING,
+  PAGINATE_ALERT_RESULTS_SUCCESS,
+  PaginateAlertResultsFailedAction,
   PaginateAlertResultsPendingAction,
+  PaginateAlertResultsSuccessAction,
 } from '../alertSearchResults';
 
 export interface SearchQueryState {
@@ -83,13 +91,43 @@ export const searchQuery = createReducer<SearchQueryState>({
     state: SearchQueryState,
     action: PaginateResultsPendingAction,
   ) => updateState(state, {
+    isLoading: true,
     promiseID: action.payload,
+  }),
+
+  [PAGINATE_RESULTS_SUCCESS]: (
+    state: SearchQueryState,
+    action: PaginateResultsSuccessAction,
+  ) => updateState(state, {
+    isLoading: false,
+  }),
+
+  [PAGINATE_RESULTS_FAILED]: (
+    state: SearchQueryState,
+    action: PaginateResultsFailedAction,
+  ) => updateState(state, {
+    isLoading: false,
+  }),
+
+  [PAGINATE_ALERT_RESULTS_SUCCESS]: (
+    state: SearchQueryState,
+    action: PaginateAlertResultsSuccessAction,
+  ) => updateState(state, {
+    isLoading: false,
+  }),
+
+  [PAGINATE_ALERT_RESULTS_FAILED]: (
+    state: SearchQueryState,
+    action: PaginateAlertResultsFailedAction,
+  ) => updateState(state, {
+    isLoading: false,
   }),
 
   [PAGINATE_ALERT_RESULTS_PENDING]: (
     state: SearchQueryState,
     action: PaginateAlertResultsPendingAction,
   ) => updateState(state, {
+    isLoading: true,
     promiseID: action.payload,
   }),
 });
