@@ -22,6 +22,7 @@ import { Pagination, ListGroup } from 'react-bootstrap';
 import { Result } from '~/types/result';
 import { DistillerySearchResults } from '~/services/search/types';
 import { JSONFormatter } from '~/components/JSONFormatter';
+import { SearchQueryInstructions } from '~/routes/Search/components/SearchQueryInstructions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -54,7 +55,8 @@ export class SearchResults extends React.Component<Props> {
       return (
         <div className="flex-box">
           <div className="flex-item content">
-            <h2 className="text-center">No Results</h2>
+            <h1 className="text-center text--muted">No Results</h1>
+            <SearchQueryInstructions />
           </div>
         </div>
       );
