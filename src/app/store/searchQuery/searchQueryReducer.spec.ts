@@ -102,7 +102,11 @@ describe('searchQueryReducer', () => {
       const promiseID = Symbol();
       const update = searchQuery(initial, paginateResultsPending(promiseID));
 
-      expect(update).to.deep.equal({ ...initial, promiseID });
+      expect(update).to.deep.equal({
+        ...initial,
+        promiseID,
+        isLoading: true,
+      });
     });
   });
 });
