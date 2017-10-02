@@ -29,10 +29,6 @@ import { DistillerySearchResults } from '~/services/search/types';
 import { selectDistillery } from '~/store/searchResults';
 import { DistilleryMinimal } from '~/services/distilleries/types';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
 interface ContainerProps {
   distillery: DistilleryMinimal;
 }
@@ -49,11 +45,11 @@ interface FunctionProps {
 
 type Props = ValueProps & FunctionProps;
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
 class Container extends React.Component<Props> {
+  public onClick = () => {
+    this.props.selectResultDistillery(this.props.distillery.id);
+  };
+
   public render() {
     const results = this.props.results
       ? this.props.results[this.props.distillery.id]
@@ -70,10 +66,6 @@ class Container extends React.Component<Props> {
     );
   }
 }
-
-// --------------------------------------------------------------------------
-// Container
-// --------------------------------------------------------------------------
 
 const values: StateToProps<ValueProps, ContainerProps> = (state, props) => ({
   selectedDistilleryID: state.searchResults.selectedDistilleryID,

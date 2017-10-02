@@ -22,6 +22,7 @@ import { AlertSearchResults } from '~/services/search/types';
 import { Pagination } from 'react-bootstrap';
 import { SearchAlertResult } from '~/routes/Search/components/SearchAlertResult';
 import { AlertDetail } from '~/services/alerts/types';
+import { SearchQueryInstructions } from '~/routes/Search/components/SearchQueryInstructions';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -85,7 +86,8 @@ export class SearchAlertResults extends React.Component<Props, {}> {
         </div>
       ) : (
         <div className="flex-item content">
-          <h2 className="text-center">No Results</h2>
+          <h1 className="text-center text--muted">No Results</h1>
+          <SearchQueryInstructions />
         </div>
       );
   }

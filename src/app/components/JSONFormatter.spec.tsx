@@ -19,36 +19,20 @@
 // Vendor
 import * as React from 'react';
 import * as sinon from 'sinon';
-import * as chai from 'chai';
 import * as enzyme from 'enzyme';
 
 // Local
 import { JSONFormatter } from './JSONFormatter';
 
 describe('<JSONFormatter />', () => {
-  let wrapper: enzyme.ShallowWrapper<any, any>;
+  let render: (props?: any) => enzyme.ReactWrapper<any, any>;
 
-  describe('addTargetBlankToLinks()', () => {
-    let element: any;
-    let links: any[];
+  beforeEach(() => {
+    render = (props = {}) => {
+      const defaults = {};
+      const passed = { ...defaults, ...props };
 
-    beforeEach(() => {
-      links = [{}, {}];
-      element = { getElementsByTagName: sinon.stub().returns(links) };
-    });
-
-    it('should add target="_blank" to an element with links', () => {
-      JSONFormatter.addTargetBlankToLinks(element);
-
-      links.forEach((link) => {
-        chai.expect(link.target).to.equal('_blank');
-      });
-    });
-  });
-
-  it('should create a div with a randomized ID', () => {
-    wrapper = enzyme.shallow(<JSONFormatter json={1} />);
-    chai.expect(wrapper.type()).to.equal('div');
-    chai.expect(wrapper.props().id.slice(0, 2)).to.equal('id');
+      return enzyme.mount(<JSONFormatter {...passed} />);
+    };
   });
 });

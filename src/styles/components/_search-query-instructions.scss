@@ -16,16 +16,21 @@
  * are made]
  */
 
-// Vendor
-import * as React from 'react';
+.SearchQueryInstructions {
+  &__header {
+    color: $text-muted;
+    margin-top: 0;
+    font-size: 2.5rem;
+  }
 
-/**
- * Icon informing the user that an error occurred.
- */
-export class ErrorIcon extends React.Component<{}, {}> {
-  public render() {
-    return (
-      <i className="fa fa-exclamation-triangle alert-text--high" />
-    );
+  &__list {
+    list-style-type: none;
+    padding-left: 0;
+    color: darken($text-muted, 5%);
+    font-size: 1.5rem;
+  }
+
+  &__list-item {
+    margin-bottom: 1rem;
   }
 }

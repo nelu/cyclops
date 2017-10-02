@@ -16,17 +16,10 @@
  * are made]
  */
 
-// Vendor
 import * as React from 'react';
 
-// Local
 import { TextArea } from './TextArea';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** HiddenTextArea component properties. */
 interface Props {
   /** Text to fill the textarea with when it's shown. */
   text?: string;
@@ -39,25 +32,16 @@ interface Props {
   onSubmit(value: string): any;
 }
 
-/** Internal state of the HiddenTextArea component. */
 interface State {
   /** If the text area should be shown. */
   active: boolean;
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
 /**
  * Text area that is hidden until the user clicks a button.
  */
 export class HiddenTextArea extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-
-    this.state = { active: false };
-  }
+  public state = { active: false };
 
   /**
    * Passes the current string value in the text area to the given function
@@ -70,16 +54,10 @@ export class HiddenTextArea extends React.Component<Props, State> {
       .then(() => this.hideTextArea());
   };
 
-  /**
-   * Hides the text area.
-   */
   public hideTextArea = (): void => {
     this.setState({ active: false });
   };
 
-  /**
-   * Shows the text area.
-   */
   public showTextArea = (): void => {
     this.setState({ active: true });
   };

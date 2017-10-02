@@ -48,7 +48,8 @@ interface Props {
   /** List of all the current distilleries in Cyphon. */
   distilleries: DistilleryNested[];
   /** Object representation of the current string query. */
-  query?: SearchQueryInterface;
+  initialQuery: string;
+  queryObject?: SearchQueryInterface;
   alertResultCount: number;
   resultCount: number;
   view: SearchQueryView;
@@ -81,27 +82,39 @@ export class SearchView extends React.Component<Props> {
     const distilleries = this.props.distilleries.map((distillery) => (
       <SearchDistillery distillery={distillery}/>
     ));
-    const query = this.props.query
-      ? <SearchQuery query={this.props.query} valid={this.props.isQueryValid} />
+    const query = this.props.queryObject
+      ? <SearchQuery query={this.props.queryObject} valid={this.props.isQueryValid} />
       : null;
     const loading = this.props.isLoading ? <Loading /> : null;
 
     return (
       <div className="flex-box flex-box--column">
         <div className="flex-box flex--shrink content banner">
-          <SearchBar onSubmit={this.props.changeQuery} />
+          <SearchBar
+            initialValue={this.props.initialQuery}
+            onSubmit={this.props.changeQuery}
+          />
         </div>
         <div className="flex-box">
           <div className="flex-box flex--shrink sidebar sidebar--large">
             <div className="flex-item content">
               {query}
-              <CollapsibleHeader title="Collections">
+              <CollapsibleHeader
+                title={`Collections ${distilleries.length}`}
+                open={false}
+              >
                 {distilleries}
               </CollapsibleHeader>
-              <CollapsibleHeader title="Fields">
+              <CollapsibleHeader
+                title={`Fields ${fields.length}`}
+                open={false}
+              >
                 {fields}
               </CollapsibleHeader>
-              <CollapsibleHeader title="Containers">
+              <CollapsibleHeader
+                title={`Containers ${containers.length}`}
+                open={false}
+              >
                 {containers}
               </CollapsibleHeader>
             </div>

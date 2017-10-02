@@ -37,21 +37,13 @@ import {
   paginateResults,
 } from '~/store/searchResults';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-interface ContainerProps {
-  location: LocationDescriptor;
-}
-
 interface ValueProps {
   results: any[];
   count: number;
   page: number;
+  query: string;
   selectedDistilleryID: number;
   distilleries: DistilleryMinimal[];
-  location: LocationDescriptor;
 }
 
 interface FunctionProps {
@@ -60,21 +52,15 @@ interface FunctionProps {
 
 type Props = ValueProps & FunctionProps;
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
 class Container extends React.Component<Props> {
   public changePage = (page: number) => {
-    const URLQuery = this.props.location.query as SearchRouteURLQuery;
+    if (!this.props.query) { return; }
 
-    if (URLQuery.query) {
-      this.props.paginateResults(
-        this.props.selectedDistilleryID,
-        URLQuery.query,
-        page,
-      );
-    }
+    this.props.paginateResults(
+      this.props.selectedDistilleryID,
+      this.props.query,
+      page,
+    );
   };
 
   public render() {
@@ -94,23 +80,19 @@ class Container extends React.Component<Props> {
   }
 }
 
-// --------------------------------------------------------------------------
-// Container
-// --------------------------------------------------------------------------
-
-const values: StateToProps<ValueProps, ContainerProps> = (state, props) => ({
+const values: StateToProps<ValueProps, {}> = (state, props) => ({
   results: getSelectedResults(state.searchResults),
   count: getSelectedResultCount(state.searchResults),
   page: getSelectedResultsPage(state.searchResults),
   distilleries: getSearchResultDistilleries(state.searchResults),
   selectedDistilleryID: state.searchResults.selectedDistilleryID,
-  location: props.location,
+  query: state.searchQuery.query,
 });
 
-const functions: DispatchToProps<FunctionProps, ContainerProps> = (dispatch) => ({
+const functions: DispatchToProps<FunctionProps, {}> = (dispatch) => ({
   paginateResults: bind(paginateResults, dispatch),
 });
 
 export const SearchResultsContainer: React.ComponentClass<{}> = (
-  withRouter(connect(values, functions)(Container))
+  connect(values, functions)(Container)
 );

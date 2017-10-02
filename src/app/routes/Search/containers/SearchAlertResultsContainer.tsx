@@ -30,10 +30,6 @@ import { paginateAlertResults } from '~/store/alertSearchResults';
 import { withRouter } from 'react-router';
 import { SearchRouteURLQuery } from '~/routes/Search/types';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
 interface ContainerProps {
   router: InjectedRouter;
   location: LocationDescriptor;
@@ -42,9 +38,9 @@ interface ContainerProps {
 interface ValueProps {
   page: number;
   count: number;
+  query: string;
   results: AlertDetail[];
   router: InjectedRouter;
-  location: LocationDescriptor;
 }
 
 interface FunctionProps {
@@ -53,21 +49,15 @@ interface FunctionProps {
 
 type Props = ValueProps & FunctionProps;
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
 class Container extends React.Component<Props> {
   public onAlertClick = (alertID: number) => {
     this.props.router.push({ pathname: `/alerts/${alertID}/` });
   };
 
   public onPaginate = (page: number) => {
-    if (!this.props.location.query) { return; }
+    if (!this.props.query) { return; }
 
-    const query = (this.props.location.query as SearchRouteURLQuery).query;
-
-    if (query) { this.props.paginateResults(query, page); }
+    this.props.paginateResults(this.props.query, page);
   };
 
   public render() {
@@ -83,16 +73,12 @@ class Container extends React.Component<Props> {
   }
 }
 
-// --------------------------------------------------------------------------
-// Container
-// --------------------------------------------------------------------------
-
 const values: StateToProps<ValueProps, ContainerProps> = (state, props) => ({
   page: state.alertSearchResults.page,
   count: state.alertSearchResults.count,
   results: state.alertSearchResults.results,
   router: props.router,
-  location: props.location,
+  query: state.searchQuery.query,
 });
 
 const functions: DispatchToProps<FunctionProps, ContainerProps> = (dispatch) => ({

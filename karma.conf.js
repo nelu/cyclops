@@ -81,5 +81,9 @@ module.exports = function(config) {
       timeoutNotCreated: 2000,
       timeoutNoMoreFiles: 2000,
     },
+
+    mochaReporter: {
+      showDiff: true,
+    },
   });
 };

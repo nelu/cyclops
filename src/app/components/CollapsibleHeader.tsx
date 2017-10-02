@@ -21,11 +21,6 @@ import * as React from 'react';
 import * as classnames from 'classnames';
 import * as _ from 'lodash';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the CollapsibleListGroup component. */
 interface Props {
   title: string;
   actionName?: string;
@@ -34,15 +29,10 @@ interface Props {
   action?(): any;
 }
 
-/** Internal state of the CollapsibleListGroup component */
 interface State {
   /** If the content should be viewable. */
   open: boolean;
 }
-
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
 
 /**
  *
@@ -54,17 +44,14 @@ export class CollapsibleHeader extends React.Component<Props, State> {
     this.state = { open: _.defaultTo<boolean>(this.props.open, true) };
   }
 
-  /** Closes the collapsible content. */
   public close = (): void => {
     this.setState({ open: false });
   };
 
-  /** Opens the collapsible content */
   public open = (): void => {
     this.setState({ open: true });
   };
 
-  /** Toggles the collapsible content. */
   public toggle = (): void => {
     (this.state.open ? this.close : this.open)();
   };

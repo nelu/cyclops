@@ -16,15 +16,9 @@
  * are made]
  */
 
-// Vendor
 import * as React from 'react';
 import * as classnames from 'classnames';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the Collapsible component. */
 interface Props {
   descriptor: JSX.Element | string;
   open: boolean;
@@ -34,20 +28,12 @@ interface State {
   open: boolean;
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
 /**
  * Creates a block of text with a descriptor that can be collapsed to
  * save screen real estate.
  */
 export class Collapsible extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-
-    this.state = { open: this.props.open };
-  }
+  public state = { open: this.props.open };
 
   public close = () => {
     this.setState({ open: false });

@@ -23,11 +23,6 @@ import * as React from 'react';
 import { Autocomplete } from '~/components/Autocomplete';
 import { RemovableItem } from '~/components/RemovableItem';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the MultiAutocomplete component. */
 interface Props {
   items: any[];
   selected?: any[];
@@ -39,10 +34,6 @@ interface Props {
   onSelect?(item: any): void;
   filter?(item: any): boolean;
 }
-
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
 
 /**
  * Displays an Autcomplete component that selects multiple items and

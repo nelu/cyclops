@@ -22,11 +22,6 @@ import * as _ from 'lodash';
 import Complete = require('react-autocomplete');
 import * as classnames from 'classnames';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the Autocomplete component. */
 interface Props {
   items: any[];
   value: string;
@@ -42,12 +37,8 @@ interface State {
   filtered: any[];
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
 /**
- * Shows an input element that allows for text autocomplete.
+ * Input element that allows for text autocomplete.
  */
 export class Autocomplete extends React.Component<Props, Partial<State>> {
   /**
@@ -81,15 +72,11 @@ export class Autocomplete extends React.Component<Props, Partial<State>> {
     <div className="autocomplete__menu" style={styles} children={items} />
   );
 
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      selected: this.props.value || '',
-      value: '',
-      filtered: this.props.items || [],
-    };
-  }
+  public state = {
+    selected: this.props.value || '',
+    value: '',
+    filtered: this.props.items || [],
+  };
 
   public componentWillReceiveProps(nextProps: Props): void {
     const filtered = this.filterItems(nextProps.items, this.state.value || '');
@@ -107,7 +94,6 @@ export class Autocomplete extends React.Component<Props, Partial<State>> {
 
   /**
    * Returns the properties to pass to the input element.
-   * @returns {any}
    */
   public getInputProps = (): any => {
     return {

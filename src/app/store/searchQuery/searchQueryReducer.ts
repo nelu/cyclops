@@ -23,11 +23,11 @@ import * as actions from './searchQueryActions';
 import {
   PAGINATE_RESULTS_PENDING,
   PaginateResultsPendingAction,
-} from '../searchResults/searchResultsActions';
+} from '../searchResults';
 import {
   PAGINATE_ALERT_RESULTS_PENDING,
   PaginateAlertResultsPendingAction,
-} from '../alertSearchResults/alertSearchResultsActions';
+} from '../alertSearchResults';
 
 export interface SearchQueryState {
   query: string;
