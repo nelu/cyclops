@@ -25,7 +25,7 @@ import {
   NormalizedContextList,
   ContextNested,
 } from '../../../services/contexts/types';
-import { denormalizeContexts } from '../../../services/contexts/utils';
+import { denormalizeContexts } from '../../../services/contexts/utils/contextNormalizr';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types

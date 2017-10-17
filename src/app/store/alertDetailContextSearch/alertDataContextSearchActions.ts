@@ -28,7 +28,7 @@ import {
 import { Result } from '../../types/result';
 import { ContextSearchParams } from '../../services/contexts/types';
 import { getCancelTokenSource } from '../../services/cyphon/utils/cancelTokens';
-import { searchContext } from '../../services/contexts/api';
+import { searchContext } from '../../services/contexts/utils/contextAPI';
 import { addError } from '../errorModal/errorModalActions';
 
 /**

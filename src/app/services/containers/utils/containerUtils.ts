@@ -19,7 +19,7 @@
 // Vendor
 import * as _ from 'lodash';
 
-import { Container } from '../types';
+import { ContainerNested } from '../types';
 import { Result } from '~/types/result';
 
 export interface FieldValue<T> {
@@ -36,7 +36,7 @@ export interface FieldValue<T> {
  */
 export function getFieldsOfType<T>(
   type: string,
-  container: Container,
+  container: ContainerNested,
   result: Result,
 ): Array<FieldValue<T>> {
   return container.fields
