@@ -58,12 +58,12 @@ describe('version', () => {
       const cyclopsVersion = version.parseVersion('0.1.0');
       const range = version.getCyphonVersionRange(cyclopsVersion);
 
-      expect((range as version.SemanticVersionRange)[0][0]).to.equal(0);
+      expect((range as version.SemanticVersionRange)[0][0]).to.equal(1);
       expect((range as version.SemanticVersionRange)[0][1]).to.equal(0);
       expect((range as version.SemanticVersionRange)[0][2]).to.equal(0);
       expect((range as version.SemanticVersionRange)[1][0]).to.equal(1);
-      expect((range as version.SemanticVersionRange)[1][1]).to.equal(3);
-      expect((range as version.SemanticVersionRange)[1][2]).to.equal(0);
+      expect((range as version.SemanticVersionRange)[1][1]).to.equal(1);
+      expect((range as version.SemanticVersionRange)[1][2]).to.equal(3);
     });
 
     it('should return the range that matches a specified start and ' +
@@ -128,7 +128,7 @@ describe('version', () => {
 
     it('should return true of the two versions match', () => {
       getVersion.returns('0.1.0');
-      getConfig.returns({ CYPHON_VERSION: '1.2.0'});
+      getConfig.returns({ CYPHON_VERSION: '1.1.3'});
 
       expect(version.cyclopsVersionMatchesCyphonVersion()).to.be.true;
 

@@ -17,26 +17,16 @@
  */
 
 // Vendor
-import { stringify, parse } from 'qs';
+import axios, { AxiosInstance } from 'axios';
+import * as Cookies from 'js-cookie';
 
-/**
- * Parameter serializer for the API request handler.
- * @param params Parameters to serialize into a string.
- * @returns {string} Serialized parameters.
- */
-export function paramsSerializer(params: any): string {
-  return stringify(params, { arrayFormat: 'repeat' });
-}
+// Local
+import { getConfig } from '~/config';
+import { paramsSerializer } from './utils/URLParams';
 
-/**
- * Serializes a url with the given parameters. If no parameters are given,
- * it returns the given url.
- * @param url Url to add parameters to.
- * @param params Parameters to add to the url.
- * @returns {string} Serialized url.
- */
-export function serializeUrl(url: string, params: any): string {
-  if (params) { return `${url}?${paramsSerializer(params)}`; }
-
-  return url;
-}
+export const cyphonAPI: AxiosInstance = axios.create({
+  baseURL: getConfig().API_URL,
+  paramsSerializer,
+  timeout: getConfig().API_TIMEOUT,
+  headers: { 'X-CSRFToken': Cookies.get('csrftoken') },
+});
