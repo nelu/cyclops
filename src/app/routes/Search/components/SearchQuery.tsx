@@ -16,32 +16,18 @@
  * are made]
  */
 
-// Vendor
 import * as React from 'react';
-import * as classnames from 'classnames';
 
-// Local
 import { SearchQuery as SearchQueryInterface } from '~/services/search/types';
-import { Collapsible } from '~/components/Collapsible';
-import { SearchQueryErrors } from '~/routes/Search/components/SearchQueryErrors';
-import { SearchQueryKeywords } from '~/routes/Search/components/SearchQueryKeywords';
-import { SearchQueryFields } from '~/routes/Search/components/SearchQueryFields';
-import { SearchQueryDistilleries } from '~/routes/Search/components/SearchQueryDistillery';
-import { SearchQueryUnknown } from '~/routes/Search/components/SearchQueryUnknown';
+import { SearchQueryParameter } from '~/routes/Search/components/SearchQueryParameter';
+import { CollapsibleHeader } from '~/components/CollapsibleHeader';
+import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
+import './SearchQuery.scss';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the SearchQuery component. */
 interface Props {
   query: SearchQueryInterface;
   valid: boolean;
 }
-
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
 
 /**
  * Displays information about a search query.
@@ -51,27 +37,80 @@ export class SearchQuery extends React.Component<Props, {}> {
     const errors = this.props.query.errors.map((error) => (
       <p className="alert-text--high">{error}</p>
     ));
-    const errorIcon = !this.props.valid
-      ? <i className="fa fa-exclamation-triangle alert-text--high icon-spacing" />
-      : null;
     const unknownParameters = this.props.query.unknown.length
-      ? <SearchQueryUnknown parameters={this.props.query.unknown} />
-      : null;
+      ? this.props.query.unknown.map((parameter) => (
+        <SearchQueryParameter
+          parameter={parameter.parameter}
+          value={''}
+          errors={parameter.errors}
+        />
+      )) : null;
+    const keywordParameterCount = this.props.query.keywords.length;
+    const fieldParamterCount = this.props.query.fields.length;
+    const distilleryCount = this.props.query.distilleries
+      ? this.props.query.distilleries.distilleries.length
+      : 0;
+    const keywords = keywordParameterCount
+      ? this.props.query.keywords.map((keyword) => (
+        <SearchQueryParameter
+          value={keyword.keyword}
+          errors={keyword.errors}
+          parameter={keyword.parameter}
+        />
+      )) : '-';
+    const fields = this.props.query.fields.length
+      ? this.props.query.fields.map((parameter) => (
+        <SearchQueryParameter
+          value={`${parameter.field_name} ${parameter.operator} ${parameter.value}`}
+          errors={parameter.errors}
+          parameter={parameter.parameter}
+        />
+      )) : '-';
+    const collections = this.props.query.distilleries
+      ? this.props.query.distilleries.distilleries.map((name) => (
+        <SearchQueryParameter value={shortenDistilleryName(name)} parameter={name} errors={[]}/>
+      )) : '-';
+    const keywordBlock = keywordParameterCount
+      ? (
+        <div className="SearchQuery_ParameterBlock">
+          <div className="SearchQuery__Title">Keywords {keywordParameterCount}</div>
+          <div className="SearchQuery__Content">{keywords}</div>
+        </div>
+      ) : null;
+    const fieldBlock = fieldParamterCount
+      ? (
+        <div>
+          <div className="SearchQuery__Title">Fields {fieldParamterCount}</div>
+          <div className="SearchQuery__Content">{fields}</div>
+        </div>
+      ) : null;
+    const collectionBlock = distilleryCount
+      ? (
+        <div>
+          <div className="SearchQuery__Title">Collections {distilleryCount}</div>
+          <div className="SearchQuery__Content">{collections}</div>
+        </div>
+      ) : null;
+    const unknownBlock = unknownParameters
+      ? (
+        <div>
+          <div className="SearchQuery__Title">Unknown {unknownParameters.length}</div>
+          <div className="SearchQuery__Content">{unknownParameters}</div>
+        </div>
+      ) : null;
 
     return (
-      <div className="well">
-        <h4 className="well__header text--emphasis">
-          Search Query
-          {errorIcon}
-        </h4>
-        <div className="well__content">
-          {errors}
-          <SearchQueryKeywords keywords={this.props.query.keywords} />
-          <SearchQueryFields fields={this.props.query.fields} />
-          <SearchQueryDistilleries distilleries={this.props.query.distilleries} />
-          {unknownParameters}
+      <CollapsibleHeader title="Parameters">
+        <div className="well">
+          <div className="well__content">
+            {errors}
+            {keywordBlock}
+            {fieldBlock}
+            {collectionBlock}
+            {unknownBlock}
+          </div>
         </div>
-      </div>
+      </CollapsibleHeader>
     );
   }
 }

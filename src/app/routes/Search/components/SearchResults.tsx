@@ -16,19 +16,15 @@
  * are made]
  */
 
-// Vendor
 import * as React from 'react';
 import { Pagination, ListGroup } from 'react-bootstrap';
+
 import { Result } from '~/types/result';
-import { DistillerySearchResults } from '~/services/search/types';
-import { JSONFormatter } from '~/components/JSONFormatter';
 import { SearchQueryInstructions } from '~/routes/Search/components/SearchQueryInstructions';
+import { JSONTable } from '~/services/json/components/JSONTable';
+import { Well } from '~/components/Well';
+import './SearchResults.scss';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the SearchResults component. */
 interface Props {
   results: Result[];
   count: number;
@@ -37,15 +33,10 @@ interface Props {
   onPaginate(page: number): any;
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
 /**
  * List of results from distillery stores that match the current query.
  */
 export class SearchResults extends React.Component<Props> {
-
   public changePage = (eventKey: any) => {
     this.props.onPaginate(eventKey);
   };
@@ -62,15 +53,17 @@ export class SearchResults extends React.Component<Props> {
       );
     }
     const results = this.props.results.map((result) => (
-      <div style={{ 'padding': '15px', 'border-bottom': '1px solid #2a2b2e' }}>
-        <JSONFormatter json={result}/>
-      </div>
+      <Well key={result._id} isLight={true}>
+        <Well.Content>
+          <JSONTable data={result}/>
+        </Well.Content>
+      </Well>
     ));
 
     return (
       <div className="flex-box">
         <div className="flex-box flex--shrink">
-          <div className="flex-item">
+          <div className="flex-item SearchResults__Sidebar">
             <ListGroup>
               {this.props.distilleries}
             </ListGroup>
@@ -78,12 +71,12 @@ export class SearchResults extends React.Component<Props> {
         </div>
         <div className="flex-box flex-box--column">
           <div className="flex-box">
-            <div className="flex-item">
+            <div className="flex-item SearchResults__Results">
               {results}
             </div>
           </div>
           <div className="flex-box flex--shrink">
-            <div className="flex-item text-center" style={{ padding: '15px' }}>
+            <div className="flex-item SearchResults__Pagination">
               <Pagination
                 items={Math.ceil(this.props.count / 10)}
                 activePage={this.props.page}

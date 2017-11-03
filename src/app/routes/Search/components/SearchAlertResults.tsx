@@ -16,19 +16,14 @@
  * are made]
  */
 
-// Vendor
 import * as React from 'react';
-import { AlertSearchResults } from '~/services/search/types';
 import { Pagination } from 'react-bootstrap';
+
 import { SearchAlertResult } from '~/routes/Search/components/SearchAlertResult';
 import { AlertDetail } from '~/services/alerts/types';
 import { SearchQueryInstructions } from '~/routes/Search/components/SearchQueryInstructions';
+import './SearchAlertResults.scss';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the SearchAlertResults component. */
 interface Props {
   page: number;
   count: number;
@@ -36,10 +31,6 @@ interface Props {
   onAlertClick(alertID: number): void;
   onPaginate(page: number): void;
 }
-
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
 
 /**
  * Displays the alert results returned from a search query.
@@ -65,7 +56,7 @@ export class SearchAlertResults extends React.Component<Props, {}> {
     return results && results.length
       ? (
         <div className="flex-box flex-box--column">
-          <div className="flex-item">
+          <div className="flex-item SearchAlertResults__Container">
             {results}
           </div>
           <div

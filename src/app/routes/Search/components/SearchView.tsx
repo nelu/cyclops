@@ -25,20 +25,16 @@ import { CollapsibleHeader } from '~/components/CollapsibleHeader';
 import { ContainerNested } from '~/services/containers/types';
 import { Field } from '~/services/cyphon/types';
 import { SearchBar } from './SearchBar';
-import { SearchContainer } from './SearchContainer';
 import { SearchField } from '~/routes/Search/components/SearchField';
-import { SearchDistillery } from '~/routes/Search/components/SearchCollection';
+import { SearchDistillery } from '~/routes/Search/components/SearchDistillery';
 import { SearchQuery } from '~/routes/Search/components/SearchQuery';
 import { SearchQuery as SearchQueryInterface } from '~/services/search/types';
 import { Loading } from '~/components/Loading';
 import { SearchQueryView } from '~/store/searchQuery';
 import { SearchViewChangeButton } from '~/routes/Search/components/SearchViewChangeButton';
-
-// Local
-
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
+import { SearchFields } from '~/routes/Search/components/SearchFields';
+import './SearchView.scss';
+import { addCommas } from '~/utils/stringUtils';
 
 interface Props {
   /** List of all the current containers in Cyphon. */
@@ -61,24 +57,14 @@ interface Props {
   changeQuery(query: string): any;
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
 /**
  * Root component of the SearchQueryStore page.
  */
 export class SearchView extends React.Component<Props> {
   public render() {
-    const containers = this.props.containers.map((container) => (
-      <SearchContainer
-        container={container}
-        open={false}
-      />
-    ));
-    const fields = this.props.fields.map((field) => (
-      <SearchField field={field} />
-    ));
+    const fields = this.props.fields
+      .filter((field) => field.field_name)
+      .map((field) => <SearchField field={field} />);
     const distilleries = this.props.distilleries.map((distillery) => (
       <SearchDistillery distillery={distillery}/>
     ));
@@ -89,7 +75,7 @@ export class SearchView extends React.Component<Props> {
 
     return (
       <div className="flex-box flex-box--column">
-        <div className="flex-box flex--shrink content banner">
+        <div className="flex-box flex--shrink SearchView__Banner">
           <SearchBar
             initialValue={this.props.initialQuery}
             onSubmit={this.props.changeQuery}
@@ -109,13 +95,7 @@ export class SearchView extends React.Component<Props> {
                 title={`Fields ${fields.length}`}
                 open={false}
               >
-                {fields}
-              </CollapsibleHeader>
-              <CollapsibleHeader
-                title={`Containers ${containers.length}`}
-                open={false}
-              >
-                {containers}
+                <SearchFields fields={this.props.fields}/>
               </CollapsibleHeader>
             </div>
           </div>
@@ -123,7 +103,7 @@ export class SearchView extends React.Component<Props> {
             <div className="flex-box flex--shrink">
               <div className="flex-item content" style={{ 'border-bottom': 'solid 1px #2a2b2e' }}>
                 <span className="text--emphasis">
-                  {this.props.alertResultCount + this.props.resultCount}
+                  {addCommas(this.props.alertResultCount + this.props.resultCount)}
                 </span>
                 {' '}
                 <span style={{'margin-right': '6px'}}>
@@ -134,14 +114,14 @@ export class SearchView extends React.Component<Props> {
                   onClick={this.props.changeView}
                   activeView={this.props.view}
                 >
-                  {this.props.alertResultCount} Alerts
+                  {addCommas(this.props.alertResultCount)} Alerts
                 </SearchViewChangeButton>
                 <SearchViewChangeButton
                   view={SearchQueryView.Data}
                   onClick={this.props.changeView}
                   activeView={this.props.view}
                 >
-                  {this.props.resultCount} Data
+                  {addCommas(this.props.resultCount)} Data
                 </SearchViewChangeButton>
 
               </div>

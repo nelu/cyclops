@@ -16,3 +16,21 @@
  * are made]
  */
 
+@import '../../../../styles/base/variables';
+
+.SearchField {
+  border-bottom: 1px solid darken($border-color-extra-light, 6%);
+  padding: 0.3rem 0;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+}
+
+.SearchField__Field {
+  color: darken($text-color, 15%);
+}
+
+.SearchField__FieldType {
+  color: darken($text-muted, 15%);
+}
