@@ -1,5 +1,21 @@
 # Change log
 
+<a name="0.5.0"></a>
+## [0.5.0](https://github.com/dunbarcyber/cyclops/compare/0.4.4...0.5.0) (2017-11-03)
+
+### Added
+
+- Ability to search through alerts and distilled data using keywords and field comparisons.
+- Ability to limit searches by collection using wildcard operators or specific names.
+- Quick visibility of all collections and their associated fields for quick reference.
+- Link to alert page when clicking alert search result.
+- New data layout for the search page ([83390bf](https://github.com/dunbarcyber/cyclops/commit/83390bf5319835d7695ccaa52a9406a1ac5c1325)).
+- Component styling in adjacent scss files with the same name.
+
+### Fixed
+
+- Duplicate monitors appearing in the monitors panel ([7287c13](https://github.com/dunbarcyber/cyclops/commit/7287c134bb5418ba98e416834b21d0377d96664c)).
+
 <a name="0.4.4"></a>
 ## [0.4.4](https://github.com/dunbarcyber/cyclops/compare/0.4.3...0.4.4) (2017-09-20)
 
