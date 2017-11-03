@@ -28,7 +28,7 @@ import {
 
 // Local
 import { Result } from '../../../types/result';
-import { Container } from '../../../services/containers/types';
+import { ContainerNested } from '../../../services/containers/types';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -45,13 +45,13 @@ interface Props {
   /** The selected alerts data. */
   alertData: Result;
   /** Container associated with the alert. */
-  alertContainer?: Container;
+  alertContainer?: ContainerNested;
   /**
    * Opens a modal to analyze the alert data.
    * @param data Data of the alert to analyze.
    * @param container Container related to the alert data.
    */
-  openDataModal(data: Result, container: Container): any;
+  openDataModal(data: Result, container: ContainerNested): any;
   /** Closes the alert detail. */
   closeAlert(): any;
 }

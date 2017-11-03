@@ -27,6 +27,7 @@ import {
 import { getConfig } from '~/config';
 import { MonitorStatusContainer } from '../containers/MonitorStatusContainer';
 import { LogoutModal } from './LogoutModal';
+import { SearchLinkContainer } from '../containers/SearchLinkContainer';
 
 // --------------------------------------------------------------------------
 // Interfaces/Types
@@ -86,6 +87,9 @@ export class Header extends React.Component<HeaderProps, {}> {
             >
               Alerts
             </Link>
+          </div>
+          <div className="flex-item flex--shrink">
+            <SearchLinkContainer/>
           </div>
         </div>
         <div className="flex-box flex--shrink">

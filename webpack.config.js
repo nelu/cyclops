@@ -121,7 +121,6 @@ const TSLINT_RULE = {
   test: /\.tsx?$/,
   enforce: 'pre',
   loader: 'tslint-loader',
-  options: { emitErrors: true },
 };
 
 /**
@@ -152,7 +151,7 @@ const TYPESCRIPT_RULE = {
  */
 const SCSS_RULE = {
   test: /\.scss$/,
-  include: path.resolve(__dirname, 'src/styles'),
+  include: path.resolve(__dirname, 'src'),
   use: ExtractTextPlugin.extract({
     fallback: 'style-loader',
     use: [

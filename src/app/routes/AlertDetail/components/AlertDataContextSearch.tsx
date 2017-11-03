@@ -35,7 +35,7 @@ import { SubTitle } from '../../../components/SubTitle';
 import { TextInput } from '../../../components/TextInput';
 import { Result } from '../../../types/result';
 import { getResultPaginationRange } from '../../../utils/getResultPaginationRange';
-import { denormalizeContext } from '../../../services/contexts/utils';
+import { denormalizeContext } from '../../../services/contexts/utils/contextNormalizr';
 import {
   StateToProps,
   DispatchToProps,
@@ -217,7 +217,7 @@ export class AlertDataContextSearch extends React.Component<Props, State> {
       ) : null;
     const searchButtonText = loading
       ?  <i className="fa fa-spinner fa-spin" />
-      : 'Search';
+      : 'SearchView';
 
     return (
       <div className="flex-box">

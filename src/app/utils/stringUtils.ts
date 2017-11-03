@@ -23,3 +23,23 @@
 export function createRandomId(): string {
   return 'id' + Math.random().toString(36).substr(2, 10);
 }
+
+export function addCommas(num: number): string {
+  const stringified = num.toString();
+
+  if (stringified.length <= 3) { return stringified; }
+
+  const converted: string[] = [];
+
+  stringified.split('').reverse().forEach((letter, index) => {
+    const place = index + 1;
+
+    converted.push(letter);
+
+    if (place % 3 === 0 && place !== stringified.length) {
+      converted.push(',');
+    }
+  });
+
+  return converted.reverse().join('');
+}

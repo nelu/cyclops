@@ -17,7 +17,7 @@
  */
 
 // Vendor
-import { stringify } from 'qs';
+import { stringify, parse } from 'qs';
 
 /**
  * Parameter serializer for the API request handler.

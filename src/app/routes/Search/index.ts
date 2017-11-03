@@ -17,28 +17,13 @@
  */
 
 // Vendor
-import { CancelToken } from 'axios';
+import { ComponentClass } from 'react';
 
 // Local
-import * as cyphonAPI from '../cyphon/utils/cyphonAPI';
-import { Context, ContextSearchParams, ContextFilter } from './types';
-import { Result } from '../../types/result';
-import { APIList } from '../cyphon/types';
+import { SearchViewContainer } from './containers/SearchViewContainer';
 
 /**
- * Searches a context for results that match the given result ID.
- * @param contextId ID of the context to search.
- * @param params Parameters to search with.
- * @param cancelToken Cancel token to cancel the request with.
- * @returns {Promise<APIList<Result>>}
+ * Root component for the SearchQueryStore view.
+ * @type {ComponentClass<any>}
  */
-export function searchContext(
-  contextId: number,
-  params: ContextSearchParams,
-  cancelToken?: CancelToken,
-): Promise<APIList<Result>> {
-  return cyphonAPI.get(
-    `/contexts/${contextId}/related-data-by-id/`,
-    { params, cancelToken },
-  );
-}
+export const SearchRouteComponent: ComponentClass<any> = SearchViewContainer;

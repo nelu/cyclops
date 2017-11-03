@@ -16,30 +16,3 @@
  * are made]
  */
 
-// --------------------------------------------------------------------------
-// Colors
-// --------------------------------------------------------------------------
-
-//== Base
-
-$color-base: #313236;
-$color-dark: darken($color-base, 3%);
-$color-darker: darken($color-base, 6%);
-$color-darkest: darken($color-base, 8%);
-$color-light: darken(#4F5054, 6%);
-$color-lighter: #4F5054;
-$color-primary: desaturate(#00ADBB, 15%);
-
-//== Alerts
-
-$alert-color-critical: #C168A6;
-$alert-color-high: #D6705C;
-$alert-color-medium: #FFC578;
-$alert-color-low: #6CA887;
-$alert-color-info: #80B8D6;
-
-//== Borders
-
-$border-color-base: darken($color-dark, 5%);
-$border-color-light: #4D4D4D;
-$border-color-extra-light: darken($border-color-light, 7%);

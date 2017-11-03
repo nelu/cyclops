@@ -23,9 +23,9 @@ import * as chai from 'chai';
 import {
   ContextFilter,
   ContextNested,
-} from './types';
-import { DistilleryFlat } from '../distilleries/types';
-import * as utils from './utils';
+} from '../types';
+import { DistilleryFlat } from '../../distilleries/types';
+import * as utils from './contextNormalizr';
 
 describe('api.contexts.utils', () => {
   const distillery: DistilleryFlat = {
@@ -33,6 +33,7 @@ describe('api.contexts.utils', () => {
     name: 'distillery',
     container: 1,
     contexts: [],
+    url: '',
   };
   const filter: ContextFilter = {
     id: 1,

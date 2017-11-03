@@ -26,19 +26,10 @@ import {
 // Local
 import { createRandomId } from '../utils/stringUtils';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the Close component. */
 interface Props {
   /** Function that runs when the close button is clicked. */
   close(): any;
 }
-
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
 
 /**
  * Displays a close button with a tooltip explaining that it's a close button.
