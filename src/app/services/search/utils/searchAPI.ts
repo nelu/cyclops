@@ -18,11 +18,9 @@
 
 // Local
 import { get } from '~/services/cyphon/utils/cyphonAPI';
-import * as _ from 'lodash';
 import {
   AlertSearchResults,
   CombinedSearchResults,
-  DistilleryListSearchResults,
   DistillerySearchResults,
   SearchEndpoint,
 } from '~/services/search/types';

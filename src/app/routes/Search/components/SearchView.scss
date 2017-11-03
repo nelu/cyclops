@@ -16,3 +16,13 @@
  * are made]
  */
 
+@import '../../../../styles/base/variables';
+
+.SearchView__Banner {
+  background-color: $color-darker;
+  padding: $padding-large-vertical $padding-base-horizontal;
+
+  .search-bar {
+    margin-bottom: 0 !important;
+  }
+}

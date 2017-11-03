@@ -16,3 +16,20 @@
  * are made]
  */
 
+@import '../../../../styles/base/variables';
+
+.SearchResults {
+  &__Sidebar {
+    border-right: 1px solid $border-color-extra-light;
+  }
+
+  &__Results {
+    padding: $padding-base-vertical $padding-base-horizontal;
+  }
+
+  &__Pagination {
+    padding: 15px;
+    text-align: center;
+    border-top: 1px solid $border-color-extra-light;
+  }
+}

@@ -16,48 +16,61 @@
  * are made]
  */
 
-// Vendor
 import * as React from 'react';
+import * as classnames from 'classnames';
+
 import { DistilleryNested } from '~/services/distilleries/types';
-import { Collapsible } from '~/components/Collapsible';
 import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
-import { SearchField } from '~/routes/Search/components/SearchField';
+import './SearchDistillery.scss';
+import { SearchFields } from '~/routes/Search/components/SearchFields';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the SearchDistillery component. */
 interface Props {
   distillery: DistilleryNested;
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
+interface State {
+  active: boolean;
+}
 
 /**
  * Displays field and container information about a distillery.
  */
-export class SearchDistillery extends React.Component<Props, {}> {
+export class SearchDistillery extends React.Component<Props, State> {
+  public state: State = { active: false };
+
+  public handleClick = () => {
+    this.setState({ active: !this.state.active });
+  };
+
   public render() {
     const shortenedDistilleryName = shortenDistilleryName(
       this.props.distillery.name,
     );
-    const fields = this.props.distillery.container.fields.map((field) => (
-      <SearchField key={field.field_name} field={field} />
-    ));
+    const classes = classnames('SearchDistillery__Distillery', {
+      'SearchDistillery__Distillery--active': this.state.active,
+    });
+    const iconClasses = classnames('SearchDistillery__Icon fa', {
+      'fa-caret-down': !this.state.active,
+      'fa-caret-up': this.state.active,
+    });
+    const fields = this.state.active
+      ? (
+        <div className="SearchDistillery__SearchFields">
+          <SearchFields fields={this.props.distillery.container.fields}/>
+        </div>
+      ) : null;
 
     return (
-      <div>
-        <Collapsible descriptor={shortenedDistilleryName} open={false}>
-          <div className="tabbed tabbed--border">
-            <div className="tabbed__title text--muted">Container</div>
-            <div>{this.props.distillery.container.name}</div>
-            <div className="tabbed__title text--muted">Fields</div>
-            {fields}
-          </div>
-        </Collapsible>
+      <div className="SearchDistillery">
+        <button
+          className={classes}
+          onClick={this.handleClick}
+        >
+          {shortenedDistilleryName}
+          {' '}
+          <i className={iconClasses} />
+        </button>
+        {fields}
       </div>
     );
   }

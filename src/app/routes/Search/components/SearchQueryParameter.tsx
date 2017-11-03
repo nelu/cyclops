@@ -17,35 +17,34 @@
  */
 
 import * as React from 'react';
-import { ListGroupItem } from 'react-bootstrap';
+import * as classnames from 'classnames';
 
-import { DistilleryMinimal } from '~/services/distilleries/types';
-import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
-import { addCommas } from '~/utils/stringUtils';
+import { ErrorIcon } from '~/components/ErrorIcon';
+import './SearchQueryParameter.scss';
 
 interface Props {
-  isActive: boolean;
-  distillery: DistilleryMinimal;
-  resultCount: number;
-  onSelect(distilleryID: number): any;
+  value: string;
+  parameter: string;
+  errors: string[];
 }
 
-export class SearchResultDistillery extends React.Component<Props, {}> {
-  public onClick = () => {
-    this.props.onSelect(this.props.distillery.id);
-  };
-
+export class SearchQueryParameter extends React.Component<Props, {}> {
   public render() {
+    const classes = classnames('SearchQueryParameter', {
+      'SearchQueryParameter--error': !!this.props.errors.length,
+    });
+    const displayValue = this.props.errors.length
+      ? this.props.parameter
+      : this.props.value;
+    const errors = this.props.errors.map((error) => (
+      <div className="SearchQueryParameter__Error flex-box">
+        <div className="flex-item flex--shrink"><ErrorIcon /></div>
+        <div className="flex-item alert-icon-spacing">{error}</div>
+      </div>
+    ));
+
     return (
-      <ListGroupItem
-        active={this.props.isActive}
-        onClick={this.onClick}
-        key={this.props.distillery.id}
-      >
-        {shortenDistilleryName(this.props.distillery.name)}
-        {' '}
-        <span className="text--muted">({addCommas(this.props.resultCount)})</span>
-      </ListGroupItem>
+      <div className={classes}>{displayValue} {errors}</div>
     );
   }
 }

@@ -151,7 +151,7 @@ const TYPESCRIPT_RULE = {
  */
 const SCSS_RULE = {
   test: /\.scss$/,
-  include: path.resolve(__dirname, 'src/styles'),
+  include: path.resolve(__dirname, 'src'),
   use: ExtractTextPlugin.extract({
     fallback: 'style-loader',
     use: [

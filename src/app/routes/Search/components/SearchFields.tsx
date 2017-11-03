@@ -16,3 +16,26 @@
  * are made]
  */
 
+import * as React from 'react';
+import * as _ from 'lodash';
+
+import { Field } from '~/services/cyphon/types';
+import { SearchField } from '~/routes/Search/components/SearchField';
+import './SearchFields.scss';
+
+interface Props {
+  fields: Field[];
+}
+
+export class SearchFields extends React.Component<Props, {}> {
+  public render() {
+    const sorted = _.sortBy(this.props.fields, (field) => field.field_name);
+    const fields = sorted.map((field) => <SearchField field={field}/>);
+
+    return (
+      <div className="SearchFields well">
+        {fields}
+      </div>
+    );
+  }
+}

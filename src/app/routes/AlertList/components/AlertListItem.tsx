@@ -37,6 +37,7 @@ interface Props {
   /** Alert to display. */
   alert: Alert;
   isActive: boolean;
+  removeGradient?: boolean;
   /**
    * Selects an alerts to view in the alert detail.
    * @param alertID
@@ -71,6 +72,9 @@ export class AlertListItem extends React.Component<Props, {}> {
     const user = this.props.alert.assigned_user
       ? getUserFullName(this.props.alert.assigned_user)
       : 'Unassigned';
+    const gradient = this.props.removeGradient
+      ? null
+      : <div className="alert-list-item__gradient" />;
 
     return (
       <tr className={classes} onClick={this.selectAlert}>
@@ -87,7 +91,7 @@ export class AlertListItem extends React.Component<Props, {}> {
           <div className="flex-box">
             <div className="alert-list-item__title flex-item">
               {this.props.alert.title}
-              <div className="alert-list-item__gradient"/>
+              {gradient}
             </div>
             <div className="alert-list-item__user flex-item flex--shrink">
               <span className="text--emphasis">

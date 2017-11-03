@@ -16,3 +16,10 @@
  * are made]
  */
 
+@import '../../../../styles/base/variables';
+
+.SearchAlertResults {
+  &__Container {
+    padding: $padding-base-vertical $padding-base-horizontal;
+  }
+}

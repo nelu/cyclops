@@ -16,24 +16,14 @@
  * are made]
  */
 
-// Vendor
 import * as React from 'react';
 
-// Local
 import { Field } from '~/services/cyphon/types';
+import './SearchField.scss';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the SearchField component. */
 interface Props {
   field: Field;
 }
-
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
 
 /**
  * Displays the name of a search field to create a search filter from.
@@ -41,10 +31,12 @@ interface Props {
 export class SearchField extends React.Component<Props, {}> {
   public render() {
     return (
-      <div>
-        {this.props.field.field_name}
+      <div className="SearchField">
+        <span className="SearchField__Field">
+          {this.props.field.field_name}
+        </span>
         {' '}
-        <i className="text--muted">{this.props.field.field_type}</i>
+        <i className="SearchField__FieldType">{this.props.field.field_type}</i>
       </div>
     );
   }
