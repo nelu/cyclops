@@ -16,7 +16,6 @@
  * are made]
  */
 
-// Vendor
 import * as React from 'react';
 import {
   Router,
@@ -27,24 +26,16 @@ import {
 import { createHistory } from 'history';
 import { Provider } from 'react-redux';
 
-// Local
 import { getConfig } from './config';
 import { store } from './store';
 import * as routes from './routes';
 
-/** React router history that uses the base url given by the parent template. */
 const browserHistory = useRouterHistory(createHistory)({
+  // Use base URL given by the parent template.
   basename: getConfig().APP_BASE_URL,
 });
 
-// --------------------------------------------------------------------------
-// Main Application
-// --------------------------------------------------------------------------
-
-/**
- * Root component of the application.
- * @type {JSX.Element}
- */
+// Root application component.
 export const App = (
   <Provider store={store}>
     <Router history={browserHistory}>
