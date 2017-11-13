@@ -16,7 +16,6 @@
  * are made]
  */
 
-// Vendor
 import * as React from 'react';
 
 interface Props {

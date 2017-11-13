@@ -16,42 +16,18 @@
  * are made]
  */
 
-// Vendor
 import * as React from 'react';
-import * as classnames from 'classnames';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
+import './Loading.scss';
 
-/** Properties of the Loading component. */
-interface Props {
-  /** If the icon should take up the whole screen. */
-  global?: boolean;
-  /** If the icon should not include a muted backdrop. */
-  baseBg?: boolean;
-}
-
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
-/**
- * Displays a loading spinner.
- */
-export class Loading extends React.Component<Props, {}> {
+// Loading spinner.
+export class Loading extends React.Component<{}, {}> {
   public render(): JSX.Element {
-    const optionalClasses = {
-      loading_base: this.props.baseBg,
-      loading_global: this.props.global,
-    };
-    const classes = classnames('loading', optionalClasses);
-
     return (
-      <div className={classes}>
-        <div className="loading__spinner">
-          <div className="loading__dot1"/>
-          <div className="loading__dot2"/>
+      <div className="Loading">
+        <div className="Loading__Spinner">
+          <div className="Loading__Dot1"/>
+          <div className="Loading__Dot2"/>
         </div>
       </div>
     );
