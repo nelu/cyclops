@@ -17,9 +17,9 @@
  */
 
 import * as React from 'react';
-import * as classnames from 'classnames';
 
 import { Dictionary } from '~/types/object';
+import { FontAwesome } from '~/components/FontAwesome';
 import './AlertLevelIcon.scss';
 
 interface Props {
@@ -37,12 +37,11 @@ const LEVEL_ICONS: Dictionary<string> = {
 // Shows the icon related to the an alert level.
 export class AlertLevelIcon extends React.Component<Props, {}> {
   public render() {
-    const classes = classnames(
-      'fa',
-      `fa-${LEVEL_ICONS[this.props.level]}`,
-      `AlertLevelIcon--${this.props.level.toLowerCase()}`,
+    return (
+      <FontAwesome
+        icon={LEVEL_ICONS[this.props.level]}
+        className={`AlertLevelIcon--${this.props.level.toLowerCase()}`}
+      />
     );
-
-    return <i className={classes} />;
   }
 }
