@@ -20,11 +20,12 @@
 
 .AlertLevelIcon {
   text-align: center;
-  width: 1rem;
+  width: 15px;
 
   &--critical { color: $alert-color-critical; }
   &--high { color: $alert-color-high; }
   &--medium { color: $alert-color-medium; }
   &--low { color: $alert-color-low; }
   &--info { color: $alert-color-info; }
+
 }
