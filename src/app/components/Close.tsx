@@ -20,6 +20,7 @@ import * as React from 'react';
 import { OverlayTrigger, Popover } from 'react-bootstrap';
 
 import { createRandomId } from '~/utils/stringUtils';
+import { FontAwesome } from '~/components/FontAwesome';
 
 interface Props {
   /** Function that runs when the close button is clicked. */
@@ -38,7 +39,7 @@ export class Close extends React.Component<Props, {}> {
         animation={false}
       >
         <button onClick={this.props.close} className="btn-alt">
-          <i className="fa fa-times" />
+          <FontAwesome icon="times"/>
         </button>
       </OverlayTrigger>
     );
