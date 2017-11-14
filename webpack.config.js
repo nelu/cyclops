@@ -16,45 +16,21 @@
  * are made]
  */
 
-// Vendor
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const execSync = require('child_process').execSync
 
-// --------------------------------------------------------------------------
-// Constants
-// --------------------------------------------------------------------------
-
-/**
- * Current running environment.
- * @type {string}
- */
+/** Current running environment. */
 const ENV = process.env.NODE_ENV || 'development';
 
-/**
- * If webpack is being run in a production environment.
- * @type {boolean}
- */
+/** If webpack is being run in a production environment. */
 const PRODUCTION = ENV === 'production';
 
-/**
- * If webpack is being run in a test environment.
- * @type {boolean}
- */
+/** If webpack is being run in a test environment. */
 const TESTING = ENV === 'test';
 
-/**
- * If webpack is being run in a development environment.
- * @type {boolean}
- */
+/** If webpack is being run in a development environment. */
 const DEVELOPMENT = ENV === 'development';
-
-/**
- * Current Cyclops version according to the git tags.
- * @type {String}
- */
-const VERSION = execSync('git describe --tags --abbrev=0').toString() || '';
 
 const BANNER =
 `The contents of this file are subject to the CYPHON Proprietary Non-
@@ -73,14 +49,6 @@ Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
 Contributor/Change Made By: ________________. [Only apply if changes
 are made]`;
 
-// --------------------------------------------------------------------------
-// Loaders
-// --------------------------------------------------------------------------
-
-/**
- * Webpack loader for CSS files.
- * @type {Object}
- */
 const CSS_LOADER = {
   loader: 'css-loader',
   options: {
@@ -89,44 +57,24 @@ const CSS_LOADER = {
   },
 };
 
-// --------------------------------------------------------------------------
-// Rules
-// --------------------------------------------------------------------------
-
-/**
- * Webpack rule for loading javascript sourcemap files.
- * @type {Object}
- */
 const JS_SOURCEMAP_RULE = {
   test: /\.js$/,
   enforce: 'pre',
   loader: 'source-map-loader',
 };
 
-/**
- * Webpack rule for loading typescript sourcemap files.
- * @type {Object}
- */
 const TS_SOURCEMAP_RULE = {
   test: /\.tsx?$/,
   enforce: 'pre',
   loader: 'source-map-loader',
 };
 
-/**
- * Webpack rule for linting Typescript files.
- * @type {Object}
- */
 const TSLINT_RULE = {
   test: /\.tsx?$/,
   enforce: 'pre',
   loader: 'tslint-loader',
 };
 
-/**
- * Webpack rule for CSS files.
- * @type {Object}
- */
 const CSS_RULE = {
   test: /\.css$/,
   use: [
@@ -135,20 +83,12 @@ const CSS_RULE = {
   ],
 };
 
-/**
- * Webpack rule for Typescript files.
- * @type {Object}
- */
 const TYPESCRIPT_RULE = {
   test: /\.tsx?$/,
   include: path.resolve(__dirname, 'src'),
   use: ['awesome-typescript-loader'],
 };
 
-/**
- * Webpack rule for sass files.
- * @type {Object}
- */
 const SCSS_RULE = {
   test: /\.scss$/,
   include: path.resolve(__dirname, 'src'),
@@ -161,10 +101,6 @@ const SCSS_RULE = {
   }),
 };
 
-/**
- * Webpack rule for generating code coverage.
- * @type {Object}
- */
 const COVERAGE_RULE = {
   test: /\.tsx?$/,
   enforce: 'post',
@@ -173,10 +109,6 @@ const COVERAGE_RULE = {
   loader: 'istanbul-instrumenter-loader',
 };
 
-/**
- * Rules that are used no matter the environment
- * @type {Rule[]}
- */
 const BASE_RULES = [
   TSLINT_RULE,
   JS_SOURCEMAP_RULE,
@@ -186,37 +118,17 @@ const BASE_RULES = [
   SCSS_RULE,
 ];
 
-/**
- * Rules that are used in a test environment.
- * @type {Rule[]}
- */
 const TEST_RULES = [
   COVERAGE_RULE,
 ];
 
-/**
- * Rules used in the webpack configuration.
- * @type {Rule[]}
- */
 const RULES = TESTING ? BASE_RULES.concat(TEST_RULES) : BASE_RULES;
 
-// --------------------------------------------------------------------------
-// Plugins
-// --------------------------------------------------------------------------
-
-/**
- * Plugins that are used no matter the environment.
- * @type {Plugin[]}
- */
 const BASE_PLUGINS = [
   new ExtractTextPlugin('cyclops.css'),
   new webpack.BannerPlugin(BANNER),
 ];
 
-/**
- * Plugins that are used in a testing environment.
- * @type {Plugin[]}
- */
 const TEST_PLUGINS = [
   new webpack.SourceMapDevToolPlugin({
     filename: null, // if no value is provided the sourcemap is inlined
@@ -224,10 +136,6 @@ const TEST_PLUGINS = [
   }),
 ];
 
-/**
- * Plugins to add in a production environment.
- * @type {Plugin[]}
- */
 const PRODUCTION_PLUGINS = [
   new webpack.DefinePlugin({
     'process.env': {
@@ -237,24 +145,12 @@ const PRODUCTION_PLUGINS = [
   new webpack.optimize.UglifyJsPlugin({ sourceMap: true }),
 ];
 
-/**
- * Plugins used in the webpack configuration.
- * @type {Plugin[]}
- */
 const PLUGINS = {
   development: () => BASE_PLUGINS,
   production: () => BASE_PLUGINS.concat(PRODUCTION_PLUGINS),
   test: () => BASE_PLUGINS.concat(TEST_PLUGINS),
 }[ENV]();
 
-// --------------------------------------------------------------------------
-// Configuration
-// --------------------------------------------------------------------------
-
-/**
- * Webpack configuration.
- * @type {Object}
- */
 module.exports = {
   context: __dirname,
 
