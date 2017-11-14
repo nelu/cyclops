@@ -16,7 +16,6 @@
  * are made]
  */
 
-// Vendor
 import * as React from 'react';
 import * as _ from 'lodash';
 import Complete = require('react-autocomplete');
@@ -37,39 +36,24 @@ interface State {
   filtered: any[];
 }
 
-/**
- * Input element that allows for text autocomplete.
- */
+/** Input element that allows for text autocomplete. */
 export class Autocomplete extends React.Component<Props, Partial<State>> {
-  /**
-   * Default input props given to the input element of the
-   * react-autocomplete component.
-   */
+  /** Base component properties for the react-autocomplete input element. */
   public static INPUT_PROPS = {
     className: 'form-control',
   };
 
-  /**
-   * Default wrappper style for the component.
-   */
-  public static WRAPPER_STYLE = {};
-
+  /** Base component properties for the react-autocomplete wrapper element. */
   public static WRAPPER_PROPS = {
     className: 'form-group',
   };
 
-  /**
-   * Renders the menu element for the component.
-   * @param items Autcomplete items.
-   * @param value Current input value.
-   * @param styles Dynamic element styles.
-   */
   public static renderMenu = (
     items: any[],
     value: string,
     styles: any,
   ): JSX.Element => (
-    <div className="autocomplete__menu" style={styles} children={items} />
+    <div className="AutoComplete__Menu" style={styles} children={items} />
   );
 
   public state = {
@@ -92,9 +76,6 @@ export class Autocomplete extends React.Component<Props, Partial<State>> {
     if (!open) { this.setState({ value: this.state.selected }); }
   };
 
-  /**
-   * Returns the properties to pass to the input element.
-   */
   public getInputProps = (): any => {
     return {
       ...Autocomplete.INPUT_PROPS,
@@ -102,12 +83,6 @@ export class Autocomplete extends React.Component<Props, Partial<State>> {
     };
   };
 
-  /**
-   * Filters the dropdown items based on the given text value.
-   * @param items Items to filter.
-   * @param value Value to filter with.
-   * @returns {any[]} Items that match the given value.
-   */
   public filterItems = (items: any[], value: string): any[] => {
     const filtered: any[] = [];
 
@@ -124,35 +99,19 @@ export class Autocomplete extends React.Component<Props, Partial<State>> {
     return filtered;
   };
 
-  /**
-   * Renders the items in the drop down.
-   * @param item Item to render.
-   * @param active
-   */
   public renderItem = (item: any, active: boolean): JSX.Element => {
-    const classes = classnames('autocomplete__menu-item', {
-      'autocomplete__menu-item--active': active,
+    const classes = classnames('AutoComplete__MenuItem', {
+      'AutoComplete__MenuItem--active': active,
     });
 
-    return (<div className={classes}>{this.props.getValue(item)}</div>);
+    return <div className={classes}>{this.props.getValue(item)}</div>;
   };
 
-  /**
-   * Handles the onSelect even emitted from the react-autocomplete Component.
-   * @param value Value selected in the component.
-   * @param item Item associated with the value.
-   */
-  public onSelect = (value: string, item: any): void => {
+  public handleSelect = (value: string, item: any): void => {
     if (this.props.onSelect) { this.props.onSelect(item); }
   };
 
-  /**
-   * Handles the onChange event emitted from the react-autocomplete input
-   * element.
-   * @param event React event from the input element.
-   * @param value Value in the input element.
-   */
-  public onChange = (
+  public handleChange = (
     event: React.SyntheticEvent<HTMLInputElement>,
     value: string,
   ) => {
@@ -167,11 +126,10 @@ export class Autocomplete extends React.Component<Props, Partial<State>> {
         items={this.state.filtered || []}
         getItemValue={this.props.getValue}
         renderItem={this.renderItem}
-        wrapperStyle={Autocomplete.WRAPPER_STYLE}
         inputProps={this.getInputProps()}
         onMenuVisibilityChange={this.onMenuVisibilityChange}
-        onChange={this.onChange}
-        onSelect={this.onSelect}
+        onChange={this.handleChange}
+        onSelect={this.handleSelect}
         value={this.state.value}
         renderMenu={Autocomplete.renderMenu}
         wrapperProps={Autocomplete.WRAPPER_PROPS}
