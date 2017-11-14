@@ -16,54 +16,32 @@
  * are made]
  */
 
-// Vendor
 import * as React from 'react';
-import * as classNames from 'classnames';
 
-// Local
 import { Dictionary } from '~/types/object';
+import { FontAwesome } from '~/components/FontAwesome';
+import './AlertStatusIcon.scss';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties for the AlertStatusIcon component. */
 interface Props {
-  /** Status icon to show. */
   status: string;
 }
 
-// --------------------------------------------------------------------------
-// Constants
-// --------------------------------------------------------------------------
-
-/**
- * Status values mapped to Fontawesome icon names.
- * @type {Dictionary<string>}
- */
 const STATUS_ICONS: Dictionary<string> = {
   NEW: 'circle-o',
   BUSY: 'circle',
   DONE: 'check-circle',
 };
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
-/**
- * Displays the icon associated with the given alert status.
- */
+// Icon associated with an alert status.
 export class AlertStatusIcon extends React.Component<Props, {}> {
   public render(): JSX.Element {
-    const classes = classNames(
-      'text--emphasis',
-      'text-center',
-      'alert-icon',
-      'fa',
-      `fa-${STATUS_ICONS[this.props.status]}`,
-    );
+    const lowercase = this.props.status.toLowerCase();
 
-    return <i className={classes}/>;
+    return (
+      <FontAwesome
+        icon={STATUS_ICONS[this.props.status]}
+        className={`AlertStatusIcon AlertStatusIcon--${lowercase}`}
+      />
+    );
   }
 }
