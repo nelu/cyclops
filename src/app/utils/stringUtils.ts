@@ -24,6 +24,11 @@ export function createRandomId(): string {
   return 'id' + Math.random().toString(36).substr(2, 10);
 }
 
+/**
+ * Add comma delimiters to a number value for easier reading.
+ * @param {number} num
+ * @returns {string}
+ */
 export function addCommas(num: number): string {
   const stringified = num.toString();
 
