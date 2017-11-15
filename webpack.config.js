@@ -158,7 +158,7 @@ module.exports = {
 
   output: TESTING ? undefined : {
     filename: 'cyclops.js',
-    path: path.resolve(__dirname, DEVELOPMENT ? 'build' : 'dist'),
+    path: path.resolve(__dirname, 'dist'),
   },
 
   resolve: {
