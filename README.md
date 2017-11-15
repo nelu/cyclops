@@ -8,8 +8,6 @@ Cyclops is a single-page application (SPA) that displays real-time data from an 
 
 Cyclops allows you to easily view, assign, and investigate Cyphon alerts. It provides an “eye” into your data, enabling you to respond to issues quickly and effectively.
 
-See [Cyclops' documentation](http://cyphon-ui.readthedocs.io/) for more info.
-
 ![Cyclops UI dashboard view](https://github.com/dunbarcyber/cyphon/blob/master/docs/source/_static/images/screenshots/cyclops-dashboard.png)
 
 ![Cyclops UI alert view](https://github.com/dunbarcyber/cyphon/blob/master/docs/source/_static/images/screenshots/cyclops-alerts.png)
