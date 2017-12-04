@@ -16,19 +16,13 @@
  * are made]
  */
 
-export interface SearchRouteURLQuery {
-  query?: string;
-  before?: string;
-  after?: string;
-  relative?: string;
-}
+.SearchViewTimeFilter {
+  &__description {
+    margin-top: 20px;
+  }
 
-export interface TimeQuery {
-  after?: string;
-  before?: string;
-}
-
-export interface RelativeTimeOption {
-  after: string;
-  before: string;
+  &__FilterButton {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }

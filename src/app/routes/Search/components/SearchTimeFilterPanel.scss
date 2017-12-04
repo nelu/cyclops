@@ -16,19 +16,16 @@
  * are made]
  */
 
-export interface SearchRouteURLQuery {
-  query?: string;
-  before?: string;
-  after?: string;
-  relative?: string;
-}
+@import '../../../../styles/base/variables';
 
-export interface TimeQuery {
-  after?: string;
-  before?: string;
-}
+.SearchTimeFilterPanel {
+  background-color: lighten($color-dark, 1%);
 
-export interface RelativeTimeOption {
-  after: string;
-  before: string;
+  &__DateTimeContainer {
+    padding: $padding-large-vertical $padding-base-horizontal;
+  }
+
+  &__FilterButton {
+    padding-top: $padding-large-vertical;
+  }
 }

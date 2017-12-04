@@ -1,5 +1,18 @@
 # Change log
 
+## Unreleased
+
+### Added
+
+- Ability to filter search results by time. Defaults results to previous 30 minutes.
+
+### Removed
+
+- Any mention of the `build` directory in configs and `.gitignore`.
+- Sphinx documentation. Information has been transferred to the CONTRIBUTING file.
+- **.gitattributes**: Removed `dist` binary diff. Directory is now ignored. Distribution files have been moved to https://s3.amazonaws.com/cyclops-public/.
+
+
 <a name="0.5.0"></a>
 ## [0.5.0](https://github.com/dunbarcyber/cyclops/compare/0.4.4...0.5.0) (2017-11-03)
 

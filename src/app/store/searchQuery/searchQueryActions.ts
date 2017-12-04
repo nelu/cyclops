@@ -29,6 +29,7 @@ import {
   SearchQuery,
 } from '~/services/search/types';
 import { addError } from '~/store/errorModal';
+import { TimeQuery } from '~/routes/Search/types';
 
 /**
  * Determines if a promise is still valid based on the given promiseID.
@@ -53,13 +54,20 @@ export enum SearchQueryView {
 export const FETCH_RESULTS_PENDING = `${ACTION_PREFIX}/FETCH_RESULTS_PENDING`;
 export type FetchResultsPendingAction = ReduxAction<{
   query: string;
+  after?: string;
+  before?: string;
   promiseID: symbol;
 }>;
 export function fetchResultsPending(
   query: string,
   promiseID: symbol,
+  after?: string,
+  before?: string,
 ): FetchResultsPendingAction {
-  return { type: FETCH_RESULTS_PENDING, payload: { query, promiseID } };
+  return {
+    type: FETCH_RESULTS_PENDING,
+    payload: { query, promiseID, after, before },
+  };
 }
 
 // -- FETCH_RESULTS_SUCCESS --
@@ -98,15 +106,21 @@ export function changeView(view: SearchQueryView): ChangeViewAction {
 /**
  * Retrieves alerts and data matching the search query.
  * @param {string} query
+ * @param after Time to search for results after.
+ * @param before Time to search for results before.
  * @returns {ThunkActionPromise}
  */
-export function fetchResults(query: string): ThunkActionPromise {
+export function fetchResults(
+  query: string,
+  after?: string,
+  before?: string,
+): ThunkActionPromise {
   return (dispatch, getState) => {
     const promiseID = Symbol();
 
-    dispatch(fetchResultsPending(query, promiseID));
+    dispatch(fetchResultsPending(query, promiseID, after, before));
 
-    return search(query)
+    return search(query, undefined, undefined, after, before)
       .then((results) => {
         if (!isValidPromise(promiseID, getState())) { return; }
 

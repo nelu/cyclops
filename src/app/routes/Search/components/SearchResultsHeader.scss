@@ -16,19 +16,15 @@
  * are made]
  */
 
-export interface SearchRouteURLQuery {
-  query?: string;
-  before?: string;
-  after?: string;
-  relative?: string;
-}
+@import '../../../../styles/base/variables';
 
-export interface TimeQuery {
-  after?: string;
-  before?: string;
-}
+.SearchResultsHeader {
+  &__Container {
+    border-bottom: solid 1px #2a2b2e;
+    padding: $padding-large-vertical $padding-base-horizontal;
+  }
 
-export interface RelativeTimeOption {
-  after: string;
-  before: string;
+  &__CountTitle {
+    margin-right: 6px;
+  }
 }

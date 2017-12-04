@@ -199,9 +199,33 @@ dd {
 
 //== Navs
 
+.nav-tabs {
+  border-bottom: none;
+}
+
 .nav-tabs > li.active > a {
   color: #fff;
   background-color: $color-lighter;
+  border: none;
+}
+
+.nav > li > a {
+  padding: $padding-small-vertical $padding-small-horizontal;
+  color: $text-color;
+}
+
+.nav-tabs > li > a {
+  border-radius: $border-radius-base;
+  border: none;
+}
+
+.nav-tabs > li.active > a {
+  background-color: $color-primary;
+  border-radius: $border-radius-base;
+
+  &:focus {
+    border: none;
+  }
 }
 
 .nav.nav-pills {

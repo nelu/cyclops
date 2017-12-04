@@ -16,19 +16,19 @@
  * are made]
  */
 
-export interface SearchRouteURLQuery {
-  query?: string;
-  before?: string;
-  after?: string;
-  relative?: string;
-}
+// Vendor
+import * as _ from 'lodash';
 
-export interface TimeQuery {
-  after?: string;
-  before?: string;
-}
-
-export interface RelativeTimeOption {
-  after: string;
-  before: string;
+/**
+ * Turns a kebab case string into a space separated one with each word
+ * capitalized.
+ * @param {string} value
+ * @returns {string}
+ */
+export function capitalizeKebabCase(value: string): string {
+  return value
+    .replace('-', ' ')
+    .split(' ')
+    .map((word) => _.capitalize(word))
+    .join(' ');
 }

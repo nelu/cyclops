@@ -24,6 +24,7 @@ import {
 import { searchDistillery } from '~/services/search/utils/searchAPI';
 import { StoreState } from '~/store';
 import { addError } from '../errorModal';
+import { TimeQuery } from '~/routes/Search/types';
 
 const ACTION_PREFIX = 'SEARCH_RESULTS';
 
@@ -90,6 +91,8 @@ export function paginateResults(
   distilleryID: number,
   query: string,
   page: number,
+  after?: string,
+  before?: string,
 ): ThunkActionPromise {
   return (dispatch, getState) => {
     // TODO: Add rejected reason string.
@@ -99,7 +102,7 @@ export function paginateResults(
 
     dispatch(paginateResultsPending(promiseID));
 
-    return searchDistillery(distilleryID, query, page)
+    return searchDistillery(distilleryID, query, page, undefined, after, before)
       .then((response) => {
         if (!isValidPromise(promiseID, getState())) { return; }
         if (!resultsExist(distilleryID, getState())) { return; }
