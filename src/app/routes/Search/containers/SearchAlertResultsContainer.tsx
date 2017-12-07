@@ -39,12 +39,19 @@ interface ValueProps {
   page: number;
   count: number;
   query: string;
+  after?: string;
+  before?: string;
   results: AlertDetail[];
   router: InjectedRouter;
 }
 
 interface FunctionProps {
-  paginateResults(query: string, page: number): any;
+  paginateResults(
+    query: string,
+    page: number,
+    after?: string,
+    before?: string,
+  ): any;
 }
 
 type Props = ValueProps & FunctionProps;
@@ -57,7 +64,12 @@ class Container extends React.Component<Props> {
   public onPaginate = (page: number) => {
     if (!this.props.query) { return; }
 
-    this.props.paginateResults(this.props.query, page);
+    this.props.paginateResults(
+      this.props.query,
+      page,
+      this.props.after,
+      this.props.before,
+    );
   };
 
   public render() {
@@ -77,6 +89,8 @@ const values: StateToProps<ValueProps, ContainerProps> = (state, props) => ({
   page: state.alertSearchResults.page,
   count: state.alertSearchResults.count,
   results: state.alertSearchResults.results,
+  after: state.searchQuery.after,
+  before: state.searchQuery.before,
   router: props.router,
   query: state.searchQuery.query,
 });
