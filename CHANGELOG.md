@@ -1,6 +1,7 @@
 # Change log
 
-## Unreleased
+<a name="0.5.1"></a>
+## [0.5.1](https://github.com/dunbarcyber/cyclops/compare/0.5.0...0.5.1) (2017-12-07)
 
 ### Added
 
