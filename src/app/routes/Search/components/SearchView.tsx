@@ -18,6 +18,7 @@
 
 // Vendor
 import * as React from 'react';
+import { Tab, Tabs } from 'react-bootstrap';
 
 // Local
 import { DistilleryNested } from '~/services/distilleries/types';
@@ -31,10 +32,10 @@ import { SearchQuery } from '~/routes/Search/components/SearchQuery';
 import { SearchQuery as SearchQueryInterface } from '~/services/search/types';
 import { Loading } from '~/components/Loading';
 import { SearchQueryView } from '~/store/searchQuery';
-import { SearchViewChangeButton } from '~/routes/Search/components/SearchViewChangeButton';
 import { SearchFields } from '~/routes/Search/components/SearchFields';
 import './SearchView.scss';
-import { addCommas } from '~/utils/stringUtils';
+import { SearchResultsHeader } from '~/routes/Search/components/SearchResultsHeader';
+import { SearchTimeFilterPanel } from '~/routes/Search/components/SearchTimeFilterPanel';
 
 interface Props {
   /** List of all the current containers in Cyphon. */
@@ -49,18 +50,45 @@ interface Props {
   alertResultCount: number;
   resultCount: number;
   view: SearchQueryView;
+  after?: string;
+  before?: string;
+  relative?: string;
   /** If more results are currently being loaded. */
   isLoading: boolean;
   /** If the current search query string is valid. */
   isQueryValid: boolean;
   changeView(view: SearchQueryView): any;
   changeQuery(query: string): any;
+  onAbsoluteTimeChange(after?: string, before?: string): any;
+  onRelativeTimeChange(relative: string): any;
+}
+
+interface State {
+  timePanelIsActive: boolean;
 }
 
 /**
- * Root component of the SearchQueryStore page.
+ * Root component of the Search page.
  */
-export class SearchView extends React.Component<Props> {
+export class SearchView extends React.Component<Props, State> {
+  public state: State = {
+    timePanelIsActive: false,
+  };
+
+  public toggleTimePanel = () => {
+    this.setState({ timePanelIsActive: !this.state.timePanelIsActive });
+  };
+
+  public onRelativeTimeChange = (relate: string) => {
+    this.toggleTimePanel();
+    this.props.onRelativeTimeChange(relate);
+  };
+
+  public onAbsoluteTimeChange = (after?: string, before?: string) => {
+    this.toggleTimePanel();
+    this.props.onAbsoluteTimeChange(after, before);
+  };
+
   public render() {
     const fields = this.props.fields
       .filter((field) => field.field_name)
@@ -69,8 +97,22 @@ export class SearchView extends React.Component<Props> {
       <SearchDistillery distillery={distillery}/>
     ));
     const query = this.props.queryObject
-      ? <SearchQuery query={this.props.queryObject} valid={this.props.isQueryValid} />
-      : null;
+      ? (
+        <SearchQuery
+          query={this.props.queryObject}
+          valid={this.props.isQueryValid}
+        />
+      ) : null;
+    const timeFilterPanel = this.state.timePanelIsActive
+      ? (
+        <SearchTimeFilterPanel
+          after={this.props.after}
+          before={this.props.before}
+          relative={this.props.relative}
+          onRelativeTimeChange={this.onRelativeTimeChange}
+          onAbsoluteTimeChange={this.onAbsoluteTimeChange}
+        />
+      ) : null;
     const loading = this.props.isLoading ? <Loading /> : null;
 
     return (
@@ -100,38 +142,22 @@ export class SearchView extends React.Component<Props> {
             </div>
           </div>
           <div className="flex-box flex-box--column">
-            <div className="flex-box flex--shrink">
-              <div className="flex-item content" style={{ 'border-bottom': 'solid 1px #2a2b2e' }}>
-                <span className="text--emphasis">
-                  {addCommas(this.props.alertResultCount + this.props.resultCount)}
-                </span>
-                {' '}
-                <span style={{'margin-right': '6px'}}>
-                  Results
-                </span>
-                <SearchViewChangeButton
-                  view={SearchQueryView.Alerts}
-                  onClick={this.props.changeView}
-                  activeView={this.props.view}
-                >
-                  {addCommas(this.props.alertResultCount)} Alerts
-                </SearchViewChangeButton>
-                <SearchViewChangeButton
-                  view={SearchQueryView.Data}
-                  onClick={this.props.changeView}
-                  activeView={this.props.view}
-                >
-                  {addCommas(this.props.resultCount)} Data
-                </SearchViewChangeButton>
-
-              </div>
-            </div>
+            <SearchResultsHeader
+              alertResultCount={this.props.alertResultCount}
+              resultCount={this.props.resultCount}
+              after={this.props.after}
+              before={this.props.before}
+              relative={this.props.relative}
+              view={this.props.view}
+              changeView={this.props.changeView}
+              onTimeClick={this.toggleTimePanel}
+            />
+            {timeFilterPanel}
             <div
               className="flex-box"
               style={{ 'border-top': 'solid 1px #3b3c41', 'border-bottom': 'solid 1px #2a2b2e'}}
             >
               {this.props.children}
-
             </div>
             {loading}
           </div>

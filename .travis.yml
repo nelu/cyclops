@@ -26,5 +26,4 @@ deploy:
     local_dir: dist
     upload-dir: $TRAVIS_TAG
     on:
-      branch: master
-      condition: "-z $TRAVIS_TAG"
+      tags: true

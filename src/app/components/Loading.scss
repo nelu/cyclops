@@ -1,0 +1,77 @@
+/**
+ * The contents of this file are subject to the CYPHON Proprietary Non-
+ * Commercial Registered User Use License Agreement (the "Agreement”). You
+ * may not use this file except in compliance with the Agreement, a copy
+ * of which may be found at https://github.com/dunbarcyber/cyclops/. The
+ * developer of the CYPHON technology and platform is Dunbar Security
+ * Systems, Inc.
+ *
+ * The CYPHON technology or platform are distributed under the Agreement on
+ * an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the Agreement for specific terms.
+ *
+ * Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
+ *
+ * Contributor/Change Made By: ________________. [Only apply if changes
+ * are made]
+ */
+
+.Loading {
+  background-color: rgba(#000, 0.15);
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  &__Spinner {
+    margin: 10px;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    text-align: center;
+    -webkit-animation: sk-rotate 2.0s infinite linear;
+    animation: sk-rotate 2.0s infinite linear;
+  }
+
+  &__Dot1,
+  &__Dot2 {
+    width: 60%;
+    height: 60%;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    background-color: #CCCCCC;
+    border-radius: 100%;
+    -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+    animation: sk-bounce 2.0s infinite ease-in-out;
+  }
+
+  &__Dot2 {
+    top: auto;
+    bottom: 0;
+    -webkit-animation-delay: -1.0s;
+    animation-delay: -1.0s;
+  }
+}
+
+@-webkit-keyframes sk-rotate { 100% { -webkit-transform: rotate(360deg) }}
+@keyframes sk-rotate { 100% { transform: rotate(360deg); -webkit-transform: rotate(360deg) }}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% { -webkit-transform: scale(0.0) }
+  50% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bounce {
+  0%, 100% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 50% {
+      transform: scale(1.0);
+      -webkit-transform: scale(1.0);
+    }
+}

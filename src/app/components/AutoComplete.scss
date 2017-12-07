@@ -16,34 +16,27 @@
  * are made]
  */
 
-import * as React from 'react';
+@import '../../styles/base/variables';
 
-import { Dictionary } from '~/types/object';
-import { FontAwesome } from '~/components/FontAwesome';
-import './AlertLevelIcon.scss';
+.AutoComplete {
+  &__Menu {
+    margin-top: $padding-small-vertical;
+    background-color: $input-bg;
+    border: 1px solid $input-border-focus;
+    border-radius: $border-radius-base;
+    padding: $padding-base-vertical 0;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  }
 
-interface Props {
-  level: string;
-}
+  &__MenuItem {
+    padding: $padding-small-vertical $padding-base-horizontal;
+    cursor: pointer;
 
-const LEVEL_ICONS: Dictionary<string> = {
-  CRITICAL: 'fire',
-  HIGH: 'exclamation-triangle',
-  MEDIUM: 'exclamation-circle',
-  LOW: 'exclamation',
-  INFO: 'info',
-};
-
-// Shows the icon related to the an alert level.
-export class AlertLevelIcon extends React.Component<Props, {}> {
-  public render() {
-    const lowercase = this.props.level.toLowerCase();
-
-    return (
-      <FontAwesome
-        icon={LEVEL_ICONS[this.props.level]}
-        className={`AlertLevelIcon AlertLevelIcon--${lowercase}`}
-      />
-    );
+    &--active {
+      border-left: 3px solid $color-primary;
+      color: #fff;
+    }
   }
 }

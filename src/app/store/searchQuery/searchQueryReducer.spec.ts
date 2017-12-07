@@ -16,10 +16,6 @@
  * are made]
  */
 
-// Vendor
-import * as sinon from 'sinon';
-import * as chai from 'chai';
-
 // Local
 import { searchQuery, SearchQueryState } from './searchQueryReducer';
 import * as searchQueryActions from './searchQueryActions';
@@ -46,6 +42,8 @@ describe('searchQueryReducer', () => {
       expect(update).to.deep.equal({
         ...initial,
         query,
+        after: undefined,
+        before: undefined,
         promiseID,
         isLoading: true,
       });

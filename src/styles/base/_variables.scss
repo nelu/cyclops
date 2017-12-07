@@ -64,6 +64,7 @@ $brand-danger: $alert-color-high;
 
 $body-bg: $color-base;
 $text-color: #B3B3B3;
+$text-color-muted: darken($text-color, 25%);
 $link-color: #FFF;
 $link-hover-color: #FFF;
 

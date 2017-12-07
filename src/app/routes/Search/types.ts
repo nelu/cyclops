@@ -18,4 +18,17 @@
 
 export interface SearchRouteURLQuery {
   query?: string;
+  before?: string;
+  after?: string;
+  relative?: string;
+}
+
+export interface TimeQuery {
+  after?: string;
+  before?: string;
+}
+
+export interface RelativeTimeOption {
+  after: string;
+  before: string;
 }

@@ -1,5 +1,26 @@
 # Change log
 
+<a name="0.5.1"></a>
+## [0.5.1](https://github.com/dunbarcyber/cyclops/compare/0.5.0...0.5.1) (2017-12-07)
+
+### Added
+
+- Ability to filter search results by time. Relative and absolute filter options are present.'
+- Automatic deployment to S3 bucket from travis when a new tag is introduced.
+- `FontAwesome` helper component for displaying font awesome icons.
+
+### Removed
+
+- Any mention of the `build` directory in configs and `.gitignore`.
+- Sphinx documentation. Information will be transferred to the CONTRIBUTING.md file.
+- **.gitattributes**: Removed `dist` binary diff. Directory is now ignored. Distribution files have been moved to https://s3.amazonaws.com/cyclops-public/.
+
+### Moved
+
+- Started migration process of SCSS classes to localized components. Current classes are in `styles` directory. Future destination will be in files located next to Component classes using those files.
+
+### Fixed
+
 <a name="0.5.0"></a>
 ## [0.5.0](https://github.com/dunbarcyber/cyclops/compare/0.4.4...0.5.0) (2017-11-03)
 

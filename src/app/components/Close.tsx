@@ -16,37 +16,20 @@
  * are made]
  */
 
-// Vendor
 import * as React from 'react';
-import {
-  OverlayTrigger,
-  Popover,
-} from 'react-bootstrap';
+import { OverlayTrigger, Popover } from 'react-bootstrap';
 
-// Local
-import { createRandomId } from '../utils/stringUtils';
+import { createRandomId } from '~/utils/stringUtils';
+import { FontAwesome } from '~/components/FontAwesome';
 
 interface Props {
   /** Function that runs when the close button is clicked. */
   close(): any;
 }
 
-/**
- * Displays a close button with a tooltip explaining that it's a close button.
- */
+/** Close button with a tooltip explaining that it's a close button. */
 export class Close extends React.Component<Props, {}> {
-  /**
-   * Popover element that lets the user know that this button closes
-   * something.
-   * @type {JSX.Element}
-   */
-  public ClosePopover: JSX.Element;
-
-  constructor(props: Props) {
-    super(props);
-
-    this.ClosePopover = <Popover id={createRandomId()}>Close</Popover>;
-  }
+  public ClosePopover = <Popover id={createRandomId()}>Close</Popover>;
 
   public render(): JSX.Element {
     return (
@@ -56,7 +39,7 @@ export class Close extends React.Component<Props, {}> {
         animation={false}
       >
         <button onClick={this.props.close} className="btn-alt">
-          <i className="fa fa-times" />
+          <FontAwesome icon="times"/>
         </button>
       </OverlayTrigger>
     );

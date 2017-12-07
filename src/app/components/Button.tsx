@@ -18,32 +18,20 @@
 
 import * as React from 'react';
 
-import { Dictionary } from '~/types/object';
-import { FontAwesome } from '~/components/FontAwesome';
-import './AlertLevelIcon.scss';
-
-interface Props {
-  level: string;
+interface Props extends React.HTMLProps<HTMLButtonElement> {
+  type: ButtonType;
 }
 
-const LEVEL_ICONS: Dictionary<string> = {
-  CRITICAL: 'fire',
-  HIGH: 'exclamation-triangle',
-  MEDIUM: 'exclamation-circle',
-  LOW: 'exclamation',
-  INFO: 'info',
-};
+export enum ButtonType {
+  Plain = 'plain',
+}
 
-// Shows the icon related to the an alert level.
-export class AlertLevelIcon extends React.Component<Props, {}> {
+export class Button extends React.Component<Props, {}> {
   public render() {
-    const lowercase = this.props.level.toLowerCase();
+    const { type, ...props } = this.props;
 
     return (
-      <FontAwesome
-        icon={LEVEL_ICONS[this.props.level]}
-        className={`AlertLevelIcon AlertLevelIcon--${lowercase}`}
-      />
+      <button className={`Button--${type}`} {...props} />
     );
   }
 }

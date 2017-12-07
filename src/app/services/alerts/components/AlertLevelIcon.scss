@@ -16,34 +16,16 @@
  * are made]
  */
 
-import * as React from 'react';
+@import '../../../../styles/base/variables';
 
-import { Dictionary } from '~/types/object';
-import { FontAwesome } from '~/components/FontAwesome';
-import './AlertLevelIcon.scss';
+.AlertLevelIcon {
+  text-align: center;
+  width: 15px;
 
-interface Props {
-  level: string;
-}
+  &--critical { color: $alert-color-critical; }
+  &--high { color: $alert-color-high; }
+  &--medium { color: $alert-color-medium; }
+  &--low { color: $alert-color-low; }
+  &--info { color: $alert-color-info; }
 
-const LEVEL_ICONS: Dictionary<string> = {
-  CRITICAL: 'fire',
-  HIGH: 'exclamation-triangle',
-  MEDIUM: 'exclamation-circle',
-  LOW: 'exclamation',
-  INFO: 'info',
-};
-
-// Shows the icon related to the an alert level.
-export class AlertLevelIcon extends React.Component<Props, {}> {
-  public render() {
-    const lowercase = this.props.level.toLowerCase();
-
-    return (
-      <FontAwesome
-        icon={LEVEL_ICONS[this.props.level]}
-        className={`AlertLevelIcon AlertLevelIcon--${lowercase}`}
-      />
-    );
-  }
 }

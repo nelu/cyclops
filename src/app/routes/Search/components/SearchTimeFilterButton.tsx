@@ -16,34 +16,44 @@
  * are made]
  */
 
+// Vendor
 import * as React from 'react';
 
-import { Dictionary } from '~/types/object';
+// Local
 import { FontAwesome } from '~/components/FontAwesome';
-import './AlertLevelIcon.scss';
+import { capitalizeKebabCase } from '~/utils/capitalizeKebabCase';
 
 interface Props {
-  level: string;
+  /** Time after to search for data. */
+  after?: string;
+  /** Time before to search for data. */
+  before?: string;
+  /** Relative time searching for data. */
+  relative?: string;
+  onClick(): any;
 }
 
-const LEVEL_ICONS: Dictionary<string> = {
-  CRITICAL: 'fire',
-  HIGH: 'exclamation-triangle',
-  MEDIUM: 'exclamation-circle',
-  LOW: 'exclamation',
-  INFO: 'info',
-};
+/** Shows the time filter used to search for data. */
+export class SearchTimeFilterButton extends React.Component<Props, {}> {
+  public getTitleDisplay = (): string => {
+    if (this.props.after || this.props.before) {
+      return `${this.props.after || '*'} to ${this.props.before || '*'}`;
+    }
 
-// Shows the icon related to the an alert level.
-export class AlertLevelIcon extends React.Component<Props, {}> {
+    if (this.props.relative) {
+      return capitalizeKebabCase(this.props.relative);
+    }
+
+    return 'None';
+  };
+
   public render() {
-    const lowercase = this.props.level.toLowerCase();
-
     return (
-      <FontAwesome
-        icon={LEVEL_ICONS[this.props.level]}
-        className={`AlertLevelIcon AlertLevelIcon--${lowercase}`}
-      />
+      <button className="btn btn-basic" onClick={this.props.onClick}>
+        <FontAwesome icon="clock-o" />
+        {' '}
+        {this.getTitleDisplay()}
+      </button>
     );
   }
 }

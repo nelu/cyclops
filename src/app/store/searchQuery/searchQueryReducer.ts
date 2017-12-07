@@ -40,6 +40,8 @@ import {
 export interface SearchQueryState {
   query: string;
   queryObject?: SearchQuery;
+  after?: string;
+  before?: string;
   isLoading: boolean;
   isValid: boolean;
   promiseID: symbol;
@@ -58,6 +60,8 @@ export const searchQuery = createReducer<SearchQueryState>({
     action: actions.FetchResultsPendingAction,
   ) => updateState(state, {
     isLoading: true,
+    after: action.payload.after,
+    before: action.payload.before,
     query: action.payload.query,
     promiseID: action.payload.promiseID,
   }),

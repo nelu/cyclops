@@ -73,13 +73,15 @@ export function paginateAlertResultsFailed(): PaginateAlertResultsFailedAction {
 export function paginateAlertResults(
   query: string,
   page: number,
+  after?: string,
+  before?: string,
 ): ThunkActionPromise {
   return (dispatch, getState) => {
     const promiseID = Symbol();
 
     dispatch(paginateAlertResultsPending(promiseID));
 
-    return searchAlerts(query, page)
+    return searchAlerts(query, page, undefined, after, before)
       .then((response) => {
         if (!isValidPromise(promiseID, getState())) { return; }
 

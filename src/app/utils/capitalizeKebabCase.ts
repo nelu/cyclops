@@ -16,34 +16,19 @@
  * are made]
  */
 
-import * as React from 'react';
+// Vendor
+import * as _ from 'lodash';
 
-import { Dictionary } from '~/types/object';
-import { FontAwesome } from '~/components/FontAwesome';
-import './AlertLevelIcon.scss';
-
-interface Props {
-  level: string;
-}
-
-const LEVEL_ICONS: Dictionary<string> = {
-  CRITICAL: 'fire',
-  HIGH: 'exclamation-triangle',
-  MEDIUM: 'exclamation-circle',
-  LOW: 'exclamation',
-  INFO: 'info',
-};
-
-// Shows the icon related to the an alert level.
-export class AlertLevelIcon extends React.Component<Props, {}> {
-  public render() {
-    const lowercase = this.props.level.toLowerCase();
-
-    return (
-      <FontAwesome
-        icon={LEVEL_ICONS[this.props.level]}
-        className={`AlertLevelIcon AlertLevelIcon--${lowercase}`}
-      />
-    );
-  }
+/**
+ * Turns a kebab case string into a space separated one with each word
+ * capitalized.
+ * @param {string} value
+ * @returns {string}
+ */
+export function capitalizeKebabCase(value: string): string {
+  return value
+    .replace('-', ' ')
+    .split(' ')
+    .map((word) => _.capitalize(word))
+    .join(' ');
 }
