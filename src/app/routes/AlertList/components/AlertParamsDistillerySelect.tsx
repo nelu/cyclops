@@ -18,36 +18,25 @@
 
 // Vendor
 import * as React from 'react';
-import * as _ from 'lodash';
 
 // Local
 import { Distillery } from '~/services/distilleries/types';
-import { sortByWarehouse } from '~/services/distilleries/utils/distilleryUtils';
-import { DistillerySelectGroup } from '~/services/distilleries/components/DistillerySelectGroup';
+import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the AlertParamsDistillerySelect component. */
 interface Props {
   /** Currently selected distillery in alerts list search parameters. */
-  currentDistillery: number| undefined;
+  currentDistillery?: number;
   /** Current list of distilleries that have alerts associated with them. */
   distilleries: Distillery[];
   /**
    * Changes the currently selected distillery.
    * @param distillery Distillery to filter alerts with.
    */
-  selectDistillery(distillery: number | undefined): any;
+  selectDistillery(distillery?: number): any;
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
 /**
- * Displays a select dropdown of distilleries to filter alerts with.
+ * Dropdown of distilleries to filter alerts with.
  */
 export class AlertParamsDistillerySelect extends React.Component<Props, {}> {
   /**
@@ -62,17 +51,11 @@ export class AlertParamsDistillerySelect extends React.Component<Props, {}> {
   };
 
   public render(): JSX.Element {
-    const sortedDistilleries = sortByWarehouse(this.props.distilleries);
-    const distilleryOptionGroups: JSX.Element[] = [];
-
-    _.forEach(sortedDistilleries, (distilleries, warehouse) => {
-      distilleryOptionGroups.push(
-        <DistillerySelectGroup
-          title={warehouse as string}
-          options={distilleries}
-        />,
-      );
-    });
+    const distilleryOptions = this.props.distilleries.map((distillery) => (
+      <option value={distillery.id} key={distillery.id}>
+        {shortenDistilleryName(distillery.name)}
+      </option>
+    ));
 
     return (
       <div className="alert-list-params__spacer alert-list-params__group">
@@ -84,7 +67,7 @@ export class AlertParamsDistillerySelect extends React.Component<Props, {}> {
             onChange={this.selectDistillery}
           >
             <option value={0}>All</option>
-            {distilleryOptionGroups}
+            {distilleryOptions}
           </select>
         </div>
       </div>
