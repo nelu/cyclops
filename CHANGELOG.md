@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## [0.5.2](https://github.com/dunbarcyber/cyclops/compare/0.5.1...0.5.2) (2017-12-13)
 
 ### Removed
 
