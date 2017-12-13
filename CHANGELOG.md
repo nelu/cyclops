@@ -1,5 +1,11 @@
 # Change log
 
+## Unreleased
+
+### Removed
+
+- Source drop down items grouped by warehouse on the alerts page. Now it only displays the distillery names.
+
 <a name="0.5.1"></a>
 ## [0.5.1](https://github.com/dunbarcyber/cyclops/compare/0.5.0...0.5.1) (2017-12-07)
 
