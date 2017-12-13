@@ -23,10 +23,6 @@ import * as React from 'react';
 import { Distillery } from '../types';
 import { shortenDistilleryName } from '../utils/distilleryUtils';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
 /** Properties of the DistillerySelectGroup component. */
 interface Props {
   /** Title of the option group. */
@@ -34,10 +30,6 @@ interface Props {
   /** Distillery options to display. */
   options: Distillery[];
 }
-
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
 
 /** Creates an option group of a list of distilleries. */
 export class DistillerySelectGroup extends React.Component<Props, {}> {
