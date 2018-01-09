@@ -30,7 +30,6 @@ import {
 } from '~/services/alerts/types';
 import { User } from '~/services/users/types';
 import { getConfig } from '~/config';
-import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 import { formatDate } from '~/utils/dateUtils';
 import { AlertStatusIcon } from '~/services/alerts/components/AlertStatusIcon';
 import { STATUS_OPTIONS } from '../../AlertList/constants';
