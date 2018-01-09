@@ -32,9 +32,8 @@ export class SearchQueryInstructions extends React.Component<{}, {}> {
             <li className="SearchQueryInstructions__list-item">
               Filter search by collection name.
               <ul>
-                <li><b>@source=group.name</b>: Search specific collection.</li>
-                <li><b>@source=group.*</b>: Search all collections in a group.</li>
-                <li><b>@source=*.name</b>: Search all collections with a particular name</li>
+                <li><b>@source="Specific Name"</b>: Search specific collection.</li>
+                <li><b>@source="Name"</b>: Search collections that contain the word "Name".</li>
               </ul>
             </li>
             <li className="SearchQueryInstructions__list-item">
