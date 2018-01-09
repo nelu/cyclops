@@ -12,7 +12,7 @@
 
 ### Security
 
-- Typedoc dependency from `package-lock.json`. Package depended on insecure dependency `chjj/marked@0.3.6`.
+- Removed Typedoc dependency from `package-lock.json`. Package depended on insecure dependency `chjj/marked@0.3.6`.
 
 ## [0.5.2](https://github.com/dunbarcyber/cyclops/compare/0.5.1...0.5.2) (2017-12-13)
 
