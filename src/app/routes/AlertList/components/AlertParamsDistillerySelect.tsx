@@ -21,7 +21,6 @@ import * as React from 'react';
 
 // Local
 import { Distillery } from '~/services/distilleries/types';
-import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 
 interface Props {
   /** Currently selected distillery in alerts list search parameters. */
@@ -53,7 +52,7 @@ export class AlertParamsDistillerySelect extends React.Component<Props, {}> {
   public render(): JSX.Element {
     const distilleryOptions = this.props.distilleries.map((distillery) => (
       <option value={distillery.id} key={distillery.id}>
-        {shortenDistilleryName(distillery.name)}
+        {distillery.name}
       </option>
     ));
 

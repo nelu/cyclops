@@ -21,7 +21,6 @@ import * as React from 'react';
 import { SearchQuery as SearchQueryInterface } from '~/services/search/types';
 import { SearchQueryParameter } from '~/routes/Search/components/SearchQueryParameter';
 import { CollapsibleHeader } from '~/components/CollapsibleHeader';
-import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 import './SearchQuery.scss';
 
 interface Props {
@@ -68,7 +67,7 @@ export class SearchQuery extends React.Component<Props, {}> {
       )) : '-';
     const collections = this.props.query.distilleries
       ? this.props.query.distilleries.distilleries.map((name) => (
-        <SearchQueryParameter value={shortenDistilleryName(name)} parameter={name} errors={[]}/>
+        <SearchQueryParameter value={name} parameter={name} errors={[]}/>
       )) : '-';
     const keywordBlock = keywordParameterCount
       ? (

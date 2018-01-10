@@ -1,5 +1,19 @@
 # Change log
 
+## [0.5.3](https://github.com/dunbarcyber/cyclops/compare/0.5.2...0.5.3) (2018-01-09)
+
+### Removed
+
+- `src/app/services/distilleries/utils/distilleryUtils.ts`: shortenDistilleryName no longer necessary with new distillery name field.
+
+### Changed
+
+- `src/app/routes/Search/components/SearchQueryInstructions.tsx`: Changed distillery filter parameter instructions to include new filter syntax.
+
+### Security
+
+- Removed Typedoc dependency from `package-lock.json`. Package depended on insecure dependency `chjj/marked@0.3.6`.
+
 ## [0.5.2](https://github.com/dunbarcyber/cyclops/compare/0.5.1...0.5.2) (2017-12-13)
 
 ### Removed

@@ -56,7 +56,6 @@ import { createRandomId } from '~/utils/stringUtils';
 import { getPieChartDataTotal } from '~/services/chart/utils/getPieChartDataTotal';
 import { addLevelPieChartColor } from '../../routes/Dashboard/utils/addLevelPieChartColor';
 import { addColorProperty } from '~/services/chart/utils/addColorProperty';
-import { shortenDistilleryDictionary } from '~/services/distilleries/utils/distilleryUtils';
 
 /**
  * Action type prefix for Dashboard actions.
@@ -315,8 +314,7 @@ export function fetchCollectionDistribution(
   return (dispatch) => {
     return fetchAlertCollectionDistribution(days, cancelToken)
       .then((distribution) => {
-        const shortedDistilleryNames = shortenDistilleryDictionary(distribution);
-        const pieChartData = createPieChartDataFromObject(shortedDistilleryNames);
+        const pieChartData = createPieChartDataFromObject(distribution);
         const sortedPieChartData = sortPieChartData(pieChartData);
         const data = addColorProperty(
           sortedPieChartData,

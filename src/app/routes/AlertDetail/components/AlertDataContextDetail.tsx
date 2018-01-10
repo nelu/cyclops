@@ -25,26 +25,13 @@ import { SpacedList } from '~/components/SpacedList';
 import { SpacedSection } from '~/components/SpacedSection';
 import { SubTitle } from '~/components/SubTitle';
 import { AlertDataContextFilters } from './AlertDataContextFilters';
-import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the AlertDataContextDetail component. */
 interface Props {
   /** Context to display detailed information on. */
   context: ContextNested;
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
-/**
- * Displays information about a selected context related to a piece of
- * alert data.
- */
+/** Information about a selected context related to a piece of alert data. */
 export class AlertDataContextDetail extends React.Component<Props, {}> {
   public render() {
     return (
@@ -53,10 +40,10 @@ export class AlertDataContextDetail extends React.Component<Props, {}> {
           <SubTitle>Sources</SubTitle>
           <SpacedList>
             <dt>Primary Source:</dt>
-            <dd>{shortenDistilleryName(this.props.context.primary_distillery.name)}</dd>
+            <dd>{this.props.context.primary_distillery.name}</dd>
 
             <dt>Related Source:</dt>
-            <dd>{shortenDistilleryName(this.props.context.related_distillery.name)}</dd>
+            <dd>{this.props.context.related_distillery.name}</dd>
           </SpacedList>
         </SpacedSection>
 

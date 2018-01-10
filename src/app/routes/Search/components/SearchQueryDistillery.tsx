@@ -19,29 +19,17 @@
 // Vendor
 import * as React from 'react';
 import { Collapsible } from '~/components/Collapsible';
-import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 import { DistilleryFilterParameter } from '~/services/search/types';
-
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
 
 interface Props {
   distilleries: DistilleryFilterParameter | null;
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
-/**
- *
- */
 export class SearchQueryDistilleries extends React.Component<Props, {}> {
   public render() {
     const distilleries = this.props.distilleries
       ? this.props.distilleries.distilleries.map((distillery) => (
-        <li>{shortenDistilleryName(distillery)}</li>
+        <li>{distillery}</li>
       ))
       : <li>None</li>;
     const count = this.props.distilleries

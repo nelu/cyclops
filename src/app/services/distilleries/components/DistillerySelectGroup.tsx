@@ -21,7 +21,6 @@ import * as React from 'react';
 
 // Local
 import { Distillery } from '../types';
-import { shortenDistilleryName } from '../utils/distilleryUtils';
 
 /** Properties of the DistillerySelectGroup component. */
 interface Props {
@@ -36,7 +35,7 @@ export class DistillerySelectGroup extends React.Component<Props, {}> {
   public render() {
     const options = this.props.options.map((distillery) => (
       <option value={distillery.id} key={distillery.id}>
-        {shortenDistilleryName(distillery.name)}
+        {distillery.name}
       </option>
     ));
 

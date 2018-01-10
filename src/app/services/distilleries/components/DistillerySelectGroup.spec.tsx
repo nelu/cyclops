@@ -24,7 +24,6 @@ import * as enzyme from 'enzyme';
 
 // Local
 import { DistillerySelectGroup } from './DistillerySelectGroup';
-import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 
 describe('<DistillerySelectGroup />', () => {
   const distillery1: any = { id: 1, name: 'magic.magic' };
@@ -55,7 +54,7 @@ describe('<DistillerySelectGroup />', () => {
       const distillery = distilleries[index];
 
       chai.expect(option.prop('value')).to.equal(distillery.id);
-      chai.expect(option.text()).to.equal(shortenDistilleryName(distillery.name));
+      chai.expect(option.text()).to.equal(distillery.name);
     });
   });
 });

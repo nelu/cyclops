@@ -23,15 +23,7 @@ import * as React from 'react';
 import { Result } from '~/types/result';
 import { DistilleryNested } from '~/services/distilleries/types';
 import { JSONFormatter } from '~/components/JSONFormatter';
-import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/**
- * Properties of the AlertData component.
- */
 interface Props {
   /** Data associated with the alert. */
   result: Result;
@@ -39,12 +31,8 @@ interface Props {
   distillery: DistilleryNested;
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
 /**
- * Displays a results data and shows a brief explanation of the fields
+ * Alert result data with a brief explanation of the fields
  * present in the results container.
  */
 export class AlertData extends React.Component<Props, {}> {
@@ -64,7 +52,7 @@ export class AlertData extends React.Component<Props, {}> {
       <div className="flex-box">
         <div className="result-modal__sidebar flex-item flex--shrink">
           <h3>
-            {shortenDistilleryName(this.props.distillery.name)}
+            {this.props.distillery.name}
           </h3>
 
           {containerFieldElements}

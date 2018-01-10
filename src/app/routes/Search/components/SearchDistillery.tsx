@@ -20,7 +20,6 @@ import * as React from 'react';
 import * as classnames from 'classnames';
 
 import { DistilleryNested } from '~/services/distilleries/types';
-import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 import './SearchDistillery.scss';
 import { SearchFields } from '~/routes/Search/components/SearchFields';
 
@@ -43,9 +42,6 @@ export class SearchDistillery extends React.Component<Props, State> {
   };
 
   public render() {
-    const shortenedDistilleryName = shortenDistilleryName(
-      this.props.distillery.name,
-    );
     const classes = classnames('SearchDistillery__Distillery', {
       'SearchDistillery__Distillery--active': this.state.active,
     });
@@ -66,7 +62,7 @@ export class SearchDistillery extends React.Component<Props, State> {
           className={classes}
           onClick={this.handleClick}
         >
-          {shortenedDistilleryName}
+          {this.props.distillery.name}
           {' '}
           <i className={iconClasses} />
         </button>

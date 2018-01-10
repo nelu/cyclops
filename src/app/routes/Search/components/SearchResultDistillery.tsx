@@ -20,7 +20,6 @@ import * as React from 'react';
 import { ListGroupItem } from 'react-bootstrap';
 
 import { DistilleryMinimal } from '~/services/distilleries/types';
-import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 import { addCommas } from '~/utils/stringUtils';
 
 interface Props {
@@ -42,7 +41,7 @@ export class SearchResultDistillery extends React.Component<Props, {}> {
         onClick={this.onClick}
         key={this.props.distillery.id}
       >
-        {shortenDistilleryName(this.props.distillery.name)}
+        {this.props.distillery.name}
         {' '}
         <span className="text--muted">({addCommas(this.props.resultCount)})</span>
       </ListGroupItem>
