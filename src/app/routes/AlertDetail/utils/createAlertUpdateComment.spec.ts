@@ -47,6 +47,14 @@ describe('createAlertUpdateComment()', () => {
     chai.expect(comment).to.equal('Changed level from High to Medium.');
   });
 
+  it('should not add a comment if the levels are the same', () => {
+    const alert: any = { level: 'MEDIUM' };
+    const update: any = { level: 'MEDIUM' };
+    const comment = createAlertUpdateComment(alert, update);
+
+    chai.expect(comment).to.equal('');
+  });
+
   it('should create a comment explaining an assigned outcome', () => {
     const alert: any = {};
     const update: any = { outcome: 'completed' };
@@ -63,6 +71,14 @@ describe('createAlertUpdateComment()', () => {
     chai.expect(comment).to.equal(
       'Changed outcome from False positive to Completed.',
     );
+  });
+
+  it('should not create a comment if the outcomes are the same', () => {
+    const alert: any = { outcome: 'completed' };
+    const update: any = { outcome: 'completed' };
+    const comment = createAlertUpdateComment(alert, update);
+
+    chai.expect(comment).to.equal('');
   });
 
   it('should return an empty string if any empty update level is given', () => {
@@ -128,6 +144,20 @@ describe('createAlertUpdateComment()', () => {
     const comment = createAlertUpdateComment(alert, update);
 
     chai.expect(comment).to.equal('Assigned from George Costanza to self.');
+  });
+
+  it('should not comment if both assigned_users are the same', () => {
+    let alert: any = { assigned_user: self };
+    let update: any = { assigned_user: self };
+    let comment = createAlertUpdateComment(alert, update);
+
+    chai.expect(comment).to.equal('');
+
+    alert = { assigned_user: user1 };
+    update = { assigned_user: user1 };
+    comment = createAlertUpdateComment(alert, update);
+
+    chai.expect(comment).to.equal('');
   });
 
   it('should comment that an alert was unassigned from self', () => {

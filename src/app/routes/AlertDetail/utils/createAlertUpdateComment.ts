@@ -46,7 +46,7 @@ const creators: Dictionary<CommentCreator> = {
    * @returns {string} Update comment.
    */
   level: (alert, update) => {
-    if (!update.level) { return ''; }
+    if (!update.level || update.level === alert.level) { return ''; }
 
     return `Changed level from ${getLevelDisplayName(alert.level)} to ` +
       `${getLevelDisplayName(update.level)}.`;
@@ -65,6 +65,8 @@ const creators: Dictionary<CommentCreator> = {
     if (!alert.outcome) { return `Changed outcome to ${after}.`; }
 
     const before = getOutcomeDisplayName(alert.outcome);
+
+    if (after === before) { return ''; }
 
     return `Changed outcome from ${before} to ${after}.`;
   },
@@ -94,6 +96,7 @@ const creators: Dictionary<CommentCreator> = {
       : getUserFullName(update.assigned_user);
 
     if (!alert.assigned_user) { return `Assigned to ${toUser}.`; }
+    if (toUser === fromUser) { return ''; }
 
     return `Assigned from ${fromUser} to ${toUser}.`;
   },
