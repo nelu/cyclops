@@ -1,5 +1,11 @@
 # Change log
 
+## Unreleased
+
+### Fixed
+
+- Creation of extraneous comments when assigning a user, outcome, or level back to itself ([eb321db](https://github.com/dunbarcyber/cyclops/commit/eb321dbb7aa15936694e5af95a0b374c9f55cb79)).
+
 ## [0.5.3](https://github.com/dunbarcyber/cyclops/compare/0.5.2...0.5.3) (2018-01-09)
 
 ### Removed
