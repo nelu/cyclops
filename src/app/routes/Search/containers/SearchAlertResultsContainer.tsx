@@ -29,6 +29,7 @@ import { InjectedRouter, LocationDescriptor } from 'react-router';
 import { paginateAlertResults } from '~/store/alertSearchResults';
 import { withRouter } from 'react-router';
 import { SearchRouteURLQuery } from '~/routes/Search/types';
+import { getConfig } from '~/config';
 
 interface ContainerProps {
   router: InjectedRouter;

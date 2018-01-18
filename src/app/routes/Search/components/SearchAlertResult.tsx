@@ -25,6 +25,7 @@ import { CollapsibleHeader } from '~/components/CollapsibleHeader';
 import { getOutcomeDisplayName } from '~/services/alerts/utils/getOutcomeDisplayName';
 import { JSONTable } from '~/services/json/components/JSONTable';
 import { Well } from '~/components/Well';
+import { getConfig } from '~/config';
 
 interface Props {
   alert: AlertDetail;
@@ -52,9 +53,20 @@ export class SearchAlertResult extends React.Component<Props, State> {
   }
 
   public render() {
-    const comments = this.props.alert.comments.map((comment) => (
-      <AlertDetailComment key={comment.id} comment={comment}/>
-    ));
+    const isStaff = getConfig().CURRENT_USER.is_staff;
+    const comments = isStaff
+      ? this.props.alert.comments.map((comment) => (
+        <AlertDetailComment key={comment.id} comment={comment}/>
+      )) : null;
+    const commentContainer = isStaff
+      ? (
+        <CollapsibleHeader
+          title={`Comments ${this.props.alert.comments.length}`}
+          open={!!this.props.alert.comments.length}
+        >
+          {comments}
+        </CollapsibleHeader>
+      ): null;
     const outcome = (
       getOutcomeDisplayName(this.props.alert.outcome) ||
       <i>No outcome selected</i>
@@ -85,12 +97,7 @@ export class SearchAlertResult extends React.Component<Props, State> {
               <div className="well__content">{notes}</div>
             </div>
 
-            <CollapsibleHeader
-              title={`Comments ${this.props.alert.comments.length}`}
-              open={!!this.props.alert.comments.length}
-            >
-              {comments}
-            </CollapsibleHeader>
+            {commentContainer}
           </div>
         </div>
       </Well>
