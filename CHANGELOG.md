@@ -1,10 +1,15 @@
 # Change log
 
-## Unreleased
+## [0.5.4](https://github.com/dunbarcyber/cyclops/compare/0.5.2...0.5.3) (2018-01-09)
+
+### Changed
+
+- Hide Comments on alert detail and search page if user is not staff. ([1b8162d](https://github.com/dunbarcyber/cyclops/commit/ed04cfc))
+- "Last Active" to "Last Updated" in monitor modal. ([ed04cfc](https://github.com/dunbarcyber/cyclops/commit/ed04cfc))
 
 ### Fixed
 
-- Creation of extraneous comments when assigning a user, outcome, or level back to itself ([eb321db](https://github.com/dunbarcyber/cyclops/commit/eb321dbb7aa15936694e5af95a0b374c9f55cb79)).
+- Creation of extraneous comments when assigning a user, outcome, or level back to itself. ([eb321db](https://github.com/dunbarcyber/cyclops/commit/eb321dbb7aa15936694e5af95a0b374c9f55cb79))
 
 ## [0.5.3](https://github.com/dunbarcyber/cyclops/compare/0.5.2...0.5.3) (2018-01-09)
 
