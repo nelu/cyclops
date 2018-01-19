@@ -73,7 +73,7 @@ export class MonitorDetail extends React.Component<MonitorDetailProps, {}> {
 
         <h4 className="sub-title">Dates</h4>
         <dl className="dl-horizontal">
-          <dt>Last Active:</dt>
+          <dt>Last Updated:</dt>
           <dd>{formatDate(this.props.monitor.last_active)}</dd>
 
           <dt>Last Healthy:</dt>
