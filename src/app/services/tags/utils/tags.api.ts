@@ -16,7 +16,8 @@
  * are made]
  */
 import { getAll } from '~/services/cyphon/utils/cyphonAPI';
+import { TagWithTopic } from '~/services/tags/types';
 
-export function fetchAllTags() {
+export function fetchAllTags(): Promise<TagWithTopic[]> {
   return getAll('/tags/');
 }
