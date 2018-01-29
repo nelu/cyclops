@@ -38,7 +38,7 @@ export function request<T>(config: AxiosRequestConfig): Promise<T> {
 /**
  * Make a GET request to the Cyphon API.
  * @param url Request url.
- * @param config Request configuration.
+ * @param config Request configurationwind
  * @returns {Promise<T>}
  */
 export function get<T>(url: string, config: AxiosRequestConfig = {}): Promise<T> {

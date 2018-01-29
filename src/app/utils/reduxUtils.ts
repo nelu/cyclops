@@ -23,13 +23,11 @@ import { ReduxAction } from '~/store/types';
  * Creates a flux standard action with the given payload type.
  * @param type Action type.
  * @param payload Data to attach to the action.
- * @param error If the action is an error.
  * @returns {ReduxAction<Payload>}
  */
 export function createAction<Payload>(
   type: string,
   payload: Payload,
-  error?: boolean,
 ): ReduxAction<Payload> {
-  return { type, payload, error };
+  return { type, payload };
 }

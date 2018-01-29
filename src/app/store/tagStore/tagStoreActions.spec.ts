@@ -16,18 +16,10 @@
  * are made]
  */
 
-// Vendor
-import * as chai from 'chai';
+describe('tagStoreActions', () => {
+  describe('fetchAllTags()', () => {
+    it('should make a call to ', () => {
 
-// Local
-import { createAction } from './reduxUtils';
-
-describe('createAction', () => {
-  it('should create an action with a type and payload', () => {
-    const type = 'type';
-    const payload = 'payload';
-    const action = createAction(type, payload);
-
-    chai.expect(action).to.deep.equal({ type, payload, error: undefined });
+    });
   });
 });

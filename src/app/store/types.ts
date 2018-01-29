@@ -46,8 +46,6 @@ export interface ReduxAction<Payload> extends Action {
   type: string;
   /** Data passed with the action. */
   payload: Payload;
-  /** If the action is an error type. */
-  error?: boolean;
 }
 
 /** Thunk action that returns a promise that returns undefined. */
