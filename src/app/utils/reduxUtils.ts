@@ -28,6 +28,7 @@ import { ReduxAction } from '~/store/types';
 export function createAction<Payload>(
   type: string,
   payload: Payload,
+  error?: boolean,
 ): ReduxAction<Payload> {
-  return { type, payload };
+  return { type, payload, error };
 }
