@@ -28,30 +28,34 @@ import { ReducerMap } from '~/store/types';
 /** State shape of the AlertDetail reducer. */
 export interface AlertDetailState {
   /** ID of the currently selected alerts. */
-  alertId: number | null;
+  alertID: number | null;
+
   /** Locations from the alerts data with their addresses. */
   locations: LocationFieldAddress[] | null;
+
   /** GeoJSON markers of the currently selected alerts. */
   markers: Markers | null;
+
   /** Currently selected alerts. */
   alert: AlertDetail | null;
+
   /** If a loading icon should be shown. */
   loading: boolean;
+
   /** IP address fields related to the alert. */
   ipAddresses: ResultIPAdresses | null;
+
   /** If the data modal is active. */
   modalActive: boolean;
+
   /** Error message that doesn't require the error popup. */
   error: string[];
 }
 
-/**
- * Initial state of the AlertDetail reducer.
- * @type {State}
- */
+/** Initial state of the AlertDetail reducer. */
 export const INITIAL_STATE: AlertDetailState = {
   alert: null,
-  alertId: null,
+  alertID: null,
   ipAddresses: null,
   loading: false,
   locations: [],
@@ -94,7 +98,7 @@ reducers[actions.FETCH_ALERT_PENDING] = (
   action: actions.FetchAlertPendingAction,
 ): AlertDetailState => {
   const update: Partial<AlertDetailState> = {
-    alertId: action.payload.alertId,
+    alertID: action.payload.alertID,
     loading: true,
   };
 

@@ -57,12 +57,12 @@ describe('alertDetail', () => {
 
   describe('FETCH_ALERT_PENDING', () => {
     it('should update the state with the given payload', () => {
-      const alertId = 1;
-      const action = actions.fetchAlertPending(alertId, {} as any);
+      const alertID = 1;
+      const action = actions.fetchAlertPending(alertID, {} as any);
       const state = alertDetail({} as any, action);
 
       chai.expect(state).to.deep.equal({
-        alertId: 1,
+        alertID: 1,
         loading: true,
       });
     });

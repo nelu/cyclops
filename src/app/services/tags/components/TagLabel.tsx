@@ -22,21 +22,11 @@ import * as React from 'react';
 // Local
 import { TagWithTopic } from '~/services/tags/types';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
 interface Props {
   tag: TagWithTopic;
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
-/**
- * Name of a tag object in a label.
- */
+/** Name of a tag object in a label. */
 export class TagLabel extends React.Component<Props, {}> {
   public render() {
     return (

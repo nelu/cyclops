@@ -48,6 +48,7 @@
     "redux-actions": "0.12.0",
     "redux-devtools-extension": "2.13.2",
     "redux-logger": "2.6.1",
+    "redux-saga": "0.16.0",
     "redux-thunk": "2.1.0",
     "reselect": "3.0.1",
     "ts-helpers": "1.1.2"
@@ -125,7 +126,7 @@
     "karma-webpack": "2.0.3",
     "livereload": "0.6.2",
     "mocha": "3.1.2",
-    "node-sass": "3.10.0",
+    "node-sass": "4.7.2",
     "phantomjs-prebuilt": "2.1.14",
     "react-addons-test-utils": "15.3.2",
     "remap-istanbul": "0.9.5",

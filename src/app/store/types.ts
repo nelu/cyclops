@@ -50,6 +50,18 @@ export interface ReduxAction<Payload> extends Action {
   error?: boolean;
 }
 
+/**
+ * Flux standard action with specified action type and payload type.
+ * Used for payload type inference in reducers.
+ */
+export interface ReduxActionWithType<T, P> extends Action {
+  /** Type of action. */
+  type: T;
+
+  /** Data passed with the action. */
+  payload: P;
+}
+
 /** Thunk action that returns a promise that returns undefined. */
 export type ThunkActionPromise = ThunkAction<
   Promise<void>,

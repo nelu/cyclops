@@ -139,7 +139,7 @@ export const FETCH_ALERT_PENDING = `${ACTION_PREFIX}/FETCH_ALERT_PENDING`;
 
 /** FETCH_ALERT_PENDING payload type. */
 export interface FetchAlertPendingPayload {
-  alertId: number;
+  alertID: number;
   canceler: Canceler;
 }
 
@@ -149,13 +149,13 @@ export type FetchAlertPendingAction = ReduxAction<FetchAlertPendingPayload>;
 /**
  * Creates a FETCH_ALERT_PENDING action and cancels any other requests
  * that have been made prior to this action.
- * @param alertId ID of the alerts being fetched.
+ * @param alertID ID of the alerts being fetched.
  * @param canceler Function that cancels the promise making the request.
  * @returns {ReduxAction<{alertId: number, canceler: Canceler}>}
  */
-export function fetchAlertPending(alertId: number, canceler: Canceler):
+export function fetchAlertPending(alertID: number, canceler: Canceler):
   FetchAlertPendingAction {
-  return createAction(FETCH_ALERT_PENDING, { alertId, canceler });
+  return createAction(FETCH_ALERT_PENDING, { alertID, canceler });
 }
 
 // --------------------------------------------------------------------------

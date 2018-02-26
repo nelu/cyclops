@@ -80,7 +80,7 @@ const values: Values = (state, props) => ({
   polling: state.alertList.polling,
   pollingEnabled: state.alertList.pollingEnabled,
   router: props.router,
-  selectedAlert: state.alertDetail.alertId,
+  selectedAlert: state.alertDetail.alertID,
   users: state.alertList.users,
 });
 

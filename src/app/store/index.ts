@@ -17,9 +17,10 @@
  */
 
 // Vendor
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware, Store } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import sagaMiddleware, { SagaIterator } from 'redux-saga';
 
 // Local
 import { AlertDetailState, alertDetail } from './alertDetail';
@@ -35,6 +36,7 @@ import { SearchResultsState, searchResults } from './searchResults';
 import { SearchQueryState, searchQuery } from './searchQuery';
 import { AlertSearchResultsState, alertSearchResults } from './alertSearchResults';
 import { DistilleryStoreState, distilleryStore } from './distilleryStore';
+import { all } from 'redux-saga/effects';
 
 /** Shape of the redux store state. */
 export interface StoreState {
@@ -70,8 +72,18 @@ const reducer = combineReducers<StoreState>({
   userStore,
 });
 
-/** Middleware to add to the redux store. */
-const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware));
+function * sagas(): SagaIterator {
+  yield all([]);
+}
 
 /** Central redux store for the application */
-export const store = createStore<StoreState>(reducer, middleware);
+export const store: Store<StoreState> = (() => {
+  const sagaMiddlware = sagaMiddleware();
+  const middleware = applyMiddleware(thunkMiddleware, sagaMiddlware);
+  const middlewareWithDevTools = composeWithDevTools(middleware);
+  const instance = createStore<StoreState>(reducer, middlewareWithDevTools);
+
+  sagaMiddlware.run(sagas);
+
+  return instance;
+})();
