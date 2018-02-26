@@ -6,10 +6,11 @@ describe('alertDetailTagActions', () => {
     it('should create an ADD_TAG action', () => {
       const alertID = 1;
       const tagID = 5;
+      const userID = 3;
 
-      expect(actions.addTag(alertID, tagID)).to.deep.equal({
+      expect(actions.addTag(alertID, tagID, userID)).to.deep.equal({
         type: actions.ADD_TAG,
-        payload: { alertID, tagID },
+        payload: { alertID, tagID, userID },
       });
     });
   });
@@ -18,9 +19,11 @@ describe('alertDetailTagActions', () => {
     it('should create an ADD_TAG_SUCCESS action', () => {
       const alertID = 3;
       const tagID = 8;
-      expect(actions.addTagSuccess(alertID, tagID)).to.deep.equal({
+      const userID = 3;
+
+      expect(actions.addTagSuccess(alertID, tagID, userID)).to.deep.equal({
         type: actions.ADD_TAG_SUCCESS,
-        payload: { alertID, tagID },
+        payload: { alertID, tagID, userID },
       });
     });
   });
@@ -29,10 +32,11 @@ describe('alertDetailTagActions', () => {
     it('should create an ADD_TAG_FAILURE action', () => {
       const alertID = 5;
       const tagID = 3;
+      const userID = 2;
 
-      expect(actions.addTagFailure(alertID, tagID)).to.deep.equal({
+      expect(actions.addTagFailure(alertID, tagID, userID)).to.deep.equal({
         type: actions.ADD_TAG_FAILURE,
-        payload: { alertID, tagID },
+        payload: { alertID, tagID, userID },
       });
     });
   });

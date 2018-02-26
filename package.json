@@ -86,6 +86,7 @@
     "@types/sinon": "2.2.1",
     "@types/webpack-env": "1.13.0",
     "awesome-typescript-loader": "3.1.2",
+    "axios-mock-adapter": "1.14.0",
     "chai": "3.5.0",
     "clean-webpack-plugin": "0.1.10",
     "coveralls": "2.13.0",

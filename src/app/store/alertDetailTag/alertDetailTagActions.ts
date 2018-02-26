@@ -3,28 +3,36 @@ import { ReduxActionWithType } from '~/store/types';
 export const ADD_TAG = 'ALERT_DETAIL_TAG_ADD_TAG';
 export type AddTagAction = ReduxActionWithType<
   typeof ADD_TAG,
-  { alertID: number, tagID: number }>;
-export const addTag = (alertID: number, tagID: number): AddTagAction => ({
+  { alertID: number, tagID: number, userID: number }>;
+export const addTag = (alertID: number, tagID: number, userID: number): AddTagAction => ({
   type: ADD_TAG,
-  payload: { alertID, tagID },
+  payload: { alertID, tagID, userID },
 });
 
 export const ADD_TAG_SUCCESS = 'ALERT_DETAIL_TAG_ADD_TAG_SUCCESS';
 export type AddTagSuccessAction = ReduxActionWithType<
   typeof ADD_TAG_SUCCESS,
-  { alertID: number, tagID: number }>;
-export const addTagSuccess = (alertID: number, tagID: number): AddTagSuccessAction => ({
+  { alertID: number, tagID: number, userID: number }>;
+export const addTagSuccess = (
+  alertID: number,
+  tagID: number,
+  userID: number,
+): AddTagSuccessAction => ({
   type: ADD_TAG_SUCCESS,
-  payload: { alertID, tagID },
+  payload: { alertID, tagID, userID },
 });
 
 export const ADD_TAG_FAILURE = 'ALERT_DETAIL_TAG_ADD_TAG_FAILURE';
 export type AddTagFailureAction = ReduxActionWithType<
   typeof ADD_TAG_FAILURE,
-  { alertID: number, tagID: number }>;
-export const addTagFailure = (alertID: number, tagID: number): AddTagFailureAction => ({
+  { alertID: number, tagID: number, userID: number }>;
+export const addTagFailure = (
+  alertID: number,
+  tagID: number,
+  userID: number,
+): AddTagFailureAction => ({
   type: ADD_TAG_FAILURE,
-  payload: { alertID, tagID },
+  payload: { alertID, tagID, userID },
 });
 
 export const OPEN_PANEL = 'ALERT_DETAIL_TAG_OPEN_PANEL';
