@@ -1,6 +1,7 @@
 import { TagRelationContentTypes } from '~/services/tags/types/TagRelationContentTypes';
 import { TagDetail } from '~/services/tags/types';
-import { post } from '~/services/cyphon/utils/cyphonAPI';
+import { del, get, post } from '~/services/cyphon/utils/cyphonAPI';
+import { TagRelation } from '~/services/tags/types/TagRelation';
 
 /**
  * Adds a tag relation to a given object.
@@ -10,14 +11,46 @@ import { post } from '~/services/cyphon/utils/cyphonAPI';
  * @param {number} userID ID of the user who made the relation.
  * @returns {Promise<TagDetail>}
  */
-export const addTagRelation = (
+export function addTagRelation(
   type: TagRelationContentTypes,
   objectID: number,
   tagID: number,
   userID?: number,
-): Promise<TagDetail> => post('/tagrelations/', {
-  content_type: type,
-  object_id: objectID,
-  tag: tagID,
-  tagged_by: userID,
-});
+): Promise<TagDetail> {
+  return post('/tagrelations/', {
+    content_type: type,
+    object_id: objectID,
+    tag: tagID,
+    tagged_by: userID,
+  });
+}
+
+/**
+ * Finds a tag relation based on select parameters.
+ * @param {TagRelationContentTypes} contentType
+ * @param {number} objectID
+ * @param {number} tagID
+ * @returns {Promise<any>}
+ */
+export function findTagRelation(
+  contentType: TagRelationContentTypes,
+  objectID: number,
+  tagID: number,
+): Promise<TagRelation> {
+  return get('/tagrelations/', {
+    params: {
+      content_type: contentType,
+      object_id: objectID,
+      tag: tagID,
+    },
+  });
+}
+
+/**
+ * Deletes a tag relation based on it's ID.
+ * @param {number} tagRelationID
+ * @returns {Promise<TagRelation>}
+ */
+export function deleteTagRelation(tagRelationID: number): Promise<TagRelation> {
+  return del(`/tagrelations/${tagRelationID}`);
+}

@@ -7,6 +7,7 @@ import * as thunks from './alertDetailTagThunks';
 import * as actions from './alertDetailTagActions';
 import * as api from '~/services/tags/services/tagAPI';
 import { cyphonAPI } from '~/services/cyphon/constants';
+import { ADD_ERROR, addError } from '~/store/errorModal';
 
 describe('alertDetailTagSagas()', () => {
   let mockAPI: MockAdapter;
@@ -24,6 +25,8 @@ describe('alertDetailTagSagas()', () => {
 
   afterEach(() => {
     mockAPI.reset();
+    dispatch.reset();
+    getState.reset();
   });
 
   after(() => {
@@ -34,15 +37,22 @@ describe('alertDetailTagSagas()', () => {
     const alertID = 1;
     const tagID = 4;
     const userID = 3;
-
-    before(() => {
-      mockAPI.onPost(/\/tagrelations\/$/).reply(200);
-    });
+    const url = /\/tagrelations\/$/;
 
     it('should make a post request to make a tag relation', async () => {
+      const body = {
+        content_type: 'alert',
+        object_id: alertID,
+        tag: tagID,
+        tagged_by: userID,
+      };
       const thunk = thunks.addTag(alertID, tagID, userID);
 
+      mockAPI.onPost(/\/tagrelations\//, body).reply(200);
+
       await thunk(dispatch, getState, undefined);
+
+      expect(dispatch.args[1]).to.deep.equal([actions.addTagSuccess(alertID, tagID, userID)]);
     });
 
     it('should dispatch an ADD_TAG action', async () => {
@@ -51,6 +61,25 @@ describe('alertDetailTagSagas()', () => {
       await thunk(dispatch, getState, undefined);
 
       expect(dispatch.args[0]).to.deep.equal([actions.addTag(alertID, tagID, userID)]);
+    });
+
+    it('should dispatch an ADD_TAG_SUCCESS action on a successful request', async () => {
+      const thunk = thunks.addTag(alertID, tagID, userID);
+
+      mockAPI.onPost(url).reply(200);
+
+      await thunk(dispatch, getState, undefined);
+
+      expect(dispatch.args[1]).to.deep.equal([actions.addTagSuccess(alertID, tagID, userID)]);
+    });
+
+    it('should dispatch an ADD_TAG_FAILURE and ADD_ERROR action on an ' +
+      'unsuccessful request', async () => {
+      const thunk = thunks.addTag(alertID, tagID, userID);
+      await thunk(dispatch, getState, undefined);
+
+      expect(dispatch.args[1]).to.deep.equal([actions.addTagFailure(alertID, tagID, userID)]);
+      expect(dispatch.args[2][0].type).to.deep.equal(ADD_ERROR);
     });
   });
 });
