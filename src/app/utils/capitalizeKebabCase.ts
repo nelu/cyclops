@@ -17,32 +17,18 @@
  */
 
 // Vendor
-import * as React from 'react';
+import * as _ from 'lodash';
 
-// Local
-import { Distillery } from '../types';
-
-/** Properties of the DistillerySelectGroup component. */
-interface Props {
-  /** Title of the option group. */
-  title: string;
-  /** Distillery options to display. */
-  options: Distillery[];
-}
-
-/** Creates an option group of a list of distilleries. */
-export class DistillerySelectGroup extends React.Component<Props, {}> {
-  public render() {
-    const options = this.props.options.map((distillery) => (
-      <option value={distillery.id} key={distillery.id}>
-        {distillery.name}
-      </option>
-    ));
-
-    return (
-      <optgroup label={this.props.title}>
-        {options}
-      </optgroup>
-    );
-  }
+/**
+ * Turns a kebab case string into a space separated one with each word
+ * capitalized.
+ * @param {string} value
+ * @returns {string}
+ */
+export function capitalizeKebabCase(value: string): string {
+  return value
+    .replace('-', ' ')
+    .split(' ')
+    .map((word) => _.capitalize(word))
+    .join(' ');
 }

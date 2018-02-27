@@ -26,13 +26,7 @@ import { AlertStatusIcon } from '~/services/alerts/components/AlertStatusIcon';
 import { AlertListItem as Alert } from '~/services/alerts/types';
 import { getUserFullName } from '~/services/users/utils/getUserFullName';
 import { formatDate } from '~/utils/dateUtils';
-import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the AlertListItem component. */
 interface Props {
   /** Alert to display. */
   alert: Alert;
@@ -44,10 +38,6 @@ interface Props {
    */
   onClick(alertID: number): any;
 }
-
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
 
 /**
  * Displays a table row with an overview of the given alert.
@@ -62,7 +52,7 @@ export class AlertListItem extends React.Component<Props, {}> {
 
   public render(): JSX.Element {
     const distilleryName = this.props.alert.distillery
-      ? shortenDistilleryName(this.props.alert.distillery.name)
+      ? this.props.alert.distillery.name
       : 'None';
     const classes = classnames(
       'alert-list-item',

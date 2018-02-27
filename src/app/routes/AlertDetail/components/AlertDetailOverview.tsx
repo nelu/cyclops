@@ -30,7 +30,6 @@ import {
 } from '~/services/alerts/types';
 import { User } from '~/services/users/types';
 import { getConfig } from '~/config';
-import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 import { formatDate } from '~/utils/dateUtils';
 import { AlertStatusIcon } from '~/services/alerts/components/AlertStatusIcon';
 import { STATUS_OPTIONS } from '../../AlertList/constants';
@@ -38,11 +37,6 @@ import { AlertDetailUnassignButton } from './AlertDetailUnassignButton';
 import { AlertDetailSelfAssignButton } from './AlertDetailSelfAssignButton';
 import { TagLabel } from '~/services/tags/components/TagLabel';
 
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
-
-/** Properties of the AlertDetailOverview component. */
 interface Props {
   /** Alert to display the details of. */
   alert: AlertDetail;
@@ -56,12 +50,8 @@ interface Props {
   updateAlert(alert: Alert, fields: AlertUpdateRequest): any;
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
 /**
- * Displays a list of details about a given alerts.
+ * List of details about a given alerts.
  */
 export class AlertDetailOverview extends React.Component<Props, {}> {
   /**
@@ -105,7 +95,7 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
       ? formatDate(this.props.alert.content_date)
       : 'Unknown';
     const distilleryName = this.props.alert.distillery
-      ? shortenDistilleryName(this.props.alert.distillery.name)
+      ? this.props.alert.distillery.name
       : 'None';
     const tags = this.props.alert.tags.length
       ? this.props.alert.tags.map((tag) => <TagLabel tag={tag}/>)

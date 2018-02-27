@@ -24,6 +24,7 @@ import {
   DistillerySearchResults,
   SearchEndpoint,
 } from '~/services/search/types';
+import { TimeQuery } from '~/routes/Search/types';
 
 /**
  * Searches a given search endpoint and returns the results.
@@ -31,6 +32,8 @@ import {
  * @param query SearchQueryStore query used to look for results.
  * @param page Page number of results to return.
  * @param pageSize Number of results to return per page.
+ * @param after Time to search for results after.
+ * @param before Time to search for results before.
  * @returns {Promise<SearchEndpoint<any>>}
  */
 function getSearchResults(
@@ -38,8 +41,16 @@ function getSearchResults(
   query: string,
   page?: number,
   pageSize?: number,
+  after?: string,
+  before?: string,
 ): Promise<SearchEndpoint<any>> {
-  const params = { query, page, page_size: pageSize };
+  const params = {
+    query,
+    page,
+    page_size: pageSize,
+    after,
+    before,
+  };
 
   return get(url, { params });
 }
@@ -50,14 +61,18 @@ function getSearchResults(
  * @param query SearchQueryStore query used to look for results.
  * @param page Page number of results to return.
  * @param pageSize Number of results to return per page.
+ * @param after Time to search for results after.
+ * @param before Time to search for results before.
  * @returns {Promise<SearchEndpoint<CombinedSearchResults>>}
  */
 export function search(
   query: string,
   page?: number,
   pageSize?: number,
+  after?: string,
+  before?: string,
 ): Promise<SearchEndpoint<CombinedSearchResults>> {
-  return getSearchResults('/search/', query, page, pageSize);
+  return getSearchResults('/search/', query, page, pageSize, after, before);
 }
 
 /**
@@ -65,14 +80,25 @@ export function search(
  * @param query SearchQueryStore query used to look for results.
  * @param page Page number of results to return.
  * @param pageSize Number of results to return per page.
+ * @param after Time to search for results after.
+ * @param before Time to search for results before.
  * @returns {Promise<SearchEndpoint<AlertSearchResults>>}
  */
 export function searchAlerts(
   query: string,
   page?: number,
   pageSize?: number,
+  after?: string,
+  before?: string,
 ): Promise<SearchEndpoint<AlertSearchResults>> {
-  return getSearchResults('/search/alerts/', query, page, pageSize);
+  return getSearchResults(
+    '/search/alerts/',
+    query,
+    page,
+    pageSize,
+    after,
+    before,
+  );
 }
 
 /**
@@ -81,6 +107,8 @@ export function searchAlerts(
  * @param query SearchQueryStore query used to look for results.
  * @param page Page number of results to return.
  * @param pageSize Number of results to return per page.
+ * @param after Time to search for results after.
+ * @param before Time to search for results before.
  * @returns {Promise<SearchEndpoint<any>>}
  */
 export function searchDistillery(
@@ -88,6 +116,15 @@ export function searchDistillery(
   query: string,
   page?: number,
   pageSize?: number,
+  after?: string,
+  before?: string,
 ): Promise<SearchEndpoint<DistillerySearchResults>> {
-  return getSearchResults(`/search/distilleries/${id}/`, query, page, pageSize);
+  return getSearchResults(
+    `/search/distilleries/${id}/`,
+    query,
+    page,
+    pageSize,
+    after,
+    before,
+  );
 }

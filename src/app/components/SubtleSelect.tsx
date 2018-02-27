@@ -21,11 +21,7 @@ import * as React from 'react';
 
 // Local
 import { SubtleButton } from './SubtleButton';
-import { createRandomId } from '../utils/stringUtils';
-
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
+import { createRandomId } from '~/utils/stringUtils';
 
 /**
  * Object structure used when displaying a select option on a
@@ -51,19 +47,13 @@ interface Props  {
   onSelect(value: string): any;
 }
 
-export type SubtleSelectOnSelect = (value: string) => any;
-
 /** Internal state of the SubtleSelect component. */
 interface State {
   /** If the select dropdown view is active. */
   active: boolean;
 }
 
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
-
-/** Displays a subtle button that displays a select option on click. */
+/** Subtle button that displays a select option on click. */
 export class SubtleSelect extends React.Component<Props, State> {
   /** If the window listener has been activated. */
   private listenerActivated: boolean;

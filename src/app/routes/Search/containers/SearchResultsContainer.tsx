@@ -42,12 +42,20 @@ interface ValueProps {
   count: number;
   page: number;
   query: string;
+  after?: string;
+  before?: string;
   selectedDistilleryID: number;
   distilleries: DistilleryMinimal[];
 }
 
 interface FunctionProps {
-  paginateResults(distilleryID: number, query: string, page: number): any;
+  paginateResults(
+    distilleryID: number,
+    query: string,
+    page: number,
+    after?: string,
+    before?: string,
+  ): any;
 }
 
 type Props = ValueProps & FunctionProps;
@@ -60,6 +68,8 @@ class Container extends React.Component<Props> {
       this.props.selectedDistilleryID,
       this.props.query,
       page,
+      this.props.after,
+      this.props.before,
     );
   };
 
@@ -84,6 +94,8 @@ const values: StateToProps<ValueProps, {}> = (state, props) => ({
   results: getSelectedResults(state.searchResults),
   count: getSelectedResultCount(state.searchResults),
   page: getSelectedResultsPage(state.searchResults),
+  after: state.searchQuery.after,
+  before: state.searchQuery.before,
   distilleries: getSearchResultDistilleries(state.searchResults),
   selectedDistilleryID: state.searchResults.selectedDistilleryID,
   query: state.searchQuery.query,

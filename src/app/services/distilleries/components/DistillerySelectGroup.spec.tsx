@@ -18,13 +18,11 @@
 
 // Vendor
 import * as React from 'react';
-import * as sinon from 'sinon';
 
 import * as enzyme from 'enzyme';
 
 // Local
 import { DistillerySelectGroup } from './DistillerySelectGroup';
-import { shortenDistilleryName } from '~/services/distilleries/utils/distilleryUtils';
 
 describe('<DistillerySelectGroup />', () => {
   const distillery1: any = { id: 1, name: 'magic.magic' };
@@ -55,7 +53,7 @@ describe('<DistillerySelectGroup />', () => {
       const distillery = distilleries[index];
 
       expect(option.prop('value')).toEqual(distillery.id);
-      expect(option.text()).toEqual(shortenDistilleryName(distillery.name));
+      expect(option.text()).toEqual(distillery.name);
     });
   });
 });

@@ -16,33 +16,15 @@
  * are made]
  */
 
-// Vendor
-import * as React from 'react';
+@import '../../../../styles/base/variables';
 
-// Local
-import { Distillery } from '../types';
+.SearchResultsHeader {
+  &__Container {
+    border-bottom: solid 1px #2a2b2e;
+    padding: $padding-large-vertical $padding-base-horizontal;
+  }
 
-/** Properties of the DistillerySelectGroup component. */
-interface Props {
-  /** Title of the option group. */
-  title: string;
-  /** Distillery options to display. */
-  options: Distillery[];
-}
-
-/** Creates an option group of a list of distilleries. */
-export class DistillerySelectGroup extends React.Component<Props, {}> {
-  public render() {
-    const options = this.props.options.map((distillery) => (
-      <option value={distillery.id} key={distillery.id}>
-        {distillery.name}
-      </option>
-    ));
-
-    return (
-      <optgroup label={this.props.title}>
-        {options}
-      </optgroup>
-    );
+  &__CountTitle {
+    margin-right: 6px;
   }
 }

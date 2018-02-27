@@ -11,6 +11,58 @@
 - Test specs.ts file. ([03d5051](https://github.com/dunbarcyber/cyclops/commit/03d5051693fd47b47611a449ee0d0d454b965dfd))
 - Unused dependencies. ([30ff3f0](https://github.com/dunbarcyber/cyclops/commit/30ff3f0eb012818f37906e22fad9f2bc488fe4d3))
 
+## [0.5.4](https://github.com/dunbarcyber/cyclops/compare/0.5.2...0.5.3) (2018-01-09)
+
+### Changed
+
+- Hide Comments on alert detail and search page if user is not staff. ([1b8162d](https://github.com/dunbarcyber/cyclops/commit/ed04cfc))
+- "Last Active" to "Last Updated" in monitor modal. ([ed04cfc](https://github.com/dunbarcyber/cyclops/commit/ed04cfc))
+
+### Fixed
+
+- Creation of extraneous comments when assigning a user, outcome, or level back to itself. ([eb321db](https://github.com/dunbarcyber/cyclops/commit/eb321dbb7aa15936694e5af95a0b374c9f55cb79))
+
+## [0.5.3](https://github.com/dunbarcyber/cyclops/compare/0.5.2...0.5.3) (2018-01-09)
+
+### Removed
+
+- `src/app/services/distilleries/utils/distilleryUtils.ts`: shortenDistilleryName no longer necessary with new distillery name field.
+
+### Changed
+
+- `src/app/routes/Search/components/SearchQueryInstructions.tsx`: Changed distillery filter parameter instructions to include new filter syntax.
+
+### Security
+
+- Removed Typedoc dependency from `package-lock.json`. Package depended on insecure dependency `chjj/marked@0.3.6`.
+
+## [0.5.2](https://github.com/dunbarcyber/cyclops/compare/0.5.1...0.5.2) (2017-12-13)
+
+### Removed
+
+- Source drop down items grouped by warehouse on the alerts page. Now it only displays the distillery names.
+
+<a name="0.5.1"></a>
+## [0.5.1](https://github.com/dunbarcyber/cyclops/compare/0.5.0...0.5.1) (2017-12-07)
+
+### Added
+
+- Ability to filter search results by time. Relative and absolute filter options are present.'
+- Automatic deployment to S3 bucket from travis when a new tag is introduced.
+- `FontAwesome` helper component for displaying font awesome icons.
+
+### Removed
+
+- Any mention of the `build` directory in configs and `.gitignore`.
+- Sphinx documentation. Information will be transferred to the CONTRIBUTING.md file.
+- **.gitattributes**: Removed `dist` binary diff. Directory is now ignored. Distribution files have been moved to https://s3.amazonaws.com/cyclops-public/.
+
+### Moved
+
+- Started migration process of SCSS classes to localized components. Current classes are in `styles` directory. Future destination will be in files located next to Component classes using those files.
+
+### Fixed
+
 <a name="0.5.0"></a>
 ## [0.5.0](https://github.com/dunbarcyber/cyclops/compare/0.4.4...0.5.0) (2017-11-03)
 

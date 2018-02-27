@@ -46,6 +46,8 @@ describe('searchQueryReducer', () => {
       expect(update).toEqual({
         ...initial,
         query,
+        after: undefined,
+        before: undefined,
         promiseID,
         isLoading: true,
       });

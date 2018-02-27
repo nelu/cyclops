@@ -68,10 +68,7 @@ import {
 } from '../../../store/alertDetail/alertDetailActions';
 import { Action } from '../../../services/actions/types';
 import { ContainerNested } from '../../../services/containers/types';
-
-// --------------------------------------------------------------------------
-// Interfaces/Types
-// --------------------------------------------------------------------------
+import { getConfig } from '~/config';
 
 /** Properties of the AlertDetail component that are values. */
 export interface ValueProps {
@@ -163,10 +160,6 @@ interface RouteParams {
   /** ID of the alert to view. */
   alertId: string;
 }
-
-// --------------------------------------------------------------------------
-// Component
-// --------------------------------------------------------------------------
 
 /**
  * Displays detailed alert information in a sidebar.
@@ -327,6 +320,14 @@ export class AlertDetail extends React.Component<Props, {}> {
           {errors}
         </div>
       ) : null;
+    const comments = alert && getConfig().CURRENT_USER.is_staff
+      ? (
+        <AlertDetailComments
+          alertId={alert.id}
+          comments={alert.comments}
+          addComment={addComment}
+        />
+      ) : null;
     const alertDetailElement = alert ? (
       <div className="flex-item content">
         <div className="spacing-section">
@@ -344,11 +345,7 @@ export class AlertDetail extends React.Component<Props, {}> {
 
         <AlertDetailOutcomeContainer alert={alert} />
 
-        <AlertDetailComments
-          alertId={alert.id}
-          comments={alert.comments}
-          addComment={addComment}
-        />
+        {comments}
 
         <AlertDetailActions
           alertId={alert.id}
