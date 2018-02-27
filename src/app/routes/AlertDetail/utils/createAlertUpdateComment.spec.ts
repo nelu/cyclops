@@ -19,7 +19,6 @@
 // Vendor
 import * as sinon from 'sinon';
 
-
 // Local
 import { createAlertUpdateComment } from './createAlertUpdateComment';
 import * as cyclops from '~/config';
@@ -52,7 +51,7 @@ describe('createAlertUpdateComment()', () => {
     const update: any = { level: 'MEDIUM' };
     const comment = createAlertUpdateComment(alert, update);
 
-    chai.expect(comment).to.equal('');
+    expect(comment).toEqual('');
   });
 
   it('should create a comment explaining an assigned outcome', () => {
@@ -78,7 +77,7 @@ describe('createAlertUpdateComment()', () => {
     const update: any = { outcome: 'completed' };
     const comment = createAlertUpdateComment(alert, update);
 
-    chai.expect(comment).to.equal('');
+    expect(comment).toEqual('');
   });
 
   it('should return an empty string if any empty update level is given', () => {
@@ -151,13 +150,13 @@ describe('createAlertUpdateComment()', () => {
     let update: any = { assigned_user: self };
     let comment = createAlertUpdateComment(alert, update);
 
-    chai.expect(comment).to.equal('');
+    expect(comment).toEqual('');
 
     alert = { assigned_user: user1 };
     update = { assigned_user: user1 };
     comment = createAlertUpdateComment(alert, update);
 
-    chai.expect(comment).to.equal('');
+    expect(comment).toEqual('');
   });
 
   it('should comment that an alert was unassigned from self', () => {
