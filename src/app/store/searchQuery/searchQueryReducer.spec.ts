@@ -18,7 +18,7 @@
 
 // Vendor
 import * as sinon from 'sinon';
-import * as chai from 'chai';
+
 
 // Local
 import { searchQuery, SearchQueryState } from './searchQueryReducer';
@@ -43,7 +43,7 @@ describe('searchQueryReducer', () => {
         searchQueryActions.fetchResultsPending(query, promiseID),
       );
 
-      expect(update).to.deep.equal({
+      expect(update).toEqual({
         ...initial,
         query,
         promiseID,
@@ -60,7 +60,7 @@ describe('searchQueryReducer', () => {
         searchQueryActions.fetchResultsSuccess(results),
       );
 
-      expect(update).to.deep.equal({
+      expect(update).toEqual({
         ...initial,
         queryObject: results.query,
         isLoading: false,
@@ -76,7 +76,7 @@ describe('searchQueryReducer', () => {
         searchQueryActions.fetchResultsFailed(query),
       );
 
-      expect(update).to.deep.equal({
+      expect(update).toEqual({
         ...initial,
         isLoading: false,
         isValid: false,
@@ -93,7 +93,7 @@ describe('searchQueryReducer', () => {
         searchQueryActions.changeView(view),
       );
 
-      expect(update).to.deep.equal({ ...initial, view });
+      expect(update).toEqual({ ...initial, view });
     });
   });
 
@@ -102,7 +102,7 @@ describe('searchQueryReducer', () => {
       const promiseID = Symbol();
       const update = searchQuery(initial, paginateResultsPending(promiseID));
 
-      expect(update).to.deep.equal({
+      expect(update).toEqual({
         ...initial,
         promiseID,
         isLoading: true,

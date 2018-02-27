@@ -8,7 +8,7 @@ describe('alertDetailTagActions', () => {
       const tagID = 5;
       const userID = 3;
 
-      expect(actions.addTag(alertID, tagID, userID)).to.deep.equal({
+      expect(actions.addTag(alertID, tagID, userID)).toEqual({
         type: actions.ADD_TAG,
         payload: { alertID, tagID, userID },
       });
@@ -21,7 +21,7 @@ describe('alertDetailTagActions', () => {
       const tagID = 8;
       const userID = 3;
 
-      expect(actions.addTagSuccess(alertID, tagID, userID)).to.deep.equal({
+      expect(actions.addTagSuccess(alertID, tagID, userID)).toEqual({
         type: actions.ADD_TAG_SUCCESS,
         payload: { alertID, tagID, userID },
       });
@@ -34,7 +34,7 @@ describe('alertDetailTagActions', () => {
       const tagID = 3;
       const userID = 2;
 
-      expect(actions.addTagFailure(alertID, tagID, userID)).to.deep.equal({
+      expect(actions.addTagFailure(alertID, tagID, userID)).toEqual({
         type: actions.ADD_TAG_FAILURE,
         payload: { alertID, tagID, userID },
       });
@@ -45,7 +45,7 @@ describe('alertDetailTagActions', () => {
     it('should create an OPEN_PANEL action', () => {
       const alertID = 3;
 
-      expect(actions.openPanel(alertID)).to.deep.equal({
+      expect(actions.openPanel(alertID)).toEqual({
         type: actions.OPEN_PANEL,
         payload: alertID,
       });
@@ -56,7 +56,7 @@ describe('alertDetailTagActions', () => {
     it('should create a CANCEL_MODIFICATIONS action', () => {
       const alertID = 8;
 
-      expect(actions.cancelModifications(alertID)).to.deep.equal({
+      expect(actions.cancelModifications(alertID)).toEqual({
         type: actions.CANCEL_MODIFICATIONS,
         payload: alertID,
       });
@@ -68,7 +68,7 @@ describe('alertDetailTagActions', () => {
       const alertID = 3;
       const tagID = 7;
 
-      expect(actions.showRemovalConfirmation(alertID, tagID)).to.deep.equal({
+      expect(actions.showRemovalConfirmation(alertID, tagID)).toEqual({
         type: actions.SHOW_REMOVAL_CONFIRMATION,
         payload: { alertID, tagID },
       });
@@ -80,7 +80,7 @@ describe('alertDetailTagActions', () => {
       const alertID = 3;
       const tagID = 7;
 
-      expect(actions.cancelTagRemoval(alertID, tagID)).to.deep.equal({
+      expect(actions.cancelTagRemoval(alertID, tagID)).toEqual({
         type: actions.CANCEL_TAG_REMOVAL,
         payload: { alertID, tagID },
       });
@@ -92,7 +92,7 @@ describe('alertDetailTagActions', () => {
       const alertID = 10;
       const tagID = 3;
 
-      expect(actions.removeTag(alertID, tagID)).to.deep.equal({
+      expect(actions.removeTag(alertID, tagID)).toEqual({
         type: actions.REMOVE_TAG,
         payload: { alertID, tagID },
       });
@@ -104,7 +104,7 @@ describe('alertDetailTagActions', () => {
       const alertID = 3;
       const tagID = 2;
 
-      expect(actions.removeTagSuccess(alertID, tagID)).to.deep.equal({
+      expect(actions.removeTagSuccess(alertID, tagID)).toEqual({
         type: actions.REMOVE_TAG_SUCCESS,
         payload: { alertID, tagID },
       });
@@ -116,7 +116,7 @@ describe('alertDetailTagActions', () => {
       const alertID = 6;
       const tagID = 2;
 
-      expect(actions.removeTagFailed(alertID, tagID)).to.deep.equal({
+      expect(actions.removeTagFailed(alertID, tagID)).toEqual({
         type: actions.REMOVE_TAG_FAILED,
         payload: { alertID, tagID },
       });

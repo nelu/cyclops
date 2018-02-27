@@ -17,7 +17,7 @@
  */
 
 // Vendor
-import * as chai from 'chai';
+
 
 // Local
 import {
@@ -34,7 +34,7 @@ describe('alertDetailOutcome', () => {
       const action = actions.open(outcome, notes);
       const state = alertDetailOutcome({} as any, action);
 
-      chai.expect(state).to.deep.equal({
+      expect(state).toEqual({
         active: true,
         outcome,
         notes,
@@ -47,7 +47,7 @@ describe('alertDetailOutcome', () => {
       const action = actions.close();
       const state = alertDetailOutcome({} as any, action);
 
-      chai.expect(state).to.deep.equal(INITIAL_STATE);
+      expect(state).toEqual(INITIAL_STATE);
     });
   });
 
@@ -57,7 +57,7 @@ describe('alertDetailOutcome', () => {
       const action = actions.changeOutcome(outcome);
       const state = alertDetailOutcome({} as any, action);
 
-      chai.expect(state).to.deep.equal({
+      expect(state).toEqual({
         outcome,
       });
     });
@@ -69,7 +69,7 @@ describe('alertDetailOutcome', () => {
       const action = actions.changeNotes(notes);
       const state = alertDetailOutcome({} as any, action);
 
-      chai.expect(state).to.deep.equal({
+      expect(state).toEqual({
         notes,
       });
     });
@@ -80,7 +80,7 @@ describe('alertDetailOutcome', () => {
       const action = actions.openRemovePanel();
       const state = alertDetailOutcome({} as any, action);
 
-      chai.expect(state).to.deep.equal({
+      expect(state).toEqual({
         showRemovePanel: true,
       });
     });
@@ -91,7 +91,7 @@ describe('alertDetailOutcome', () => {
       const action = actions.closeRemovePanel();
       const state = alertDetailOutcome({} as any, action);
 
-      chai.expect(state).to.deep.equal({
+      expect(state).toEqual({
         showRemovePanel: false,
       });
     });

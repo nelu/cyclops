@@ -14,7 +14,7 @@ describe('alertDetailTagSagas()', () => {
   let dispatch: sinon.SinonSpy;
   let getState: sinon.SinonSpy;
 
-  before(() => {
+  beforeAll(() => {
     mockAPI = new MockAdapter(cyphonAPI);
   });
 
@@ -29,7 +29,7 @@ describe('alertDetailTagSagas()', () => {
     getState.reset();
   });
 
-  after(() => {
+  afterAll(() => {
     mockAPI.restore();
   });
 
@@ -52,7 +52,7 @@ describe('alertDetailTagSagas()', () => {
 
       await thunk(dispatch, getState, undefined);
 
-      expect(dispatch.args[1]).to.deep.equal([actions.addTagSuccess(alertID, tagID, userID)]);
+      expect(dispatch.args[1]).toEqual([actions.addTagSuccess(alertID, tagID, userID)]);
     });
 
     it('should dispatch an ADD_TAG action', async () => {
@@ -60,7 +60,7 @@ describe('alertDetailTagSagas()', () => {
 
       await thunk(dispatch, getState, undefined);
 
-      expect(dispatch.args[0]).to.deep.equal([actions.addTag(alertID, tagID, userID)]);
+      expect(dispatch.args[0]).toEqual([actions.addTag(alertID, tagID, userID)]);
     });
 
     it('should dispatch an ADD_TAG_SUCCESS action on a successful request', async () => {
@@ -70,7 +70,7 @@ describe('alertDetailTagSagas()', () => {
 
       await thunk(dispatch, getState, undefined);
 
-      expect(dispatch.args[1]).to.deep.equal([actions.addTagSuccess(alertID, tagID, userID)]);
+      expect(dispatch.args[1]).toEqual([actions.addTagSuccess(alertID, tagID, userID)]);
     });
 
     it('should dispatch an ADD_TAG_FAILURE and ADD_ERROR action on an ' +
@@ -78,8 +78,8 @@ describe('alertDetailTagSagas()', () => {
       const thunk = thunks.addTag(alertID, tagID, userID);
       await thunk(dispatch, getState, undefined);
 
-      expect(dispatch.args[1]).to.deep.equal([actions.addTagFailure(alertID, tagID, userID)]);
-      expect(dispatch.args[2][0].type).to.deep.equal(ADD_ERROR);
+      expect(dispatch.args[1]).toEqual([actions.addTagFailure(alertID, tagID, userID)]);
+      expect(dispatch.args[2][0].type).toEqual(ADD_ERROR);
     });
   });
 });

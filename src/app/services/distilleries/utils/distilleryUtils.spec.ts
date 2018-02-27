@@ -17,7 +17,7 @@
  */
 
 // Vendor
-import * as chai from 'chai';
+
 
 // Local
 import * as utils from './distilleryUtils';
@@ -28,20 +28,20 @@ describe('api.distilleries.utils', () => {
       const distilleryName = 'backend.store.collection';
       const shortened = utils.shortenDistilleryName(distilleryName);
 
-      chai.expect(shortened).to.equal('store.collection');
+      expect(shortened).toEqual('store.collection');
     });
 
     it('should return an empty string for an empty string', () => {
       const shortened = utils.shortenDistilleryName('');
 
-      chai.expect(shortened).to.equal('');
+      expect(shortened).toEqual('');
     });
 
     it('should return the given string if there are no periods', () => {
       const name = 'hello';
       const shortened = utils.shortenDistilleryName(name);
 
-      chai.expect(shortened).to.equal(name);
+      expect(shortened).toEqual(name);
     });
   });
 
@@ -50,21 +50,21 @@ describe('api.distilleries.utils', () => {
       const name = 'backend.store.collection';
       const warehouse = utils.getBackendName(name);
 
-      chai.expect(warehouse).to.equal('backend');
+      expect(warehouse).toEqual('backend');
     });
 
     it('should return an empty string if there is no warehouse name', () => {
       const name = 'name';
       const warehouse = utils.getBackendName(name);
 
-      chai.expect(warehouse).to.equal('');
+      expect(warehouse).toEqual('');
     });
 
     it('should return an empty string if given an empty string', () => {
       const name = '';
       const warehouse = utils.getBackendName(name);
 
-      chai.expect(warehouse).to.equal('');
+      expect(warehouse).toEqual('');
     });
   });
 
@@ -78,7 +78,7 @@ describe('api.distilleries.utils', () => {
         distilleries,
       );
 
-      chai.expect(shortened).to.deep.equal({
+      expect(shortened).toEqual({
         name: {},
         distillery: {},
       });
@@ -93,7 +93,7 @@ describe('api.distilleries.utils', () => {
       const distilleries: any[] = [distillery1, distillery2, distillery3];
       const sorted = utils.sortByWarehouse(distilleries);
 
-      chai.expect(sorted).to.deep.equal({
+      expect(sorted).toEqual({
         one: [distillery1, distillery2],
         two: [distillery3],
       });

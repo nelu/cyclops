@@ -10,11 +10,11 @@ import { TagRelation } from '~/services/tags/types/TagRelation';
 describe('tagAPI', () => {
   let mockAPI: MockAdapter;
 
-  before(() => {
+  beforeAll(() => {
     mockAPI = new MockAdapter(cyphonAPI);
   });
 
-  after(() => {
+  afterAll(() => {
     mockAPI.restore();
   });
 

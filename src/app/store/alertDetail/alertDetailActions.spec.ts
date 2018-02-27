@@ -54,14 +54,14 @@ describe('AlertDetailActions', () => {
     it('should return an action with the ADD_ERROR_MESSAGE type', () => {
       const action = actions.addErrorMessage(['message']);
 
-      chai.expect(action.type).to.equal(actions.ADD_ERROR_MESSAGE);
+      expect(action.type).toEqual(actions.ADD_ERROR_MESSAGE);
     });
 
     it('should add the passed in message to the payload', () => {
       const message = ['message'];
       const action = actions.addErrorMessage(message);
 
-      chai.expect(action.payload).to.equal(message);
+      expect(action.payload).toEqual(message);
     });
   });
 
@@ -73,11 +73,11 @@ describe('AlertDetailActions', () => {
     });
 
     it('should return an action with the CLOSE_ERROR_MESSAGE type', () => {
-      chai.expect(action.type).to.equal(actions.CLOSE_ERROR_MESSAGE);
+      expect(action.type).toEqual(actions.CLOSE_ERROR_MESSAGE);
     });
 
     it('should return an action with an empty payload', () => {
-      chai.expect(action.payload).to.equal(undefined);
+      expect(action.payload).toEqual(undefined);
     });
   });
 
@@ -112,9 +112,9 @@ describe('AlertDetailActions', () => {
 
       testAction(alertId, actionId);
 
-      chai.expect(performAction.called).to.be.true;
-      chai.expect(performAction.args[0][0]).to.equal(actionId);
-      chai.expect(performAction.args[0][1]).to.equal(alertId);
+      expect(performAction.called).toBe(true);
+      expect(performAction.args[0][0]).toEqual(actionId);
+      expect(performAction.args[0][1]).toEqual(alertId);
     });
   });
 
@@ -180,8 +180,8 @@ describe('AlertDetailActions', () => {
 
     it('should check the alert update', () => {
       return testAction(alertParam, fieldParam).then(() => {
-        chai.expect(checkAlertUpdateStub.called).to.be.true;
-        chai.expect(checkAlertUpdateStub.args[0]).to.deep.equal(
+        expect(checkAlertUpdateStub.called).toBe(true);
+        expect(checkAlertUpdateStub.args[0]).toEqual(
           [alertParam, fieldParam],
         );
       });
@@ -189,8 +189,8 @@ describe('AlertDetailActions', () => {
 
     it('should modify the alert update', () => {
       return testAction(alertParam, fieldParam).then(() => {
-        chai.expect(modifyAlertUpdateStub.called).to.be.true;
-        chai.expect(modifyAlertUpdateStub.args[0]).to.deep.equal(
+        expect(modifyAlertUpdateStub.called).toBe(true);
+        expect(modifyAlertUpdateStub.args[0]).toEqual(
           [alertParam, fieldParam],
         );
       });
@@ -203,9 +203,9 @@ describe('AlertDetailActions', () => {
       check.valid = false;
 
       return testAction(alertParam, fieldParam).catch((error: string) => {
-        chai.expect(error).to.equal('Alert update request invalid');
-        chai.expect(dispatch.called).to.be.true;
-        chai.expect(dispatch.args[0][0]).to.deep.equal({
+        expect(error).toEqual('Alert update request invalid');
+        expect(dispatch.called).toBe(true);
+        expect(dispatch.args[0][0]).toEqual({
           type: actions.ADD_ERROR_MESSAGE,
           payload: errors,
           error: undefined,
@@ -215,8 +215,8 @@ describe('AlertDetailActions', () => {
 
     it('should send a request pending action', () => {
       return testAction(alertParam, fieldParam).then(() => {
-        chai.expect(dispatch.called).to.be.true;
-        chai.expect(dispatch.args[0]).to.deep.equal([{
+        expect(dispatch.called).toBe(true);
+        expect(dispatch.args[0]).toEqual([{
           type: actions.REQUEST_PENDING,
           payload: cancel,
           error: undefined,
@@ -226,8 +226,8 @@ describe('AlertDetailActions', () => {
 
     it('should call updateAlert', () => {
       return testAction(alertParam, fieldParam).then(() => {
-        chai.expect(updateAlert.called).to.be.true;
-        chai.expect(updateAlert.args[0]).to.deep.equal([
+        expect(updateAlert.called).toBe(true);
+        expect(updateAlert.args[0]).toEqual([
           alertParam.id,
           update,
           token,

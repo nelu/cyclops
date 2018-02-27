@@ -17,7 +17,7 @@
  */
 
 // Vendor
-import * as chai from 'chai';
+
 
 // Local
 import * as utils from './getUserFullName';
@@ -30,7 +30,7 @@ describe('api.users.utils', () => {
         last_name: 'Saget',
       };
 
-      chai.expect(utils.getUserFullName(user)).to.equal('Bob Saget');
+      expect(utils.getUserFullName(user)).toEqual('Bob Saget');
     });
   });
 });

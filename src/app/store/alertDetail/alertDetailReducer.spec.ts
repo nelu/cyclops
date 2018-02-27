@@ -18,7 +18,7 @@
 
 // Vendor
 import * as sinon from 'sinon';
-import * as chai from 'chai';
+
 
 // Local
 import { alertDetail, INITIAL_STATE, REQUEST_ID } from './alertDetailReducer';
@@ -44,14 +44,14 @@ describe('alertDetail', () => {
     it('should return the initial state', () => {
       const state = alertDetail({} as any, actions.closeAlert());
 
-      chai.expect(state).to.deep.equal(INITIAL_STATE);
+      expect(state).toEqual(INITIAL_STATE);
     });
 
     it('should cancel an active request', () => {
       alertDetail({} as any, actions.closeAlert());
 
-      chai.expect(cancel.called).to.be.true;
-      chai.expect(cancel.args[0][0]).to.equal(REQUEST_ID);
+      expect(cancel.called).toBe(true);
+      expect(cancel.args[0][0]).toEqual(REQUEST_ID);
     });
   });
 
@@ -61,7 +61,7 @@ describe('alertDetail', () => {
       const action = actions.fetchAlertPending(alertID, {} as any);
       const state = alertDetail({} as any, action);
 
-      chai.expect(state).to.deep.equal({
+      expect(state).toEqual({
         alertID: 1,
         loading: true,
       });
@@ -70,8 +70,8 @@ describe('alertDetail', () => {
     it('should cancel an active request', () => {
       alertDetail({} as any, actions.fetchAlertPending(1, {} as any));
 
-      chai.expect(cancel.called).to.be.true;
-      chai.expect(cancel.args[0][0]);
+      expect(cancel.called).toBe(true);
+      expect(cancel.args[0][0]);
     });
 
     it('should set the cancel function of a new request', () => {
@@ -79,9 +79,9 @@ describe('alertDetail', () => {
 
       alertDetail({} as any, actions.fetchAlertPending(1, canceler));
 
-      chai.expect(set.called).to.be.true;
-      chai.expect(set.args[0][0]).to.equal(REQUEST_ID);
-      chai.expect(set.args[0][1]).to.equal(canceler);
+      expect(set.called).toBe(true);
+      expect(set.args[0][0]).toEqual(REQUEST_ID);
+      expect(set.args[0][1]).toEqual(canceler);
     });
   });
 
@@ -93,7 +93,7 @@ describe('alertDetail', () => {
       const action = actions.fetchAlertSuccess(alert, locations, markers);
       const state = alertDetail({} as any, action);
 
-      chai.expect(state).to.deep.equal({
+      expect(state).toEqual({
         alert,
         loading: false,
         locations,
@@ -108,7 +108,7 @@ describe('alertDetail', () => {
       const action = actions.requestPending(canceler);
       const state = alertDetail({} as any, action);
 
-      chai.expect(state).to.deep.equal({ loading: true });
+      expect(state).toEqual({ loading: true });
     });
 
     it('should cancel an active request', () => {
@@ -116,8 +116,8 @@ describe('alertDetail', () => {
 
       alertDetail({} as any, action);
 
-      chai.expect(cancel.called).to.be.true;
-      chai.expect(cancel.args[0][0]).to.equal(REQUEST_ID);
+      expect(cancel.called).toBe(true);
+      expect(cancel.args[0][0]).toEqual(REQUEST_ID);
     });
 
     it('should set the canceler for a new request', () => {
@@ -126,9 +126,9 @@ describe('alertDetail', () => {
 
       alertDetail({} as any, action);
 
-      chai.expect(set.called).to.be.true;
-      chai.expect(set.args[0][0]).to.equal(REQUEST_ID);
-      chai.expect(set.args[0][1]).to.equal(canceler);
+      expect(set.called).toBe(true);
+      expect(set.args[0][0]).toEqual(REQUEST_ID);
+      expect(set.args[0][1]).toEqual(canceler);
     });
   });
 
@@ -137,7 +137,7 @@ describe('alertDetail', () => {
       const action = actions.requestFailed();
       const state = alertDetail({} as any, action);
 
-      chai.expect(state).to.deep.equal({ loading: false });
+      expect(state).toEqual({ loading: false });
     });
   });
 
@@ -147,7 +147,7 @@ describe('alertDetail', () => {
       const action = actions.updateAlertSuccess(alert);
       const state = alertDetail({} as any, action);
 
-      chai.expect(state).to.deep.equal({
+      expect(state).toEqual({
         alert,
         loading: false,
       });
@@ -160,7 +160,7 @@ describe('alertDetail', () => {
       const state: any = { alert };
       const update = alertDetail(state, action);
 
-      chai.expect(update.alert).to.deep.equal(alertUpdated);
+      expect(update.alert).toEqual(alertUpdated);
     });
   });
 
@@ -178,7 +178,7 @@ describe('alertDetail', () => {
       const action = actions.openDataModal(result, container);
       const state = alertDetail({} as any, action);
 
-      chai.expect(state).to.deep.equal({
+      expect(state).toEqual({
         ipAddresses: result,
         modalActive: true,
       });
@@ -190,7 +190,7 @@ describe('alertDetail', () => {
       const action = actions.openDataModal(result, container);
       const state = alertDetail({} as any, action);
 
-      chai.expect(state.ipAddresses).to.be.null;
+      expect(state.ipAddresses).toBeNull();
     });
   });
 
@@ -199,7 +199,7 @@ describe('alertDetail', () => {
       const action = actions.closeDataModal();
       const state = alertDetail({} as any, action);
 
-      chai.expect(state).to.deep.equal({ modalActive: false });
+      expect(state).toEqual({ modalActive: false });
     });
   });
 
@@ -209,7 +209,7 @@ describe('alertDetail', () => {
       const action = actions.addErrorMessage(message);
       const state = alertDetail({} as any, action);
 
-      chai.expect(state).to.deep.equal({ error: message });
+      expect(state).toEqual({ error: message });
     });
   });
 
@@ -217,7 +217,7 @@ describe('alertDetail', () => {
     it('should set the error message to an empty string', () => {
       const state = alertDetail({} as any, actions.closeErrorMessage());
 
-      chai.expect(state).to.deep.equal({ error: [] });
+      expect(state).toEqual({ error: [] });
     });
   });
 });

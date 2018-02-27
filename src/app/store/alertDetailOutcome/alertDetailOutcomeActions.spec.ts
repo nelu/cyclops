@@ -18,7 +18,6 @@
 
 // Vendor
 import * as sinon from 'sinon';
-import * as chai from 'chai';
 
 // Local
 import * as actions from './alertDetailOutcomeActions';
@@ -31,7 +30,7 @@ describe('AlertDetailOutcomeActions', () => {
       const notes = 'blah';
       const action = actions.open(outcome, notes);
 
-      chai.expect(action).to.deep.equal({
+      expect(action).toEqual({
         type: actions.OPEN,
         payload: { outcome, notes },
         error: undefined,
@@ -43,7 +42,7 @@ describe('AlertDetailOutcomeActions', () => {
     it('should create an action with the CLOSE type', () => {
       const action = actions.close();
 
-      chai.expect(action).to.deep.equal({
+      expect(action).toEqual({
         type: actions.CLOSE,
         payload: undefined,
         error: undefined,
@@ -56,7 +55,7 @@ describe('AlertDetailOutcomeActions', () => {
       const outcome = 'completed';
       const action = actions.changeOutcome(outcome);
 
-      chai.expect(action).to.deep.equal({
+      expect(action).toEqual({
         type: actions.CHANGE_OUTCOME,
         payload: outcome,
         error: undefined,
@@ -69,7 +68,7 @@ describe('AlertDetailOutcomeActions', () => {
       const notes = 'completed';
       const action = actions.changeNotes(notes);
 
-      chai.expect(action).to.deep.equal({
+      expect(action).toEqual({
         type: actions.CHANGE_NOTES,
         payload: notes,
         error: undefined,
@@ -108,14 +107,14 @@ describe('AlertDetailOutcomeActions', () => {
       const action = actions.close();
 
       return submit('meh', true).then(() => {
-        chai.expect(dispatch.called).to.be.true;
-        chai.expect(dispatch.args[1][0]).to.deep.equal(action);
+        expect(dispatch.called).toBe(true);
+        expect(dispatch.args[1][0]).toEqual(action);
       });
     });
 
     it('should not call close() if the update is unsuccessful', () => {
       return submit('meh', false).catch(() => {
-        chai.expect(dispatch.callCount).to.equal(1);
+        expect(dispatch.callCount).toEqual(1);
       });
     });
   });

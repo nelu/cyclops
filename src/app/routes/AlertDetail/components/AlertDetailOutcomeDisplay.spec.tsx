@@ -19,7 +19,7 @@
 // Vendor
 import * as React from 'react';
 import * as sinon from 'sinon';
-import * as chai from 'chai';
+
 import * as enzyme from 'enzyme';
 
 // Local
@@ -54,39 +54,39 @@ describe('<AlertDetailOutcomeDisplay />', () => {
 
   it('should show the remove outcome button if there is an outcome and ' +
     'the user is staff', () => {
-    chai.expect(component().find('#alert-remove-outcome')).to.have.length(1);
+    expect(component().find('#alert-remove-outcome')).toHaveLength(1);
   });
 
   it('should not show the remove outcome button if there is an outcome and ' +
     'the user is staff', () => {
     getConfig.returns({ CURRENT_USER: { is_staff: false } });
-    chai.expect(component().find('#alert-remove-outcome')).to.have.length(0);
+    expect(component().find('#alert-remove-outcome')).toHaveLength(0);
   });
 
   it('should show the edit outcome button if the user is staff', () => {
-    chai.expect(component().find('#alert-edit-outcome')).to.have.length(1);
+    expect(component().find('#alert-edit-outcome')).toHaveLength(1);
   });
 
   it('should not show the remove outcome button if the user is not staff', () => {
     getConfig.returns({ CURRENT_USER: { is_staff: false } });
-    chai.expect(component().find('#alert-edit-outcome')).to.have.length(0);
+    expect(component().find('#alert-edit-outcome')).toHaveLength(0);
   });
 
   it('should run showRemovePanel prop when clicking remove outcome button', () => {
     component().find('#alert-remove-outcome').simulate('click');
 
-    chai.expect(showRemovePanel.called).to.be.true;
+    expect(showRemovePanel.called).toBe(true);
   });
 
   it('should run editOutcome prop when clicking remove outcome button', () => {
     component().find('#alert-remove-outcome').simulate('click');
 
-    chai.expect(showRemovePanel.called).to.be.true;
+    expect(showRemovePanel.called).toBe(true);
   });
 
   it('should run editOutcome prop when clicking remove outcome button', () => {
     component().find('#alert-edit-outcome').simulate('click');
 
-    chai.expect(editOutcome.called).to.be.true;
+    expect(editOutcome.called).toBe(true);
   });
 });
