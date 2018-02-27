@@ -1,5 +1,11 @@
 # Change log
 
+## Unreleased
+
+### Changed
+
+- Test suite from Karma/Webpack/Mocha/Chai to Jest. ([24271f4](https://github.com/dunbarcyber/cyclops/commit/24271f4a50813b89d22369df0e00496eb5401067))
+
 <a name="0.5.0"></a>
 ## [0.5.0](https://github.com/dunbarcyber/cyclops/compare/0.4.4...0.5.0) (2017-11-03)
 

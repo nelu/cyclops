@@ -26,9 +26,6 @@ const ENV = process.env.NODE_ENV || 'development';
 /** If webpack is being run in a production environment. */
 const PRODUCTION = ENV === 'production';
 
-/** If webpack is being run in a test environment. */
-const TESTING = ENV === 'test';
-
 /** If webpack is being run in a development environment. */
 const DEVELOPMENT = ENV === 'development';
 
@@ -101,15 +98,7 @@ const SCSS_RULE = {
   }),
 };
 
-const COVERAGE_RULE = {
-  test: /\.tsx?$/,
-  enforce: 'post',
-  include: path.resolve(__dirname, 'src/app'),
-  exclude: /\.spec\.tsx?$/,
-  loader: 'istanbul-instrumenter-loader',
-};
-
-const BASE_RULES = [
+const RULES = [
   TSLINT_RULE,
   JS_SOURCEMAP_RULE,
   TS_SOURCEMAP_RULE,
@@ -118,22 +107,9 @@ const BASE_RULES = [
   SCSS_RULE,
 ];
 
-const TEST_RULES = [
-  COVERAGE_RULE,
-];
-
-const RULES = TESTING ? BASE_RULES.concat(TEST_RULES) : BASE_RULES;
-
 const BASE_PLUGINS = [
   new ExtractTextPlugin('cyclops.css'),
   new webpack.BannerPlugin(BANNER),
-];
-
-const TEST_PLUGINS = [
-  new webpack.SourceMapDevToolPlugin({
-    filename: null, // if no value is provided the sourcemap is inlined
-    test: /\.(tsx?|js)($|\?)/i, // process .js and .ts files only
-  }),
 ];
 
 const PRODUCTION_PLUGINS = [
@@ -148,7 +124,6 @@ const PRODUCTION_PLUGINS = [
 const PLUGINS = {
   development: () => BASE_PLUGINS,
   production: () => BASE_PLUGINS.concat(PRODUCTION_PLUGINS),
-  test: () => BASE_PLUGINS.concat(TEST_PLUGINS),
 }[ENV]();
 
 module.exports = {
@@ -156,7 +131,7 @@ module.exports = {
 
   entry: './src/main.ts',
 
-  output: TESTING ? undefined : {
+  output: {
     filename: 'cyclops.js',
     path: path.resolve(__dirname, DEVELOPMENT ? 'build' : 'dist'),
   },
@@ -173,7 +148,7 @@ module.exports = {
     },
   },
 
-  devtool: TESTING || DEVELOPMENT ? 'inline-source-map' : 'source-map',
+  devtool: DEVELOPMENT ? 'inline-source-map' : 'source-map',
 
   module: {
     rules: RULES,
