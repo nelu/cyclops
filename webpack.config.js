@@ -16,19 +16,28 @@
  * are made]
  */
 
+// Vendor
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-/** Current running environment. */
+/**
+ * Current running environment.
+ * @type {string}
+ */
 const ENV = process.env.NODE_ENV || 'development';
 
-/** If webpack is being run in a production environment. */
+/**
+ * If webpack is being run in a production environment.
+ * @type {boolean}
+ */
 const PRODUCTION = ENV === 'production';
 
-/** If webpack is being run in a development environment. */
-const DEVELOPMENT = ENV === 'development';
-
+/**
+ * Banner placed at the top of the compiled code.
+ * @type {string}
+ */
 const BANNER =
 `The contents of this file are subject to the CYPHON Proprietary Non-
 Commercial Registered User Use License Agreement (the "Agreement”). You
@@ -49,6 +58,7 @@ are made]`;
 const CSS_LOADER = {
   loader: 'css-loader',
   options: {
+    // Use minimize and source map in production.
     minimize: PRODUCTION,
     sourceMap: PRODUCTION,
   },
@@ -76,7 +86,7 @@ const CSS_RULE = {
   test: /\.css$/,
   use: [
     'style-loader',
-    'css-loader',
+    CSS_LOADER,
   ],
 };
 
@@ -113,12 +123,8 @@ const BASE_PLUGINS = [
 ];
 
 const PRODUCTION_PLUGINS = [
-  new webpack.DefinePlugin({
-    'process.env': {
-      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-    },
-  }),
   new webpack.optimize.UglifyJsPlugin({ sourceMap: true }),
+  new CleanWebpackPlugin(['dist']),
 ];
 
 const PLUGINS = {
@@ -129,7 +135,10 @@ const PLUGINS = {
 module.exports = {
   context: __dirname,
 
-  entry: './src/main.ts',
+  entry: [
+    'core-js/shim',
+    './src/main.ts'
+  ],
 
   output: {
     filename: 'cyclops.js',
@@ -148,7 +157,7 @@ module.exports = {
     },
   },
 
-  devtool: DEVELOPMENT ? 'inline-source-map' : 'source-map',
+  devtool: PRODUCTION ? 'source-map' : 'inline-source-map',
 
   module: {
     rules: RULES,
@@ -159,7 +168,7 @@ module.exports = {
     'react/lib/ReactContext': 'window',
     'react/lib/ExecutionEnvironment': true,
     'react/addons': true,
-    mapboxgl: 'mapboxgl',
+    'mapboxgl': 'mapboxgl',
   },
 
   plugins: PLUGINS,

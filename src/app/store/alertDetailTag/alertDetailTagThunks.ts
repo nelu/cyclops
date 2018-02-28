@@ -1,7 +1,7 @@
 import * as actions from './alertDetailTagActions';
 import {
   addTagRelation, deleteTagRelation,
-  findTagRelation
+  findTagRelation,
 } from '~/services/tags/services/tagAPI';
 import { addError } from '~/store/errorModal';
 import { ThunkActionPromise } from '~/store/types';
