@@ -1,98 +1,125 @@
-import { ReduxActionWithType } from '~/store/types';
+/**
+ * The contents of this file are subject to the CYPHON Proprietary Non-
+ * Commercial Registered User Use License Agreement (the "Agreement”). You
+ * may not use this file except in compliance with the Agreement, a copy
+ * of which may be found at https://github.com/dunbarcyber/cyclops/. The
+ * developer of the CYPHON technology and platform is Dunbar Security
+ * Systems, Inc.
+ *
+ * The CYPHON technology or platform are distributed under the Agreement on
+ * an “AS IS” basis, WITHOUT WARRANTY OF ANY KIND, either express or
+ * implied. See the Agreement for specific terms.
+ *
+ * Copyright (C) 2017 Dunbar Security Solutions, Inc. All Rights Reserved.
+ *
+ * Contributor/Change Made By: ________________. [Only apply if changes
+ * are made]
+ */
 
-export const ADD_TAG = 'ALERT_DETAIL_TAG_ADD_TAG';
-export type AddTagAction = ReduxActionWithType<
-  typeof ADD_TAG,
-  { alertID: number, tagID: number, userID: number }>;
-export const addTag = (alertID: number, tagID: number, userID: number): AddTagAction => ({
+// Local
+import { Action } from '~/store/types';
+import { TagWithTopic } from '~/services/tags/types';
+
+// ADD_TAG
+// --------------------------------------------------------------------------
+
+export const ADD_TAG = 'ALERT_DETAIL_TAG:ADD_TAG';
+export type AddTagAction = Action<typeof ADD_TAG, {
+  alertId: number;
+  tagId: number;
+  userId: number;
+}>;
+export const addTag = (alertId: number, tagId: number, userId: number): AddTagAction => ({
   type: ADD_TAG,
-  payload: { alertID, tagID, userID },
+  payload: { alertId, tagId, userId },
 });
 
-export const ADD_TAG_SUCCESS = 'ALERT_DETAIL_TAG_ADD_TAG_SUCCESS';
-export type AddTagSuccessAction = ReduxActionWithType<
-  typeof ADD_TAG_SUCCESS,
-  { alertID: number, tagID: number, userID: number }>;
-export const addTagSuccess = (
-  alertID: number,
-  tagID: number,
-  userID: number,
-): AddTagSuccessAction => ({
+// ADD_TAG_SUCCESS
+// --------------------------------------------------------------------------
+
+export const ADD_TAG_SUCCESS = 'ALERT_DETAIL_TAG:ADD_TAG_SUCCESS';
+export type AddTagSuccessAction = Action<typeof ADD_TAG_SUCCESS, undefined>;
+export const addTagSuccess = (): AddTagSuccessAction => ({
   type: ADD_TAG_SUCCESS,
-  payload: { alertID, tagID, userID },
+  payload: undefined,
 });
 
-export const ADD_TAG_FAILURE = 'ALERT_DETAIL_TAG_ADD_TAG_FAILURE';
-export type AddTagFailureAction = ReduxActionWithType<
-  typeof ADD_TAG_FAILURE,
-  { alertID: number, tagID: number, userID: number }>;
-export const addTagFailure = (
-  alertID: number,
-  tagID: number,
-  userID: number,
-): AddTagFailureAction => ({
+// ADD_TAG_FAILURE
+// --------------------------------------------------------------------------
+
+export const ADD_TAG_FAILURE = 'ALERT_DETAIL_TAG:ADD_TAG_FAILURE';
+export type AddTagFailureAction = Action<typeof ADD_TAG_FAILURE, undefined>;
+export const addTagFailure = (): AddTagFailureAction => ({
   type: ADD_TAG_FAILURE,
-  payload: { alertID, tagID, userID },
+  payload: undefined,
 });
 
-export const OPEN_PANEL = 'ALERT_DETAIL_TAG_OPEN_PANEL';
-export type OpenPanelAction = ReduxActionWithType<typeof OPEN_PANEL, number>;
-export const openPanel = (alertID: number): OpenPanelAction => ({
-  type: OPEN_PANEL,
-  payload: alertID,
+// OPEN_TAG_PANEL
+// --------------------------------------------------------------------------
+
+export const OPEN_TAG_PANEL = 'ALERT_DETAIL_TAG:OPEN_TAG_PANEL';
+export type OpenTagPanelAction = Action<typeof OPEN_TAG_PANEL, undefined>;
+export const openTagPanel = (): OpenTagPanelAction => ({
+  type: OPEN_TAG_PANEL,
+  payload: undefined,
 });
 
-export const CANCEL_MODIFICATIONS = 'ALERT_DETAIL_TAG_CANCEL';
-export type CancelModificationsAction = ReduxActionWithType<typeof CANCEL_MODIFICATIONS, number>;
-export const cancelModifications = (alertID: number): CancelModificationsAction => ({
-  type: CANCEL_MODIFICATIONS,
-  payload: alertID,
+// CLOSE_TAG_PANEL
+// --------------------------------------------------------------------------
+
+export const CLOSE_TAG_PANEL = 'ALERT_DETAIL_TAG:CLOSE_TAG_PANEL';
+export type CloseTagePanelAction = Action<typeof CLOSE_TAG_PANEL, undefined>;
+export const closeTagPanel = (): CloseTagePanelAction => ({
+  type: CLOSE_TAG_PANEL,
+  payload: undefined,
 });
 
-export const SHOW_REMOVAL_CONFIRMATION = 'ALERT_DETAIL_TAG_SHOW_REMOVAL_CONFIRMATION';
-export type ShowRemovalConfirmationAction = ReduxActionWithType<
-  typeof SHOW_REMOVAL_CONFIRMATION,
-  { alertID: number, tagID: number }>;
-export const showRemovalConfirmation = (
-  alertID: number,
-  tagID: number,
-): ShowRemovalConfirmationAction => ({
+// SHOW_REMOVAL_CONFIRMATION
+// --------------------------------------------------------------------------
+
+export const SHOW_REMOVAL_CONFIRMATION = 'ALERT_DETAIL_TAG:SHOW_REMOVAL_CONFIRMATION';
+export type ShowRemovalConfirmationAction = Action<typeof SHOW_REMOVAL_CONFIRMATION, string>;
+export const showRemovalConfirmation = (tag: TagWithTopic): ShowRemovalConfirmationAction => ({
   type: SHOW_REMOVAL_CONFIRMATION,
-  payload: { alertID, tagID },
+  payload: `${tag.topic.name}: ${tag.name}`,
 });
 
-export const CANCEL_TAG_REMOVAL = 'ALERT_DETAIL_TAG_CANCEL_TAG_REMOVAL';
-export type CancelTagRemovalAction = ReduxActionWithType<
-  typeof CANCEL_TAG_REMOVAL,
-  { alertID: number, tagID: number }>;
-export const cancelTagRemoval = (alertID: number, tagID: number): CancelTagRemovalAction => ({
+// CANCEL_TAG_REMOVAL
+// --------------------------------------------------------------------------
+
+export const CANCEL_TAG_REMOVAL = 'ALERT_DETAIL_TAG:CANCEL_TAG_REMOVAL';
+export type CancelTagRemovalAction = Action<typeof CANCEL_TAG_REMOVAL, undefined>;
+export const cancelTagRemoval = (): CancelTagRemovalAction => ({
   type: CANCEL_TAG_REMOVAL,
-  payload: { alertID, tagID },
+  payload: undefined,
 });
 
-export const REMOVE_TAG = 'ALERT_DETAIL_TAG_REMOVE_TAG';
-export type RemoveTagAction = ReduxActionWithType<
-  typeof REMOVE_TAG,
-  { alertID: number, tagID: number }>;
-export const removeTag = (alertID: number, tagID: number): RemoveTagAction => ({
+// REMOVE_TAG
+// --------------------------------------------------------------------------
+
+export const REMOVE_TAG = 'ALERT_DETAIL_TAG:REMOVE_TAG';
+export type RemoveTagAction = Action<typeof REMOVE_TAG, { alertId: number, tagId: number }>;
+export const removeTag = (alertId: number, tagId: number): RemoveTagAction => ({
   type: REMOVE_TAG,
-  payload: { alertID, tagID },
+  payload: { alertId, tagId },
 });
 
-export const REMOVE_TAG_SUCCESS = 'ALERT_DETAIL_TAG_REMOVE_TAG_SUCCESS';
-export type RemoveTagSuccessAction = ReduxActionWithType<
-  typeof REMOVE_TAG_SUCCESS,
-  { alertID: number, tagID: number }>;
-export const removeTagSuccess = (alertID: number, tagID: number): RemoveTagSuccessAction => ({
+// REMOVE_TAG_SUCCESS
+// --------------------------------------------------------------------------
+
+export const REMOVE_TAG_SUCCESS = 'ALERT_DETAIL_TAG:REMOVE_TAG_SUCCESS';
+export type RemoveTagSuccessAction = Action<typeof REMOVE_TAG_SUCCESS, undefined>;
+export const removeTagSuccess = (): RemoveTagSuccessAction => ({
   type: REMOVE_TAG_SUCCESS,
-  payload: { alertID, tagID },
+  payload: undefined,
 });
 
-export const REMOVE_TAG_FAILED = 'ALERT_DETAIL_TAG_REMOVE_TAG_FAILED';
-export type RemoveTagFailedAction = ReduxActionWithType<
-  typeof REMOVE_TAG_FAILED,
-  { alertID: number, tagID: number }>;
-export const removeTagFailed = (alertID: number, tagID: number): RemoveTagFailedAction => ({
+// REMOVE_TAG_FAILED
+// --------------------------------------------------------------------------
+
+export const REMOVE_TAG_FAILED = 'ALERT_DETAIL_TAG:REMOVE_TAG_FAILED';
+export type RemoveTagFailedAction = Action<typeof REMOVE_TAG_FAILED, undefined>;
+export const removeTagFailed = (): RemoveTagFailedAction => ({
   type: REMOVE_TAG_FAILED,
-  payload: { alertID, tagID },
+  payload: undefined,
 });

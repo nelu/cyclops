@@ -6,35 +6,46 @@ import {
 import { addError } from '~/store/errorModal';
 import { ThunkActionPromise } from '~/store/types';
 
-export function addTag(alertID: number, tagID: number, userID: number): ThunkActionPromise {
-  return (dispatch) => {
-    dispatch(actions.addTag(alertID, tagID, userID));
+/**
+ * Adds a tag to an alert.
+ * @param {number} alertId Id of the alert to add the tag to.
+ * @param {number} tagId Id of the tag to add.
+ * @param {number} userId Id of the user adding the tag.
+ * @returns {ThunkActionPromise}
+ */
+export function addTag(alertId: number, tagId: number, userId: number): ThunkActionPromise {
+  return async (dispatch) => {
+    dispatch(actions.addTag(alertId, tagId, userId));
 
-    return addTagRelation('alert', alertID, tagID, userID)
-      .then(() => {
-        dispatch(actions.addTagSuccess(alertID, tagID, userID));
-      })
-      .catch((error) => {
-        dispatch(actions.addTagFailure(alertID, tagID, userID));
-        dispatch(addError(error));
-      });
+    try {
+      await addTagRelation('alert', alertId, tagId, userId);
+
+      dispatch(actions.addTagSuccess());
+    } catch (error) {
+      dispatch(actions.addTagFailure());
+      dispatch(addError(error));
+    }
   };
 }
 
-export function removeTag(alertID: number, tagID: number): ThunkActionPromise {
-  return (dispatch) => {
-    dispatch(actions.removeTag(alertID, tagID));
+/**
+ * Removes a tag from an alert.
+ * @param {number} alertId Id of the alert to remove the tag from.
+ * @param {number} tagId Id of the tag to remove.
+ * @returns {ThunkActionPromise}
+ */
+export function removeTag(alertId: number, tagId: number): ThunkActionPromise {
+  return async (dispatch) => {
+    dispatch(actions.removeTag(alertId, tagId));
 
-    return findTagRelation('alert', alertID, tagID)
-      .then((relation) => {
-        return deleteTagRelation(relation.id);
-      })
-      .then(() => {
-        dispatch(actions.removeTagSuccess(alertID, tagID));
-      })
-      .catch((error) => {
-        dispatch(actions.removeTagFailed(alertID, tagID));
-        dispatch(addError(error));
-      });
+    try {
+      const relation = await findTagRelation('alert', alertId, tagId);
+      await deleteTagRelation(relation.id);
+
+      dispatch(actions.removeTagSuccess());
+    } catch (error) {
+      dispatch(actions.removeTagFailed());
+      dispatch(addError(error));
+    }
   };
 }

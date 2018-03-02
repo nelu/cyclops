@@ -25,6 +25,7 @@ import { alertDetail, INITIAL_STATE, REQUEST_ID } from './alertDetailReducer';
 import * as actions from './alertDetailActions';
 import * as requests from '~/services/cyphon/utils/requests';
 import { CONTAINER_FIELDS } from '~/services/containers/constants';
+import * as alertDetailTagActions from '~/store/alertDetailTag/alertDetailTagActions';
 
 describe('alertDetail', () => {
   let cancel: sinon.SinonStub;
@@ -40,127 +41,80 @@ describe('alertDetail', () => {
     set.restore();
   });
 
-  describe('CLOSE_ALERT', () => {
-    it('should return the initial state', () => {
-      const state = alertDetail({} as any, actions.closeAlert());
+  it('should return the initial state', () => {
+    expect(alertDetail(undefined, { type: 'NONE' } as any)).toEqual(INITIAL_STATE);
+  });
 
-      expect(state).toEqual(INITIAL_STATE);
+  it('should response to a CLOSE_ALERT action', () => {
+    const state = alertDetail({} as any, actions.closeAlert());
+
+    expect(state).toEqual(INITIAL_STATE);
+    expect(cancel.called).toBe(true);
+    expect(cancel.args[0][0]).toEqual(REQUEST_ID);
+  });
+
+  it('should response to a FETCH_ALERT_PENDING action', () => {
+    const alertID = 1;
+    const canceler: any = {};
+    const action = actions.fetchAlert(alertID, canceler);
+    const state = alertDetail({} as any, action);
+
+    expect(state).toEqual({
+      alertId: 1,
+      loading: true,
     });
+    expect(cancel.called).toBe(true);
+    expect(cancel.args[0][0]);
+    expect(set.called).toBe(true);
+    expect(set.args[0][0]).toEqual(REQUEST_ID);
+    expect(set.args[0][1]).toEqual(canceler);
+  });
 
-    it('should cancel an active request', () => {
-      alertDetail({} as any, actions.closeAlert());
+  it('should respond to a FETCH_ALERT_SUCCESS action', () => {
+    const alert: any = { id: 4 };
+    const locations: any = { data: 'data' };
+    const markers: any = { markers: 'markers' };
+    const action = actions.fetchAlertSuccess(alert, locations, markers);
+    const state = alertDetail({} as any, action);
 
-      expect(cancel.called).toBe(true);
-      expect(cancel.args[0][0]).toEqual(REQUEST_ID);
+    expect(state).toEqual({
+      alert,
+      locations,
+      markers,
+      loading: false,
     });
   });
 
-  describe('FETCH_ALERT_PENDING', () => {
-    it('should update the state with the given payload', () => {
-      const alertID = 1;
-      const action = actions.fetchAlertPending(alertID, {} as any);
-      const state = alertDetail({} as any, action);
+  it('should response to a REQUEST_PENDING action', () => {
+    const canceler: any = {};
+    const action = actions.requestPending(canceler);
+    const state = alertDetail({} as any, action);
 
-      expect(state).toEqual({
-        alertID: 1,
-        loading: true,
-      });
-    });
-
-    it('should cancel an active request', () => {
-      alertDetail({} as any, actions.fetchAlertPending(1, {} as any));
-
-      expect(cancel.called).toBe(true);
-      expect(cancel.args[0][0]);
-    });
-
-    it('should set the cancel function of a new request', () => {
-      const canceler: any = {};
-
-      alertDetail({} as any, actions.fetchAlertPending(1, canceler));
-
-      expect(set.called).toBe(true);
-      expect(set.args[0][0]).toEqual(REQUEST_ID);
-      expect(set.args[0][1]).toEqual(canceler);
-    });
+    expect(state).toEqual({ loading: true });
+    expect(cancel.called).toBe(true);
+    expect(cancel.args[0][0]).toEqual(REQUEST_ID);
+    expect(set.called).toBe(true);
+    expect(set.args[0][0]).toEqual(REQUEST_ID);
+    expect(set.args[0][1]).toEqual(canceler);
   });
 
-  describe('FETCH_ALERT_SUCCESS', () => {
-    it('should update the state with the given payload data', () => {
-      const alert: any = { id: 4 };
-      const locations: any = { data: 'data' };
-      const markers: any = { markers: 'markers' };
-      const action = actions.fetchAlertSuccess(alert, locations, markers);
-      const state = alertDetail({} as any, action);
+  it('should respond to a REQUEST_FAILED action', () => {
+    const action = actions.requestFailed();
+    const state = alertDetail({} as any, action);
 
-      expect(state).toEqual({
-        alert,
-        loading: false,
-        locations,
-        markers,
-      });
-    });
+    expect(state).toEqual({ loading: false });
   });
 
-  describe('REQUEST_PENDING', () => {
-    it('should update the state with the given payload', () => {
-      const canceler: any = {};
-      const action = actions.requestPending(canceler);
-      const state = alertDetail({} as any, action);
+  it('should response to an UPDATE_ALERT_SUCCESS action', () => {
+    const alert: any = { id: 1, level: 'MEDIUM' };
+    const alertUpdated: any = { id: 1, level: 'HIGH' };
+    const action = actions.updateAlertSuccess(alertUpdated);
+    const state: any = { alert };
+    const update = alertDetail(state, action);
 
-      expect(state).toEqual({ loading: true });
-    });
-
-    it('should cancel an active request', () => {
-      const action = actions.requestPending({} as any);
-
-      alertDetail({} as any, action);
-
-      expect(cancel.called).toBe(true);
-      expect(cancel.args[0][0]).toEqual(REQUEST_ID);
-    });
-
-    it('should set the canceler for a new request', () => {
-      const canceler: any = {};
-      const action = actions.requestPending(canceler);
-
-      alertDetail({} as any, action);
-
-      expect(set.called).toBe(true);
-      expect(set.args[0][0]).toEqual(REQUEST_ID);
-      expect(set.args[0][1]).toEqual(canceler);
-    });
-  });
-
-  describe('REQUEST_FAILED', () => {
-    it('should update the state with the given payload data', () => {
-      const action = actions.requestFailed();
-      const state = alertDetail({} as any, action);
-
-      expect(state).toEqual({ loading: false });
-    });
-  });
-
-  describe('UPDATE_ALERT_SUCCESS', () => {
-    it('should update the state with the given payload data', () => {
-      const alert: any = { id: 1 };
-      const action = actions.updateAlertSuccess(alert);
-      const state = alertDetail({} as any, action);
-
-      expect(state).toEqual({
-        alert,
-        loading: false,
-      });
-    });
-
-    it('should update the current alert', () => {
-      const alert: any = { id: 1, level: 'MEDIUM' };
-      const alertUpdated: any = { id: 1, level: 'HIGH' };
-      const action = actions.updateAlertSuccess(alertUpdated);
-      const state: any = { alert };
-      const update = alertDetail(state, action);
-
-      expect(update.alert).toEqual(alertUpdated);
+    expect(update).toEqual({
+      loading: false,
+      alert: alertUpdated,
     });
   });
 
@@ -219,5 +173,41 @@ describe('alertDetail', () => {
 
       expect(state).toEqual({ error: [] });
     });
+  });
+
+  it('should respond to an ADD_TAG_SUCCESS action', () => {
+    const state = alertDetail({} as any, alertDetailTagActions.addTagSuccess());
+
+    expect(state).toEqual({ loading: false });
+  });
+
+  it('should respond to an ADD_TAG_FAILURE action', () => {
+    const state = alertDetail({} as any, alertDetailTagActions.addTagFailure());
+
+    expect(state).toEqual({ loading: false });
+  });
+
+  it('should respond to an REMOVE_TAG_FAILED action', () => {
+    const state = alertDetail({} as any, alertDetailTagActions.removeTagFailed());
+
+    expect(state).toEqual({ loading: false });
+  });
+
+  it('should respond to an REMOVE_TAG_SUCCESS action', () => {
+    const state = alertDetail({} as any, alertDetailTagActions.removeTagSuccess());
+
+    expect(state).toEqual({ loading: false });
+  });
+
+  it('should respond to an ADD_TAG action', () => {
+    const state = alertDetail({} as any, alertDetailTagActions.addTag(1, 1, 1));
+
+    expect(state).toEqual({ loading: true });
+  });
+
+  it('should respond to an REMOVE_TAG action', () => {
+    const state = alertDetail({} as any, alertDetailTagActions.removeTag(1, 1));
+
+    expect(state).toEqual({ loading: true });
   });
 });

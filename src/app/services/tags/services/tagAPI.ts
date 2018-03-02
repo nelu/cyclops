@@ -1,7 +1,8 @@
 import { TagRelationContentTypes } from '~/services/tags/types/TagRelationContentTypes';
-import { TagDetail } from '~/services/tags/types';
-import { del, get, post } from '~/services/cyphon/utils/cyphonAPI';
+import { TagDetail, TagWithTopic } from '~/services/tags/types';
+import { del, get, post, getAll } from '~/services/cyphon/utils/cyphonAPI';
 import { TagRelation } from '~/services/tags/types/TagRelation';
+import { APIList, APIResponse } from '~/services/cyphon/types';
 
 /**
  * Adds a tag relation to a given object.
@@ -32,18 +33,24 @@ export function addTagRelation(
  * @param {number} tagID
  * @returns {Promise<any>}
  */
-export function findTagRelation(
+export async function findTagRelation(
   contentType: TagRelationContentTypes,
   objectID: number,
   tagID: number,
 ): Promise<TagRelation> {
-  return get('/tagrelations/', {
+  const relations = await get<APIList<TagRelation>>('/tagrelations/', {
     params: {
       content_type: contentType,
       object_id: objectID,
       tag: tagID,
     },
   });
+
+  if (relations.results.length > 1) {
+    throw new Error(`API call expected one result but received ${relations.results.length}`);
+  }
+
+  return relations.results[0];
 }
 
 /**
@@ -52,5 +59,13 @@ export function findTagRelation(
  * @returns {Promise<TagRelation>}
  */
 export function deleteTagRelation(tagRelationID: number): Promise<TagRelation> {
-  return del(`/tagrelations/${tagRelationID}`);
+  return del(`/tagrelations/${tagRelationID}/`);
+}
+
+/**
+ * Gets all the current tags in the system.
+ * @returns {Promise<TagWithTopic[]>}
+ */
+export function fetchAllTags(): Promise<TagWithTopic[]> {
+  return getAll('/tags/');
 }

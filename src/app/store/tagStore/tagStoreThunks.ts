@@ -1,4 +1,4 @@
-/*!
+/**
  * The contents of this file are subject to the CYPHON Proprietary Non-
  * Commercial Registered User Use License Agreement (the "Agreement”). You
  * may not use this file except in compliance with the Agreement, a copy
@@ -17,21 +17,24 @@
  */
 
 // Local
-import { ReduxAction, Action } from '~/store/types';
+import { ThunkActionPromise } from '~/store/types';
+import * as actions from './tagStoreActions';
+import { fetchAllTags } from '~/services/tags/services/tagAPI';
+import { addError } from '~/store/errorModal';
 
 /**
- * Creates a flux standard action with the given payload type.
- * @param type Action type.
- * @param payload Data to attach to the action.
- * @param error If the action is an error.
- * @returns {ReduxAction<Payload>}
+ * Fetches the current list of all available tags.
+ * @returns {ThunkActionPromise}
  */
-export function createAction<Payload>(
-  type: string,
-  payload: Payload,
-  error?: boolean,
-): ReduxAction<Payload> {
-  return { type, payload, error };
-}
+export function fetchTags(): ThunkActionPromise {
+  return async (dispatch) => {
+    dispatch(actions.fetchTagsPending());
 
-export const action = (type: any, payload: any): Action<any, any> => ({ type, payload });
+    try {
+      dispatch(actions.fetchTagsSuccess(await fetchAllTags()));
+    } catch (error) {
+      dispatch(actions.fetchTagsFailure());
+      dispatch(addError(error));
+    }
+  };
+}

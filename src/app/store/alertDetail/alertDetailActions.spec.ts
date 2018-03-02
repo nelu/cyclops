@@ -51,33 +51,22 @@ describe('AlertDetailActions', () => {
   });
 
   describe('addErrorMessage()', () => {
-    it('should return an action with the ADD_ERROR_MESSAGE type', () => {
-      const action = actions.addErrorMessage(['message']);
-
-      expect(action.type).toEqual(actions.ADD_ERROR_MESSAGE);
-    });
-
-    it('should add the passed in message to the payload', () => {
+    it('should return an ADD_ERROR_MESSAGE action', () => {
       const message = ['message'];
-      const action = actions.addErrorMessage(message);
 
-      expect(action.payload).toEqual(message);
+      expect(actions.addErrorMessage(message)).toEqual({
+        type: actions.ADD_ERROR_MESSAGE,
+        payload: message,
+      });
     });
   });
 
   describe('closeErrorMessage()', () => {
-    let action: actions.CloseErrorMessageAction;
-
-    beforeEach(() => {
-      action = actions.closeErrorMessage();
-    });
-
-    it('should return an action with the CLOSE_ERROR_MESSAGE type', () => {
-      expect(action.type).toEqual(actions.CLOSE_ERROR_MESSAGE);
-    });
-
-    it('should return an action with an empty payload', () => {
-      expect(action.payload).toEqual(undefined);
+    it('should return a CLOSE_ERROR_MESSAGE action', () => {
+      expect(actions.closeErrorMessage()).toEqual({
+        type: actions.CLOSE_ERROR_MESSAGE,
+        payload: undefined,
+      });
     });
   });
 
@@ -203,7 +192,7 @@ describe('AlertDetailActions', () => {
       check.valid = false;
 
       return testAction(alertParam, fieldParam).catch((error: string) => {
-        expect(error).toEqual('Alert update request invalid');
+        expect(error).toEqual(Error('Alert update request failed'));
         expect(dispatch.called).toBe(true);
         expect(dispatch.args[0][0]).toEqual({
           type: actions.ADD_ERROR_MESSAGE,

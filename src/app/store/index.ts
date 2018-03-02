@@ -36,7 +36,8 @@ import { SearchResultsState, searchResults } from './searchResults';
 import { SearchQueryState, searchQuery } from './searchQuery';
 import { AlertSearchResultsState, alertSearchResults } from './alertSearchResults';
 import { DistilleryStoreState, distilleryStore } from './distilleryStore';
-import { all } from 'redux-saga/effects';
+import { all, fork } from 'redux-saga/effects';
+import { tagStoreSagas } from '~/store/tagStore/tagStoreSagas';
 
 /** Shape of the redux store state. */
 export interface StoreState {
@@ -73,7 +74,9 @@ const reducer = combineReducers<StoreState>({
 });
 
 function * sagas(): SagaIterator {
-  yield all([]);
+  yield all([
+    fork(tagStoreSagas),
+  ]);
 }
 
 /** Central redux store for the application */
