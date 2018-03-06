@@ -33,15 +33,14 @@ describe('<AlertDetailComments />', () => {
     { id: 4 },
   ];
   let component: (props?: any) => enzyme.ShallowWrapper<any, any>;
-  let addComment: sinon.SinonSpy;
+  let onSubmit: sinon.SinonSpy;
   let currentUserIsStaff: sinon.SinonStub;
 
   beforeEach(() => {
-    addComment = sinon.spy();
+    onSubmit = sinon.spy();
     currentUserIsStaff = sinon.stub(utils, 'currentUserIsStaff');
-
     component = (props) => {
-      const defaults = { alertId, comments, addComment };
+      const defaults = { comments, onSubmit };
       const passed = Object.assign({}, defaults, props);
 
       return enzyme.shallow(<AlertDetailComments {...passed} />);
@@ -92,7 +91,7 @@ describe('<AlertDetailComments />', () => {
 
     instance.handleSubmit(value);
 
-    expect(addComment.called).toBe(true);
-    expect(addComment.args[0]).toEqual([alertId, value]);
+    expect(onSubmit.called).toBe(true);
+    expect(onSubmit.args[0]).toEqual([value]);
   });
 });

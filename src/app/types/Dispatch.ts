@@ -17,18 +17,7 @@
  */
 
 // Vendor
-import * as _ from 'lodash';
+import { Action } from '~/store/types';
 
-/**
- * Turns a kebab case string into a space separated one with each word
- * capitalized.
- * @param {string} value
- * @returns {string}
- */
-export function capitalizeKebabCase(value: string): string {
-  return value
-    .replace('-', ' ')
-    .split(' ')
-    .map(word => _.capitalize(word))
-    .join(' ');
-}
+// Dispatches an action to the redux store.
+export type Dispatch<T extends string, P> = (action: Action<T, P>) => Action<T, P>;

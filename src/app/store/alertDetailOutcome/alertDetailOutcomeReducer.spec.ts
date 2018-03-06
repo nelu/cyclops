@@ -29,49 +29,21 @@ import * as actions from './alertDetailOutcomeActions';
 describe('alertDetailOutcome', () => {
   describe('OPEN', () => {
     it('should update the state with the given payload data', () => {
-      const outcome = 'completed';
-      const notes = 'notes';
-      const action = actions.open(outcome, notes);
+      const action = actions.openEditPanel();
       const state = alertDetailOutcome({} as any, action);
 
       expect(state).toEqual({
         active: true,
-        outcome,
-        notes,
       });
     });
   });
 
   describe('CLOSE', () => {
     it('should return the initial state', () => {
-      const action = actions.close();
+      const action = actions.closeEditPanel();
       const state = alertDetailOutcome({} as any, action);
 
       expect(state).toEqual(INITIAL_STATE);
-    });
-  });
-
-  describe('CHANGE_OUTCOME', () => {
-    it('should update the state with the given payload data', () => {
-      const outcome = 'completed';
-      const action = actions.changeOutcome(outcome);
-      const state = alertDetailOutcome({} as any, action);
-
-      expect(state).toEqual({
-        outcome,
-      });
-    });
-  });
-
-  describe('CHANGE_NOTES', () => {
-    it('should update the state with the given payload data', () => {
-      const notes = 'notes';
-      const action = actions.changeNotes(notes);
-      const state = alertDetailOutcome({} as any, action);
-
-      expect(state).toEqual({
-        notes,
-      });
     });
   });
 

@@ -26,7 +26,6 @@ import {
   AlertUpdateRequest,
   AlertDetail,
   AlertLevelChoices,
-  Alert,
 } from '~/services/alerts/types';
 import { User } from '~/services/users/types';
 import { getConfig } from '~/config';
@@ -38,28 +37,27 @@ import { AlertDetailSelfAssignButton } from './AlertDetailSelfAssignButton';
 import { TagLabel } from '~/services/tags/components/TagLabel';
 
 interface Props {
-  /** Alert to display the details of. */
+  // Alert to display the details of.
   alert: AlertDetail;
-  /** List of current users. */
+
+  // List of current users.
   users: User[];
+
   /**
    * Updates the fields of an alert.
-   * @param alert Alert object to update.
    * @param fields Fields to change.
    */
-  updateAlert(alert: Alert, fields: AlertUpdateRequest): any;
+  onUpdate(fields: AlertUpdateRequest): any;
 }
 
-/**
- * List of details about a given alerts.
- */
+// List of details about a given alerts.
 export class AlertDetailOverview extends React.Component<Props, {}> {
   /**
    * Changes the alerts level.
    * @param level
    */
   public selectLevel = (level: AlertLevelChoices): void => {
-    this.props.updateAlert(this.props.alert, { level });
+    this.props.onUpdate({ level });
   };
 
   /**
@@ -67,27 +65,21 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
    * @param assignedUser
    */
   public selectUser = (assignedUser: User): void => {
-    this.props.updateAlert(
-      this.props.alert,
-      { assigned_user: assignedUser },
-    );
+    this.props.onUpdate({ assigned_user: assignedUser });
   };
 
   /**
    * Assigns the alerts to the current user.
    */
   public assignToSelf = (): void => {
-    this.props.updateAlert(
-      this.props.alert,
-      { assigned_user: getConfig().CURRENT_USER },
-    );
+    this.props.onUpdate({ assigned_user: getConfig().CURRENT_USER });
   };
 
   /**
    * Unassigns the current alerts.
    */
   public unassign = (): void => {
-    this.props.updateAlert(this.props.alert, { assigned_user: null });
+    this.props.onUpdate({ assigned_user: null });
   };
 
   public render(): JSX.Element {

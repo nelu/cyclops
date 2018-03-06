@@ -1,5 +1,6 @@
 {
   "extends": ["tslint-config-airbnb", "tslint-react"],
+  "defaultSeverity": "warning",
   "rules": {
     "quotemark": [true, "single", "jsx-double"],
     "ordered-imports": false,

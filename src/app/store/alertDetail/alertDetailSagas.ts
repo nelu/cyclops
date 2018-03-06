@@ -16,6 +16,11 @@ import { modifyAlertUpdate } from '~/services/alerts/utils/modifyAlertUpdate';
 import { createAlertUpdateComment } from '~/routes/AlertDetail/utils/createAlertUpdateComment';
 import { AlertDetail } from '~/services/alerts/types';
 
+/**
+ * Fetches a new alert detail object and updates it with location information if applicable.
+ * @param {FetchAlertAction} action
+ * @returns {SagaIterator}
+ */
 export function * fetchAlert(action: alertDetailActions.FetchAlertAction): SagaIterator {
   try {
     const alert = yield call(alertEndpoint.fetchAlert, action.payload.alertID);
@@ -36,13 +41,22 @@ export function * fetchAlert(action: alertDetailActions.FetchAlertAction): SagaI
   }
 }
 
+/**
+ * Updates the current alert detail object with the given fields and creates an update comment
+ * on the alert as needed.
+ * @param {UpdateAlertAction} action
+ * @returns {SagaIterator}
+ */
 export function * updateAlert(action: alertDetailActions.UpdateAlertAction): SagaIterator {
   let update: AlertDetail | undefined;
 
   try {
     const request = checkAlertUpdate(action.payload.alert, action.payload.update);
 
-    if (!request.valid) return yield put(alertDetailActions.addErrorMessage(request.errors));
+    if (!request.valid) {
+      yield put(alertDetailActions.addErrorMessage(request.errors));
+      return yield put(alertDetailActions.updateAlertFailed());
+    }
 
     const fields = modifyAlertUpdate(action.payload.alert, action.payload.update);
     const comment = createAlertUpdateComment(action.payload.alert, fields);

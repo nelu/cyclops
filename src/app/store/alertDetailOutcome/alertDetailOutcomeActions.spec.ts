@@ -16,49 +16,42 @@
  * are made]
  */
 
-// Vendor
-import * as sinon from 'sinon';
-
 // Local
 import * as actions from './alertDetailOutcomeActions';
-import * as detail from '../alertDetail/alertDetailActions';
 
 describe('AlertDetailOutcomeActions', () => {
-  describe('open()', () => {
+  describe('openEditPanel()', () => {
     it('should create an action with the OPEN type', () => {
-      const outcome = 'N/A';
-      const notes = 'blah';
-      const action = actions.open(outcome, notes);
+      const action = actions.openEditPanel();
 
       expect(action).toEqual({
-        type: actions.OPEN,
-        payload: { outcome, notes },
-        error: undefined,
-      });
-    });
-  });
-
-  describe('close()', () => {
-    it('should create an action with the CLOSE type', () => {
-      const action = actions.close();
-
-      expect(action).toEqual({
-        type: actions.CLOSE,
+        type: actions.OPEN_EDIT_PANEL,
         payload: undefined,
-        error: undefined,
       });
     });
   });
 
-  describe('changeOutcome()', () => {
+  describe('closeEditPanel()', () => {
+    it('should create an action with the CLOSE type', () => {
+      const action = actions.closeEditPanel();
+
+      expect(action).toEqual({
+        type: actions.CLOSE_EDIT_PANEL,
+        payload: undefined,
+      });
+    });
+  });
+
+  describe('submitOutcomeChange()', () => {
     it('should create an action with the correct action type and payload', () => {
       const outcome = 'completed';
-      const action = actions.changeOutcome(outcome);
+      const notes = 'blah';
+      const alert: any = {};
+      const action = actions.submitOutcomeChange(alert, outcome, notes);
 
       expect(action).toEqual({
-        type: actions.CHANGE_OUTCOME,
-        payload: outcome,
-        error: undefined,
+        type: actions.SUBMIT_OUTCOME_CHANGES,
+        payload: { alert, outcome, notes },
       });
     });
   });
@@ -72,49 +65,6 @@ describe('AlertDetailOutcomeActions', () => {
         type: actions.CHANGE_NOTES,
         payload: notes,
         error: undefined,
-      });
-    });
-  });
-
-  describe('submit()', () => {
-    const alert: any  = {};
-    const outcome = 'N/A';
-    let updateAlertDetail: sinon.SinonStub;
-    let dispatch: sinon.SinonStub;
-    let promise: Promise<any>;
-    let submit: any;
-
-    beforeEach(() => {
-      updateAlertDetail = sinon.stub(detail, 'updateAlertDetail');
-      dispatch = sinon.stub().callsFake((action) => action);
-      promise = Promise.resolve();
-
-      submit = (notes: string, pass: boolean) => {
-        if (pass) { promise = Promise.resolve(); }
-        else { promise = Promise.reject(''); }
-
-        updateAlertDetail.returns(promise);
-
-        return actions.submit(alert, outcome, notes)(dispatch, {} as any, undefined);
-      };
-    });
-
-    afterEach(() => {
-      updateAlertDetail.restore();
-    });
-
-    it('should call close() if the update is successful', () => {
-      const action = actions.close();
-
-      return submit('meh', true).then(() => {
-        expect(dispatch.called).toBe(true);
-        expect(dispatch.args[1][0]).toEqual(action);
-      });
-    });
-
-    it('should not call close() if the update is unsuccessful', () => {
-      return submit('meh', false).catch(() => {
-        expect(dispatch.callCount).toEqual(1);
       });
     });
   });

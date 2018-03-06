@@ -21,13 +21,13 @@ import MockAdapter from 'axios-mock-adapter';
 
 // Local
 import { cyphonAPI } from '~/services/cyphon/constants';
-import { runSaga, RunSagaOptions } from 'redux-saga';
+import { RunSagaOptions } from 'redux-saga';
 import * as effects from 'redux-saga/effects';
 import * as alertDetailSagas from './alertDetailSagas';
 import * as alertDetailActions from './alertDetailActions';
 import * as alertApi from '~/services/alerts/utils/alertsAPI';
 import { Action } from '~/store/types';
-import { AlertDetail, AlertUpdateRequest } from '~/services/alerts/types';
+import { AlertDetail } from '~/services/alerts/types';
 import { addError } from '~/store/errorModal';
 
 

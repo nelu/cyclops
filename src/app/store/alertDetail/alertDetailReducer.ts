@@ -65,7 +65,9 @@ type Actions =
   actions.FetchAlertSuccessAction |
   actions.RequestPendingAction |
   actions.RequestFailedAction |
+  actions.UpdateAlertAction |
   actions.UpdateAlertSuccessAction |
+  actions.UpdateAlertFailedAction |
   actions.OpenDataModalAction |
   actions.CloseDataModalAction |
   actions.AddErrorMessageAction |
@@ -115,6 +117,7 @@ export function alertDetail(
       return { ...state, loading: true };
 
     case actions.REQUEST_FAILED:
+    case actions.UPDATE_ALERT_FAILED:
     case alertDetailTagActions.ADD_TAG_SUCCESS:
     case alertDetailTagActions.ADD_TAG_FAILURE:
     case alertDetailTagActions.REMOVE_TAG_SUCCESS:
@@ -147,6 +150,7 @@ export function alertDetail(
     case actions.CLOSE_ERROR_MESSAGE:
       return { ...state, error: [] };
 
+    case actions.UPDATE_ALERT:
     case alertDetailTagActions.ADD_TAG:
     case alertDetailTagActions.REMOVE_TAG:
       return { ...state, loading: true };

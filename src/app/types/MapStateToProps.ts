@@ -16,19 +16,8 @@
  * are made]
  */
 
-// Vendor
-import * as _ from 'lodash';
+// Local
+import { StoreState } from '~/store';
 
-/**
- * Turns a kebab case string into a space separated one with each word
- * capitalized.
- * @param {string} value
- * @returns {string}
- */
-export function capitalizeKebabCase(value: string): string {
-  return value
-    .replace('-', ' ')
-    .split(' ')
-    .map(word => _.capitalize(word))
-    .join(' ');
-}
+// Function that maps store state to a component state.
+export type MapStateToProps<P, C> = (state: StoreState, props: C) => Partial<P>;

@@ -17,18 +17,6 @@
  */
 
 // Vendor
-import * as _ from 'lodash';
+import { Dispatch } from 'react-redux';
 
-/**
- * Turns a kebab case string into a space separated one with each word
- * capitalized.
- * @param {string} value
- * @returns {string}
- */
-export function capitalizeKebabCase(value: string): string {
-  return value
-    .replace('-', ' ')
-    .split(' ')
-    .map(word => _.capitalize(word))
-    .join(' ');
-}
+export type MapDispatchToProps<P, C> = (dispatch: Dispatch<any>, props: C) => Partial<P>;

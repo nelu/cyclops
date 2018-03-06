@@ -278,37 +278,37 @@ export const closeDataModal = (): CloseDataModalAction => ({
  * Fetchs an alert object for the alert detail view.
  * @returns {ThunkActionPromise}
  */
-export function fetchAlertDetail(alertId: number): ThunkActionPromise {
-  return (dispatch) => {
-    const source = getCancelTokenSource();
-    let nestedAlert: AlertDetail;
-
-    dispatch(fetchAlert(alertId, source.cancel));
-
-    return alertAPI.fetchAlert(alertId, source.token)
-      .then((alert) => {
-        nestedAlert = alert;
-
-        if (alert.distillery) {
-          const { container } = alert.distillery;
-          const { data } = alert;
-          const { token } = source;
-
-          return getLocationsWithAddress(container, data, token)
-            .then((locations) => {
-              const markers = locations.length
-                ? createLocationGeoJSON(locations)
-                : null;
-
-              dispatch(fetchAlertSuccess(nestedAlert, locations, markers));
-            });
-        }
-
-        dispatch(fetchAlertSuccess(nestedAlert, null, null));
-      })
-      .catch(handleError(dispatch));
-  };
-}
+// export function fetchAlertDetail(alertId: number): ThunkActionPromise {
+//   return (dispatch) => {
+//     const source = getCancelTokenSource();
+//     let nestedAlert: AlertDetail;
+//
+//     dispatch(fetchAlert(alertId, source.cancel));
+//
+//     return alertAPI.fetchAlert(alertId, source.token)
+//       .then((alert) => {
+//         nestedAlert = alert;
+//
+//         if (alert.distillery) {
+//           const { container } = alert.distillery;
+//           const { data } = alert;
+//           const { token } = source;
+//
+//           return getLocationsWithAddress(container, data, token)
+//             .then((locations) => {
+//               const markers = locations.length
+//                 ? createLocationGeoJSON(locations)
+//                 : null;
+//
+//               dispatch(fetchAlertSuccess(nestedAlert, locations, markers));
+//             });
+//         }
+//
+//         dispatch(fetchAlertSuccess(nestedAlert, null, null));
+//       })
+//       .catch(handleError(dispatch));
+//   };
+// }
 
 /**
  * Updates the alert detail object with new fields.
@@ -316,60 +316,60 @@ export function fetchAlertDetail(alertId: number): ThunkActionPromise {
  * @param fields Fields to update the alert with.
  * @returns {ThunkActionPromise}
  */
-export function updateAlertDetail(
-  alert: AlertDetail,
-  fields: AlertUpdateRequest,
-): ThunkActionPromise {
-  return async (dispatch) => {
-    const request = checkAlertUpdate(alert, fields);
-
-    if (!request.valid) {
-      dispatch(addErrorMessage(request.errors));
-      throw new Error('Alert update request failed');
-    }
-
-    const modifiedFields = modifyAlertUpdate(alert, fields);
-    const source = getCancelTokenSource();
-
-    dispatch(requestPending(source.cancel));
-
-    try {
-      const update = await alertAPI.updateAlert(alert.id, modifiedFields, source.token);
-      const comment = createAlertUpdateComment(alert, fields);
-
-      if (!comment) {
-        dispatch(updateAlertSuccess(update));
-        dispatch(closeErrorMessage());
-
-        return;
-      }
-
-      try {
-        const response = await alertAPI.addComment(alert.id, comment, source.token);
-
-        dispatch(updateAlertSuccess(response));
-        dispatch(closeErrorMessage());
-
-        return;
-      } catch (error) {
-        dispatch(updateAlertSuccess(update));
-        dispatch(closeErrorMessage());
-
-        if (axios.isCancel(error)) return;
-
-        dispatch(requestFailed());
-        dispatch(addError(error));
-
-        return;
-      }
-    } catch (error) {
-      if (axios.isCancel(error)) return;
-
-      dispatch(requestFailed());
-      dispatch(addError(error));
-    }
-  };
-}
+// export function updateAlertDetail(
+//   alert: AlertDetail,
+//   fields: AlertUpdateRequest,
+// ): ThunkActionPromise {
+//   return async (dispatch) => {
+//     const request = checkAlertUpdate(alert, fields);
+//
+//     if (!request.valid) {
+//       dispatch(addErrorMessage(request.errors));
+//       throw new Error('Alert update request failed');
+//     }
+//
+//     const modifiedFields = modifyAlertUpdate(alert, fields);
+//     const source = getCancelTokenSource();
+//
+//     dispatch(requestPending(source.cancel));
+//
+//     try {
+//       const update = await alertAPI.updateAlert(alert.id, modifiedFields, source.token);
+//       const comment = createAlertUpdateComment(alert, fields);
+//
+//       if (!comment) {
+//         dispatch(updateAlertSuccess(update));
+//         dispatch(closeErrorMessage());
+//
+//         return;
+//       }
+//
+//       try {
+//         const response = await alertAPI.addComment(alert.id, comment, source.token);
+//
+//         dispatch(updateAlertSuccess(response));
+//         dispatch(closeErrorMessage());
+//
+//         return;
+//       } catch (error) {
+//         dispatch(updateAlertSuccess(update));
+//         dispatch(closeErrorMessage());
+//
+//         if (axios.isCancel(error)) return;
+//
+//         dispatch(requestFailed());
+//         dispatch(addError(error));
+//
+//         return;
+//       }
+//     } catch (error) {
+//       if (axios.isCancel(error)) return;
+//
+//       dispatch(requestFailed());
+//       dispatch(addError(error));
+//     }
+//   };
+// }
 
 /**
  * Performs an action on the alert in the alert detail and then updates

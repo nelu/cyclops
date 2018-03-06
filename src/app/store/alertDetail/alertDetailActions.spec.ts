@@ -24,13 +24,6 @@ import axios from 'axios';
 import * as alertsAPI from '~/services/alerts/utils/alertsAPI';
 import * as actions from './alertDetailActions';
 import * as errorActions from '../errorModal/errorModalActions';
-import * as checkAlertUpdate from '~/services/alerts/utils/checkAlertUpdate';
-import * as modifyAlertUpdate from '~/services/alerts/utils/modifyAlertUpdate';
-import * as apiUtils from '~/services/cyphon/utils/cancelTokens';
-import {
-  AlertDetail,
-  AlertUpdateRequest,
-} from '~/services/alerts/types';
 
 describe('AlertDetailActions', () => {
   let addError: sinon.SinonStub;
@@ -104,124 +97,6 @@ describe('AlertDetailActions', () => {
       expect(performAction.called).toBe(true);
       expect(performAction.args[0][0]).toEqual(actionId);
       expect(performAction.args[0][1]).toEqual(alertId);
-    });
-  });
-
-  describe('updateAlertDetail()', () => {
-    let checkAlertUpdateStub: sinon.SinonStub;
-    let modifyAlertUpdateStub: sinon.SinonStub;
-    let getCancelTokenSource: sinon.SinonStub;
-    let updateAlert: sinon.SinonStub;
-    let check: checkAlertUpdate.AlertUpdateCheck;
-    let update: any;
-    let cancel: any;
-    let token: any;
-    let promise: Promise<any>;
-    let testAction: any;
-    let alertPromise: any;
-    let alertParam: any;
-    let fieldParam: any;
-
-    beforeEach(() => {
-      cancel = {};
-      token = {};
-      check = {
-        valid: true,
-        errors: [],
-      };
-      alertParam = {
-        id: 1,
-      };
-      fieldParam = {};
-      update = {
-        updated: 'updated',
-      };
-      alertPromise = {};
-      promise = Promise.resolve(alert);
-
-      checkAlertUpdateStub = sinon
-        .stub(checkAlertUpdate, 'checkAlertUpdate')
-        .returns(check);
-
-      modifyAlertUpdateStub = sinon
-        .stub(modifyAlertUpdate, 'modifyAlertUpdate')
-        .returns(update);
-
-      getCancelTokenSource = sinon
-        .stub(apiUtils, 'getCancelTokenSource')
-        .returns({ cancel, token });
-
-      updateAlert = sinon
-        .stub(alertsAPI, 'updateAlert')
-        .returns(promise);
-
-      testAction = (alert: AlertDetail, fields: AlertUpdateRequest) => {
-        return actions.updateAlertDetail(alert, fields)(dispatch, getState, undefined);
-      };
-    });
-
-    afterEach(() => {
-      checkAlertUpdateStub.restore();
-      modifyAlertUpdateStub.restore();
-      getCancelTokenSource.restore();
-      updateAlert.restore();
-    });
-
-    it('should check the alert update', () => {
-      return testAction(alertParam, fieldParam).then(() => {
-        expect(checkAlertUpdateStub.called).toBe(true);
-        expect(checkAlertUpdateStub.args[0]).toEqual(
-          [alertParam, fieldParam],
-        );
-      });
-    });
-
-    it('should modify the alert update', () => {
-      return testAction(alertParam, fieldParam).then(() => {
-        expect(modifyAlertUpdateStub.called).toBe(true);
-        expect(modifyAlertUpdateStub.args[0]).toEqual(
-          [alertParam, fieldParam],
-        );
-      });
-    });
-
-    it('should add an error message if the update is not valid', () => {
-      const errors = ['meh'];
-
-      check.errors = errors;
-      check.valid = false;
-
-      return testAction(alertParam, fieldParam).catch((error: string) => {
-        expect(error).toEqual(Error('Alert update request failed'));
-        expect(dispatch.called).toBe(true);
-        expect(dispatch.args[0][0]).toEqual({
-          type: actions.ADD_ERROR_MESSAGE,
-          payload: errors,
-          error: undefined,
-        });
-      });
-    });
-
-    it('should send a request pending action', () => {
-      return testAction(alertParam, fieldParam).then(() => {
-        expect(dispatch.called).toBe(true);
-        expect(dispatch.args[0]).toEqual([{
-          type: actions.REQUEST_PENDING,
-          payload: cancel,
-          error: undefined,
-        }]);
-      });
-    });
-
-    it('should call updateAlert', () => {
-      return testAction(alertParam, fieldParam).then(() => {
-        expect(updateAlert.called).toBe(true);
-        expect(updateAlert.args[0]).toEqual([
-          alertParam.id,
-          update,
-          token,
-        ]);
-      });
     });
   });
 });

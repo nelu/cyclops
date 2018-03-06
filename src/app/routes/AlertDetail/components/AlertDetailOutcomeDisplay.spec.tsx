@@ -30,18 +30,18 @@ describe('<AlertDetailOutcomeDisplay />', () => {
   const notes = 'notes';
   const outcome = 'completed';
   let component: (props?: any) => enzyme.ShallowWrapper<any, any>;
-  let editOutcome: sinon.SinonSpy;
-  let showRemovePanel: sinon.SinonSpy;
+  let onEditClick: sinon.SinonSpy;
+  let onRemoveClick: sinon.SinonSpy;
   let getConfig: sinon.SinonStub;
 
   beforeEach(() => {
     getConfig = sinon
       .stub(config, 'getConfig')
       .returns({ CURRENT_USER: { is_staff: true } });
-    showRemovePanel = sinon.spy();
-    editOutcome = sinon.spy();
+    onRemoveClick = sinon.spy();
+    onEditClick = sinon.spy();
     component = (props) => {
-      const defaults = { notes, outcome, showRemovePanel, editOutcome };
+      const defaults = { notes, outcome, onRemoveClick, onEditClick };
       const passed = Object.assign({}, defaults, props);
 
       return enzyme.shallow(<AlertDetailOutcomeDisplay {...passed} />);
@@ -52,16 +52,20 @@ describe('<AlertDetailOutcomeDisplay />', () => {
     getConfig.restore();
   });
 
-  it('should show the remove outcome button if there is an outcome and ' +
-    'the user is staff', () => {
-    expect(component().find('#alert-remove-outcome')).toHaveLength(1);
-  });
+  it(
+    'should show the remove outcome button if there is an outcome and ' +
+    'the user is staff',
+    () => {
+      expect(component().find('#alert-remove-outcome')).toHaveLength(1);
+    });
 
-  it('should not show the remove outcome button if there is an outcome and ' +
-    'the user is staff', () => {
-    getConfig.returns({ CURRENT_USER: { is_staff: false } });
-    expect(component().find('#alert-remove-outcome')).toHaveLength(0);
-  });
+  it(
+    'should not show the remove outcome button if there is an outcome and ' +
+    'the user is staff',
+    () => {
+      getConfig.returns({ CURRENT_USER: { is_staff: false } });
+      expect(component().find('#alert-remove-outcome')).toHaveLength(0);
+    });
 
   it('should show the edit outcome button if the user is staff', () => {
     expect(component().find('#alert-edit-outcome')).toHaveLength(1);
@@ -75,18 +79,18 @@ describe('<AlertDetailOutcomeDisplay />', () => {
   it('should run showRemovePanel prop when clicking remove outcome button', () => {
     component().find('#alert-remove-outcome').simulate('click');
 
-    expect(showRemovePanel.called).toBe(true);
+    expect(onRemoveClick.called).toBe(true);
   });
 
   it('should run editOutcome prop when clicking remove outcome button', () => {
     component().find('#alert-remove-outcome').simulate('click');
 
-    expect(showRemovePanel.called).toBe(true);
+    expect(onRemoveClick.called).toBe(true);
   });
 
   it('should run editOutcome prop when clicking remove outcome button', () => {
     component().find('#alert-edit-outcome').simulate('click');
 
-    expect(editOutcome.called).toBe(true);
+    expect(onEditClick.called).toBe(true);
   });
 });

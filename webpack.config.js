@@ -21,6 +21,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ForkTSCheckerPlugin = require('fork-ts-checker-webpack-plugin');
 
 /**
  * Current running environment.
@@ -76,12 +77,6 @@ const TS_SOURCEMAP_RULE = {
   loader: 'source-map-loader',
 };
 
-const TSLINT_RULE = {
-  test: /\.tsx?$/,
-  enforce: 'pre',
-  loader: 'tslint-loader',
-};
-
 const CSS_RULE = {
   test: /\.css$/,
   use: [
@@ -93,7 +88,10 @@ const CSS_RULE = {
 const TYPESCRIPT_RULE = {
   test: /\.tsx?$/,
   include: path.resolve(__dirname, 'src'),
-  use: ['awesome-typescript-loader'],
+  loader: 'ts-loader',
+  options: {
+    transpileOnly: true
+  }
 };
 
 const SCSS_RULE = {
@@ -109,7 +107,6 @@ const SCSS_RULE = {
 };
 
 const RULES = [
-  TSLINT_RULE,
   JS_SOURCEMAP_RULE,
   TS_SOURCEMAP_RULE,
   CSS_RULE,
@@ -119,11 +116,14 @@ const RULES = [
 
 const BASE_PLUGINS = [
   new ExtractTextPlugin('cyclops.css'),
+  new ForkTSCheckerPlugin(),
   new webpack.BannerPlugin(BANNER),
 ];
 
 const PRODUCTION_PLUGINS = [
-  new webpack.optimize.UglifyJsPlugin({ sourceMap: true }),
+  new webpack.optimize.UglifyJsPlugin({
+    sourceMap: true,
+  }),
   new CleanWebpackPlugin(['dist']),
 ];
 
@@ -155,6 +155,11 @@ module.exports = {
     alias: {
       '~': path.resolve(__dirname, 'src/app/'),
     },
+  },
+
+  devServer: {
+    stats: "minimal",
+    compress: true,
   },
 
   devtool: PRODUCTION ? 'source-map' : 'inline-source-map',
