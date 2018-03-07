@@ -21,48 +21,84 @@ import * as _ from 'lodash';
 import Complete = require('react-autocomplete');
 import * as classnames from 'classnames';
 
-interface Props {
+// Types
+// --------------------------------------------------------------------------
+
+export interface Props {
+  // Items included in the autocomplete.
   items: any[];
+
+  // Initial value of the input element.
   value: string;
+
+  // Placeholder value of the input element.
   placeholder?: string;
+
+  /**
+   * Returns the display value of an item.
+   * @param value
+   * @returns {any}
+   */
   getValue(value: any): any;
+
+  /**
+   * Function run when the user selects one of the items.
+   * @param item
+   */
   onSelect?(item: any): void;
+
+  /**
+   * Function that determines if a particular item should be displayed in the list.
+   * @param item
+   * @returns {boolean}
+   */
   filter?(item: any): boolean;
 }
 
-interface State {
+export interface State {
+  // Currently selected item.
   selected: string;
+
+  // Current value in the input element.
   value: string;
+
+  // Currently filtered items.
   filtered: any[];
 }
 
-/** Input element that allows for text autocomplete. */
+// Component
+// --------------------------------------------------------------------------
+
+// Input element that allows for text autocomplete.
 export class Autocomplete extends React.Component<Props, Partial<State>> {
-  /** Base component properties for the react-autocomplete input element. */
-  public static INPUT_PROPS = {
+  // Base component properties for the react-autocomplete input element.
+  static INPUT_PROPS = {
     className: 'form-control',
   };
 
-  /** Base component properties for the react-autocomplete wrapper element. */
-  public static WRAPPER_PROPS = {
+  // Base component properties for the react-autocomplete wrapper element.
+  static WRAPPER_PROPS = {
     className: 'form-group',
   };
 
-  public static renderMenu = (
-    items: any[],
-    value: string,
-    styles: any,
-  ): JSX.Element => (
+  /**
+   * Renders the autocomplete menu.
+   * @param {any[]} items
+   * @param {string} value
+   * @param styles
+   * @returns {JSX.Element}
+   */
+  static renderMenu = (items: any[], value: string, styles: any): JSX.Element => (
     <div className="AutoComplete__Menu" style={styles} children={items} />
   );
 
-  public state = {
+  state = {
     selected: this.props.value || '',
     value: '',
     filtered: this.props.items || [],
   };
 
-  public componentWillReceiveProps(nextProps: Props): void {
+  componentWillReceiveProps(nextProps: Props): void {
     const filtered = this.filterItems(nextProps.items, this.state.value || '');
     const selected = nextProps.value;
     const value = selected !== this.state.selected
@@ -72,25 +108,40 @@ export class Autocomplete extends React.Component<Props, Partial<State>> {
     this.setState({ filtered, selected, value });
   }
 
-  public onMenuVisibilityChange = (open: boolean): void => {
-    if (!open) { this.setState({ value: this.state.selected }); }
+  /**
+   * Functoin that runs when the visibility of the autocomplete menu changes.
+   * @param {boolean} open
+   */
+  onMenuVisibilityChange = (open: boolean): void => {
+    if (!open) this.setState({ value: this.state.selected });
   };
 
-  public getInputProps = (): any => {
+  /**
+   * Creates the passed down props to the Autocomplete input element.
+   * @returns {any}
+   */
+  getInputProps = (): any => {
     return {
       ...Autocomplete.INPUT_PROPS,
       placeholder: this.props.placeholder,
     };
   };
 
-  public filterItems = (items: any[], value: string): any[] => {
+  /**
+   * Filters the autocomplete items based on the current value of the input element
+   * and a custom filter passed in from the properties.
+   * @param {any[]} items
+   * @param {string} value
+   * @returns {any[]}
+   */
+  filterItems = (items: any[], value: string): any[] => {
     const filtered: any[] = [];
 
     items.forEach((item) => {
       const text = this.props.getValue(item);
       const includesText = _.includes(text.toLowerCase(), value.toLowerCase());
       const passesCustomFilter = this.props.filter
-        ? !this.props.filter(item)
+        ? this.props.filter(item)
         : true;
 
       if (includesText && passesCustomFilter) { filtered.push({ ...item }); }
@@ -99,7 +150,13 @@ export class Autocomplete extends React.Component<Props, Partial<State>> {
     return filtered;
   };
 
-  public renderItem = (item: any, active: boolean): JSX.Element => {
+  /**
+   * Renders an item in an autocomplete drop down.
+   * @param item Object to render.
+   * @param {boolean} active If the current item is highlighted.
+   * @returns {JSX.Element}
+   */
+  renderItem = (item: any, active: boolean): JSX.Element => {
     const classes = classnames('AutoComplete__MenuItem', {
       'AutoComplete__MenuItem--active': active,
     });
@@ -107,20 +164,27 @@ export class Autocomplete extends React.Component<Props, Partial<State>> {
     return <div className={classes}>{this.props.getValue(item)}</div>;
   };
 
-  public handleSelect = (value: string, item: any): void => {
+  /**
+   * Handles the select action when an item is selected.
+   * @param {string} value
+   * @param item
+   */
+  handleSelect = (value: string, item: any): void => {
     if (this.props.onSelect) { this.props.onSelect(item); }
   };
 
-  public handleChange = (
-    event: React.SyntheticEvent<HTMLInputElement>,
-    value: string,
-  ) => {
+  /**
+   * Handles when the use changes the inputs value.
+   * @param {React.SyntheticEvent<HTMLInputElement>} event Event emitted from the input element.
+   * @param {string} value Selected value.
+   */
+  handleChange = (event: React.SyntheticEvent<HTMLInputElement>, value: string): void => {
     const filtered = this.filterItems(this.props.items, value);
 
     this.setState({ value, filtered });
   };
 
-  public render() {
+  render() {
     return (
       <Complete
         items={this.state.filtered || []}
