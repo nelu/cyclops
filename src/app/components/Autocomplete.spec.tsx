@@ -49,7 +49,7 @@ describe('Autocomplete', () => {
 
       expect(menu).toHaveLength(1);
       expect(menu.props()).toEqual({
-        style: { ...style, left: 0, top: undefined },
+        style,
         children: items,
         className: 'Autocomplete__Menu',
       });
