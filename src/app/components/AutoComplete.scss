@@ -16,25 +16,32 @@
  * are made]
  */
 
-// Local
-import { ThunkActionPromise } from '~/store/types';
-import * as actions from './tagStoreActions';
-import { fetchAllTags } from '~/services/tags/services/tagAPI';
-import { addError } from '~/store/errorModal';
+@import '../../styles/base/variables';
 
-/**
- * Fetches the current list of all available tags.
- * @returns {ThunkActionPromise}
- */
-export function fetchTags(): ThunkActionPromise {
-  return async (dispatch) => {
-    dispatch(actions.fetchTagsPending());
+.Autocomplete {
+  &__Wrapper {
+    position: relative;
+  }
 
-    try {
-      dispatch(actions.fetchTagsSuccess(await fetchAllTags()));
-    } catch (error) {
-      dispatch(actions.fetchTagsFailure());
-      dispatch(addError(error));
+  &__Menu {
+    //position: absolute;
+    margin-top: $padding-small-vertical;
+    background-color: $input-bg;
+    border: 1px solid $input-border-focus;
+    border-radius: $border-radius-base;
+    padding: $padding-base-vertical 0;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  }
+
+  &__MenuItem {
+    padding: $padding-small-vertical $padding-base-horizontal;
+    cursor: pointer;
+
+    &--active {
+      border-left: 3px solid $color-primary;
+      color: #fff;
     }
-  };
+  }
 }

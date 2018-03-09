@@ -41,12 +41,18 @@ import { tagStoreSagas } from '~/store/tagStore/tagStoreSagas';
 import { alertDetailSagas } from '~/store/alertDetail/alertDetailSagas';
 import { alertDetailOutcomeSagas } from '~/store/alertDetailOutcome/alertDetailOutcomeSagas';
 import { alertDetailTagSagas } from '~/store/alertDetailTag/alertDetailTagSagas';
+import { tagStoreReducer, TagStoreState } from '~/store/tagStore/tagStoreReducer';
+import {
+  alertDetailTagReducer,
+  AlertDetailTagState
+} from '~/store/alertDetailTag/alertDetailTagReducer';
 
 /** Shape of the redux store state. */
 export interface StoreState {
   alertDetail: AlertDetailState;
   alertDataContextSearch: AlertDataContextSearchState;
   alertDetailOutcome: AlertDetailOutcomeState;
+  alertDetailTag: AlertDetailTagState;
   alertList: AlertListState;
   alertSearchResults: AlertSearchResultsState;
   categoryStore: CategoryStoreState;
@@ -56,10 +62,10 @@ export interface StoreState {
   monitorModal: MonitorModalState;
   searchQuery: SearchQueryState;
   searchResults: SearchResultsState;
+  tagStore: TagStoreState;
   userStore: UserStoreState;
 }
-
-/** Main redux reducer. */
+// Main redux store reducer. Tie all other reducers back into this one.
 const reducer = combineReducers<StoreState>({
   alertDetail,
   alertDataContextSearch,
@@ -74,14 +80,16 @@ const reducer = combineReducers<StoreState>({
   searchQuery,
   searchResults,
   userStore,
+  alertDetailTag: alertDetailTagReducer,
+  tagStore: tagStoreReducer,
 });
 
 function * sagas(): SagaIterator {
   yield all([
-    fork(tagStoreSagas),
     fork(alertDetailSagas),
     fork(alertDetailOutcomeSagas),
     fork(alertDetailTagSagas),
+    fork(tagStoreSagas),
   ]);
 }
 

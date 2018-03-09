@@ -1,6 +1,6 @@
 // Local
 import * as actions from './alertDetailTagActions';
-import { TagWithTopic } from '~/services/tags/types';
+import { Tag } from '~/services/tags/types';
 
 describe('alertDetailTagActions', () => {
   describe('addTag()', () => {
@@ -54,7 +54,7 @@ describe('alertDetailTagActions', () => {
 
   describe('showRemovalConfirmation()', () => {
     it('should create a SHOW_REMOVAL_CONFIRMATION action', () => {
-      const tag: TagWithTopic = {
+      const tag: Tag = {
         id: 1,
         name: 'George',
         topic: {
@@ -66,7 +66,7 @@ describe('alertDetailTagActions', () => {
 
       expect(actions.showRemovalConfirmation(tag)).toEqual({
         type: actions.SHOW_REMOVAL_CONFIRMATION,
-        payload: 'Super: George',
+        payload: tag,
       });
     });
   });

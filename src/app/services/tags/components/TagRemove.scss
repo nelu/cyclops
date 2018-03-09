@@ -16,25 +16,10 @@
  * are made]
  */
 
-// Vendor
-import * as React from 'react';
+@import '../../../../styles/base/variables';
 
-// Local
-import { TagWithTopic } from '~/services/tags/types';
-
-interface Props {
-  tag: TagWithTopic;
-}
-
-/** Name of a tag object in a label. */
-export class TagLabel extends React.Component<Props, {}> {
-  public render() {
-    return (
-      <div className="tag">
-        <b>{this.props.tag.topic.name}:</b>
-        {' '}
-        {this.props.tag.name}
-      </div>
-    );
+.TagRemove {
+  &__Button {
+    color: $text-muted;
   }
 }

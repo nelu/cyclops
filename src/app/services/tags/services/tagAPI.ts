@@ -1,5 +1,5 @@
 import { TagRelationContentTypes } from '~/services/tags/types/TagRelationContentTypes';
-import { TagDetail, TagWithTopic } from '~/services/tags/types';
+import { TagDetail, Tag } from '~/services/tags/types';
 import { del, get, post, getAll } from '~/services/cyphon/utils/cyphonAPI';
 import { TagRelation } from '~/services/tags/types/TagRelation';
 import { APIList, APIResponse } from '~/services/cyphon/types';
@@ -64,8 +64,8 @@ export function deleteTagRelation(tagRelationID: number): Promise<TagRelation> {
 
 /**
  * Gets all the current tags in the system.
- * @returns {Promise<TagWithTopic[]>}
+ * @returns {Promise<Tag[]>}
  */
-export function fetchAllTags(): Promise<TagWithTopic[]> {
+export function fetchAllTags(): Promise<Tag[]> {
   return getAll('/tags/');
 }

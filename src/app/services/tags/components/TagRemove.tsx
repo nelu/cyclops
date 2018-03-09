@@ -18,28 +18,43 @@
 
 // Vendor
 import * as React from 'react';
-import * as classnames from 'classnames';
+import FontAwesome = require('react-fontawesome');
 
 // Local
-import './Button.scss';
+import { Tag } from '~/services/tags/types';
+import { Button } from '~/components/Button';
+import './TagRemove.scss';
 
 // Types
 // --------------------------------------------------------------------------
 
-interface Props extends React.HTMLProps<HTMLButtonElement> {
-  type: 'plain' | 'tiny' | 'unstyled';
+export interface Props {
+  tag: Tag;
+  onClick?(tag: Tag): void;
 }
+
+export interface State {}
 
 // Component
 // --------------------------------------------------------------------------
 
-export class Button extends React.Component<Props, {}> {
-  render() {
-    const { type, className, ...props } = this.props;
-    const classes = classnames(`Button--${type}`, className);
+// Displays a tag with a remove button.
+export class TagRemove extends React.Component<Props, State> {
+  handleClick = () => {
+    if (this.props.onClick) this.props.onClick(this.props.tag);
+  };
 
+  render() {
     return (
-      <button className={classes} {...props} />
+      <span className="tag">
+        <span><b>{this.props.tag.topic.name}</b>: {this.props.tag.name}</span>
+        <span className="TagRemove__Button">
+          {' | '}
+          <Button type="plain" onClick={this.handleClick}>
+            <FontAwesome name="close" />
+          </Button>
+        </span>
+      </span>
     );
   }
 }

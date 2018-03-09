@@ -18,28 +18,42 @@
 
 // Vendor
 import * as React from 'react';
-import * as classnames from 'classnames';
-
-// Local
-import './Button.scss';
+import { Well, ButtonGroup, Button } from 'react-bootstrap';
+import { Tag } from '~/services/tags/types';
+import { getTagDisplayName } from '~/services/tags/services/tagUtils';
 
 // Types
 // --------------------------------------------------------------------------
 
-interface Props extends React.HTMLProps<HTMLButtonElement> {
-  type: 'plain' | 'tiny' | 'unstyled';
+export interface Props {
+  tag: Tag;
+  onRemove(tag: Tag): void;
+  onCancel(): void;
 }
+
+export interface State {}
 
 // Component
 // --------------------------------------------------------------------------
 
-export class Button extends React.Component<Props, {}> {
-  render() {
-    const { type, className, ...props } = this.props;
-    const classes = classnames(`Button--${type}`, className);
+export class AlertDetailTagRemove extends React.Component<Props, State> {
+  handleRemove = (): void => {
+    this.props.onRemove(this.props.tag);
+  };
 
+  render() {
     return (
-      <button className={classes} {...props} />
+      <Well>
+        <p>Are you sure you wish to remove tag {getTagDisplayName(this.props.tag)}?</p>
+        <ButtonGroup justified={true}>
+          <ButtonGroup>
+            <Button onClick={this.handleRemove}>Remove</Button>
+          </ButtonGroup>
+          <ButtonGroup>
+            <Button bsStyle="danger" onClick={this.props.onCancel}>Cancel</Button>
+          </ButtonGroup>
+        </ButtonGroup>
+      </Well>
     );
   }
 }

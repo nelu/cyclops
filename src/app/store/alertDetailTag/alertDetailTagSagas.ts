@@ -25,13 +25,15 @@ import * as actions from './alertDetailTagActions';
 import * as tagApi from '~/services/tags/services/tagAPI';
 import { fetchAlert } from '~/store/alertDetail';
 import { addError } from '~/store/errorModal';
+import { fetchTags } from '~/store/tagStore/tagStoreActions';
+import { fetchTagListSaga } from '~/store/tagStore/tagStoreSagas';
 
 /**
  * Adds a new tag to a specified alert.
  * @param {AddTagAction} action
  * @returns {SagaIterator}
  */
-export function * addTag(action: actions.AddTagAction): SagaIterator {
+export function * addTagSaga(action: actions.AddTagAction): SagaIterator {
   const { alertId, tagId, userId } = action.payload;
   try {
     yield call(tagApi.addTagRelation, 'alert', alertId, tagId, userId);
@@ -48,7 +50,7 @@ export function * addTag(action: actions.AddTagAction): SagaIterator {
  * @param {RemoveTagAction} action
  * @returns {SagaIterator}
  */
-export function * removeTag(action: actions.RemoveTagAction): SagaIterator {
+export function * removeTagSaga(action: actions.RemoveTagAction): SagaIterator {
   const { alertId, tagId } = action.payload;
   try {
     const relation = yield call(tagApi.findTagRelation, 'alert', alertId, tagId);
@@ -62,12 +64,22 @@ export function * removeTag(action: actions.RemoveTagAction): SagaIterator {
 }
 
 /**
+ * Fetches the necessary resources for the tag panel.
+ * @param {OpenTagPanelAction} action
+ * @returns {SagaIterator}
+ */
+export function * openTagPanelSaga(): SagaIterator {
+  yield put(fetchTags());
+}
+
+/**
  * Root saga that starts all the alert detail tag sagas in parallel.
  * @returns {SagaIterator}
  */
 export function * alertDetailTagSagas(): SagaIterator {
   yield all([
-    takeEvery(actions.ADD_TAG, addTag),
-    takeEvery(actions.REMOVE_TAG, removeTag),
+    takeEvery(actions.ADD_TAG, addTagSaga),
+    takeEvery(actions.REMOVE_TAG, removeTagSaga),
+    takeEvery(actions.OPEN_TAG_PANEL, openTagPanelSaga),
   ]);
 }

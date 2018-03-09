@@ -18,15 +18,15 @@
 
 // Local
 import { Action } from '~/store/types';
-import { TagWithTopic } from '~/services/tags/types';
+import { Tag } from '~/services/tags/types';
 
 // FETCH_TAGS_PENDING
 // --------------------------------------------------------------------------
 
-export const FETCH_TAGS_PENDING = 'TAG_STORE:FETCH_TAGS_PENDING';
-export type FetchTagsPendingAction = Action<typeof FETCH_TAGS_PENDING, undefined>;
-export const fetchTagsPending = (): FetchTagsPendingAction => ({
-  type: FETCH_TAGS_PENDING,
+export const FETCH_TAGS = 'TAG_STORE:FETCH_TAGS_PENDING';
+export type FetchTagsAction = Action<typeof FETCH_TAGS, undefined>;
+export const fetchTags = (): FetchTagsAction => ({
+  type: FETCH_TAGS,
   payload: undefined,
 });
 
@@ -34,8 +34,8 @@ export const fetchTagsPending = (): FetchTagsPendingAction => ({
 // --------------------------------------------------------------------------
 
 export const FETCH_TAGS_SUCCESS = 'TAG_STORE:FETCH_TAGS_SUCCESS';
-export type FetchTagsSuccessAction = Action<typeof FETCH_TAGS_SUCCESS, TagWithTopic[]>;
-export const fetchTagsSuccess = (tags: TagWithTopic[]): FetchTagsSuccessAction => ({
+export type FetchTagsSuccessAction = Action<typeof FETCH_TAGS_SUCCESS, Tag[]>;
+export const fetchTagsSuccess = (tags: Tag[]): FetchTagsSuccessAction => ({
   type: FETCH_TAGS_SUCCESS,
   payload: tags,
 });

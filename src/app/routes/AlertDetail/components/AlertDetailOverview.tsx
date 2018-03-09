@@ -34,7 +34,8 @@ import { AlertStatusIcon } from '~/services/alerts/components/AlertStatusIcon';
 import { STATUS_OPTIONS } from '../../AlertList/constants';
 import { AlertDetailUnassignButton } from './AlertDetailUnassignButton';
 import { AlertDetailSelfAssignButton } from './AlertDetailSelfAssignButton';
-import { TagLabel } from '~/services/tags/components/TagLabel';
+import { Tag } from '~/services/tags/components/Tag';
+import AlertDetailTags from '~/routes/AlertDetail/components/AlertDetailTags';
 
 interface Props {
   // Alert to display the details of.
@@ -56,7 +57,7 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
    * Changes the alerts level.
    * @param level
    */
-  public selectLevel = (level: AlertLevelChoices): void => {
+  selectLevel = (level: AlertLevelChoices): void => {
     this.props.onUpdate({ level });
   };
 
@@ -64,33 +65,36 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
    * Changes the user assigned to the alerts.
    * @param assignedUser
    */
-  public selectUser = (assignedUser: User): void => {
+  selectUser = (assignedUser: User): void => {
     this.props.onUpdate({ assigned_user: assignedUser });
   };
 
   /**
    * Assigns the alerts to the current user.
    */
-  public assignToSelf = (): void => {
+  assignToSelf = (): void => {
     this.props.onUpdate({ assigned_user: getConfig().CURRENT_USER });
   };
 
   /**
    * Unassigns the current alerts.
    */
-  public unassign = (): void => {
+  unassign = (): void => {
     this.props.onUpdate({ assigned_user: null });
   };
 
-  public render(): JSX.Element {
+  renderTags = (): JSX.Element[] | string => {
+    return this.props.alert.tags.length
+      ? this.props.alert.tags.map(tag => <Tag key={tag.id} tag={tag}/>)
+      : 'None';
+  };
+
+  render(): JSX.Element {
     const contentDate = this.props.alert.content_date
       ? formatDate(this.props.alert.content_date)
       : 'Unknown';
     const distilleryName = this.props.alert.distillery
       ? this.props.alert.distillery.name
-      : 'None';
-    const tags = this.props.alert.tags.length
-      ? this.props.alert.tags.map((tag) => <TagLabel tag={tag}/>)
       : 'None';
 
     return (
@@ -145,8 +149,7 @@ export class AlertDetailOverview extends React.Component<Props, {}> {
           <dt>Incidents:</dt>
           <dd><span className="badge">{this.props.alert.incidents}</span></dd>
 
-          <dt>Tags:</dt>
-          <dd>{tags}</dd>
+          <AlertDetailTags alert={this.props.alert} />
         </dl>
       </div>
     );

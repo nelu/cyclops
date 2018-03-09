@@ -26,24 +26,24 @@ import { fetchAllTags } from '~/services/tags/services/tagAPI';
 import { addError } from '~/store/errorModal';
 
 describe('tagStoreSagas', () => {
-  describe('fetchTagList()', () => {
+  describe('fetchTagListSaga()', () => {
     it('should perform a successful api call', () => {
-      const saga = sagas.fetchTagList();
+      const saga = sagas.fetchTagListSaga();
       const tags: any[] = [{ id: 1 }];
 
-      expect(saga.next().value).toEqual(put(actions.fetchTagsPending()));
       expect(saga.next().value).toEqual(call(fetchAllTags));
       expect(saga.next(tags).value).toEqual(put(actions.fetchTagsSuccess(tags)));
+      expect(saga.next().done).toBe(true);
     });
 
     it('should perform a failed api call', () => {
-      const saga = sagas.fetchTagList();
+      const saga = sagas.fetchTagListSaga();
       const error = new Error('Request failed with status code 400');
 
-      expect(saga.next().value).toEqual(put(actions.fetchTagsPending()));
       expect(saga.next().value).toEqual(call(fetchAllTags));
       expect(saga.throw!(error).value).toEqual(put(actions.fetchTagsFailure()));
       expect(saga.next().value).toEqual(put(addError(error)));
+      expect(saga.next().done).toBe(true);
     });
   });
 });

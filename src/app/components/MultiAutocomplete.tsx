@@ -20,7 +20,7 @@
 import * as React from 'react';
 
 // Local
-import { Autocomplete } from '~/components/Autocomplete/Autocomplete';
+import { Autocomplete } from '~/components/Autocomplete';
 import { RemovableItem } from '~/components/RemovableItem';
 
 interface Props {

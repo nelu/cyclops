@@ -20,7 +20,7 @@ import { SagaIterator } from 'redux-saga';
 import { put, race, take, all, takeEvery } from 'redux-saga/effects';
 
 import * as actions from './alertDetailOutcomeActions';
-import { UPDATE_ALERT_FAILED, UPDATE_ALERT_SUCCESS, updateAlert } from '~/store/alertDetail';
+import { UPDATE_ALERT_FAILED, UPDATE_ALERT_SUCCESS, updateAlert } from '~/store/alertDetail/alertDetailActions';
 
 /**
  * Submits a change of the outcome and notes

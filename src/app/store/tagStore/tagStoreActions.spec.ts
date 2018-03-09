@@ -22,8 +22,8 @@ import * as actions from './tagStoreActions';
 describe('tagStoreActions', () => {
   describe('fetchTagsPending()', () => {
     it('should create a FETCH_TAGS_PENDING action', () => {
-      expect(actions.fetchTagsPending()).toEqual({
-        type: actions.FETCH_TAGS_PENDING,
+      expect(actions.fetchTags()).toEqual({
+        type: actions.FETCH_TAGS,
         payload: undefined,
       });
     });

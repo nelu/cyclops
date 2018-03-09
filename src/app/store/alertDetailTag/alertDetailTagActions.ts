@@ -18,7 +18,7 @@
 
 // Local
 import { Action } from '~/store/types';
-import { TagWithTopic } from '~/services/tags/types';
+import { Tag } from '~/services/tags/types';
 
 // ADD_TAG
 // --------------------------------------------------------------------------
@@ -78,10 +78,10 @@ export const closeTagPanel = (): CloseTagePanelAction => ({
 // --------------------------------------------------------------------------
 
 export const SHOW_REMOVAL_CONFIRMATION = 'ALERT_DETAIL_TAG:SHOW_REMOVAL_CONFIRMATION';
-export type ShowRemovalConfirmationAction = Action<typeof SHOW_REMOVAL_CONFIRMATION, string>;
-export const showRemovalConfirmation = (tag: TagWithTopic): ShowRemovalConfirmationAction => ({
+export type ShowRemovalConfirmationAction = Action<typeof SHOW_REMOVAL_CONFIRMATION, Tag>;
+export const showRemovalConfirmation = (tag: Tag): ShowRemovalConfirmationAction => ({
   type: SHOW_REMOVAL_CONFIRMATION,
-  payload: `${tag.topic.name}: ${tag.name}`,
+  payload: tag,
 });
 
 // CANCEL_TAG_REMOVAL

@@ -18,21 +18,26 @@
 
 // Local
 import * as actions from './alertDetailTagActions';
-import * as tagStoreActions from '~/store/tagStore/tagStoreActions';
+import { Tag } from '~/services/tags/types';
+import {
+  CLOSE_ALERT, CloseAlertAction, FETCH_ALERT_SUCCESS,
+  FetchAlertSuccessAction,
+} from '~/store/alertDetail';
 
 export interface AlertDetailTagState {
   // If the modification panel for tags is currently active.
   panelIsActive: boolean;
+
   // If a confirmation to remove a tag is currently active.
   confirmationIsActive: boolean;
-  // If the current tag list is being fetched.
-  isFetchingTags: boolean;
+
+  // Tag the user wishes to remove.
+  tagToRemove?: Tag;
 }
 
 export const INITIAL_STATE: AlertDetailTagState = {
   panelIsActive: false,
   confirmationIsActive: false,
-  isFetchingTags: false,
 };
 
 type Actions =
@@ -40,9 +45,9 @@ type Actions =
   actions.CloseTagePanelAction |
   actions.ShowRemovalConfirmationAction |
   actions.CancelTagRemovalAction |
-  tagStoreActions.FetchTagsPendingAction |
-  tagStoreActions.FetchTagsSuccessAction |
-  tagStoreActions.FetchTagsFailureAction;
+  actions.RemoveTagSuccessAction |
+  FetchAlertSuccessAction |
+  CloseAlertAction;
 
 export function alertDetailTagReducer(
   state: AlertDetailTagState = INITIAL_STATE,
@@ -53,22 +58,24 @@ export function alertDetailTagReducer(
       return { ...state, panelIsActive: true };
 
     case actions.CLOSE_TAG_PANEL:
-      return { ...state, panelIsActive: false };
+    case FETCH_ALERT_SUCCESS:
+    case CLOSE_ALERT:
+      return INITIAL_STATE;
 
     case actions.SHOW_REMOVAL_CONFIRMATION:
-      return { ...state, confirmationIsActive: true };
+      return {
+        ...state,
+        confirmationIsActive: true,
+        tagToRemove: action.payload,
+      };
 
     case actions.CANCEL_TAG_REMOVAL:
-      return { ...state, confirmationIsActive: false };
-
-    case tagStoreActions.FETCH_TAGS_PENDING:
-      return { ...state, isFetchingTags: true };
-
-    case tagStoreActions.FETCH_TAGS_FAILURE:
-      return { ...state, isFetchingTags: false, panelIsActive: false };
-
-    case tagStoreActions.FETCH_TAGS_SUCCESS:
-      return { ...state, isFetchingTags: false };
+    case actions.REMOVE_TAG_SUCCESS:
+      return {
+        ...state,
+        confirmationIsActive: false,
+        tagToRemove: undefined,
+      };
 
     default:
       return state;

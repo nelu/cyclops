@@ -43,13 +43,15 @@ describe('Autocomplete', () => {
       const items = [{ id: 1 }];
       const value = 'hello';
       const style = { color: '#fff' };
-      const component = shallow(Autocomplete.renderMenu(items, value, style));
+      const component = render();
+      const instance = component.instance() as Autocomplete;
+      const menu = shallow(instance.renderMenu(items, value, style));
 
-      expect(component).toHaveLength(1);
-      expect(component.props()).toEqual({
-        style,
+      expect(menu).toHaveLength(1);
+      expect(menu.props()).toEqual({
+        style: { ...style, left: 0, top: undefined },
         children: items,
-        className: 'AutoComplete__Menu',
+        className: 'Autocomplete__Menu',
       });
     });
   });

@@ -16,10 +16,14 @@
  * are made]
  */
 
+// Vendor
 import * as React from 'react';
 import * as _ from 'lodash';
 import Complete = require('react-autocomplete');
 import * as classnames from 'classnames';
+
+// Local
+import './AutoComplete.scss';
 
 // Types
 // --------------------------------------------------------------------------
@@ -78,7 +82,11 @@ export class Autocomplete extends React.Component<Props, Partial<State>> {
 
   // Base component properties for the react-autocomplete wrapper element.
   static WRAPPER_PROPS = {
-    className: 'form-group',
+    className: 'Autocomplete__Wrapper form-group',
+  };
+
+  static WRAPPER_STYLE = {
+    display: 'block',
   };
 
   /**
@@ -88,9 +96,15 @@ export class Autocomplete extends React.Component<Props, Partial<State>> {
    * @param styles
    * @returns {JSX.Element}
    */
-  static renderMenu = (items: any[], value: string, styles: any): JSX.Element => (
-    <div className="AutoComplete__Menu" style={styles} children={items} />
-  );
+  renderMenu = (items: any[], value: string, styles: any): JSX.Element => {
+    const list = items.length
+      ? items
+      : <div className="Autocomplete__MenuItem"><i>Empty</i></div>;
+
+    return (
+      <div className="Autocomplete__Menu" style={styles} children={list}/>
+    );
+  };
 
   state = {
     selected: this.props.value || '',
@@ -157,8 +171,8 @@ export class Autocomplete extends React.Component<Props, Partial<State>> {
    * @returns {JSX.Element}
    */
   renderItem = (item: any, active: boolean): JSX.Element => {
-    const classes = classnames('AutoComplete__MenuItem', {
-      'AutoComplete__MenuItem--active': active,
+    const classes = classnames('Autocomplete__MenuItem', {
+      'Autocomplete__MenuItem--active': active,
     });
 
     return <div className={classes}>{this.props.getValue(item)}</div>;
@@ -195,8 +209,9 @@ export class Autocomplete extends React.Component<Props, Partial<State>> {
         onChange={this.handleChange}
         onSelect={this.handleSelect}
         value={this.state.value}
-        renderMenu={Autocomplete.renderMenu}
+        renderMenu={this.renderMenu}
         wrapperProps={Autocomplete.WRAPPER_PROPS}
+        wrapperStyle={Autocomplete.WRAPPER_STYLE}
       />
     );
   }

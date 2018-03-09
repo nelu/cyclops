@@ -18,28 +18,37 @@
 
 // Vendor
 import * as React from 'react';
-import * as classnames from 'classnames';
 
 // Local
-import './Button.scss';
+import { Tag as TagType } from '~/services/tags/types';
+import { Button } from '~/components/Button';
+import FontAwesome = require('react-fontawesome');
 
 // Types
 // --------------------------------------------------------------------------
 
-interface Props extends React.HTMLProps<HTMLButtonElement> {
-  type: 'plain' | 'tiny' | 'unstyled';
+interface Props {
+  // Tag object to display.
+  tag: TagType;
+
+  // Function to run on tag click.
+  onClick?(tag: TagType): void;
 }
 
 // Component
 // --------------------------------------------------------------------------
 
-export class Button extends React.Component<Props, {}> {
-  render() {
-    const { type, className, ...props } = this.props;
-    const classes = classnames(`Button--${type}`, className);
+/** Name of a tag object in a label. */
+export class Tag extends React.Component<Props, {}> {
+  handleClick = () => {
+    if (this.props.onClick) this.props.onClick(this.props.tag);
+  };
 
+  render() {
     return (
-      <button className={classes} {...props} />
+      <Button type="unstyled" className="tag" onClick={this.handleClick}>
+        <span><b>{this.props.tag.topic.name}</b>: {this.props.tag.name}</span>
+      </Button>
     );
   }
 }

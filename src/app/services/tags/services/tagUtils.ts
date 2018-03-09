@@ -16,27 +16,14 @@
  * are made]
  */
 
-@import '../../../styles/base/variables';
+// Local
+import { Tag } from '~/services/tags/types';
 
-.AutoComplete {
-  &__Menu {
-    margin-top: $padding-small-vertical;
-    background-color: $input-bg;
-    border: 1px solid $input-border-focus;
-    border-radius: $border-radius-base;
-    padding: $padding-base-vertical 0;
-    max-height: 300px;
-    overflow-y: auto;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  }
-
-  &__MenuItem {
-    padding: $padding-small-vertical $padding-base-horizontal;
-    cursor: pointer;
-
-    &--active {
-      border-left: 3px solid $color-primary;
-      color: #fff;
-    }
-  }
+/**
+ * Returns the display name of a tag object.
+ * @param {Tag} tag
+ * @returns {string}
+ */
+export function getTagDisplayName(tag: Tag): string {
+  return `${tag.topic.name}: ${tag.name}`;
 }
