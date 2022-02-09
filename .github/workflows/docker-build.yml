@@ -32,4 +32,4 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USER }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build the Docker image
-      run: docker buildx build --platform linux/amd64,linux/386 --push --tag=unzel/cyphone-cyclops:latest ./
+      run: docker buildx build --platform linux/amd64 --push --tag=unzel/cyphone-cyclops:latest ./
