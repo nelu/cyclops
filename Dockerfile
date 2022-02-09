@@ -35,4 +35,4 @@ COPY . $CYCLOPS_HOME
 WORKDIR $CYCLOPS_HOME
 
 # install node modules and compile source files
-RUN npm install && npm run build
+RUN yarn upgrade --latest && npm install && npm run build
